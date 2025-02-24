@@ -1,0 +1,47 @@
+package service;
+
+import constants.PaymentStatus;
+import dao.InvoiceDao;
+import entity.Invoice;
+import service.InvoiceService;
+
+import java.util.List;
+
+public class InvoiceServiceImpl implements InvoiceService {
+    private final InvoiceDao invoiceDao;
+
+    public InvoiceServiceImpl(InvoiceDao invoiceDao) {
+        this.invoiceDao = invoiceDao;
+    }
+
+    @Override
+    public int generateInvoice(Invoice invoice) {
+        int invoiceId = invoiceDao.generateInvoice(invoice);
+        return invoiceId;
+    }
+
+    @Override
+    public Invoice getInvoiceByBookingId(int bookingId) {
+        return invoiceDao.getInvoiceByBookingId(bookingId);
+    }
+
+    @Override
+    public List<Invoice> getAllInvoices() {
+        return invoiceDao.getAllInvoices();
+    }
+
+    @Override
+    public void updatePaymentStatus(int invoiceId, PaymentStatus status) {
+        invoiceDao.updatePaymentStatus(invoiceId, status);
+    }
+
+    @Override
+    public Invoice getInvoiceById(int invoiceId) {
+        return invoiceDao.getInvoiceById(invoiceId);
+    }
+
+    @Override
+    public List<Invoice> getInvoiceByUserId(int userID) {
+        return invoiceDao.getInvoiceByUserId(userID);
+    }
+}

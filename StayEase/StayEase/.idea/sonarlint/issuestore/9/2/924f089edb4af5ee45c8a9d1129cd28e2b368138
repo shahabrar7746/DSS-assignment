@@ -1,0 +1,13 @@
+
+0
+java:S1220""Move this file to a named package.
+Q	java:S125"<This block of commented-out lines of code should be removed.(ÅŠÞ–
+Q	java:S125E"<This block of commented-out lines of code should be removed.(™Ù¼‹
+V	java:S125M"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ
+Q
+java:S6437Z"6Revoke and change this password, as it is compromised.(‹ÂÒ²ùÿÿÿÿ
+S	java:S106d"9Replace this use of System.out or System.err by a logger.(ØÏÃ±øÿÿÿÿ
+N	java:S106f"9Replace this use of System.out or System.err by a logger.(´Í­§
+N	java:S106k"9Replace this use of System.out or System.err by a logger.(ÐÉÃÛ
+S	java:S106m"9Replace this use of System.out or System.err by a logger.(ÖËñÌûÿÿÿÿ
+S	java:S106s"9Replace this use of System.out or System.err by a logger.(óíÇ¶ýÿÿÿÿ

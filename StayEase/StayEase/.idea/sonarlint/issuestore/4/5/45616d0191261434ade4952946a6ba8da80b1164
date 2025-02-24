@@ -1,0 +1,40 @@
+
+S	java:S106""9Replace this use of System.out or System.err by a logger.(àœÉÅıÿÿÿÿ
+S	java:S106#"9Replace this use of System.out or System.err by a logger.(éèÈÃüÿÿÿÿ
+N	java:S106$"9Replace this use of System.out or System.err by a logger.(¤Ö´Ò
+N	java:S106%"9Replace this use of System.out or System.err by a logger.(Ö¬¢À
+N	java:S106&"9Replace this use of System.out or System.err by a logger.(™¬Ç•
+N	java:S106'"9Replace this use of System.out or System.err by a logger.(•éõ«
+N	java:S1068"9Replace this use of System.out or System.err by a logger.(›Ææê
+N	java:S106;"9Replace this use of System.out or System.err by a logger.(ã¨÷Š
+S	java:S106>"9Replace this use of System.out or System.err by a logger.(Òşçÿşÿÿÿÿ
+B
+java:S1602E",Remove useless curly braces around statement(È•êğ
+S	java:S106F"9Replace this use of System.out or System.err by a logger.(¥“¾şÿÿÿÿ
+N	java:S106K"9Replace this use of System.out or System.err by a logger.(¢¾Á
+S	java:S106M"9Replace this use of System.out or System.err by a logger.(ÀÖÔ‚şÿÿÿÿ
+N	java:S106O"9Replace this use of System.out or System.err by a logger.(¤Õš¬
+S	java:S106Q"9Replace this use of System.out or System.err by a logger.(¯Ú¢»ûÿÿÿÿ
+N	java:S106_"9Replace this use of System.out or System.err by a logger.(·ßğÑ
+N	java:S106b"9Replace this use of System.out or System.err by a logger.(”¹õ¡
+N	java:S106h"9Replace this use of System.out or System.err by a logger.(²­Ò
+S	java:S106l"9Replace this use of System.out or System.err by a logger.(¿²İÿøÿÿÿÿ
+N	java:S106n"9Replace this use of System.out or System.err by a logger.(åş¿ç
+S	java:S106s"9Replace this use of System.out or System.err by a logger.(ƒÕ¥Şıÿÿÿÿ
+N	java:S106v"9Replace this use of System.out or System.err by a logger.(Ùº¿
+N	java:S106|"9Replace this use of System.out or System.err by a logger.(Ñè››
+N	java:S106}"9Replace this use of System.out or System.err by a logger.(Ú¬â
+S	java:S106~"9Replace this use of System.out or System.err by a logger.(»Ø²ıÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(ı’àÃûÿÿÿÿ
+N	java:S106€"9Replace this use of System.out or System.err by a logger.(”â¶g
+O	java:S106"9Replace this use of System.out or System.err by a logger.(•éõ«
+O	java:S106‰"9Replace this use of System.out or System.err by a logger.(±²¢À
+V	java:S106Œ"9Replace this use of System.out or System.err by a logger.(±²¢À8Û¶Ù‹Ñ2
+V	java:S106’"9Replace this use of System.out or System.err by a logger.(ÁŞ€®8Ü¶Ù‹Ñ2
+V	java:S106•"9Replace this use of System.out or System.err by a logger.(ã¨÷Š8Ü¶Ù‹Ñ2
+[	java:S106˜"9Replace this use of System.out or System.err by a logger.(Òşçÿşÿÿÿÿ8Ü¶Ù‹Ñ2
+[	java:S106Ÿ"9Replace this use of System.out or System.err by a logger.(°–¹¨ùÿÿÿÿ8İ¶Ù‹Ñ2
+[	java:S106£"9Replace this use of System.out or System.err by a logger.(¥Ÿ˜şÿÿÿÿ8Ş¶Ù‹Ñ2
+[	java:S106¨"9Replace this use of System.out or System.err by a logger.(©£ÔÄıÿÿÿÿ8ß¶Ù‹Ñ2
+K
+java:S1068"5Remove this unused "bookingController" private field.(¶¯ò¦
