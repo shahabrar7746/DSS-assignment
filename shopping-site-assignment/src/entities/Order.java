@@ -10,15 +10,23 @@ public class Order {
     @Override
     public String toString() {
         return ColorCodes.YELLOW +
-                "+-------------------+-------------------+---------------------------------+-------------------+-------------------+\n" +
-                "| Order ID          | Product Name      | Status            | Ordered On                      | Seller            |\n" +
-                "+-------------------+-------------------+---------------------------------+-------------------+-------------------+\n" +
+                "+-------------------+-------------------+---------------------------------+-------------------+\n" +
+                "| Order ID          | Product Name      | Status            | Ordered On                       \n" +
+                "+-------------------+-------------------+---------------------------------+-------------------+\n" +
                 String.format("| %-17s | %-17s | %-17s | %-17s | %-17s |\n",
-                        id, product.getName(), status, orderedOn, product.getSeller().getName()) +
-                "+-------------------+-------------------+---------------------------------+-------------------+-------------------+\n" +
+                        id, product.getName(), status, orderedOn) +
+                "+-------------------+-------------------+---------------------------------+-------------------+\n" +
                 ColorCodes.RESET;
     }
+private Seller seller;
 
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
 
     private Customer customer;
     private Product product;
@@ -26,8 +34,9 @@ public class Order {
     private OrderStatus status;
     private Date orderedOn;
 
-    public Order(Customer customer, Product product) {
+    public Order(Customer customer, Product product, Seller seller) {
         this.customer = customer;
+        this.seller = seller;
         this.product = product;
         this.status = OrderStatus.ORDERED;
         this.id = new Random().nextLong(0, 9000);

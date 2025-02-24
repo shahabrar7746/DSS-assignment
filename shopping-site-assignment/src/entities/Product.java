@@ -21,7 +21,7 @@ public class Product {
 
     private Long id;
     private ProductType type;
-    private Seller seller;
+  //  private Seller seller;
 
     public String getName() {
         return name;
@@ -35,34 +35,34 @@ public class Product {
         return type;
     }
 
-    public Seller getSeller() {
-        return seller;
-    }
+//    public Seller getSeller() {
+//        return seller;
+//    }
 
-    public Product(String name, Currency currency, double price, ProductType type, Seller seller) {
+    public Product(String name, Currency currency, double price, ProductType type) {
         this.name = name;
         this.price = price;
         this.type = type;
         this.currency = currency;
-        this.seller = seller;
+       // this.seller = seller;
         this.id = new Random().nextLong(0, 9000);
     }
 
     @Override
     public int hashCode() {
-        Integer hash = (int) (this.getId() + this.seller.getId());
-        return hash.hashCode();
+
+        return id.hashCode();
     }
 
     @Override
     public String toString() {
         return ColorCodes.PURPLE +
-                "+------------------+------------+------------------+------------------+-----------------+\n" +
-                "| ProductName      | Price      | Currency         | Type             | Seller            |\n" +
-                "-+------------------+------------+------------------+------------------+------------------+\n" +
+                "+------------------+------------+------------------+------------------+\n" +
+                "| ProductName      | Price      | Currency         | Type             |\n" +
+                "-+------------------+------------+------------------+-----------------+\n" +
                 String.format("| %-16s | %-10.2f | %-16s | %-16s | %-17s |\n",
-                        name, price, currency, type, seller.getName()) +
-                "+-------------------+------------------+------------+------------------+------------------+\n" +
+                        name, price, currency, type) +
+                "+-------------------+------------------+------------+-----------------+\n" +
                 ColorCodes.RESET;
     }
 }

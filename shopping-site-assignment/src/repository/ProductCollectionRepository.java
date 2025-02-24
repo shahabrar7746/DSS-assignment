@@ -25,7 +25,7 @@ public  class ProductCollectionRepository implements ProductRepository {
         }
     }
     private  void populate(String name, Currency currency, double price, ProductType type, String sellerName){
-        products.add(new Product(name, currency, price, type, new Seller(sellerName)));
+        products.add(new Product(name, currency, price, type));
     }
     public    List<Product> fetchProducts() {
 

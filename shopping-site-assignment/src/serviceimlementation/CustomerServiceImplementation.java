@@ -96,7 +96,7 @@ private final ProductRepository productRepository;
      * @see #cancelOrder(Customer) 
      */
     private void bookOrder(Customer customer, Product product) {
-        Order order = new Order(customer, product);
+        Order order = new Order(customer, product, null);
         customer.addOrder(order);
 
         orderRepository.addOrder(order);
