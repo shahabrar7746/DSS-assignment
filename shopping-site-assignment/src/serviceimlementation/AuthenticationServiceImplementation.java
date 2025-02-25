@@ -8,6 +8,7 @@ import exceptions.TrialLimitExceedException;
 import exceptions.UserAlreadyExistsException;
 
 import repository.CustomerCollectionRepository;
+import repository.jdbc.CustomerJDBCRepository;
 import repository.interfaces.CustomerRepository;
 
 import services.AuthenticationService;
@@ -19,6 +20,7 @@ import ui.CustomerUI;
 import ui.UserInterface;
 import util.ColorCodes;
 
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
@@ -29,9 +31,9 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
     private CustomerService customerService;
     private final Scanner sc;
 private final CustomerRepository customerRepository;
-    public AuthenticationServiceImplementation() {
+    public AuthenticationServiceImplementation() throws SQLException {
         this.customerService = new CustomerServiceImplementation();
-        this.customerRepository = new CustomerCollectionRepository();
+        this.customerRepository = new CustomerJDBCRepository();
         this.sc = new Scanner(System.in);
     }
 
@@ -60,7 +62,12 @@ private final CustomerRepository customerRepository;
         customer.ifPresent(c -> {
 
             if (c.getRole() == Roles.ADMIN || c.getRole() == Roles.SUPER_ADMIN) {
-                UserInterface adminUI = new AdminUI();
+                UserInterface adminUI = null;
+                try {
+                    adminUI = new AdminUI();
+                } catch (SQLException e) {
+                    System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
+                }
                 try {
                     adminUI.init(c);
                 } catch (Exception e) {
@@ -105,7 +112,7 @@ private final CustomerRepository customerRepository;
         if (!isRedirected) {
             System.out.println(ColorCodes.GREEN + "******CUSTOMER LOG IN*******" + ColorCodes.RESET);
         }
-        Map<String, Customer> map = customerRepository.getCustomerMap().stream().collect(Collectors.toConcurrentMap(Customer::getEmail, c -> c));
+        Map<String, Customer> map = customerRepository.getCustomers().stream().collect(Collectors.toConcurrentMap(Customer::getEmail, c -> c));
         return map.containsKey(email) && map.get(email).getPassword().equals(password) ? map.get(email) : null;
     }
 
@@ -131,7 +138,8 @@ private final CustomerRepository customerRepository;
             return false;
         }
         Customer newCustomer = new Customer(name, email, password, address);
-        customerRepository.getCustomerMap().add(newCustomer);
+        customerRepository.addCustomer(newCustomer);
+
         return true;
     }
 }

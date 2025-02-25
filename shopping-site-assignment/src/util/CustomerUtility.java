@@ -21,21 +21,6 @@ private CustomerUtility(){}
          return con;
 
     }
-public static Map<Long, Customer> getCustomersFromResultSet(ResultSet set) throws SQLException {
-   Map<Long, Customer> map = new ConcurrentHashMap<>();
 
-    while(set.next()){
-        Long id = set.getLong("customer_id");
-        String email = set.getString("email");
-        String password = set.getString("password");
-        String name = set.getString("name");
-        String address = set.getString("address");
-        Roles roles  = Roles.valueOf( set.getString("role"));
-        Timestamp timestamp = set.getTimestamp("registered_on");
-        map.put(id, new Customer(id,name,email, password, address, timestamp, roles));
-    }
-
-    return map;
-}
 
 }

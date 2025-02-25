@@ -7,10 +7,11 @@ import serviceimlementation.AuthenticationServiceImplementation;
 import services.AuthenticationService;
 import util.ColorCodes;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Driver {
-    public static void main(String[] args)  {
+    public static void main(String[] args) throws SQLException {
         final ProductRepository productRepository = new ProductCollectionRepository();
         final  AuthenticationService auth = new AuthenticationServiceImplementation();
         System.out.println(ColorCodes.GREEN + "***********WELCOME*************" + ColorCodes.RESET);

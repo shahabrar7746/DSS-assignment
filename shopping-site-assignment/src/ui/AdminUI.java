@@ -11,6 +11,7 @@ import serviceimlementation.AdminServiceImplementation;
 
 import util.ColorCodes;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class AdminUI implements UserInterface{
@@ -18,7 +19,7 @@ public class AdminUI implements UserInterface{
     private final Scanner sc;
     private final AdminService service;
 
-    public AdminUI() {
+    public AdminUI() throws SQLException {
         this.service = AdminServiceImplementation.getInstance();
         this.sc = new Scanner(System.in);
     }

@@ -108,7 +108,7 @@ public class Customer {
     @Override
     public boolean equals(Object obj) {
         Customer customerObj = (Customer) obj;
-        return customerObj.email.equals(this.email);
+        return customerObj.id.equals(this.id);
     }
 
     @Override

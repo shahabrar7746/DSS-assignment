@@ -11,6 +11,7 @@ import enums.Roles;
 import exceptions.*;
 
 import repository.CustomerCollectionRepository;
+import repository.jdbc.CustomerJDBCRepository;
 import repository.OrderCollectionRepository;
 import repository.ProductCollectionRepository;
 import repository.interfaces.OrderRepository;
@@ -24,25 +25,26 @@ import util.ColorCodes;
 
 import javax.naming.OperationNotSupportedException;
 
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class AdminServiceImplementation implements AdminService {
-    private static final String SUPER_ADMIN_PASSWORD = "123456789";
+    private static final String SUPER_ADMIN_PASSWORD = "1234567890";
     private final Scanner sc;
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
 private final OrderRepository orderRepository;
-    private AdminServiceImplementation() {
+    private AdminServiceImplementation() throws SQLException {
         this.productRepository = new ProductCollectionRepository();
-        this.customerRepository = new CustomerCollectionRepository();
+        this.customerRepository = new CustomerJDBCRepository();
         this.sc = new Scanner(System.in);
         this.orderRepository = new OrderCollectionRepository();
     }
 
     private static AdminServiceImplementation service;
 
-    public static AdminServiceImplementation getInstance() {
+    public static AdminServiceImplementation getInstance() throws SQLException {
         if (service == null) {
             service = new AdminServiceImplementation();
         }
@@ -94,6 +96,9 @@ private final OrderRepository orderRepository;
         System.out.print("Please provide the id of Customer : ");
         Long id = sc.nextLong();
         Optional<Customer> customer = customerRepository.fetchById(id);
+       if(customer.get().getRole() != Roles.CUSTOMER){
+           throw new CustomerNotFoundException("No Customer object found");
+       }
         customer.orElseThrow(() -> {
             throw new CustomerNotFoundException("No Customer object found");//executed if no customer object is found
         });
@@ -102,7 +107,7 @@ private final OrderRepository orderRepository;
 
     @Override
     public List<Customer> getAllCustomer() {
-        List<Customer> allCustomer = customerRepository.getCustomerMap().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
+        List<Customer> allCustomer = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
         if (allCustomer.isEmpty()) {
             throw new CustomerNotFoundException("Customer repository is empty");//executed if no customer object is found
         }
@@ -139,7 +144,7 @@ private final OrderRepository orderRepository;
 
     @Override
     public List<Customer> getAllDeliveredOrders() {
-        List<Customer> deliveredOrders = customerRepository.getCustomerMap().stream().filter(c ->
+        List<Customer> deliveredOrders = customerRepository.getCustomers().stream().filter(c ->
                 c.getOrders().stream().anyMatch(o -> o.getStatus() == OrderStatus.DELIVERED)
         ).toList();
         if (deliveredOrders.isEmpty()) {
@@ -179,6 +184,7 @@ private final OrderRepository orderRepository;
         }
         if (authenticateSuperAdmin()) {//if 'true' lets you perform critical operation.
             customer.get().setRole(Roles.ADMIN);//critical operation.
+            customerRepository.updateCustomer(customer.get());
             System.out.println(ColorCodes.RESET + "Access granted !!" + ColorCodes.RESET);
         }
 
@@ -215,7 +221,8 @@ private final OrderRepository orderRepository;
         }
         if (customer.isPresent() && authenticateSuperAdmin()) {//checks performing critical section.
             customer.get().setRole(Roles.CUSTOMER);
-            System.out.println("Access revoked !!");//critical section.
+            customerRepository.updateCustomer(customer.get());  //critical section.
+            System.out.println("Access revoked !!");
         }
     }
 
@@ -283,17 +290,21 @@ private final OrderRepository orderRepository;
         System.out.print("Provide customer id : ");
         Long cid = sc.nextLong();
         Optional<Customer> customer = customerRepository.fetchById(cid);//fetch customer by provided id.
+        if(customer.get().getRole() != Roles.CUSTOMER){
+            throw new CustomerNotFoundException("No Customer object found");
+        }
         customer.orElseThrow(() -> {
             throw new CustomerNotFoundException("incorrect customer id or deleted exception");//thrown if no customer is found,to associated id.
         });
         if (authenticateSuperAdmin()) { //autheticates befores performing critical section. on any negative scenario a exception is thrown. or else true.
-            getAllCustomer().remove(customer.get());//critical section.
+
+            customerRepository.removeCustomer(customer.get());//critical section.
         }
     }
 
     @Override
     public List<Customer> fetchAllAdmins() {//fetches all admins excluding super admin and customer.
-        List<Customer> adminList = customerRepository.getCustomerMap().stream().filter(c -> c.getRole() == Roles.ADMIN).toList();
+        List<Customer> adminList = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.ADMIN).toList();
         if (adminList.isEmpty()) {
             throw new NoAdminFoundException("No admin found");//throws NoAdminFoundException if no admin found CustomerRepository.
         }

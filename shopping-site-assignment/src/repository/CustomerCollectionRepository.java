@@ -18,7 +18,7 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
 
 
     @Override
-    public  List<Customer> getCustomerMap() {
+    public  List<Customer> getCustomers() {
         return customers;
 
     }
@@ -27,8 +27,8 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
      * Used to populate List of customers.
      */
     public CustomerCollectionRepository() {
-        customers = new ArrayList<>();
-        addCustomer("Abrar", "superAdmin@gmail.com", "mumbai", "123456789", Roles.SUPER_ADMIN);//change to super admin after final review
+        this.customers = new ArrayList<>();
+        addCustomer("Abrar", "superAdmin@gmail.com", "mumbai", "1234567890", Roles.SUPER_ADMIN);//change to super admin after final review
         addCustomer("sam", "admin@gmail.com", "ambernath", "admin", Roles.ADMIN);
         addCustomer("joe", "customer@gmail.com", "ambernath", "customer", Roles.CUSTOMER);
     }
@@ -78,5 +78,17 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
     @Override
     public void addCustomer(Customer customer) {
         addCustomer(customer.getName(), customer.getEmail(), customer.getAddress(), customer.getPassword(), customer.getRole());
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        customers.remove(customer);
+        customers.add(customer);
+
+    }
+
+    @Override
+    public void removeCustomer(Customer customer) {
+        customers.remove(customer);
     }
 }
