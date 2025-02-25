@@ -65,24 +65,6 @@ public class Customer {
         return password;
     }
 
-
-
-//    public void addOrder(Order order) {
-//        if (orderList == null) {
-//            orderList = new ArrayList<>();
-//        }
-//        this.orderList.add(order);
-//    }
-//
-//    public void cancelOrder(Order order) {
-//        if (orderList == null) {
-//            return;
-//        }
-//        this.orderList.remove(order);
-//    }
-
-
-
     @Override
     public String toString() {
         return ColorCodes.BRIGHT_BLUE + "Customer{" +
