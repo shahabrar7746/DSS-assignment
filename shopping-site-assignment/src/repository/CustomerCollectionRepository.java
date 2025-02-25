@@ -5,10 +5,8 @@ import entities.Customer;
 import enums.Roles;
 import repository.interfaces.CustomerRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.*;
 
 import java.util.stream.Collectors;
 
@@ -20,7 +18,7 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
 
 
     @Override
-    public  List<Customer> getCustomers() {
+    public  List<Customer> getCustomerMap() {
         return customers;
 
     }
@@ -37,7 +35,7 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
 
 
     private  void addCustomer(String name, String email, String address, String password, Roles role) {
-        Customer customer = new Customer(name, email, password, address);
+        Customer customer = new Customer(new Random().nextLong(1,9000),name, email, password, address, new Timestamp(System.currentTimeMillis()), Roles.CUSTOMER);
         customer.setRole(role);
         customers.add(customer);
     }
@@ -75,5 +73,10 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
             return Optional.empty();
         }
         return map.containsKey(email) ? Optional.of(map.get(email)) : Optional.empty();
+    }
+
+    @Override
+    public void addCustomer(Customer customer) {
+        addCustomer(customer.getName(), customer.getEmail(), customer.getAddress(), customer.getPassword(), customer.getRole());
     }
 }

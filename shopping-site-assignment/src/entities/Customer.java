@@ -4,6 +4,8 @@ import enums.Roles;
 
 import util.ColorCodes;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,11 +14,20 @@ import java.util.Random;
 public class Customer {
     private String email;
     private String password;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
     private String name;
     private String address;
     private Long id;
     private List<Order> orderList;
-    private Date registeredOn;
+    private Timestamp registeredOn;
     private Roles role;
 
     public Date getRegisteredOn() {
@@ -27,14 +38,22 @@ public class Customer {
         return role;
     }
 
-    public Customer(String name, String email, String password, String address) {
+    public Customer(Long id, String name, String email, String password, String address, Timestamp registeredOn, Roles role) {
+        this(name, email, password, address);
+        this.id = id;
+        this.registeredOn = registeredOn;
+        this.role = role;
+    }
+    //name, email, password, address
+    public Customer(String name,String email, String password, String address ){
+        this.id = new Random().nextLong(0, 8000); //randomly chose between 0 - 8000.
         this.name = name;
         this.password = password;
         this.email = email;
         this.address = address;
-        this.orderList = new ArrayList<>();
-        this.id = new Random().nextLong(0, 8000); //randomly chose between 0 - 8000.
-        this.registeredOn = new Date();
+
+
+        this.registeredOn = new Timestamp(System.currentTimeMillis());
         this.role = Roles.CUSTOMER;
     }
 
@@ -55,18 +74,22 @@ public class Customer {
         return orderList;
     }
 
-    public void addOrder(Order order) {
-        if (orderList == null) {
-            orderList = new ArrayList<>();
-        }
-        this.orderList.add(order);
-    }
+//    public void addOrder(Order order) {
+//        if (orderList == null) {
+//            orderList = new ArrayList<>();
+//        }
+//        this.orderList.add(order);
+//    }
+//
+//    public void cancelOrder(Order order) {
+//        if (orderList == null) {
+//            return;
+//        }
+//        this.orderList.remove(order);
+//    }
 
-    public void cancelOrder(Order order) {
-        if (orderList == null) {
-            return;
-        }
-        this.orderList.remove(order);
+    private void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
     @Override

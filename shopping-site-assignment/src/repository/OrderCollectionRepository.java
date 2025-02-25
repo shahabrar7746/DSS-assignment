@@ -35,7 +35,7 @@ public  class OrderCollectionRepository implements OrderRepository {
         if (orders.contains(order)) {
             orders.remove(order);
             Customer customer = order.getCustomer();
-            customer.cancelOrder(order);
+            customer.getOrders().remove(order);
             return true;
         }
         return false;

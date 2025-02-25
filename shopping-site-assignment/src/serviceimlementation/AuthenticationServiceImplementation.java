@@ -105,7 +105,7 @@ private final CustomerRepository customerRepository;
         if (!isRedirected) {
             System.out.println(ColorCodes.GREEN + "******CUSTOMER LOG IN*******" + ColorCodes.RESET);
         }
-        Map<String, Customer> map = customerRepository.getCustomers().stream().collect(Collectors.toConcurrentMap(Customer::getEmail, c -> c));
+        Map<String, Customer> map = customerRepository.getCustomerMap().stream().collect(Collectors.toConcurrentMap(Customer::getEmail, c -> c));
         return map.containsKey(email) && map.get(email).getPassword().equals(password) ? map.get(email) : null;
     }
 
@@ -131,7 +131,7 @@ private final CustomerRepository customerRepository;
             return false;
         }
         Customer newCustomer = new Customer(name, email, password, address);
-        customerRepository.getCustomers().add(newCustomer);
+        customerRepository.getCustomerMap().add(newCustomer);
         return true;
     }
 }

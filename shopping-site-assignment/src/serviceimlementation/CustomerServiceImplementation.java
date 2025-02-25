@@ -97,7 +97,7 @@ private final ProductRepository productRepository;
      */
     private void bookOrder(Customer customer, Product product) {
         Order order = new Order(customer, product, null);
-        customer.addOrder(order);
+        customer.getOrders().add(order);
 
         orderRepository.addOrder(order);
         System.out.println("******ORDER*BOOKED*******");
@@ -140,13 +140,13 @@ private final ProductRepository productRepository;
             }
             List<Order> removedOrderList = l.stream().limit(quantity).toList();
             removedOrderList.forEach(o -> {
-                customer.cancelOrder(o);
+                customer.getOrders().remove(o);
                 orderRepository.cancelOrder(o);
             });
             System.out.println("Orders removed");
         } else if(l.size() == 1) {
             Order removedOrder = l.get(0);
-            customer.cancelOrder(removedOrder);
+            customer.getOrders().remove(removedOrder);
             orderRepository.cancelOrder(removedOrder);
         }
     }

@@ -2,6 +2,7 @@ package repository.interfaces;
 
 import entities.Customer;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +12,7 @@ public interface CustomerRepository {
      * Used to get all customers including customers with admin authority.
      * @return List of all registered customers
      */
-     List<Customer> getCustomers() ;
+     List<Customer> getCustomerMap();
       /**
      * Fetches Customer on the basis of id. converts list to map for efficient search operation.
      * @param id id to search.
@@ -30,4 +31,5 @@ public interface CustomerRepository {
      * @return
      */
     Optional<Customer> fetchByEmail(String email);
+    void addCustomer(Customer customer);
 }

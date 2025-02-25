@@ -102,7 +102,7 @@ private final OrderRepository orderRepository;
 
     @Override
     public List<Customer> getAllCustomer() {
-        List<Customer> allCustomer = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
+        List<Customer> allCustomer = customerRepository.getCustomerMap().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
         if (allCustomer.isEmpty()) {
             throw new CustomerNotFoundException("Customer repository is empty");//executed if no customer object is found
         }
@@ -139,7 +139,7 @@ private final OrderRepository orderRepository;
 
     @Override
     public List<Customer> getAllDeliveredOrders() {
-        List<Customer> deliveredOrders = customerRepository.getCustomers().stream().filter(c ->
+        List<Customer> deliveredOrders = customerRepository.getCustomerMap().stream().filter(c ->
                 c.getOrders().stream().anyMatch(o -> o.getStatus() == OrderStatus.DELIVERED)
         ).toList();
         if (deliveredOrders.isEmpty()) {
@@ -293,7 +293,7 @@ private final OrderRepository orderRepository;
 
     @Override
     public List<Customer> fetchAllAdmins() {//fetches all admins excluding super admin and customer.
-        List<Customer> adminList = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.ADMIN).toList();
+        List<Customer> adminList = customerRepository.getCustomerMap().stream().filter(c -> c.getRole() == Roles.ADMIN).toList();
         if (adminList.isEmpty()) {
             throw new NoAdminFoundException("No admin found");//throws NoAdminFoundException if no admin found CustomerRepository.
         }
