@@ -11,5 +11,6 @@ public interface OrderRepository {
     boolean cancelOrder(Order order);
     void addOrder(Order order);
     Optional<List<Order>> fetchOrderByProductName(String name);
+    public List<Order> getOrderByCustomerId(Long id);
 
 }

@@ -145,7 +145,7 @@ private final OrderRepository orderRepository;
     @Override
     public List<Customer> getAllDeliveredOrders() {
         List<Customer> deliveredOrders = customerRepository.getCustomers().stream().filter(c ->
-                c.getOrders().stream().anyMatch(o -> o.getStatus() == OrderStatus.DELIVERED)
+             orderRepository.getOrderByCustomerId(c.getId()).stream().anyMatch(o-> o.getStatus() == OrderStatus.DELIVERED)
         ).toList();
         if (deliveredOrders.isEmpty()) {
             throw new OrderNotFoundException(deliveredOrders.size() + " orders are delivered");// throws exception if orders are delivered,

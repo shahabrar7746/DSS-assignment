@@ -34,8 +34,6 @@ public  class OrderCollectionRepository implements OrderRepository {
     public  boolean cancelOrder(Order order) {
         if (orders.contains(order)) {
             orders.remove(order);
-            Customer customer = order.getCustomer();
-            customer.getOrders().remove(order);
             return true;
         }
         return false;
@@ -49,6 +47,11 @@ public  class OrderCollectionRepository implements OrderRepository {
     {
         List<Order> orderList = orders.stream().filter(o->o.getProduct().getName().equalsIgnoreCase(name)).toList();
         return orderList.isEmpty() ? Optional.empty() : Optional.of(orderList);
+    }
+
+    @Override
+    public List<Order> getOrderByCustomerId(Long id) {
+        return orders.stream().filter(o-> o.getCustomer().getId().equals(id)).toList();
     }
 
 

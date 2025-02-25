@@ -82,10 +82,11 @@ private final ProductRepository productRepository;
      */
     private List<Order> getAllOrders(Customer customer) {
         System.out.println(ColorCodes.GREEN + "******YOUR*ORDERS******" + ColorCodes.RESET);
-        if (customer.getOrders().isEmpty()) {
+        List<Order> orders = orderRepository.getOrderByCustomerId(customer.getId());
+        if (orders.isEmpty()) {
             throw new OrderNotFoundException("No order found");
         }
-        return customer.getOrders();
+        return orders;
     }
 
     /**
@@ -97,7 +98,7 @@ private final ProductRepository productRepository;
      */
     private void bookOrder(Customer customer, Product product) {
         Order order = new Order(customer, product, null);
-        customer.getOrders().add(order);
+       orderRepository.addOrder(order);
 
         orderRepository.addOrder(order);
         System.out.println("******ORDER*BOOKED*******");
@@ -112,9 +113,9 @@ private final ProductRepository productRepository;
 
     private void cancelOrder(Customer customer) {
         System.out.println(ColorCodes.GREEN + "*****CANCEL*ORDER*****" + ColorCodes.RESET);
-        List<Order> ordersByCustomer = customer.getOrders();
+        List<Order> ordersByCustomer = orderRepository.getOrderByCustomerId(customer.getId());
         System.out.println(ColorCodes.BLUE + "Your orders : " + ordersByCustomer + ColorCodes.RESET);
-        if (customer.getOrders().isEmpty()) {
+        if (ordersByCustomer.isEmpty()) {
             throw new OrderNotFoundException("No orders are there to be cancelled");
         }
         Optional<List<Order>> order = Optional.empty();
@@ -140,13 +141,11 @@ private final ProductRepository productRepository;
             }
             List<Order> removedOrderList = l.stream().limit(quantity).toList();
             removedOrderList.forEach(o -> {
-                customer.getOrders().remove(o);
                 orderRepository.cancelOrder(o);
             });
             System.out.println("Orders removed");
         } else if(l.size() == 1) {
             Order removedOrder = l.get(0);
-            customer.getOrders().remove(removedOrder);
             orderRepository.cancelOrder(removedOrder);
         }
     }

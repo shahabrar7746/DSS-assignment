@@ -4,6 +4,7 @@ import entities.Customer;
 import enums.Roles;
 import repository.interfaces.CustomerRepository;
 import util.ColorCodes;
+import util.ConnectionUtility;
 import util.CustomerUtility;
 
 import java.sql.*;
@@ -17,7 +18,7 @@ public class CustomerJDBCRepository implements CustomerRepository {
 
     public CustomerJDBCRepository() throws SQLException {
 
-        this.con = CustomerUtility.getConnection("jdbc:postgresql://172.16.1.195:5331/dbhdemo", "dbhuser", "Fy2aWdXt");
+        this.con = ConnectionUtility.getConnection("jdbc:postgresql://172.16.1.195:5331/dbhdemo", "dbhuser", "Fy2aWdXt");
         populateMap();
     }
 
@@ -120,7 +121,7 @@ String query = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?;";
             Timestamp timestamp = set.getTimestamp("registered_on");
             map.put(id, new Customer(id,name,email, password, address, timestamp, roles));
         }
-
+set.close();
         return map;
     }
 

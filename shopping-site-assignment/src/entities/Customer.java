@@ -26,7 +26,7 @@ public class Customer {
     private String name;
     private String address;
     private Long id;
-    private List<Order> orderList;
+
     private Timestamp registeredOn;
     private Roles role;
 
@@ -66,13 +66,6 @@ public class Customer {
     }
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public List<Order> getOrders() {
-        return orderList;
-    }
 
 //    public void addOrder(Order order) {
 //        if (orderList == null) {
@@ -88,9 +81,7 @@ public class Customer {
 //        this.orderList.remove(order);
 //    }
 
-    private void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
-    }
+
 
     @Override
     public String toString() {
@@ -99,7 +90,6 @@ public class Customer {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", id=" + id +
-                ", orderList=" + orderList +
                 ", registeredOn=" + registeredOn +
                 ", role=" + role +
                 "}\n" + ColorCodes.RESET;
@@ -115,6 +105,10 @@ public class Customer {
     public int hashCode() {
         Integer hash = (int) (this.email.hashCode() + this.id);
         return hash.hashCode();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public void setRole(Roles role) {
