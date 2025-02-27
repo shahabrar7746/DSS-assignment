@@ -2,9 +2,12 @@ package repository;
 
 import entities.Customer;
 import entities.Order;
+import enums.OrderStatus;
+import exceptions.OrderNotFoundException;
 import repository.interfaces.OrderRepository;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,15 +46,29 @@ public  class OrderCollectionRepository implements OrderRepository {
         orders.add(order);
     }
     @Override
-    public  Optional<List<Order>> fetchOrderByProductName(String name)
+    public  List<Order> fetchOrderByProductName(String name)
     {
         List<Order> orderList = orders.stream().filter(o->o.getProduct().getName().equalsIgnoreCase(name)).toList();
-        return orderList.isEmpty() ? Optional.empty() : Optional.of(orderList);
+        return orderList;
     }
 
     @Override
     public List<Order> getOrderByCustomerId(Long id) {
         return orders.stream().filter(o-> o.getCustomer().getId().equals(id)).toList();
+    }
+
+    @Override
+    public List<Order> getAllDeliveredOrders(){
+
+        List<Order> deliveredOrders = orders.stream().filter(o ->
+            o.getStatus() == OrderStatus.DELIVERED
+
+        ).toList();
+        if (deliveredOrders.isEmpty()) {
+            throw new OrderNotFoundException(deliveredOrders.size() + " orders are delivered");// throws exception if orders are delivered,
+        }
+
+        return deliveredOrders;
     }
 
 

@@ -12,13 +12,15 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import static util.ResultSetUtility.getCustomersFromResultSet;
+
 public class CustomerJDBCRepository implements CustomerRepository {
     private Map<Long, Customer> customerMap;
     private final Connection con;
 
     public CustomerJDBCRepository() throws SQLException {
 
-        this.con = ConnectionUtility.getConnection("jdbc:postgresql://172.16.1.195:5331/dbhdemo", "dbhuser", "Fy2aWdXt");
+        this.con = ConnectionUtility.getConnection();
         populateMap();
     }
 
@@ -108,22 +110,7 @@ String query = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?;";
         Customer oldCustomer = customerMap.get(customer.getId());
         customerMap.replace(customer.getId(), oldCustomer, customer);
     }
-    private static Map<Long, Customer> getCustomersFromResultSet(ResultSet set) throws SQLException {
-        Map<Long, Customer> map = new ConcurrentHashMap<>();
 
-        while(set.next()){
-            Long id = set.getLong("customer_id");
-            String email = set.getString("email");
-            String password = set.getString("password");
-            String name = set.getString("name");
-            String address = set.getString("address");
-            Roles roles  = Roles.valueOf( set.getString("role"));
-            Timestamp timestamp = set.getTimestamp("registered_on");
-            map.put(id, new Customer(id,name,email, password, address, timestamp, roles));
-        }
-set.close();
-        return map;
-    }
 
     private void populateMap() {
         String query = "SELECT * FROM CUSTOMER";

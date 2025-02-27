@@ -3,13 +3,14 @@ package entities;
 import enums.Roles;
 import util.ColorCodes;
 
+import java.sql.Timestamp;
 import java.util.Random;
 
 public class Seller {
     private Long id;
     private String name;
     private Roles role;
-
+private Timestamp timestamp;
     public Roles getRole() {
         return role;
     }
@@ -29,6 +30,13 @@ public class Seller {
         this.name = name;
         this.id = new Random().nextLong(0, 700);
         this.role = Roles.SELLER;
+    }
+    public Seller(Long id, String name, Roles role, Timestamp timestamp){
+        this(name);
+        this.id = id;
+        this.name = name;
+        this.role = role;
+        this.timestamp = timestamp;
     }
 
     public String getName() {

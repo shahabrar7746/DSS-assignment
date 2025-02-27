@@ -2,6 +2,7 @@
 import repository.ProductCollectionRepository;
 import repository.interfaces.ProductRepository;
 
+import repository.jdbc.ProductJDBCRepository;
 import serviceimlementation.AuthenticationServiceImplementation;
 
 import services.AuthenticationService;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 
 public class Driver {
     public static void main(String[] args) throws SQLException {
-        final ProductRepository productRepository = new ProductCollectionRepository();
+        final ProductRepository productRepository = new ProductJDBCRepository();
         final  AuthenticationService auth = new AuthenticationServiceImplementation();
         System.out.println(ColorCodes.GREEN + "***********WELCOME*************" + ColorCodes.RESET);
         System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);

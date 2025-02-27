@@ -1,6 +1,7 @@
 package services;
 
 import entities.Customer;
+import entities.Order;
 import entities.Product;
 
 import exceptions.*;
@@ -43,7 +44,7 @@ public interface AdminService {
       * @return List of all delivered orders.
       * @throws OrderNotFoundException if no delivered orders is found.
       */
-     List<Customer> getAllDeliveredOrders();
+     List<Order> getAllDeliveredOrders();
      /**
       * Grants admin access to a regular customer, only called and used  by Super admin.
       * @param isAuthorized provided and called by super admin.

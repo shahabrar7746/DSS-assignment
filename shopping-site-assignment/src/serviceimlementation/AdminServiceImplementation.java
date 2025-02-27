@@ -16,6 +16,8 @@ import repository.OrderCollectionRepository;
 import repository.ProductCollectionRepository;
 import repository.interfaces.OrderRepository;
 import repository.interfaces.ProductRepository;
+import repository.jdbc.OrderJDBCRepository;
+import repository.jdbc.ProductJDBCRepository;
 import services.AdminService;
 
 import repository.interfaces.CustomerRepository;
@@ -36,10 +38,10 @@ public class AdminServiceImplementation implements AdminService {
     private final CustomerRepository customerRepository;
 private final OrderRepository orderRepository;
     private AdminServiceImplementation() throws SQLException {
-        this.productRepository = new ProductCollectionRepository();
+        this.productRepository = new ProductJDBCRepository();
         this.customerRepository = new CustomerJDBCRepository();
         this.sc = new Scanner(System.in);
-        this.orderRepository = new OrderCollectionRepository();
+        this.orderRepository = new OrderJDBCRepository();
     }
 
     private static AdminServiceImplementation service;
@@ -143,14 +145,9 @@ private final OrderRepository orderRepository;
     }
 
     @Override
-    public List<Customer> getAllDeliveredOrders() {
-        List<Customer> deliveredOrders = customerRepository.getCustomers().stream().filter(c ->
-             orderRepository.getOrderByCustomerId(c.getId()).stream().anyMatch(o-> o.getStatus() == OrderStatus.DELIVERED)
-        ).toList();
-        if (deliveredOrders.isEmpty()) {
-            throw new OrderNotFoundException(deliveredOrders.size() + " orders are delivered");// throws exception if orders are delivered,
-        }
-        return deliveredOrders;
+    public List<Order> getAllDeliveredOrders() {
+
+        return orderRepository.getAllDeliveredOrders();
     }
 
 

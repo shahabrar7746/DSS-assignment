@@ -4,6 +4,7 @@ import entities.Customer;
 import entities.Order;
 import entities.Product;
 
+import entities.Seller;
 import exceptions.EmptyCartException;
 import exceptions.OrderNotFoundException;
 
@@ -11,6 +12,10 @@ import repository.OrderCollectionRepository;
 import repository.ProductCollectionRepository;
 import repository.interfaces.OrderRepository;
 import repository.interfaces.ProductRepository;
+import repository.interfaces.SellerRepository;
+import repository.jdbc.OrderJDBCRepository;
+import repository.jdbc.ProductJDBCRepository;
+import repository.jdbc.SellerJDBCRepository;
 import services.CustomerService;
 
 
@@ -26,10 +31,12 @@ public class CustomerServiceImplementation implements CustomerService {
     private final List<Product> cart;
 private final OrderRepository orderRepository;
 private final ProductRepository productRepository;
+private final SellerRepository sellerRepository;
     public CustomerServiceImplementation() {
-        this.productRepository = new ProductCollectionRepository();
+        this.sellerRepository = new SellerJDBCRepository();
+        this.productRepository = new ProductJDBCRepository();
         this.cart = new ArrayList<>();
-        this.orderRepository = new OrderCollectionRepository();
+        this.orderRepository = new OrderJDBCRepository();
         this.sc = new Scanner(System.in);
     }
 
@@ -67,6 +74,7 @@ private final ProductRepository productRepository;
                         System.out.println(ColorCodes.RED + "Invalid operation" + ColorCodes.RESET);
                 }
             } catch (Exception e) {
+                //e.printStackTrace();
                 System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
             }
         }
@@ -97,8 +105,9 @@ private final ProductRepository productRepository;
      * @see #cancelOrder(Customer) 
      */
     private void bookOrder(Customer customer, Product product) {
-        Order order = new Order(customer, product, null);
-       orderRepository.addOrder(order);
+
+        Order order = new Order(customer, product, sellerRepository.fetchById(1L).get(), product.getPrice());
+
 
         orderRepository.addOrder(order);
         System.out.println("******ORDER*BOOKED*******");
@@ -121,8 +130,11 @@ private final ProductRepository productRepository;
         Optional<List<Order>> order = Optional.empty();
         while (!order.isPresent()) {
             System.out.print("Please provide the product name whose order you want to cancel : ");
-            String productName = sc.nextLine();
-            order =  orderRepository.fetchOrderByProductName(productName);
+            String productName = sc.nextLine().toUpperCase();
+            List<Order> orders = orderRepository.fetchOrderByProductName(productName);
+            if(!orders.isEmpty()){
+                order = Optional.of(orders);
+            }
             order.ifPresentOrElse(l -> {
                 helperForCancelOrder(l,customer);
             }, () -> System.out.println(ColorCodes.RED + "Incorrect product name....." + ColorCodes.RESET));
@@ -180,7 +192,7 @@ private final ProductRepository productRepository;
             System.out.println("PRESS -1 TO EXIT CART");
             System.out.println(ColorCodes.BLUE + "Cart : " + cart + ColorCodes.RESET);
             System.out.print("product name : ");
-            String name = sc.nextLine();
+            String name = sc.nextLine().toUpperCase();
             if (name.equalsIgnoreCase("-1")) {
                 exitCart = true;//breaks the loop, by making exit condtion as true
             } else if (name.equalsIgnoreCase("0")) {

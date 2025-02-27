@@ -38,7 +38,10 @@ public class Product {
 //    public Seller getSeller() {
 //        return seller;
 //    }
-
+public Product(Long id, String name, Currency currency, double price, ProductType type){
+        this(name, currency, price, type);
+        this.id = id;
+}
     public Product(String name, Currency currency, double price, ProductType type) {
         this.name = name;
         this.price = price;

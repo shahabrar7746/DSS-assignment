@@ -40,7 +40,7 @@ public class AdminUI implements UserInterface{
             boolean isExit = false;
             System.out.println("Press 2 to get all products");
             System.out.println("Press 3 to get customer by id");
-            System.out.println("Press 4 to get customers whose products has been delivered");
+            System.out.println("Press 4 to get all delivered orders");
             System.out.println("Press 5 to get the products by their type");
             System.out.println("Press 6 to fetch all admins");
             if (isSuperAdmin) {
