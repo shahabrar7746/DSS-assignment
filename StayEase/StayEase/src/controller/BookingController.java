@@ -14,7 +14,7 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    public void createBooking(Booking booking) {
+    public void createBooking(Booking booking) {// TODO check for instance validation
         bookingService.createBooking(booking);
         System.out.println("\nBooking created successfully!");
     }
@@ -24,7 +24,7 @@ public class BookingController {
         System.out.println("Booking updated successfully!");
     }
 
-    public boolean cancelBooking(int bookingId) {
+    public boolean cancelBooking(int bookingId) { // TODO update code for shoter lines
         try {
             bookingService.cancelBooking(bookingId);
             return true;

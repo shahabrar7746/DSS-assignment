@@ -45,7 +45,7 @@ public class AdminDashBoard {
             return;
         }
 
-        while (true) {
+        while (true) { // TODO update code to generic for accepting options as argument
             System.out.println("\n===== Super Admin Dashboard =====");
             System.out.println("Welcome, " + loggedInSuperAdmin.getName() + "!");
             System.out.println("Role: " + loggedInSuperAdmin.getUserRole());
@@ -62,7 +62,6 @@ public class AdminDashBoard {
             try {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
-
                 switch (choice) {
                     case 1:
                         viewAvailableRooms();
@@ -135,7 +134,8 @@ public class AdminDashBoard {
             System.out.printf("%-10s %-20s %-30s %-15s %-10s%n", "User ID", "Name", "Email", "Role", "Active");
             System.out.println("====================================================================================");
 
-            for (User user : users) {
+//            users.forEach(System.out::printfn);
+            for (User user : users) { // TODO replace with forEach
                 System.out.printf("%-10d %-20s %-30s %-15s %-10s%n",
                         user.getUserID(),
                         user.getName(),
@@ -150,11 +150,11 @@ public class AdminDashBoard {
     private void grantOrRevokeAdminAccess() {
         System.out.print("Enter admin email ID to approve or deny: ");
         String email = scanner.nextLine().toLowerCase();
+        User user = userController.getUserByEmail(email); // TODO validate Email & regex pattern
 
-        User user = userController.getUserByEmail(email);
         if (user != null) {
             System.out.println("Grant or Revoke Admin access? (g/r): ");
-            char choice = scanner.next().charAt(0);
+            char choice = scanner.next().charAt(0); // TODO validate char
             if (choice == 'g' || choice == 'G') {
                 user.setActive(true);
                 user.setUserRole(UserRole.ADMIN);
@@ -173,11 +173,11 @@ public class AdminDashBoard {
     }
 
     public void displayAdminMenu(User loggedInAdmin) {
-
         if (loggedInAdmin == null || loggedInAdmin.getUserRole() != UserRole.ADMIN) {
             System.out.println("Error: No admin is logged in!");
             return;
         }
+
         while (true) {
             System.out.println("\n===== Admin Dashboard =====");
             System.out.println("Welcome, " + loggedInAdmin.getName() + "!");
@@ -230,7 +230,7 @@ public class AdminDashBoard {
                     "Room ID", "Room Number", "Room Type", "Price", "Available");
             System.out.println("================================================================");
 
-            for (Room room : availableRooms) {
+            for (Room room : availableRooms) { // TODO forEach
                 System.out.printf("%-10d %-15d %-15s Rs.%-9.2f %-15s%n",
                         room.getRoomID(),
                         room.getRoomNumber(),

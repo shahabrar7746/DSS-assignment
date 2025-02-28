@@ -14,15 +14,14 @@ public class InvoiceController {
     }
 
     public int generateInvoice(Invoice invoice) {
-        int invoiceId = invoiceService.generateInvoice(invoice);  // Get generated ID
-        return invoiceId;
+        return invoiceService.generateInvoice(invoice);  // Get generated ID
     }
 
     public Invoice getInvoiceByBookingId(int bookingId) {
         return invoiceService.getInvoiceByBookingId(bookingId);
     }
 
-    public void updatePaymentStatus(int invoiceId, PaymentStatus status) {
+    public void updatePaymentStatus(int invoiceId, PaymentStatus status) { // TODO response model implement
         invoiceService.updatePaymentStatus(invoiceId, status);
         System.out.println("Payment status updated!");
     }

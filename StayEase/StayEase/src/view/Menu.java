@@ -143,7 +143,7 @@ public class Menu {
         }
     }
 
-    private void loginUser() {
+    private void loginUser() { // TODO generic abstract UI
         System.out.print("\nEnter email: ");
         String email = scanner.nextLine().toLowerCase();
         System.out.print("Enter password: ");
@@ -153,7 +153,7 @@ public class Menu {
         if (isAuthenticated) {
             User user = userController.getUserByEmail(email);
 
-            if (user.getUserRole() != UserRole.SUPER_ADMIN && !user.isActive()) {
+            if (user.getUserRole() != UserRole.SUPER_ADMIN && ! user.isActive()) {
                 System.out.println(user.getName() + ", Your account is currently inactive. Please contact administrator for further assistance.");
             } else {
                 switch (user.getUserRole()) {
@@ -597,16 +597,25 @@ public class Menu {
 
     private void scheduleRoomAvailabilityReset(int roomId, LocalDateTime checkOutDate) {
         long delay = Duration.between(LocalDateTime.now(), checkOutDate).toMillis();
+//        ExecutorService servuce = Executors.newSingleThread(1);
+//        Future<?> future = service.submit(() -> {
+//
+//        });
+
+//        event base approach
+//        future.cancel(True);
+
 
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.schedule(() -> {
-            Room room = roomController.getRoomById(roomId);
-            if (room != null) {
-                room.setAvailable(true);
-                roomController.updateRoom(room);
-                System.out.println("Room ID " + roomId + " is now available again.");
-            }
-        }, delay, TimeUnit.MILLISECONDS);
+            System.out.println("---- Task executed........");
+//            Room room = roomController.getRoomById(roomId);
+//            if (room != null) {
+//                room.setAvailable(true);
+//                roomController.updateRoom(room);
+//                System.out.println("Room ID " + roomId + " is now available again.");
+//            }
+        }, 2000, TimeUnit.MILLISECONDS);
     }
 
     private boolean bookingPaymentChoice() {

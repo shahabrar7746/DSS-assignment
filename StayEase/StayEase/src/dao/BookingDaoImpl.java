@@ -15,7 +15,7 @@ public class BookingDaoImpl implements BookingDao {
     private final Connection connection = DatabaseConnection.getConnection();
 
     @Override
-    public void createBooking(Booking booking) {
+    public void createBooking(Booking booking) { // TODO
         String sql = "INSERT INTO bookings (user_id, room_id, check_in, check_out, status) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, booking.getUserId());
@@ -30,13 +30,13 @@ public class BookingDaoImpl implements BookingDao {
                     booking.setBookingId(generatedKeys.getInt(1));
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException e) { // TODO add logger
             e.printStackTrace();
         }
     }
 
     @Override
-    public void updateBooking(Booking booking) {
+    public void updateBooking(Booking booking) { // TODO club method to single code for create/update
         String sql = "UPDATE bookings SET user_id = ?, room_id = ?, check_in = ?, check_out = ?, status = ? WHERE booking_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, booking.getUserId());
@@ -110,7 +110,7 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
-    public List<Booking> getAllBookings() {
+    public List<Booking> getAllBookings() { // TODO String Builder
         List<Booking> bookings = new ArrayList<>();
         String sql = "SELECT " +
                 "b.booking_id, " +
@@ -142,7 +142,7 @@ public class BookingDaoImpl implements BookingDao {
 
 
     private Booking mapBooking(ResultSet rs) throws SQLException {
-        return new Booking(
+        return new Booking( // TODO update to encapsulation or builder pattern
                 rs.getInt("booking_id"),
                 rs.getInt("user_id"),
                 rs.getInt("room_id"),
