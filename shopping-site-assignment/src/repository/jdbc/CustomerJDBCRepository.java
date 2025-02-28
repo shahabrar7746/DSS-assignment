@@ -16,14 +16,16 @@ import static util.ResultSetUtility.getCustomersFromResultSet;
 
 public class CustomerJDBCRepository implements CustomerRepository {
     private Map<Long, Customer> customerMap;
-    private final Connection con;
+    private Connection con;
 
-    public CustomerJDBCRepository() throws SQLException {
+    public CustomerJDBCRepository() {
+        initCustomRepo();
+    }
 
+    private void initCustomRepo(){
         this.con = ConnectionUtility.getConnection();
         populateMap();
     }
-
     @Override
     public List<Customer> getCustomers() {
         return new ArrayList<>( customerMap.values());
@@ -31,7 +33,6 @@ public class CustomerJDBCRepository implements CustomerRepository {
 
     @Override
     public Optional<Customer> fetchById(Long id) {
-
       return  customerMap.containsKey(id) ? Optional.of(customerMap.get(id)) : Optional.empty();
     }
 
@@ -40,12 +41,13 @@ public class CustomerJDBCRepository implements CustomerRepository {
         List<Customer> customers = new ArrayList<>( customerMap.values());
         return customers.stream().filter(c -> {
             return c.getRole() == Roles.ADMIN && c.getId().equals(id);
-        }).findAny();
+        }).findFirst(); // TODO
     }
 
     @Override
     public Optional<Customer> fetchByEmail(String email) {
-        List<Customer> customerList =  new ArrayList<>( customerMap.values());
+        List<Customer> customerList =  new ArrayList<>(customerMap.values()); // TODO
+        customerMap.values().stream().filter(x -> x.getEmail().equalsIgnoreCase(email)).findFirst();
         Map<String, Customer> emailMap = customerList.stream().collect(Collectors.toConcurrentMap(c-> c.getEmail() , c -> c));
         return emailMap.containsKey(email) ? Optional.of(emailMap.get(email)) : Optional.empty();
     }
@@ -113,7 +115,7 @@ String query = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?;";
 
 
     private void populateMap() {
-        String query = "SELECT * FROM CUSTOMER";
+        String query = "SELECT * FROM CUSTOMER"; // TODO
         try {
             PreparedStatement statement = con.prepareStatement(query);
             customerMap = getCustomersFromResultSet(statement.executeQuery());

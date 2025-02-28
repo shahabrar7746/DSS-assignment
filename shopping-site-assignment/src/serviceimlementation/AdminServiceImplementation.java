@@ -36,8 +36,8 @@ public class AdminServiceImplementation implements AdminService {
     private final Scanner sc;
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
-private final OrderRepository orderRepository;
-    private AdminServiceImplementation() throws SQLException {
+    private final OrderRepository orderRepository;
+    private AdminServiceImplementation() { // TODO update constructor
         this.productRepository = new ProductJDBCRepository();
         this.customerRepository = new CustomerJDBCRepository();
         this.sc = new Scanner(System.in);
@@ -56,6 +56,7 @@ private final OrderRepository orderRepository;
 
     @Override
     public List<Product> getProductsByType() {
+        String pass = System.getProperty(SUPER_ADMIN_PASSWORD);
         List<Product> products = new ArrayList<>();
         String operation;
         boolean isFinished = false;
@@ -306,5 +307,10 @@ private final OrderRepository orderRepository;
             throw new NoAdminFoundException("No admin found");//throws NoAdminFoundException if no admin found CustomerRepository.
         }
         return adminList;//returns list of admins if any found.
+    }
+
+    @Override
+    public AdminService getAdminInstance() {
+        return new AdminServiceImplementation();
     }
 }

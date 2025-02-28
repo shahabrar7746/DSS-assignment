@@ -11,15 +11,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class OrderJDBCRepository implements OrderRepository {
     private Connection con;
-    private Map<Long, Order> map;
-    public OrderJDBCRepository()  {
+    private Map<Long, Order> map = new HashMap<>(); // TODO
+    public OrderJDBCRepository()  {// TODO
         try {
             this.con = ConnectionUtility.getConnection();
             map = helperToFetchOrders();
@@ -29,7 +26,6 @@ public class OrderJDBCRepository implements OrderRepository {
     }
     @Override
     public List<Order> getAllOrders() {
-
         return map.values().stream().toList();
     }
 
@@ -77,7 +73,7 @@ public class OrderJDBCRepository implements OrderRepository {
         PreparedStatement statement = null;
         try {
             statement = con.prepareStatement(query);
-        orders =    ResultSetUtility.getOrdersFromResultSet(statement.executeQuery()).values().stream().toList();
+        orders = ResultSetUtility.getOrdersFromResultSet(statement.executeQuery()).values().stream().toList();
         } catch (SQLException e) {
             System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
         }

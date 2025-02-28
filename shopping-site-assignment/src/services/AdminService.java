@@ -5,6 +5,7 @@ import entities.Order;
 import entities.Product;
 
 import exceptions.*;
+import serviceimlementation.AdminServiceImplementation;
 
 import javax.naming.OperationNotSupportedException;
 import java.util.List;
@@ -82,4 +83,6 @@ public interface AdminService {
       * @throws NoAdminFoundException if no customer is found with admin authority.
       */
      List<Customer> fetchAllAdmins();
+
+     AdminService getAdminInstance();
 }

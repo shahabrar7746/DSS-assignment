@@ -25,13 +25,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ResultSetUtility {
 private static CustomerRepository customerRepository;
 private  static SellerRepository sellerRepository;
 private static ProductRepository productRepository;
-    static {
+
+static Map<Long, Customer> map = new ConcurrentHashMap<>();
+
+static { // TODO
         try {
             sellerRepository = new SellerJDBCRepository();
             customerRepository = new CustomerJDBCRepository();
@@ -42,7 +46,7 @@ private static ProductRepository productRepository;
     }
 
     public static Map<Long, Customer> getCustomersFromResultSet(ResultSet set) throws SQLException {
-        Map<Long, Customer> map = new ConcurrentHashMap<>();
+//        Map<Long, Customer> map = new ConcurrentHashMap<>();
 
         while(set.next()){
             Long id = set.getLong("customer_id");
@@ -59,7 +63,6 @@ private static ProductRepository productRepository;
     }
     public static Map<Long, Order> getOrdersFromResultSet(ResultSet set) throws SQLException {
         Map<Long, Order> map = new ConcurrentHashMap<>();
-
         while(set.next()){
            Long orderId= set.getLong("ORDER_ID");
            Long customerId = set.getLong("customer_id");
@@ -69,7 +72,12 @@ private static ProductRepository productRepository;
             Long sellerId = set.getLong("seller_id");
             Currency currency = Currency.valueOf(set.getString("currency"));
             double price = set.getDouble("price");
-            map.put(orderId, new Order( orderId, customerRepository.fetchById(customerId).get(), productRepository.fetchProductById(productId).get(), sellerRepository.fetchById(sellerId).get(), orderStatus,currency,orderTimestamp,price ));
+            Optional<Customer> customer = customerRepository.fetchById(customerId);
+            if(customer.isPresent()){
+                map.put(orderId, new Order( orderId, customer.get(), productRepository.fetchProductById(productId).get(), sellerRepository.fetchById(sellerId).get(), orderStatus,currency,orderTimestamp,price ));
+            } else {
+                throw new RuntimeException("Order Id missing: {}");
+            }
         }
         set.close();
         return map;
@@ -79,7 +87,7 @@ private static ProductRepository productRepository;
         while(set.next()){
             Long pid = set.getLong("product_id");
             double price = set.getDouble("price");
-            String pname = set.getString("product_name");
+            String pname = set.getString("product_name"); // TODO camelCase
             Currency currency = Currency.valueOf(set.getString("currency"));
             ProductType type = ProductType.valueOf(set.getString("product_type"));
             products.add(new Product(pid,pname,currency,price,type));
@@ -93,7 +101,7 @@ private static ProductRepository productRepository;
             String name = set.getString("name");
             Roles role = Roles.valueOf(set.getString("role"));
             Timestamp  timestamp = set.getTimestamp("created_on");
-            products.add(new Seller(sid,name,role,timestamp ));
+            products.add(new Seller(sid, name, role, timestamp));
         }
         return products;
     }

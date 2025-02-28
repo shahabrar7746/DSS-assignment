@@ -45,7 +45,7 @@ public class Customer {
         this.role = role;
     }
     //name, email, password, address
-    public Customer(String name,String email, String password, String address ){
+    public Customer(String name,String email, String password, String address ){ // TODO 
         this.id = new Random().nextLong(0, 8000); //randomly chose between 0 - 8000.
         this.name = name;
         this.password = password;

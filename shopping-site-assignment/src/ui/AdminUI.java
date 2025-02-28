@@ -14,13 +14,12 @@ import util.ColorCodes;
 import java.sql.SQLException;
 import java.util.*;
 
-public class AdminUI implements UserInterface{
-
+public class AdminUI implements UserInterface {
     private final Scanner sc;
     private final AdminService service;
 
     public AdminUI() throws SQLException {
-        this.service = AdminServiceImplementation.getInstance();
+        this.service = AdminServiceImplementation.getInstance(); // TODO
         this.sc = new Scanner(System.in);
     }
 
@@ -28,6 +27,8 @@ public class AdminUI implements UserInterface{
     @Override
     public void init(Customer admin) {
         boolean isSuperAdmin = Objects.equals(admin.getRole(), Roles.SUPER_ADMIN);
+//        String msg = isSuperAdmin ? "akjakjnadna"  : "jhabhdjbadba"; // TODO
+//        System.out.println(msg);
         if (isSuperAdmin) {
             System.out.println(ColorCodes.GREEN + "*********WELCOME-SUPER-ADMIN****************" + ColorCodes.RESET);
         } else {
@@ -54,6 +55,7 @@ public class AdminUI implements UserInterface{
             operation = sc.nextLine();
 
             try {
+
             switch (operation) {
 
                     case "1":
@@ -75,14 +77,14 @@ public class AdminUI implements UserInterface{
                         System.out.println(ColorCodes.BLUE + response + service.fetchAllAdmins() + ColorCodes.RESET);
                         break;
                 case "7":
-                        authorize(isSuperAdmin);
-                        service.cancelOrder(isSuperAdmin);
-                        break;
-                    case "8":
-                        authorize(isSuperAdmin);
-                        service.deleteCustomer(isSuperAdmin);
-                        break;
-                    case "9":
+                    authorize(isSuperAdmin);
+                    service.cancelOrder(isSuperAdmin);
+                    break;
+                case "8":
+                    authorize(isSuperAdmin);
+                    service.deleteCustomer(isSuperAdmin);
+                    break;
+                case "9":
                         authorize(isSuperAdmin);
                         service.grantAccess(isSuperAdmin);
                         break;
@@ -112,7 +114,7 @@ public class AdminUI implements UserInterface{
      * @throws UnauthorizedOperationException if the user does not have permission to access the service.
      */
     private void authorize(boolean isSuperAdmin){
-        if (!isSuperAdmin) {
+        if (Boolean.FALSE.equals(isSuperAdmin)) {
             throw new UnauthorizedOperationException("Your are not authorized to access this service");
         }
     }

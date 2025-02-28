@@ -16,6 +16,9 @@ public class ProductJDBCRepository  implements ProductRepository {
     private List<Product> products;
    private Connection con;
     public ProductJDBCRepository(){
+        initSqlDataConn();
+    }
+    void initSqlDataConn() {
         try {
             this.con = ConnectionUtility.getConnection();
             products = getProducts();
