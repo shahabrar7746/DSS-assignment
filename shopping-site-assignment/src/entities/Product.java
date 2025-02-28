@@ -39,18 +39,12 @@ public class Product {
 //        return seller;
 //    }
 public Product(Long id, String name, Currency currency, double price, ProductType type){
-        this(name, currency, price, type);
+    this.name = name;
+    this.price = price;
+    this.type = type;
+    this.currency = currency;
         this.id = id;
 }
-    public Product(String name, Currency currency, double price, ProductType type) {
-        this.name = name;
-        this.price = price;
-        this.type = type;
-        this.currency = currency;
-       // this.seller = seller;
-        this.id = new Random().nextLong(0, 9000);
-    }
-
     @Override
     public int hashCode() {
 

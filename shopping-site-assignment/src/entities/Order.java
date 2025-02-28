@@ -6,6 +6,7 @@ import util.ColorCodes;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Random;
 
@@ -51,27 +52,23 @@ public class Order {
     private Product product;
     private Long id;
     private OrderStatus status;
-    private Timestamp orderedOn;
-    public Order(Long id,Customer customer, Product product, Seller seller, OrderStatus status,Currency currency, Timestamp timestamp, double price){
-        this(customer, product, seller, price);
-        this.currency = currency;
-        this.orderedOn = timestamp;
+    private LocalDateTime orderedOn;
 
-        this.status = status;
+    public void setId(Long id) {
         this.id = id;
     }
-    public Order(Customer customer, Product product, Seller seller, double price) {
-        this.currency = Currency.INR;
+
+    public Order(Customer customer, Product product, Seller seller, OrderStatus status, Currency currency, LocalDateTime orderedOn, double price){
+        this.currency = currency;
+        this.orderedOn = orderedOn;
         this.customer = customer;
         this.price = price;
         this.seller = seller;
         this.product = product;
-        this.status = OrderStatus.ORDERED;
-        this.id = new Random().nextLong(0, 9000);
-        this.orderedOn = new Timestamp(System.currentTimeMillis());
+        this.status = status;
     }
 
-    public Timestamp getOrderedOn() {
+    public LocalDateTime getOrderedOn() {
         return orderedOn;
     }
 

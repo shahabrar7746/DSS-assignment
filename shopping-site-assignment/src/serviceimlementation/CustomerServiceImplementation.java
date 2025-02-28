@@ -5,6 +5,8 @@ import entities.Order;
 import entities.Product;
 
 import entities.Seller;
+import enums.Currency;
+import enums.OrderStatus;
 import exceptions.EmptyCartException;
 import exceptions.OrderNotFoundException;
 
@@ -23,7 +25,10 @@ import services.CustomerService;
 
 import util.ColorCodes;
 
+import java.awt.*;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class CustomerServiceImplementation implements CustomerService {
@@ -105,12 +110,21 @@ private final SellerRepository sellerRepository;
      * @see #cancelOrder(Customer) 
      */
     private void bookOrder(Customer customer, Product product) {
+Optional<Seller> optionalSeller = sellerRepository.fetchById(1L);
+optionalSeller.ifPresentOrElse(s->
+        {
 
-        Order order = new Order(customer, product, sellerRepository.fetchById(1L).get(), product.getPrice());
+            Order order = new Order(customer, product, s, OrderStatus.ORDERED, Currency.INR, LocalDateTime.now(), product.getPrice());
+          //to be asked to shubham.
+
+            orderRepository.addOrder(order);
+            System.out.println("******ORDER*BOOKED*******");
+        }
+        , ()-> System.out.println(ColorCodes.RED + "No seller found for this product" + ColorCodes.RESET));
 
 
-        orderRepository.addOrder(order);
-        System.out.println("******ORDER*BOOKED*******");
+
+
     }
 
     /**

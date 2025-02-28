@@ -7,16 +7,17 @@ import util.ColorCodes;
 import util.ConnectionUtility;
 import util.ResultSetUtility;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class OrderJDBCRepository implements OrderRepository {
     private Connection con;
     private Map<Long, Order> map = new HashMap<>(); // TODO
     public OrderJDBCRepository()  {// TODO
+        init();
+    }
+    private void init(){
         try {
             this.con = ConnectionUtility.getConnection();
             map = helperToFetchOrders();
@@ -92,7 +93,8 @@ public class OrderJDBCRepository implements OrderRepository {
         statement.setLong(1, order.getCustomer().getId());
         statement.setLong(2, order.getProduct().getId());
         statement.setObject(3, OrderStatus.ORDERED, Types.OTHER);
-        statement.setTimestamp(4, order.getOrderedOn());
+
+        statement.setTimestamp(4, Timestamp.valueOf( order.getOrderedOn()));
         statement.setLong(5 , order.getSeller().getId());
         statement.setObject(6, order.getCurrency(), Types.OTHER);
         statement.setDouble(7, order.getPrice());

@@ -12,9 +12,13 @@ import java.util.stream.Collectors;
 
 public  class ProductCollectionRepository implements ProductRepository {
 
-    private  final List<Product> products;
+
+    private List<Product> products =  new ArrayList<>();
 
     public ProductCollectionRepository() {
+     init();
+    }
+    private void  init(){
         this.products = new ArrayList<>();
         String []names = {"IPHONE", "Sofa", "MIXER", "T-shirt", "Maskara"};
         String []seller = {"Apple", "Sleepwell", "Bajaj", "Cambridge", "Loreal"};
@@ -25,7 +29,9 @@ public  class ProductCollectionRepository implements ProductRepository {
         }
     }
     private  void populate(String name, Currency currency, double price, ProductType type, String sellerName){
-        products.add(new Product(name, currency, price, type));
+       Long id = new Random().nextLong(0, 9000);
+
+        products.add( new Product(id, name, currency, price, type));
     }
     public    List<Product> fetchProducts() {
 

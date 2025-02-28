@@ -21,32 +21,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ResultSetUtility {
-private static CustomerRepository customerRepository;
-private  static SellerRepository sellerRepository;
-private static ProductRepository productRepository;
+private static CustomerRepository  customerRepository = new CustomerJDBCRepository();
+private  static SellerRepository   sellerRepository = new SellerJDBCRepository();
+private static ProductRepository productRepository = new ProductJDBCRepository();
 
-static Map<Long, Customer> map = new ConcurrentHashMap<>();
 
-static { // TODO
-        try {
-            sellerRepository = new SellerJDBCRepository();
-            customerRepository = new CustomerJDBCRepository();
-            productRepository = new ProductJDBCRepository();
-        } catch (SQLException e) {
-            System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
-        }
-    }
+
 
     public static Map<Long, Customer> getCustomersFromResultSet(ResultSet set) throws SQLException {
-//        Map<Long, Customer> map = new ConcurrentHashMap<>();
+        Map<Long, Customer> map = new ConcurrentHashMap<>();
 
         while(set.next()){
             Long id = set.getLong("customer_id");
@@ -56,25 +45,26 @@ static { // TODO
             String address = set.getString("address");
             Roles roles  = Roles.valueOf( set.getString("role"));
             Timestamp timestamp = set.getTimestamp("registered_on");
-            map.put(id, new Customer(id,name,email, password, address, timestamp, roles));
+            map.put(id, new Customer(id,name,email, password, address, timestamp.toLocalDateTime(), roles));
         }
         set.close();
         return map;
     }
     public static Map<Long, Order> getOrdersFromResultSet(ResultSet set) throws SQLException {
-        Map<Long, Order> map = new ConcurrentHashMap<>();
+        Map<Long, Order> map = new HashMap<>();
         while(set.next()){
-           Long orderId= set.getLong("ORDER_ID");
+           Long orderId= set.getLong("order_id");
            Long customerId = set.getLong("customer_id");
            Long productId = set.getLong("product_id");
             OrderStatus orderStatus = OrderStatus.valueOf(set.getString("status"));
+
             Timestamp orderTimestamp= set.getTimestamp("ordered_on");
             Long sellerId = set.getLong("seller_id");
             Currency currency = Currency.valueOf(set.getString("currency"));
             double price = set.getDouble("price");
             Optional<Customer> customer = customerRepository.fetchById(customerId);
             if(customer.isPresent()){
-                map.put(orderId, new Order( orderId, customer.get(), productRepository.fetchProductById(productId).get(), sellerRepository.fetchById(sellerId).get(), orderStatus,currency,orderTimestamp,price ));
+                map.put(orderId, new Order( orderId, customer.get(), productRepository.fetchProductById(productId).get(), sellerRepository.fetchById(sellerId).get(), orderStatus,currency,orderTimestamp.toLocalDateTime(),price ));
             } else {
                 throw new RuntimeException("Order Id missing: {}");
             }
@@ -87,10 +77,10 @@ static { // TODO
         while(set.next()){
             Long pid = set.getLong("product_id");
             double price = set.getDouble("price");
-            String pname = set.getString("product_name"); // TODO camelCase
+            String pName = set.getString("product_name"); // TODO camelCase
             Currency currency = Currency.valueOf(set.getString("currency"));
             ProductType type = ProductType.valueOf(set.getString("product_type"));
-            products.add(new Product(pid,pname,currency,price,type));
+            products.add(new Product(pid,pName,currency,price,type));
         }
         return  products;
     }
@@ -101,7 +91,7 @@ static { // TODO
             String name = set.getString("name");
             Roles role = Roles.valueOf(set.getString("role"));
             Timestamp  timestamp = set.getTimestamp("created_on");
-            products.add(new Seller(sid, name, role, timestamp));
+            products.add(new Seller(sid, name, role, timestamp.toLocalDateTime()));
         }
         return products;
     }

@@ -8,10 +8,7 @@ import repository.interfaces.OrderRepository;
 
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public  class OrderCollectionRepository implements OrderRepository {
@@ -43,6 +40,7 @@ public  class OrderCollectionRepository implements OrderRepository {
     }
     @Override
     public  void addOrder(Order order) {
+        order.setId(new Random().nextLong(0, 90000));
         orders.add(order);
     }
     @Override

@@ -6,6 +6,7 @@ import enums.Roles;
 import repository.interfaces.CustomerRepository;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
  * Replicates functionality of database.
  */
 public  class CustomerCollectionRepository  implements CustomerRepository {
-    private  final  List<Customer> customers;
+    private   List<Customer> customers;
 
 
     @Override
@@ -27,6 +28,9 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
      * Used to populate List of customers.
      */
     public CustomerCollectionRepository() {
+      init();
+    }
+    private void init(){
         this.customers = new ArrayList<>();
         addCustomer("Abrar", "superAdmin@gmail.com", "mumbai", "1234567890", Roles.SUPER_ADMIN);//change to super admin after final review
         addCustomer("sam", "admin@gmail.com", "ambernath", "admin", Roles.ADMIN);
@@ -35,7 +39,7 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
 
 
     private  void addCustomer(String name, String email, String address, String password, Roles role) {
-        Customer customer = new Customer(new Random().nextLong(1,9000),name, email, password, address, new Timestamp(System.currentTimeMillis()), Roles.CUSTOMER);
+        Customer customer = new Customer(new Random().nextLong(1,9000),name, email, password, address, LocalDateTime.now(), Roles.CUSTOMER);
         customer.setRole(role);
         customers.add(customer);
     }

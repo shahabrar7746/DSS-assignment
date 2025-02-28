@@ -4,13 +4,14 @@ import enums.Roles;
 import util.ColorCodes;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 public class Seller {
     private Long id;
     private String name;
     private Roles role;
-private Timestamp timestamp;
+private LocalDateTime registeredOn;
     public Roles getRole() {
         return role;
     }
@@ -26,17 +27,12 @@ private Timestamp timestamp;
         return table.toString();
     }
 
-    public Seller(String name) {
-        this.name = name;
-        this.id = new Random().nextLong(0, 700);
-        this.role = Roles.SELLER;
-    }
-    public Seller(Long id, String name, Roles role, Timestamp timestamp){
-        this(name);
+
+    public Seller(Long id, String name, Roles role, LocalDateTime registeredOn){
         this.id = id;
         this.name = name;
         this.role = role;
-        this.timestamp = timestamp;
+        this.registeredOn = registeredOn;
     }
 
     public String getName() {
