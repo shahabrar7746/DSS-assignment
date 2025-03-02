@@ -56,7 +56,7 @@ public  class OrderCollectionRepository implements OrderRepository {
     }
 
     @Override
-    public List<Order> getAllDeliveredOrders(){
+    public List<Order> getAllDeliveredOrders() throws OrderNotFoundException {
 
         List<Order> deliveredOrders = orders.stream().filter(o ->
             o.getStatus() == OrderStatus.DELIVERED

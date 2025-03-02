@@ -3,6 +3,7 @@ package repository;
 import entities.Customer;
 
 import enums.Roles;
+import exceptions.CustomerNotFoundException;
 import repository.interfaces.CustomerRepository;
 
 import java.sql.Timestamp;
@@ -19,7 +20,10 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
 
 
     @Override
-    public  List<Customer> getCustomers() {
+    public  List<Customer> getCustomers() throws CustomerNotFoundException {
+        if(customers.isEmpty()){
+            throw new CustomerNotFoundException("No customers found");
+        }
         return customers;
 
     }
@@ -39,16 +43,23 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
 
 
     private  void addCustomer(String name, String email, String address, String password, Roles role) {
-        Customer customer = new Customer(new Random().nextLong(1,9000),name, email, password, address, LocalDateTime.now(), Roles.CUSTOMER);
+        Customer customer = new Customer(name, email, password, address, LocalDateTime.now(), Roles.CUSTOMER);
+        long id = new Random().nextLong(0, 9000);
+        customer.setId(id);
         customer.setRole(role);
         customers.add(customer);
     }
 
 
     @Override
-    public  Optional<Customer> fetchById(Long id) {
+    public  Optional<Customer> fetchById(Long id) throws CustomerNotFoundException {
         Map<Long, Customer> map = customers.stream().collect(Collectors.toConcurrentMap(Customer::getId, c -> c ));
-        return map.containsKey(id) && map.get(id).getRole() == Roles.CUSTOMER ? Optional.of(map.get(id))   : Optional.empty();
+
+        Optional<Customer> customer =  map.containsKey(id) && map.get(id).getRole() == Roles.CUSTOMER ? Optional.of(map.get(id))   : Optional.empty();
+          if(customer.isEmpty()){
+              throw  new CustomerNotFoundException("No Customer found for this id");
+          }
+          return customer;
     }
 
     /**
@@ -81,6 +92,7 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
 
     @Override
     public void addCustomer(Customer customer) {
+
         addCustomer(customer.getName(), customer.getEmail(), customer.getAddress(), customer.getPassword(), customer.getRole());
     }
 

@@ -39,7 +39,11 @@ public class Customer {
         return role;
     }
 
-    public Customer(Long id, String name, String email, String password, String address, LocalDateTime registeredOn, Roles role) {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Customer(String name, String email, String password, String address, LocalDateTime registeredOn, Roles role) {
 
         this.name = name;
         this.password = password;

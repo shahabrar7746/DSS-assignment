@@ -1,5 +1,6 @@
 package repository.jdbc;
 
+import entities.Order;
 import entities.Product;
 import entities.Seller;
 import repository.interfaces.SellerRepository;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class SellerJDBCRepository implements SellerRepository {
-    private List<Seller> sellers = new ArrayList<>(); // TODO initialize
+
     private Connection con;
 
     public SellerJDBCRepository() { // TODO update constructor remove unnecessary initialization create initMethod for initilizing instance
@@ -24,28 +25,24 @@ public class SellerJDBCRepository implements SellerRepository {
     }
 
     private void init() {
-            con = ConnectionUtility.getConnection();
-             getAllSellers();
+        con = ConnectionUtility.getConnection();
     }
 
     @Override
-    public List<Seller> fetchSellers() {
-        return sellers;
+    public List<Seller> fetchSellers() throws SQLException {
+        return getAllSellers();
     }
 
     @Override
-    public Optional<Seller> fetchById(Long id) {
-        return sellers.stream().filter(s -> s.getId().equals(id)).findAny();
+    public Optional<Seller> fetchById(Long id) throws SQLException {
+        return
+                fetchSellers().stream().filter(s -> s.getId().equals(id)).findAny();
     }
 
-    private void getAllSellers(){ // TODO handle errors within method
+    private List<Seller> getAllSellers() throws SQLException { // TODO handle errors within method
         String query = "SELECT * FROM SELLER"; // TODO create queriesUtils
-
-       try {
-           PreparedStatement statement = con.prepareStatement(query);
-           sellers =  ResultSetUtility.getSellerFromResultSet(statement.executeQuery());
-       } catch (SQLException e) {
-           System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
-       }
+        PreparedStatement statement = con.prepareStatement(query);
+        return ResultSetUtility.getSellerFromResultSet(statement.executeQuery());
     }
+
 }

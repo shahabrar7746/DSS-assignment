@@ -21,6 +21,7 @@ import ui.UserInterface;
 import util.ColorCodes;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
@@ -137,7 +138,7 @@ private final CustomerRepository customerRepository;
         if (optionalCustomer.isPresent()) {
             return false;
         }
-        Customer newCustomer = new Customer(name, email, password, address);
+        Customer newCustomer = new Customer(name, email, password, address, LocalDateTime.now(), Roles.CUSTOMER);
         customerRepository.addCustomer(newCustomer);
 
         return true;

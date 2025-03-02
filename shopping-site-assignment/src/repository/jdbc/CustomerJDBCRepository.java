@@ -28,6 +28,7 @@ public class CustomerJDBCRepository implements CustomerRepository {
     }
     @Override
     public List<Customer> getCustomers() {
+
         return new ArrayList<>( customerMap.values());
     }
 

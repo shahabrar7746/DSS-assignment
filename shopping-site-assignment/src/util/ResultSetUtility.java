@@ -5,11 +5,10 @@ import entities.Order;
 import entities.Product;
 import entities.Seller;
 
-import enums.Currency;
-import enums.OrderStatus;
-import enums.ProductType;
-import enums.Roles;
+import enums.*;
 
+import enums.Currency;
+import exceptions.CustomerNotFoundException;
 import repository.interfaces.CustomerRepository;
 import repository.interfaces.ProductRepository;
 import repository.interfaces.SellerRepository;
@@ -45,13 +44,15 @@ private static ProductRepository productRepository = new ProductJDBCRepository()
             String address = set.getString("address");
             Roles roles  = Roles.valueOf( set.getString("role"));
             Timestamp timestamp = set.getTimestamp("registered_on");
-            map.put(id, new Customer(id,name,email, password, address, timestamp.toLocalDateTime(), roles));
+            Customer customer = new Customer(name,email, password, address, timestamp.toLocalDateTime(), roles);
+            customer.setId(id);
+            map.put(id, customer);
         }
         set.close();
         return map;
     }
-    public static Map<Long, Order> getOrdersFromResultSet(ResultSet set) throws SQLException {
-        Map<Long, Order> map = new HashMap<>();
+    public static List<Order> getOrdersFromResultSet(ResultSet set) throws SQLException, CustomerNotFoundException {
+        List<Order> orders = new ArrayList<>();
         while(set.next()){
            Long orderId= set.getLong("order_id");
            Long customerId = set.getLong("customer_id");
@@ -64,13 +65,15 @@ private static ProductRepository productRepository = new ProductJDBCRepository()
             double price = set.getDouble("price");
             Optional<Customer> customer = customerRepository.fetchById(customerId);
             if(customer.isPresent()){
-                map.put(orderId, new Order( orderId, customer.get(), productRepository.fetchProductById(productId).get(), sellerRepository.fetchById(sellerId).get(), orderStatus,currency,orderTimestamp.toLocalDateTime(),price ));
+                Order order =  new Order(customer.get(), productRepository.fetchProductById(productId).get(), sellerRepository.fetchById(sellerId).get(), orderStatus,currency,orderTimestamp.toLocalDateTime(),price);
+                order.setId(orderId);
+                orders.add(order);
             } else {
                 throw new RuntimeException("Order Id missing: {}");
             }
         }
         set.close();
-        return map;
+        return orders;
     }
     public static List<Product> getProductsFromResultSet(ResultSet set) throws SQLException {
         List<Product> products = new ArrayList<>();
@@ -95,4 +98,28 @@ private static ProductRepository productRepository = new ProductJDBCRepository()
         }
         return products;
     }
+    public static  Optional<Order> getOrderByIdFromResultSet(ResultSet set) throws SQLException, CustomerNotFoundException {
+
+        while (set.next()){
+        Long orderId= set.getLong("order_id");
+        Long customerId = set.getLong("customer_id");
+        Long productId = set.getLong("product_id");
+        OrderStatus orderStatus = OrderStatus.valueOf(set.getString("status"));
+
+        Timestamp orderTimestamp= set.getTimestamp("ordered_on");
+        Long sellerId = set.getLong("seller_id");
+        Currency currency = Currency.valueOf(set.getString("currency"));
+        double price = set.getDouble("price");
+        Optional<Customer> customer = customerRepository.fetchById(customerId);
+        if(customer.isPresent()){
+            Order order =  new Order(customer.get(), productRepository.fetchProductById(productId).get(), sellerRepository.fetchById(sellerId).get(), orderStatus,currency,orderTimestamp.toLocalDateTime(),price);
+            order.setId(orderId);
+            return Optional.of(order);
+        } else {
+            throw new RuntimeException("Order Id missing: {}");
+        }
+    }
+        return Optional.empty();
+    }
 }
+

@@ -1,6 +1,7 @@
 package repository.interfaces;
 
 import entities.Customer;
+import exceptions.CustomerNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,13 +12,13 @@ public interface CustomerRepository {
      * Used to get all customers including customers with admin authority.
      * @return List of all registered customers
      */
-     List<Customer> getCustomers();
+     List<Customer> getCustomers() throws CustomerNotFoundException;
       /**
      * Fetches Customer on the basis of id. converts list to map for efficient search operation.
      * @param id id to search.
      * @return Optional of Customer if data found or else empty Optional.
      */
-     Optional<Customer> fetchById(Long id);
+     Optional<Customer> fetchById(Long id) throws CustomerNotFoundException;
     /**
      * Searches for admin based on the id.
      * @param id id to be searched.

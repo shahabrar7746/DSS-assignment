@@ -1,5 +1,6 @@
 
-import repository.ProductCollectionRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import repository.interfaces.ProductRepository;
 
 import repository.jdbc.ProductJDBCRepository;
@@ -13,6 +14,8 @@ import java.util.Scanner;
 
 public class Driver {
     public static void main(String[] args) throws SQLException {
+      Logger logger = LoggerFactory.getLogger(Driver.class);
+        logger.info("this is for test");
         final ProductRepository productRepository = new ProductJDBCRepository();
         final  AuthenticationService auth = new AuthenticationServiceImplementation();
         System.out.println(ColorCodes.GREEN + "***********WELCOME*************" + ColorCodes.RESET);

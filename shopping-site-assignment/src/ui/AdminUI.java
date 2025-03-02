@@ -29,11 +29,10 @@ public class AdminUI implements UserInterface {
         boolean isSuperAdmin = Objects.equals(admin.getRole(), Roles.SUPER_ADMIN);
 //        String msg = isSuperAdmin ? "akjakjnadna"  : "jhabhdjbadba"; // TODO
 //        System.out.println(msg);
-        if (isSuperAdmin) {
-            System.out.println(ColorCodes.GREEN + "*********WELCOME-SUPER-ADMIN****************" + ColorCodes.RESET);
-        } else {
-            System.out.println(ColorCodes.GREEN + "*********WELCOME-ADMIN****************" + ColorCodes.RESET);
-        }
+        String message = isSuperAdmin ? "SUPER_ADMIN" : "ADMIN";
+
+            System.out.println(ColorCodes.GREEN + "*********WELCOME-"+ message + "****************" + ColorCodes.RESET);
+
         String operation = "";
         while (!operation.equalsIgnoreCase("back")) {
             final String response = "Response : ";

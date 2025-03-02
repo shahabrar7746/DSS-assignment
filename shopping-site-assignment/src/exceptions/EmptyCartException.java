@@ -1,6 +1,6 @@
 package exceptions;
 
-public class EmptyCartException extends RuntimeException {
+public class EmptyCartException extends Exception {
     public EmptyCartException(String message) {
         super(message);
     }

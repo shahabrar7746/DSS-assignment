@@ -5,6 +5,7 @@ import entities.Product;
 import entities.Seller;
 import enums.Currency;
 import enums.ProductType;
+import exceptions.NoProductFoundException;
 import repository.interfaces.ProductRepository;
 
 import java.util.*;
@@ -33,8 +34,10 @@ public  class ProductCollectionRepository implements ProductRepository {
 
         products.add( new Product(id, name, currency, price, type));
     }
-    public    List<Product> fetchProducts() {
-
+    public    List<Product> fetchProducts() throws NoProductFoundException {
+        if(products.isEmpty()) {
+            throw new NoProductFoundException("Product repository is empty");
+        }
         return products;
     }
     public    Optional<Product> fetchProductById(Long id) {
