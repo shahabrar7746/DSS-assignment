@@ -1,6 +1,7 @@
 package main.ui;
 
 import main.entities.Customer;
+import main.enums.ResponseStatus;
 import main.enums.Roles;
 
 import main.exceptions.UnauthorizedOperationException;
@@ -10,11 +11,12 @@ import main.services.AdminService;
 import main.serviceimlementation.AdminServiceImplementation;
 
 import main.util.ColorCodes;
+import main.util.Response;
 
 import java.sql.SQLException;
 import java.util.*;
 
-public class AdminUI implements UserInterface {
+public class AdminUI extends UI {
     private final Scanner sc;
     private final AdminService service;
 
@@ -24,8 +26,8 @@ public class AdminUI implements UserInterface {
     }
 
 
-    @Override
-    public void init(Customer admin) {
+
+    public void initAdminServices(Customer admin) {
         boolean isSuperAdmin = Objects.equals(admin.getRole(), Roles.SUPER_ADMIN);
 //        String msg = isSuperAdmin ? "akjakjnadna"  : "jhabhdjbadba"; // TODO
 //        System.out.println(msg);
@@ -53,55 +55,52 @@ public class AdminUI implements UserInterface {
             System.out.println("Enter 'back' to go to previous page");
             operation = sc.nextLine();
 
-            try {
-
+                Response resp = null;
             switch (operation) {
 
                     case "1":
-                        System.out.println(ColorCodes.BLUE + response + service.getAllCustomer() + ColorCodes.RESET);
+                        resp = service.getAllCustomer();
                         break;
                     case "2":
-                        System.out.println(ColorCodes.BLUE + response + service.getAllProdcuts() + ColorCodes.RESET);
+                        resp = service.getAllProdcuts();
                         break;
                     case "3":
-                        System.out.println(ColorCodes.BLUE + response + service.getCustomerById() + ColorCodes.RESET);
+                        resp = service.getCustomerById();
                         break;
                     case "4":
-                        System.out.println(ColorCodes.BLUE + response + service.getAllDeliveredOrders() + ColorCodes.RESET);
+                        resp = service.getAllDeliveredOrders();
                         break;
                     case "5":
-                        System.out.println(ColorCodes.BLUE + response + service.getProductsByType() + ColorCodes.RESET);
+                        resp = service.getProductsByType();
                         break;
                     case "6":
-                        System.out.println(ColorCodes.BLUE + response + service.fetchAllAdmins() + ColorCodes.RESET);
+                     resp = service.fetchAllAdmins();
                         break;
                 case "7":
-                    authorize(isSuperAdmin);
-                    service.cancelOrder(isSuperAdmin);
+                    resp = service.cancelOrder(isSuperAdmin);
                     break;
                 case "8":
-                    authorize(isSuperAdmin);
-                    service.deleteCustomer(isSuperAdmin);
+                   resp = service.deleteCustomer(isSuperAdmin);
                     break;
                 case "9":
-                        authorize(isSuperAdmin);
-                        service.grantAccess(isSuperAdmin);
+
+                     resp = service.grantAccess(isSuperAdmin);
                         break;
                     case "10":
-                        authorize(isSuperAdmin);
-                        service.revokeAccess(isSuperAdmin);
+                        resp = service.revokeAccess(isSuperAdmin);
                         break;
                     case "back", "BACK":
                         isExit = true;
                         break;
                     default:
-                        System.err.println("Unsupported operation");
-
+                        System.err.println();
+                        resp = new Response(null, "Unsupported operation");
             }
-
-            }catch (Exception e){
-                System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
-            }
+if(resp.getStatus() == ResponseStatus.ERROR){
+    System.out.println(ColorCodes.RED + "ERROR : " + resp.getData() + ColorCodes.RESET);
+}else if(resp.getStatus() == ResponseStatus.SUCCESSFUL) {
+    System.out.println(ColorCodes.RED + response  + resp.getData() + ColorCodes.RESET);
+}
             if (isExit) {
                 break;
             }

@@ -7,6 +7,7 @@ import main.entities.Product;
 import main.entities.Seller;
 import main.enums.Currency;
 import main.enums.OrderStatus;
+import main.enums.ResponseStatus;
 import main.exceptions.CustomerNotFoundException;
 import main.exceptions.EmptyCartException;
 import main.exceptions.NoProductFoundException;
@@ -61,6 +62,7 @@ private CustomerServiceImplementation() {
         System.out.println(ColorCodes.GREEN + "******BROWSE*******" + ColorCodes.RESET);
         String operation = "";
         while (!operation.equalsIgnoreCase("back")) {
+            Response response = null;
             try {
                 System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
             }catch (NoProductFoundException e){
@@ -73,30 +75,32 @@ private CustomerServiceImplementation() {
             System.out.println("TYPE 'BACK' TO GO BACK");
             System.out.print("Operation : ");
             operation = sc.nextLine();
-            try {
+
                 switch (operation) {
                     case "1":
-                        intiateCart(customer, false);
+                      response =  intiateCart(customer, false);
                         break;
                     case "2":
-                        System.out.println(ColorCodes.BLUE + "My Order : " + getAllOrders(customer) + ColorCodes.RESET);
+                        response = getAllOrders(customer);
                         break;
                     case "3":
-                        cancelOrder(customer);
+                       response = cancelOrder(customer);
                         break;
                     case "4":
-                        proceedToOrder(customer, getTotal());
+                       response = proceedToOrder(customer, getTotal());
                         break;
                     case "back", "BACK":
-                        System.out.println("Going back");
+                        response = new Response("Going back");
                         break;
                     default:
-                        System.out.println(ColorCodes.RED + "Invalid operation" + ColorCodes.RESET);
+                       response = new Response(null, "Invalid operation");
                 }
-            } catch (Exception e) {
-                //e.printStackTrace();
-                System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
+            if(response.getStatus() == ResponseStatus.ERROR){
+                System.out.println(ColorCodes.RED + "ERROR : " + response.getData() + ColorCodes.RESET);
+            }else if(response.getStatus() == ResponseStatus.SUCCESSFUL) {
+                System.out.println(ColorCodes.RED + response  + response.getData() + ColorCodes.RESET);
             }
+
         }
     }
 
@@ -173,9 +177,9 @@ if(optionalSeller.isEmpty()){
             if(!orders.isEmpty()){
                 order = Optional.of(orders);
             }
-            order.ifPresent(l -> {
-                helperForCancelOrder(l,customer);
-            });
+           if(order.isPresent()){
+               helperForCancelOrder(order.get(),customer);
+           }
             if(order.isPresent()){
                 return new Response("Order cancelled..");
             }
@@ -183,7 +187,7 @@ if(optionalSeller.isEmpty()){
         }
         return new Response(null, "Incorrect product name.....");
     }
-    private void helperForCancelOrder(List<Order> l,Customer customer){
+    private void helperForCancelOrder(List<Order> l,Customer customer) throws SQLException {
         System.out.println(ColorCodes.BLUE + "Your orders : " + l + ColorCodes.RESET);
         if (l.size() > 1) {
             System.out.println("and your quantity of order : " + l.size());
@@ -195,9 +199,9 @@ if(optionalSeller.isEmpty()){
                 quantity = sc.nextLong();
             }
             List<Order> removedOrderList = l.stream().limit(quantity).toList();
-            removedOrderList.forEach(o -> {
+            for (Order o : removedOrderList){
                 orderRepository.cancelOrder(o);
-            });
+            }
             System.out.println("Orders removed");
         } else if(l.size() == 1) {
             Order removedOrder = l.get(0);
@@ -221,7 +225,7 @@ if(optionalSeller.isEmpty()){
      * @param customer used for creating cart against provided customer object.
      * @param cartIntiated used to print banner.
      */
-    private Response intiateCart(Customer customer, boolean cartIntiated) throws EmptyCartException, SQLException, NoProductFoundException {
+    private Response intiateCart(Customer customer, boolean cartIntiated) {
         if (cartIntiated) {
             System.out.println(ColorCodes.GREEN + "******CART*******" + ColorCodes.RESET);
         } else {
@@ -243,7 +247,12 @@ if(optionalSeller.isEmpty()){
             if (name.equalsIgnoreCase("-1")) {
                 exitCart = true;//breaks the loop, by making exit condtion as true
             } else if (name.equalsIgnoreCase("0")) {
-                removeFromCart(cart, totalPrice);
+                try {
+                    removeFromCart(cart, totalPrice);
+                } catch (Exception e) {
+                    return new Response(null, e.getLocalizedMessage());
+                }
+
             } else {
                 Optional<Product> product = null;
                 try {

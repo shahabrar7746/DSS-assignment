@@ -1,6 +1,7 @@
 package main.repositoryjdbcimpl;
 
 import main.entities.Seller;
+import main.queries.SellerQueries;
 import main.repository.interfaces.SellerRepository;
 import main.util.ConnectionUtility;
 import main.util.ResultSetUtility;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Stack;
 
 public class SellerJDBCRepository implements SellerRepository {
 
@@ -26,19 +28,18 @@ public class SellerJDBCRepository implements SellerRepository {
 
     @Override
     public List<Seller> fetchSellers() throws SQLException {
-        return getAllSellers();
+        String query = SellerQueries.getAllSellersQuery();
+        PreparedStatement statement = con.prepareStatement(query);
+        return ResultSetUtility.getSellerFromResultSet(statement.executeQuery());
     }
 
     @Override
     public Optional<Seller> fetchById(Long id) throws SQLException {
-        return
-                fetchSellers().stream().filter(s -> s.getId().equals(id)).findAny();
-    }
-
-    private List<Seller> getAllSellers() throws SQLException { // TODO handle errors within method
-        String query = "SELECT * FROM SELLER"; // TODO create queriesUtils
+    String query = SellerQueries.getSellersByColumnQuery(new String[]{"SELLER_ID"}, null);
         PreparedStatement statement = con.prepareStatement(query);
-        return ResultSetUtility.getSellerFromResultSet(statement.executeQuery());
+        statement.setLong(1, id);
+        List<Seller> sellers =  ResultSetUtility.getSellerFromResultSet(statement.executeQuery());
+       return sellers.isEmpty() ? Optional.empty() : Optional.of(sellers.get(0));
     }
 
 }

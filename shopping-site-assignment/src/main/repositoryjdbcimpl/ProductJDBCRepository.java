@@ -1,7 +1,10 @@
 package main.repositoryjdbcimpl;
 
+import main.entities.Order;
 import main.entities.Product;
 import main.exceptions.NoProductFoundException;
+import main.queries.OrderQueries;
+import main.queries.ProductQueries;
 import main.repository.interfaces.ProductRepository;
 import main.util.ConnectionUtility;
 import main.util.ResultSetUtility;
@@ -24,14 +27,11 @@ public class ProductJDBCRepository implements ProductRepository {
             this.con = ConnectionUtility.getConnection();
     }
 
-    private List<Product> getProducts() throws SQLException {
-        PreparedStatement statement = con.prepareStatement("SELECT * FROM PRODUCT");
-        return ResultSetUtility.getProductsFromResultSet(statement.executeQuery());
-    }
-
     @Override
     public List<Product> fetchProducts() throws NoProductFoundException, SQLException {
-        List<Product> products = getProducts();
+        String query = ProductQueries.getAllProducts();
+        PreparedStatement statement = con.prepareStatement(query);
+        List<Product> products = ResultSetUtility.getProductsFromResultSet(statement.executeQuery());
         if(products.isEmpty()) {
             throw new NoProductFoundException("Product main.repository is empty");
         }
@@ -40,7 +40,8 @@ public class ProductJDBCRepository implements ProductRepository {
 
     @Override
     public Optional<Product> fetchProductById(Long id) throws SQLException, NoProductFoundException {
-        PreparedStatement statement = con.prepareStatement("SELECT * FROM PRODUCT WHERE PRODUCT_ID = ?");
+        String query = ProductQueries.getProductsByColumns(new String[]{"PRODUCT_ID"}, null);
+        PreparedStatement statement = con.prepareStatement(query);
         statement.setLong(1, id);
         List<Product> products =  ResultSetUtility.getProductsFromResultSet(statement.executeQuery());
          if (products.isEmpty()){
@@ -51,7 +52,8 @@ public class ProductJDBCRepository implements ProductRepository {
 
     @Override
     public Optional<Product> fetchProductByName(String name) throws SQLException, NoProductFoundException {
-        PreparedStatement statement = con.prepareStatement("SELECT * FROM PRODUCT WHERE PRODUCT_NAME = ?");
+        String query = ProductQueries.getProductsByColumns(new String[]{"PRODUCT_NAME"}, null);
+        PreparedStatement statement = con.prepareStatement(query);
         statement.setString(1, name);
         List<Product> products =  ResultSetUtility.getProductsFromResultSet(statement.executeQuery());
         if (products.isEmpty()){
@@ -59,5 +61,4 @@ public class ProductJDBCRepository implements ProductRepository {
         }
         return Optional.of(products.get(0));
     }
-
 }

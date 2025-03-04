@@ -14,15 +14,15 @@ import main.util.ColorCodes;
 
 import java.sql.SQLException;
 
-public class CustomerUI  implements UserInterface {
+public class CustomerUI  extends  UI {
 
     private final CustomerService service;
     public CustomerUI() {
         this.service = CustomerService.getInstance();
     }
 
-    @Override
-    public void init(Customer customer) throws UnauthorizedOperationException, SQLException {
+
+    public void initCustomerServices(Customer customer) throws UnauthorizedOperationException, SQLException {
         if (customer.getRole() != Roles.CUSTOMER) {
             throw new UnauthorizedOperationException("Operation not supported");
         }
