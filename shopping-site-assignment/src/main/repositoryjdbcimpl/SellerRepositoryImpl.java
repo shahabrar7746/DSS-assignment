@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
 
-public class SellerJDBCRepository implements SellerRepository {
+public class SellerRepositoryImpl implements SellerRepository {
 
     private Connection con;
 
-    public SellerJDBCRepository() { // TODO update constructor remove unnecessary initialization create initMethod for initilizing instance
+    public SellerRepositoryImpl() { // TODO update constructor remove unnecessary initialization create initMethod for initilizing instance
         init();
     }
 

@@ -16,9 +16,10 @@ import main.exceptions.OrderNotFoundException;
 import main.repository.interfaces.OrderRepository;
 import main.repository.interfaces.ProductRepository;
 import main.repository.interfaces.SellerRepository;
-import main.repositoryjdbcimpl.OrderJDBCRepository;
-import main.repositoryjdbcimpl.ProductJDBCRepository;
-import main.repositoryjdbcimpl.SellerJDBCRepository;
+import main.repositoryjdbcimpl.OrderRepositoryImpl;
+import main.repositoryjdbcimpl.ProductRepositoryImpl;
+import main.repositoryjdbcimpl.ProductRepositoryImpl;
+import main.repositoryjdbcimpl.SellerRepositoryImpl;
 import main.services.CustomerService;
 
 
@@ -50,10 +51,10 @@ private CustomerServiceImplementation() {
         init();
     }
     private void init(){
-        this.sellerRepository = new SellerJDBCRepository();
-        this.productRepository = new ProductJDBCRepository();
+        this.sellerRepository = new SellerRepositoryImpl();
+        this.productRepository = new ProductRepositoryImpl();
         this.cart = new ArrayList<>();
-        this.orderRepository = new OrderJDBCRepository();
+        this.orderRepository = new OrderRepositoryImpl();
         this.sc = new Scanner(System.in);
     }
 

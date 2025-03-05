@@ -15,11 +15,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductJDBCRepository implements ProductRepository {
+public class ProductRepositoryImpl implements ProductRepository {
 
     private Connection con;
 
-    public ProductJDBCRepository() {
+    public ProductRepositoryImpl() {
         initSqlDataConn();
     }
 

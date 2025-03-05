@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 
 import static main.util.ResultSetUtility.getCustomersFromResultSet;
 
-public class CustomerJDBCRepository implements CustomerRepository {
+public class CustomerRepositoryImpl implements CustomerRepository {
     private Map<Long, Customer> customerMap;
     private Connection con;
 
-    public CustomerJDBCRepository() {
+    public CustomerRepositoryImpl() {
         initCustomRepo();
     }
 

@@ -8,9 +8,10 @@ import main.exceptions.CustomerNotFoundException;
 import main.exceptions.TrialLimitExceedException;
 import main.exceptions.UserAlreadyExistsException;
 
-import main.repositoryjdbcimpl.CustomerJDBCRepository;
+import main.repositoryjdbcimpl.CustomerRepositoryImpl;
 import main.repository.interfaces.CustomerRepository;
 
+import main.repositoryjdbcimpl.CustomerRepositoryImpl;
 import main.services.AuthenticationService;
 import main.services.CustomerService;
 
@@ -45,7 +46,7 @@ public static AuthenticationServiceImplementation getInstance(){
     public void init(){
     try {
         this.customerService = CustomerService.getInstance();
-        this.customerRepository = new CustomerJDBCRepository();
+        this.customerRepository = new CustomerRepositoryImpl();
         this.sc = new Scanner(System.in);
     } catch (Exception e) {
         System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);

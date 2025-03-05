@@ -10,12 +10,13 @@ import main.enums.Roles;
 
 import main.exceptions.*;
 
-import main.repositoryjdbcimpl.CustomerJDBCRepository;
 import main.repository.interfaces.OrderRepository;
 import main.repository.interfaces.ProductRepository;
-import main.repositoryjdbcimpl.OrderJDBCRepository;
-import main.repositoryjdbcimpl.ProductJDBCRepository;
 
+
+import main.repositoryjdbcimpl.CustomerRepositoryImpl;
+import main.repositoryjdbcimpl.OrderRepositoryImpl;
+import main.repositoryjdbcimpl.ProductRepositoryImpl;
 import main.services.AdminService;
 
 import main.repository.interfaces.CustomerRepository;
@@ -38,10 +39,10 @@ public class AdminServiceImplementation implements AdminService {
       init();
     }
 private void init(){
-    this.productRepository = new ProductJDBCRepository();
-    this.customerRepository = new CustomerJDBCRepository();
+    this.productRepository = new ProductRepositoryImpl();
+    this.customerRepository = new CustomerRepositoryImpl();
     this.sc = new Scanner(System.in);
-    this.orderRepository = new OrderJDBCRepository();
+    this.orderRepository = new OrderRepositoryImpl();
 }
     private static AdminServiceImplementation service;
 

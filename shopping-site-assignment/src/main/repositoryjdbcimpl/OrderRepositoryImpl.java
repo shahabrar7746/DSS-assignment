@@ -15,11 +15,11 @@ import javax.management.Query;
 import java.sql.*;
 import java.util.*;
 
-public class OrderJDBCRepository implements OrderRepository {
+public class OrderRepositoryImpl implements OrderRepository {
     private Connection con;
 
 
-    public OrderJDBCRepository() {// TODO
+    public OrderRepositoryImpl() {// TODO
         init();
     }
 
