@@ -12,19 +12,17 @@ public class User {
     private String password;
     private UserRole userRole;
     private boolean isActive;
-    private List<Guest> accompanyingGuests;
 
     public User() {
     }
 
-    public User(int userID, String name, String email, String password, UserRole userRole, boolean isActive, List<Guest> accompanyingGuests) {
+    public User(int userID, String name, String email, String password, UserRole userRole, boolean isActive) {
         this.userID = userID;
         this.name = name;
         this.email = email;
         this.password = password;
         this.userRole = userRole;
         this.isActive = isActive;
-        this.accompanyingGuests = accompanyingGuests;
     }
 
     public int getUserID() {
@@ -75,14 +73,6 @@ public class User {
         isActive = active;
     }
 
-    public List<Guest> getAccompanyingGuests() {
-        return accompanyingGuests;
-    }
-
-    public void setAccompanyingGuests(List<Guest> accompanyingGuests) {
-        this.accompanyingGuests = accompanyingGuests;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -92,7 +82,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", userRole=" + userRole +
                 ", isActive=" + isActive +
-                ", accompanyingGuests=" + accompanyingGuests +
                 '}';
     }
 }

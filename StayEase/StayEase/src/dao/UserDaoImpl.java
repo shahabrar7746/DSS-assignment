@@ -1,6 +1,8 @@
 package dao;
 
 import constants.UserRole;
+import entity.Guest;
+import entity.GuestUser;
 import entity.User;
 import utility.DatabaseConnection;
 
@@ -38,15 +40,57 @@ public class UserDaoImpl implements UserDao {
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new User(rs.getInt("user_id"), rs.getString("name"), rs.getString("email"),
-                        rs.getString("password"), UserRole.valueOf(rs.getString("user_role")),
-                        rs.getBoolean("is_active"));
+                UserRole role = UserRole.valueOf(rs.getString("user_role"));
+                boolean isActive = rs.getBoolean("is_active");
+
+                // If the user is a GUEST, fetch accompanied guests
+                if (role == UserRole.GUEST) {
+                    List<Guest> guests = getAccompaniedGuests(rs.getInt("user_id"));
+                    return new GuestUser(
+                            rs.getInt("user_id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            isActive,
+                            guests
+                    );
+                } else {
+                    // If the user is staff/admin, return a regular User object
+                    return new User(
+                            rs.getInt("user_id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            role,
+                            isActive
+                    );
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
+
+
+    private List<Guest> getAccompaniedGuests(int userId) {
+        List<Guest> guests = new ArrayList<>();
+        String sql = "SELECT * FROM guests WHERE user_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                guests.add(new Guest(rs.getInt("guest_id"), rs.getString("name"), rs.getInt("age"), userId));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return guests;
+    }
+
+
 
     @Override
     public List<User> getAllStaff() {

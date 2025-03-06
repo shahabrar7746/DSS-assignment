@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="log4j-1.2-api-2.3.2-javadoc">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/apache-log4j-2.3.2-bin/apache-log4j-2.3.2-bin/log4j-api-2.3.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/apache-log4j-2.3.2-bin/apache-log4j-2.3.2-bin/log4j-core-2.3.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
