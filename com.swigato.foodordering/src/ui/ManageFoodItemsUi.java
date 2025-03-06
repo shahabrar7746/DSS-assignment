@@ -15,67 +15,69 @@ public class ManageFoodItemsUi {
     public static void manageFoodItems(Scanner scanner, RestaurantService restaurantService) {
         boolean isExit = false;
         while (!isExit) {
-            List<String> menuItems = new ArrayList<>(List.of(ColourCodes.CYAN +"\nMANAGE FOOD ITEMS" + ColourCodes.RESET,
-                    "1. Add Food Item", "2. Remove Food Item", "3. Update Food Item", "4. Display All Food Items",
-                    "5. Display Food by Category", "6. Back to Admin Menu"));
-            OperationsInfo.displayMenu(menuItems);
+            try {
+                List<String> menuItems = new ArrayList<>(List.of(ColourCodes.CYAN + "\nMANAGE FOOD ITEMS" + ColourCodes.RESET,
+                        "1. Add Food Item", "2. Remove Food Item", "3. Update Food Item", "4. Display All Food Items",
+                        "5. Display Food by Category", "6. Back to Admin Menu"));
+                OperationsInfo.displayMenu(menuItems);
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+                int choice = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    addFoodItem(scanner, restaurantService);
-                    break;
-                case 2:
-                    removeFoodItem(scanner, restaurantService);
-                    break;
-                case 3:
-                    updateFoodItem(scanner, restaurantService);
-                    break;
-                case 4:
-                    displayAllFoodItems(restaurantService);
-                    break;
-                case 5:
-                    displayFoodByCategory(scanner, restaurantService);
-                    break;
-                case 6:
-                    isExit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice.");
+                switch (choice) {
+                    case 1:
+                        addFoodItem(scanner, restaurantService);
+                        break;
+                    case 2:
+                        removeFoodItem(scanner, restaurantService);
+                        break;
+                    case 3:
+                        updateFoodItem(scanner, restaurantService);
+                        break;
+                    case 4:
+                        displayAllFoodItems(restaurantService);
+                        break;
+                    case 5:
+                        displayFoodByCategory(scanner, restaurantService);
+                        break;
+                    case 6:
+                        isExit = true;
+                        break;
+                    default:
+                        System.out.println("Invalid choice.");
+                }
+            } catch (IllegalArgumentException | InputMismatchException e) {
+                System.out.println("invalid input");
+                scanner.nextLine();
             }
         }
     }
 
     private static void addFoodItem(Scanner scanner, RestaurantService restaurantService) {
-        try {
-            System.out.println("Enter food name:");
-            String name = scanner.nextLine();
-            System.out.println("Enter food price:");
-            double price = scanner.nextDouble();
-            scanner.nextLine();
-            System.out.println("Enter food category (VEG/NONVEG/BEVERAGES):");
-            String categoryStr = scanner.nextLine().toUpperCase();
-            FoodCategory category = FoodCategory.valueOf(categoryStr);
+        System.out.println("Enter food name:");
+        String name = scanner.nextLine();
+        System.out.println("Enter food price:");
+        double price = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.println("Enter food category (VEG/NONVEG/BEVERAGES):");
+        String categoryStr = scanner.nextLine().toUpperCase();
+        FoodCategory category = FoodCategory.valueOf(categoryStr);
 
-            FoodItem foodItem = new FoodItem(name, price, category);
-            restaurantService.addFood(foodItem);
-            System.out.println("Food item added.");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid category.");
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input.");
-            scanner.nextLine();
-        }
+        FoodItem foodItem = new FoodItem(name, price, category);
+        restaurantService.addFood(foodItem);
+        System.out.println("Food item added.");
     }
 
-    private static void removeFoodItem(Scanner scanner, RestaurantService restaurantService) {
-        System.out.println("Enter food ID:");
-        int foodId = scanner.nextInt();
-        scanner.nextLine();
 
-        FoodItem foodItem = restaurantService.getAllFood().stream().filter(f -> f.getId() == foodId).findFirst().orElse(null);
+    private static void removeFoodItem(Scanner scanner, RestaurantService restaurantService) {
+        System.out.println("Enter food name:");
+        String foodName = scanner.nextLine();
+
+        FoodItem foodItem = restaurantService.getAllFood()
+                .stream()
+                .filter(f -> f.getName().equalsIgnoreCase(foodName))
+                .findFirst()
+                .orElse(null);
         if (foodItem != null) {
             restaurantService.removeFood(foodItem);
             System.out.println("Food item removed.");
@@ -85,11 +87,14 @@ public class ManageFoodItemsUi {
     }
 
     private static void updateFoodItem(Scanner scanner, RestaurantService restaurantService) {
-        System.out.println("Enter food ID:");
-        int foodId = scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("Enter food name:");
+        String foodName = scanner.nextLine();
 
-        FoodItem foodItem = restaurantService.getAllFood().stream().filter(f -> f.getId() == foodId).findFirst().orElse(null);
+        FoodItem foodItem = restaurantService.getAllFood()
+                .stream()
+                .filter(f -> f.getName().equalsIgnoreCase(foodName))
+                .findFirst()
+                .orElse(null);
         if (foodItem != null) {
             System.out.println("Enter new name:");
             String name = scanner.nextLine();
@@ -111,6 +116,8 @@ public class ManageFoodItemsUi {
     }
 
     private static void displayAllFoodItems(RestaurantService restaurantService) {
+        System.out.println(ColourCodes.CYAN + "\nMENU" + ColourCodes.RESET);
+        System.out.println(String.format(ColourCodes.PURPLE + "| %-15s | %-10s | %-10s |" + ColourCodes.RESET, "Food Name", "Item Price", "Food Category"));
         List<FoodItem> foodItems = restaurantService.getAllFood();
         foodItems.forEach(System.out::println);
     }
@@ -118,12 +125,10 @@ public class ManageFoodItemsUi {
     private static void displayFoodByCategory(Scanner scanner, RestaurantService restaurantService) {
         System.out.println("Enter category (VEG/NONVEG/BEVERAGES):");
         String categoryStr = scanner.nextLine().toUpperCase();
-        try {
-            FoodCategory category = FoodCategory.valueOf(categoryStr);
-            List<FoodItem> foodItems = restaurantService.getFoodByCategory(category);
-            foodItems.forEach(System.out::println);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid category.");
-        }
+
+        FoodCategory category = FoodCategory.valueOf(categoryStr);
+        List<FoodItem> foodItems = restaurantService.getFoodByCategory(category);
+        foodItems.forEach(System.out::println);
+
     }
 }

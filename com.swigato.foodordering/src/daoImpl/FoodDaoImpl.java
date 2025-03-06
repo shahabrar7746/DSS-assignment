@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RepoFoodDao implements FoodDao {
+public class FoodDaoImpl implements FoodDao {
     private final List<FoodItem> foodItems = new ArrayList<>();
 
     @Override
@@ -25,7 +25,6 @@ public class RepoFoodDao implements FoodDao {
     public List<FoodItem> getAllFood() {
         return new ArrayList<>(foodItems);
     }
-
 
     @Override
     public List<FoodItem> getFoodByCategory(FoodCategory category) {

@@ -2,7 +2,7 @@ package utility;
 
 import enums.ResponseStatus;
 
-public class Response<D> {
+public  class Response<D> {
     private D data;
     private ResponseStatus responseStatus;
 

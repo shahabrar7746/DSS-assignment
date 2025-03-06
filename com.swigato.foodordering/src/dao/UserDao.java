@@ -1,11 +1,13 @@
 package dao;
 
 import entities.User;
+import utility.Response;
+
 import java.util.List;
 
 public interface UserDao {
 
-    void addUser(User user);
+    Response<Boolean> addUser(User user);
 
     User getUserByEmail(String email);
 

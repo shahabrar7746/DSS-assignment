@@ -6,10 +6,13 @@ import entities.Order;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepoOrderDao implements OrderDao
+public class OrderDaoImpl implements OrderDao
 {
     private final List<Order> orders = new ArrayList<>();
 
+    public void init(){
+
+    }
     @Override
     public void addOrder(Order order) {
         orders.add(order);

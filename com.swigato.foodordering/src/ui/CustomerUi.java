@@ -1,6 +1,6 @@
 package ui;
 
-import com.sun.security.jgss.GSSUtil;
+
 import entities.FoodItem;
 import entities.Order;
 import entities.OrderItem;
@@ -11,15 +11,16 @@ import service.CustomerService;
 import service.OrderService;
 import service.RestaurantService;
 import service.UserService;
+import serviceImpl.OrderServiceImpl;
 import utility.ColourCodes;
 import utility.Formatter;
 import utility.OperationsInfo;
 import utility.Response;
 
 import java.util.*;
-import java.util.stream.Stream;
 
-public class CustomerUi {
+
+public class CustomerUi extends Ui{
 
     private final UserService userService;
     private final RestaurantService restaurantService;
@@ -27,14 +28,14 @@ public class CustomerUi {
     private User loggedInCustomer;
     private CustomerService customerService;
 
-    public CustomerUi(UserService userService, RestaurantService restaurantService, dao.OrderDao orderDao) {
+    public CustomerUi(UserService userService, RestaurantService restaurantService, OrderService orderService) {
         this.userService = userService;
         this.restaurantService = restaurantService;
-        this.orderService = new OrderService(orderDao);
+        this.orderService = orderService;
     }
 
-    public void customerMenu(Scanner scanner) {
-//        Response<User> response = null;
+    @Override
+    public void initCustomerScreen(Scanner scanner) {
         if (loggedInCustomer == null) {
             Response<User> response = loginAsCustomer(scanner);
             if (response.getResponseStatus() == ResponseStatus.FAILURE) {
@@ -206,11 +207,6 @@ public class CustomerUi {
         }
     }
 
-    private void placeOrder() {
-        Order order = customerService.placeOrder();
-        System.out.println("Order placed successfully. Order ID: " + order.getId() + " Total bill: " + order.getTotalBillAmount());
-    }
-
     private void trackOrderStatus(Scanner scanner) {
         List<Order> allOrders = orderService.getAllOrders();
         if (allOrders.isEmpty()) {
@@ -248,9 +244,9 @@ public class CustomerUi {
 
         int orderId = Integer.parseInt(confirmation);
         Order order = orderService.getOrder(orderId);
+
         if (order == null || order.getId() != orderId) {
             System.out.println("Invalid Id!");
-
         } else {
             List<OrderItem> orderItems = order.getOrderItems();
             Formatter.tableTemplate(orderItems);

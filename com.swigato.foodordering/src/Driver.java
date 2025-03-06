@@ -1,20 +1,27 @@
 
-import daoImpl.RepoFoodDao;
-import daoImpl.RepoOrderDao;
-import daoImpl.RepoRestaurantDao;
-import daoImpl.RepoUserDao;
+import config.AppConfig;
+import dao.FoodDao;
+import dao.OrderDao;
+import dao.RestaurantDao;
+import dao.UserDao;
+import daoImpl.FoodDaoImpl;
+import daoImpl.OrderDaoImpl;
+import daoImpl.RestaurantDaoImpl;
+import daoImpl.UserDaoImpl;
 
 import entities.FoodItem;
 import entities.User;
 import enums.FoodCategory;
 import enums.UserRole;
+import service.OrderService;
+import service.RestaurantService;
+import service.UserService;
 import serviceImpl.RestaurantServiceImpl;
 import serviceImpl.UserServiceImpl;
 import ui.AdminUi;
 import ui.CustomerUi;
 import utility.ColourCodes;
 import utility.OperationsInfo;
-import utility.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,40 +32,22 @@ public class Driver {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        AppConfig appConfig = new AppConfig();
 
-        RepoUserDao userDao = new RepoUserDao();
-        RepoFoodDao foodDao = new RepoFoodDao();
-        RepoOrderDao orderDao = new RepoOrderDao();
-        RepoRestaurantDao restaurantDao = new RepoRestaurantDao();
+        UserDao userDao = appConfig.getUserDao();
+        FoodDao foodDao = appConfig.getFoodDao();
+        RestaurantDao restaurantDao = appConfig.getRestaurantDao();
+        OrderDao orderDao = appConfig.getOrderDao(); //initializing dao's
 
-        UserServiceImpl userService = new UserServiceImpl(userDao);
-        RestaurantServiceImpl restaurantService = new RestaurantServiceImpl(restaurantDao, foodDao);
+        UserService userService = appConfig.getUserService(userDao);
+        RestaurantService restaurantService = appConfig.getRestaurantService(restaurantDao, foodDao);
+        OrderService orderService = appConfig.getOrderService(orderDao); //initializing services
 
-        AdminUi adminUi = new AdminUi(userService, restaurantService, orderDao);
-        CustomerUi customerUi = new CustomerUi(userService, restaurantService, orderDao);
+        appConfig.initializeUsers(userService);
+        appConfig.initializeFoodItems(foodDao);     //initializing users and food items
 
-
-        User user1 = new User("Chetan", "chetan@gmail.com", "chetan123", UserRole.CUSTOMER);
-        User user2 = new User("Saurav", "s", "s", UserRole.CUSTOMER);
-        userService.registerUser(user2);
-        User adminUser = new User("admin", "admin@gmai.com", "ds@123", UserRole.ADMIN);
-        User adminUser2 = new User("a", "a", "a", UserRole.ADMIN);
-        userService.registerUser(user1);
-        userService.registerUser(adminUser);
-        userService.registerUser(adminUser2);
-
-        FoodItem foodItem = new FoodItem("Pasta", 60, FoodCategory.VEG);
-        FoodItem foodItem2 = new FoodItem("PaneerTikka", 150, FoodCategory.VEG);
-        FoodItem foodItem3 = new FoodItem("ChickenCurry", 130, FoodCategory.NONVEG);
-        FoodItem foodItem4 = new FoodItem("DumBiryani", 200, FoodCategory.NONVEG);
-        FoodItem foodItem5 = new FoodItem("Lassi", 40, FoodCategory.BEVERAGES);
-        FoodItem foodItem6 = new FoodItem("ButterMilk", 40, FoodCategory.BEVERAGES);
-        foodDao.addFood(foodItem);
-        foodDao.addFood(foodItem2);
-        foodDao.addFood(foodItem3);
-        foodDao.addFood(foodItem4);
-        foodDao.addFood(foodItem5);
-        foodDao.addFood(foodItem6);
+        AdminUi adminUi = new AdminUi(userService, restaurantService, orderService);
+        CustomerUi customerUi = new CustomerUi(userService, restaurantService, orderService);
 
         int choice = 0;
         while (choice != 3) {
@@ -74,10 +63,10 @@ public class Driver {
                 switch (choice) {
 
                     case 1:
-                        adminUi.adminMenu(scanner);
+                        adminUi.initAdminScreen(scanner);
                         break;
                     case 2:
-                        customerUi.customerMenu(scanner);
+                        customerUi.initCustomerScreen(scanner);
                         break;
                     case 3:
                         System.out.println("Exiting...");

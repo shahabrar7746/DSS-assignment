@@ -2,16 +2,38 @@ package daoImpl;
 
 import dao.UserDao;
 import entities.User;
+import enums.ResponseStatus;
+import enums.UserRole;
+import utility.Response;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepoUserDao implements UserDao {
+public class UserDaoImpl implements UserDao {
     private final List<User> users = new ArrayList<>();
 
+//    public UserDaoImpl() {
+//        init();
+//    }
+//
+//    public void init() {
+//        User user1 = new User("Chetan", "chetan@gmail.com", "chetan123", UserRole.CUSTOMER);
+//        User user2 = new User("Saurav", "s", "s", UserRole.CUSTOMER);
+//        User adminUser = new User("admin", "admin@gmai.com", "ds@123", UserRole.ADMIN);
+//        User adminUser2 = new User("a", "a", "a", UserRole.ADMIN);
+//        addUser(user1);
+//        addUser(user2);
+//        addUser(adminUser);
+//        addUser(adminUser2);
+//    }
+
     @Override
-    public void addUser(User user) {
-        users.add(user);
+    public Response<Boolean> addUser(User user) {
+        boolean success = users.add(user);
+        if (success) {
+            return new Response<>(Boolean.TRUE, ResponseStatus.SUCCESS);
+        }
+            return new Response<>(ResponseStatus.FAILURE);
     }
 
     @Override
