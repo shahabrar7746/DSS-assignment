@@ -1,23 +1,23 @@
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import repository.interfaces.ProductRepository;
+import main.exceptions.NoProductFoundException;
+import main.repository.interfaces.ProductRepository;
 
-import repository.jdbc.ProductJDBCRepository;
-import serviceimlementation.AuthenticationServiceImplementation;
+import main.repositoryjdbcimpl.ProductJDBCRepository;
+import main.serviceimlementation.AuthenticationServiceImplementation;
 
-import services.AuthenticationService;
-import util.ColorCodes;
+import main.services.AuthenticationService;
+import main.util.ColorCodes;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Driver {
-    public static void main(String[] args) throws SQLException {
-      Logger logger = LoggerFactory.getLogger(Driver.class);
-        logger.info("this is for test");
+ //  private static  final Logger logger = LoggerFactory.getLogger(Driver.class);
+    public static void main(String[] args) throws SQLException, NoProductFoundException {
+
+       // logger.info("this is for test");
         final ProductRepository productRepository = new ProductJDBCRepository();
-        final  AuthenticationService auth = new AuthenticationServiceImplementation();
+        final  AuthenticationService auth = AuthenticationService.getInstance();
         System.out.println(ColorCodes.GREEN + "***********WELCOME*************" + ColorCodes.RESET);
         System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
         String operation = "";
