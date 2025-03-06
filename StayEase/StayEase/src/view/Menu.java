@@ -89,19 +89,18 @@ public class Menu {
         if (availableRooms.isEmpty()) {
             System.out.println("\nNo available rooms found.");
         } else {
-            System.out.println("\n==============================================================");
-            System.out.printf("%-10s %-15s %-15s %-10s %-15s%n",
-                    "Room ID", "Room Number", "Room Type", "Price", "Available");
-            System.out.println("==============================================================");
+            System.out.println("\n=======================================================");
+            System.out.printf("%-10s %-15s %-15s %-10s %n",
+                    "Room ID", "Room Number", "Room Type", "Price");
+            System.out.println("=======================================================");
             for (Room room : availableRooms) {
-                System.out.printf("%-10d %-15d %-15s Rs.%-9.2f %-15s%n",
+                System.out.printf("%-10d %-15d %-15s Rs.%-9.2f %n",
                         room.getRoomID(),
                         room.getRoomNumber(),
                         room.getRoomType().toString(),
-                        room.getPrice(),
-                        room.isAvailable() ? "Yes" : "No");
+                        room.getPrice());
             }
-            System.out.println("--------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------");
         }
     }
 

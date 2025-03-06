@@ -10,12 +10,15 @@ import java.util.List;
 import constants.BookingStatus;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BookingDaoImpl implements BookingDao {
     private final Connection connection = DatabaseConnection.getConnection();
+    private static final Logger logger = Logger.getLogger(BookingDao.class.getName());
 
     @Override
-    public void createBooking(Booking booking) { // TODO
+    public void createBooking(Booking booking) {
         String sql = "INSERT INTO bookings (user_id, room_id, check_in, check_out, status) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, booking.getUserId());
@@ -30,8 +33,8 @@ public class BookingDaoImpl implements BookingDao {
                     booking.setBookingId(generatedKeys.getInt(1));
                 }
             }
-        } catch (SQLException e) { // TODO add logger
-            e.printStackTrace();
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error while creating booking for user ID: " + booking.getUserId(), e);
         }
     }
 
