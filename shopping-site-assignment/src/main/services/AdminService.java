@@ -26,7 +26,7 @@ public interface AdminService {
       * @throws CustomerNotFoundException if no customer object is found inside repositry.
       * @see #getCustomerById()
       */
-     Response getAllCustomer() throws CustomerNotFoundException;
+     Response getAllCustomer();
      /**
       * Fetches all Products from main.repository.
       *
@@ -41,7 +41,7 @@ public interface AdminService {
       * @return List of Products of same type as provided by admin.
       * @throws OperationNotSupportedException
       */
-     Response getProductsByType() throws OperationNotSupportedException;
+     Response getProductsByType();
 
      /**
       * Fetches all delivered orders from main.repository.
@@ -59,7 +59,7 @@ public interface AdminService {
       * @throws TrialLimitExceedException      if the try limit exceeds.
       * @see #revokeAccess(boolean)
       */
-     Response grantAccess(boolean isAuthorized) throws OperationNotSupportedException;
+     Response grantAccess(boolean isAuthorized);
      /**
       * Revokes admin access for any customer. must be performed by Super admin.
       *
@@ -69,7 +69,7 @@ public interface AdminService {
       * @throws TrialLimitExceedException      try limit exceeds.
       * @see #grantAccess(boolean)
       */
-     Response revokeAccess(boolean isAuthorized) throws OperationNotSupportedException;
+     Response revokeAccess(boolean isAuthorized);
      /**
       * Cancels order placed by customer.
       *
@@ -78,7 +78,7 @@ public interface AdminService {
       * @throws OrderNotFoundException         if no order is found for the id or order is empty.
       * @throws UnauthorizedOperationException if not authorized or called by any other entity except super admin.
       */
-     Response cancelOrder(boolean isAuthorized) throws OperationNotSupportedException;
+     Response cancelOrder(boolean isAuthorized);
      /**
       * @param isAuthorized validation to check if the operation performed by super admin.
       *                     if not validated, throws exception.
@@ -86,7 +86,7 @@ public interface AdminService {
       * @throws UnauthorizedOperationException if performed by super admin.
       * @throws CustomerNotFoundException      if the customer id is incorrect or customer main.repository is empty.
       */
-     Response deleteCustomer(boolean isAuthorized) throws OperationNotSupportedException;
+     Response deleteCustomer(boolean isAuthorized) ;
      /**
       * Used to fetch all admins from main.repository.
       *

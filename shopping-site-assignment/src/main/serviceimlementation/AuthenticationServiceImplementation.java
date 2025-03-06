@@ -8,16 +8,17 @@ import main.exceptions.CustomerNotFoundException;
 import main.exceptions.TrialLimitExceedException;
 import main.exceptions.UserAlreadyExistsException;
 
-import main.repositoryjdbcimpl.CustomerJDBCRepository;
+import main.repositoryjdbcimpl.CustomerRepositoryImpl;
 import main.repository.interfaces.CustomerRepository;
 
+import main.repositoryjdbcimpl.CustomerRepositoryImpl;
 import main.services.AuthenticationService;
 import main.services.CustomerService;
 
 import main.ui.AdminUI;
 import main.ui.CustomerUI;
 
-import main.ui.UserInterface;
+import main.ui.UI;
 import main.util.ColorCodes;
 
 import java.sql.SQLException;
@@ -45,7 +46,7 @@ public static AuthenticationServiceImplementation getInstance(){
     public void init(){
     try {
         this.customerService = CustomerService.getInstance();
-        this.customerRepository = new CustomerJDBCRepository();
+        this.customerRepository = new CustomerRepositoryImpl();
         this.sc = new Scanner(System.in);
     } catch (Exception e) {
         System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
@@ -55,7 +56,7 @@ public static AuthenticationServiceImplementation getInstance(){
 
 
     @Override
-    public void login() throws TrialLimitExceedException {
+    public void login() throws TrialLimitExceedException, SQLException {
         System.out.println(ColorCodes.GREEN + "*************LOG-IN*****************" + ColorCodes.RESET);
         System.out.print("Enter email : ");
         String email = sc.nextLine();
@@ -77,15 +78,15 @@ public static AuthenticationServiceImplementation getInstance(){
         customer.ifPresent(c -> {
             try {
             if (c.getRole() == Roles.ADMIN || c.getRole() == Roles.SUPER_ADMIN) {
-                UserInterface adminUI = null;
+                UI adminUI = null;
 
                     adminUI = new AdminUI();
-                    adminUI.init(c);
+                    adminUI.initAdminServices(c);
 
 
             } else if(c.getRole() == Roles.CUSTOMER){
-                UserInterface customerUI = new CustomerUI();
-                customerUI.init(c);
+                UI customerUI = new CustomerUI();
+                customerUI.initCustomerServices(c);
             }
             } catch (Exception e) {
                 System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
@@ -122,7 +123,7 @@ public static AuthenticationServiceImplementation getInstance(){
      * @param isRedirected indicates if the called after registration.
      * @return Customer object on successful log in, if not found returns null.
      */
-    private Customer login(String email, String password, boolean isRedirected) throws CustomerNotFoundException {
+    private Customer login(String email, String password, boolean isRedirected) throws CustomerNotFoundException, SQLException {
         if (!isRedirected) {
             System.out.println(ColorCodes.GREEN + "******CUSTOMER LOG IN*******" + ColorCodes.RESET);
         }
@@ -136,7 +137,7 @@ public static AuthenticationServiceImplementation getInstance(){
      * @param password stores user password.
      * @return true on valid email and password or else false.
      */
-    private  boolean validateLogin(String email, String password) {
+    private  boolean validateLogin(String email, String password) throws SQLException {
         Optional<Customer> optionalCustomer = customerRepository.fetchByEmail(email);
         return optionalCustomer.isPresent() ? optionalCustomer.get().getPassword().equals(password) : optionalCustomer.isPresent();
     }
@@ -146,7 +147,7 @@ public static AuthenticationServiceImplementation getInstance(){
      *
      * @return true on successful log in and false if the credentials already exists in main.repository.
      */
-    private boolean register(String email, String password, String name, String address) {
+    private boolean register(String email, String password, String name, String address) throws SQLException {
         Optional<Customer> optionalCustomer = customerRepository.fetchByEmail(email);
         if (optionalCustomer.isPresent()) {
             return false;

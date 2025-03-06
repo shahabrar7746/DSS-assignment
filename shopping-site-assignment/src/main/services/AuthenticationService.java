@@ -14,7 +14,7 @@ public interface AuthenticationService {
      *
      * @throws TrialLimitExceedException if try limit exceeds.
      */
-    void login() throws TrialLimitExceedException;
+    void login() throws TrialLimitExceedException, SQLException;
 
     /**
      * Registers user as customer. lets user register their credentials if they do not exist in system.

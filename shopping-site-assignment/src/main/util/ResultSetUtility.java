@@ -33,9 +33,9 @@ private static ProductRepository productRepository = new ProductJDBCRepository()
 
 
 
-    public static Map<Long, Customer> getCustomersFromResultSet(ResultSet set) throws SQLException {
-        Map<Long, Customer> map = new ConcurrentHashMap<>();
+    public static List<Customer> getCustomersFromResultSet(ResultSet set) throws SQLException {
 
+List<Customer> customers = new ArrayList<>();
         while(set.next()){
             Long id = set.getLong("customer_id");
             String email = set.getString("email");
@@ -46,10 +46,10 @@ private static ProductRepository productRepository = new ProductJDBCRepository()
             Timestamp timestamp = set.getTimestamp("registered_on");
             Customer customer = new Customer(name,email, password, address, timestamp.toLocalDateTime(), roles);
             customer.setId(id);
-            map.put(id, customer);
+           customers.add(customer);
         }
         set.close();
-        return map;
+        return customers;
     }
     public static List<Order> getOrdersFromResultSet(ResultSet set) throws SQLException, CustomerNotFoundException, NoProductFoundException {
         List<Order> orders = new ArrayList<>();

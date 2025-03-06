@@ -10,12 +10,13 @@ import main.enums.Roles;
 
 import main.exceptions.*;
 
-import main.repositoryjdbcimpl.CustomerJDBCRepository;
 import main.repository.interfaces.OrderRepository;
 import main.repository.interfaces.ProductRepository;
-import main.repositoryjdbcimpl.OrderJDBCRepository;
-import main.repositoryjdbcimpl.ProductJDBCRepository;
 
+
+import main.repositoryjdbcimpl.CustomerRepositoryImpl;
+import main.repositoryjdbcimpl.OrderRepositoryImpl;
+import main.repositoryjdbcimpl.ProductRepositoryImpl;
 import main.services.AdminService;
 
 import main.repository.interfaces.CustomerRepository;
@@ -23,6 +24,7 @@ import main.repository.interfaces.CustomerRepository;
 import main.util.ColorCodes;
 import main.util.Response;
 
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,10 +39,10 @@ public class AdminServiceImplementation implements AdminService {
       init();
     }
 private void init(){
-    this.productRepository = new ProductJDBCRepository();
-    this.customerRepository = new CustomerJDBCRepository();
+    this.productRepository = new ProductRepositoryImpl();
+    this.customerRepository = new CustomerRepositoryImpl();
     this.sc = new Scanner(System.in);
-    this.orderRepository = new OrderJDBCRepository();
+    this.orderRepository = new OrderRepositoryImpl();
 }
     private static AdminServiceImplementation service;
 
@@ -109,7 +111,7 @@ private void init(){
         Long id = sc.nextLong();
         try {
            customer = customerRepository.fetchById(id);
-        } catch (CustomerNotFoundException e) {
+        } catch (CustomerNotFoundException | SQLException e) {
            return new Response(null, e.getLocalizedMessage());
         }
         if ( customer.isEmpty() || customer.get().getRole() != Roles.CUSTOMER) {
@@ -119,8 +121,13 @@ private void init(){
     }
 
     @Override
-    public Response getAllCustomer() throws CustomerNotFoundException {
-        List<Customer> allCustomer = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
+    public Response getAllCustomer() {
+        List<Customer> allCustomer = null;
+        try {
+            allCustomer = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
+        } catch (Exception e) {
+            return new Response(null, e.getLocalizedMessage());
+        }
         if (allCustomer.isEmpty()) {
             return new Response(null, "Customer main.repository is empty"); //executed if no customer object is found
         }
@@ -182,7 +189,7 @@ private void init(){
         }
         try {
             System.out.println(ColorCodes.BLUE + "Admins : " + getAllCustomer().getData() + ColorCodes.RESET);
-        } catch (CustomerNotFoundException e) {
+        } catch (Exception e) {
             return new Response(null, e.getLocalizedMessage());
         }
         System.out.print("Enter Customer id to whom you want to grant access to : ");
@@ -236,13 +243,18 @@ private void init(){
         System.out.println(ColorCodes.BLUE + "Customers : " + fetchAllAdmins() + ColorCodes.RESET);
         System.out.print("Enter Customer id to whom you want to revoke access to : ");
         String cid = sc.nextLine();
-        Optional<Customer> customer = customerRepository.fetchAdminById(Long.valueOf(cid));//fetches admins based on id.
+        Optional<Customer> customer = Optional.empty();//fetches admins based on id.
+
         int count = 3;//sets try limit.
         while (customer.isEmpty() && count-- >= 0) {
             System.out.println("Wrong customer id, enter correct customer id");
             System.out.print("Enter Customer id to whom you want to revoke access to : ");
             cid = sc.nextLine();//keeps on requesting id if no object is found for the previous id, keeps on going until count is not equals to 0 or less than 0
-            customer = customerRepository.fetchAdminById(Long.valueOf(cid));
+            try {
+                customer = customerRepository.fetchAdminById(Long.valueOf(cid));
+            } catch (SQLException e) {
+                return new Response(null, e.getLocalizedMessage());
+            }
         }
         if (customer.isEmpty()) {
             return new Response(null, "No admin found");
