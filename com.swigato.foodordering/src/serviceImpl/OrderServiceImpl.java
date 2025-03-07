@@ -1,7 +1,6 @@
 package serviceImpl;
 
 import dao.OrderDao;
-import daoImpl.OrderDaoImpl;
 import entities.Order;
 import enums.OrderStatus;
 import service.OrderService;
@@ -9,12 +8,8 @@ import service.OrderService;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
+    private final OrderDao orderDao;
 
-    private  OrderDao orderDao;
-
-    public OrderServiceImpl() {
-
-    }
     public OrderServiceImpl(OrderDao orderDao) {
         this.orderDao = orderDao;
     }

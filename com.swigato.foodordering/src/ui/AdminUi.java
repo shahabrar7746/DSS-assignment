@@ -1,7 +1,5 @@
 package ui;
 
-import dao.OrderDao;
-import entities.Order;
 import entities.User;
 import enums.ResponseStatus;
 import enums.UserRole;
@@ -10,7 +8,6 @@ import service.RestaurantService;
 import service.UserService;
 import utility.*;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,15 +16,24 @@ public class AdminUi extends Ui {
 
     private final UserService userService;
     private final RestaurantService restaurantService;
+    private User loggedInAdmin;
+    private final OrderService orderService;
+
+    public AdminUi(UserService userService, RestaurantService restaurantService, OrderService orderService) {
+        this.userService = userService;
+        this.restaurantService = restaurantService;
+        this.orderService = orderService;
+    }
 
     @Override
     public void initAdminScreen(Scanner scanner) {
         if (loggedInAdmin == null) {
             Response<User> response = loginAdmin(scanner);
             if (response.getResponseStatus() == ResponseStatus.FAILURE) {
-                System.out.println(ColourCodes.RED + "Invalid credentials or not a customer." + ColourCodes.RESET);
+                System.out.println(ColourCodes.RED +response.getMessage()+ ColourCodes.RESET);
                 return;
             }
+            System.out.println(ColourCodes.GREEN +response.getMessage()+ColourCodes.RESET);
             loggedInAdmin = response.getData();
         }
         boolean isExit = false;
@@ -42,43 +48,23 @@ public class AdminUi extends Ui {
                 scanner.nextLine();
 
                 switch (choice) {
-                    case 1:
-                        addNewAdmin(scanner);
-                        break;
-                    case 2:
-                        displayAllUsers();
-                        break;
-                    case 3:
-                        displayAllOrders();
-                        break;
-                    case 4:
-                        ManageFoodItemsUi.manageFoodItems(scanner, restaurantService);
-                        break;
-                    case 5:
+                    case 1 -> addNewAdmin(scanner);
+                    case 2 -> displayAllUsers();
+                    case 3 -> displayAllOrders();
+                    case 4 -> RestaurantOwnerUi.manageFoodItems(scanner, restaurantService);
+                    case 5 -> {
                         logOutAdmin(loggedInAdmin);
                         isExit = true;
-                        break;
-                    default:
-                        System.out.println("Invalid choice.");
+                    }
+                    default -> System.out.println("Invalid choice.");
                 }
-
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    private User loggedInAdmin;
-    private final OrderService orderService;
-
-    public AdminUi(UserService userService, RestaurantService restaurantService, OrderService orderService) {
-        this.userService = userService;
-        this.restaurantService = restaurantService;
-        this.orderService = orderService;
-    }
-
     private void addNewAdmin(Scanner scanner) {
-
         System.out.println("Enter name: ");
         String name = scanner.nextLine();
         System.out.println("Enter email:");
@@ -87,16 +73,16 @@ public class AdminUi extends Ui {
         String password = scanner.nextLine();
         UserRole admin = UserRole.ADMIN;
 
-        Response<Boolean> userResponse = userService.registerUser(new User(name, email, password, admin));
+        Response<User> userResponse = userService.registerUser(new User(name, email, password, admin));
 
         if (userResponse.getResponseStatus() == ResponseStatus.SUCCESS) {
-            System.out.println("Admin successfully added");
+            System.out.println(userResponse.getMessage());
+
         } else if (userResponse.getResponseStatus() == ResponseStatus.FAILURE) {
-            System.out.println("Unable to add admin");
+            System.out.println(userResponse.getResponseStatus() + userResponse.getMessage());
         } else {
             System.out.println("Enter correct input ");
         }
-
     }
 
     private Response<User> loginAdmin(Scanner scanner) {
@@ -108,17 +94,15 @@ public class AdminUi extends Ui {
         Response<User> userResponse = userService.loginUser(email, password);
         User admin = userResponse.getData();
         if (admin != null && admin.getRole() == UserRole.ADMIN) {
-            admin.setLoggedIn(true);
-            System.out.println("Admin logged in successfully.");
-            return new Response<>(admin, ResponseStatus.SUCCESS);
+            userService.setLoginStatus(email);
+            return new Response<>(admin, ResponseStatus.SUCCESS,"Welcome "+ admin.getName().concat("!"));
         } else {
-            System.out.println("Invalid credentials or not an admin.");
-            return new Response<>(ResponseStatus.FAILURE);
+            return new Response<>(ResponseStatus.FAILURE, "Invalid credentials or not an admin.\n");
         }
     }
 
     private void logOutAdmin(User admin) {
-        admin.setLoggedIn(false);
+        userService.logoutUser(admin.getEmail());
         loggedInAdmin = null;
         System.out.println("Admin logged out.");
     }

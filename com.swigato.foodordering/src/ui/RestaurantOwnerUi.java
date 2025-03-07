@@ -11,7 +11,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class ManageFoodItemsUi {
+public class RestaurantOwnerUi {
     public static void manageFoodItems(Scanner scanner, RestaurantService restaurantService) {
         boolean isExit = false;
         while (!isExit) {
@@ -25,27 +25,15 @@ public class ManageFoodItemsUi {
                 scanner.nextLine();
 
                 switch (choice) {
-                    case 1:
-                        addFoodItem(scanner, restaurantService);
-                        break;
-                    case 2:
-                        removeFoodItem(scanner, restaurantService);
-                        break;
-                    case 3:
-                        updateFoodItem(scanner, restaurantService);
-                        break;
-                    case 4:
-                        displayAllFoodItems(restaurantService);
-                        break;
-                    case 5:
-                        displayFoodByCategory(scanner, restaurantService);
-                        break;
-                    case 6:
-                        isExit = true;
-                        break;
-                    default:
-                        System.out.println("Invalid choice.");
+                    case 1 ->  addFoodItem(scanner, restaurantService);
+                    case 2 ->  removeFoodItem(scanner, restaurantService);
+                    case 3 ->  updateFoodItem(scanner, restaurantService);
+                    case 4 ->  displayAllFoodItems(restaurantService);
+                    case 5 ->  displayFoodByCategory(scanner, restaurantService);
+                    case 6 ->  isExit = true;
+                    default ->   System.out.println("Invalid choice.");
                 }
+
             } catch (IllegalArgumentException | InputMismatchException e) {
                 System.out.println("invalid input");
                 scanner.nextLine();
@@ -67,7 +55,6 @@ public class ManageFoodItemsUi {
         restaurantService.addFood(foodItem);
         System.out.println("Food item added.");
     }
-
 
     private static void removeFoodItem(Scanner scanner, RestaurantService restaurantService) {
         System.out.println("Enter food name:");
@@ -129,6 +116,5 @@ public class ManageFoodItemsUi {
         FoodCategory category = FoodCategory.valueOf(categoryStr);
         List<FoodItem> foodItems = restaurantService.getFoodByCategory(category);
         foodItems.forEach(System.out::println);
-
     }
 }

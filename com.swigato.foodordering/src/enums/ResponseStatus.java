@@ -3,7 +3,7 @@ package enums;
 public enum ResponseStatus {
     SUCCESS(200), FAILURE(404);
 
-    private int statusCode;
+    private final int statusCode;
 
     ResponseStatus(int statusCode) {
         this.statusCode = statusCode;

@@ -1,6 +1,5 @@
 package ui;
 
-
 import entities.FoodItem;
 import entities.Order;
 import entities.OrderItem;
@@ -11,7 +10,6 @@ import service.CustomerService;
 import service.OrderService;
 import service.RestaurantService;
 import service.UserService;
-import serviceImpl.OrderServiceImpl;
 import utility.ColourCodes;
 import utility.Formatter;
 import utility.OperationsInfo;
@@ -19,8 +17,7 @@ import utility.Response;
 
 import java.util.*;
 
-
-public class CustomerUi extends Ui{
+public class CustomerUi extends Ui {
 
     private final UserService userService;
     private final RestaurantService restaurantService;
@@ -39,9 +36,11 @@ public class CustomerUi extends Ui{
         if (loggedInCustomer == null) {
             Response<User> response = loginAsCustomer(scanner);
             if (response.getResponseStatus() == ResponseStatus.FAILURE) {
-                System.out.println(ColourCodes.RED + "Invalid credentials or not a customer." + ColourCodes.RESET);
+                System.out.println(ColourCodes.RED + response.getMessage() + ColourCodes.RESET);
                 return;
             }
+
+            System.out.println(ColourCodes.GREEN + response.getMessage() + ColourCodes.RESET);
             loggedInCustomer = response.getData();
             customerService = new CustomerService(loggedInCustomer, orderService);
         }
@@ -59,32 +58,52 @@ public class CustomerUi extends Ui{
                 scanner.nextLine();
 
                 switch (choice) {
-                    case 1:
-                        viewMenu();
-                        break;
-                    case 2:
-                        addToCart(scanner);
-                        break;
-                    case 3:
-                        viewCart(scanner);
-                        break;
-                    case 4:
-                        trackOrderStatus(scanner);
-                        break;
-                    case 5:
-                        vieOrderHistory(scanner);
-                        break;
-                    case 6:
+                    case 1 -> viewMenu();
+                    case 2 -> addToCart(scanner);
+                    case 3 -> viewCart(scanner);
+                    case 4 -> trackOrderStatus(scanner);
+                    case 5 -> vieOrderHistory(scanner);
+                    case 6 -> {
                         logoutCustomer();
                         isExit = true;
-                        break;
-                    default:
-                        System.out.println("Invalid choice.");
+                    }
+                    default -> System.out.println("Invalid choice.");
                 }
+
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.nextLine();
             }
+        }
+    }
+
+    public void registerCustomer(Scanner scanner) {
+        try {
+            System.out.println("Enter name: ");
+            String name = scanner.nextLine();
+            System.out.println("Enter email:");
+            String email = scanner.nextLine();
+            System.out.println("Enter password:");
+            String password = scanner.nextLine();
+            UserRole customer = UserRole.CUSTOMER;
+
+            Response<User> userResponse = userService.registerUser(new User(name, email, password, customer));
+
+            if (userResponse.getResponseStatus() == ResponseStatus.SUCCESS) {
+                User user = userResponse.getData();
+                userService.setLoginStatus(email);
+                loggedInCustomer = user;
+                customerService = new CustomerService(loggedInCustomer, orderService);
+                System.out.println(userResponse.getMessage());
+                initCustomerScreen(scanner);
+
+            } else if (userResponse.getResponseStatus() == ResponseStatus.FAILURE) {
+                System.out.println(userResponse.getMessage());
+            } else {
+                System.out.println("Enter correct input ");
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(ColourCodes.RED + e.getMessage() + ColourCodes.RESET);
         }
     }
 
@@ -97,12 +116,10 @@ public class CustomerUi extends Ui{
         Response<User> userResponse = userService.loginUser(email, password);
         User customer = userResponse.getData();
         if (customer != null && customer.getRole() == UserRole.CUSTOMER) {
-            customer.setLoggedIn(true);
-            System.out.println(ColourCodes.GREEN + "Customer logged in successfully." + ColourCodes.RESET);
-            return new Response<>(customer, ResponseStatus.SUCCESS);
+            userService.setLoginStatus(email);
+            return new Response<>(customer, ResponseStatus.SUCCESS, "Customer logged in successfully.");
         } else {
-            // System.out.println(ColourCodes.RED + "Invalid credentials or not a customer." + ColourCodes.RESET);
-            return new Response<>(ResponseStatus.FAILURE);
+            return new Response<>(ResponseStatus.FAILURE, "Invalid credentials or not a customer.\n");
         }
     }
 
@@ -254,7 +271,7 @@ public class CustomerUi extends Ui{
     }
 
     private void logoutCustomer() {
-        loggedInCustomer.setLoggedIn(false);
+        userService.logoutUser(loggedInCustomer.getEmail());
         loggedInCustomer = null;
         customerService = null;
         System.out.println("Customer logged out.");

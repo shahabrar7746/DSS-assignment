@@ -22,7 +22,6 @@ public class OrderFormatter {
             sb.append("  - ").append(item.getFood().getName()).append(ColourCodes.BLUE+" (Quantity: ,"+ColourCodes.RESET).append(item.getQuantity()).append(ColourCodes.BLUE+" Price: "+ColourCodes.RESET)
                     .append(roundToTwoDecimalPlaces(item.getTotalPrice())).append(")\n");
         }
-
         sb.append(ColourCodes.BLUE+"Total Bill Amount: "+ColourCodes.RESET).append(roundToTwoDecimalPlaces(order.getTotalBillAmount())).append("\n");
 
         return sb.toString();

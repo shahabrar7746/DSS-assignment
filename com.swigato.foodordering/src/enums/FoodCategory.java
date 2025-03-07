@@ -5,7 +5,6 @@ public enum FoodCategory {
 
     private final String category;
 
-
     FoodCategory(String category) {
         this.category = category;
     }
@@ -13,4 +12,5 @@ public enum FoodCategory {
     public String getCategory() {
         return this.category;
     }
+
 }

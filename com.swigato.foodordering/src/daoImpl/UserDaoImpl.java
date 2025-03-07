@@ -31,9 +31,9 @@ public class UserDaoImpl implements UserDao {
     public Response<Boolean> addUser(User user) {
         boolean success = users.add(user);
         if (success) {
-            return new Response<>(Boolean.TRUE, ResponseStatus.SUCCESS);
+            return new Response<>(Boolean.TRUE, ResponseStatus.SUCCESS, "User found : Returning from Dao");
         }
-            return new Response<>(ResponseStatus.FAILURE);
+            return new Response<>(ResponseStatus.FAILURE, "Unable to add user: Returning from Dao ");
     }
 
     @Override

@@ -6,7 +6,7 @@ import utility.Response;
 import java.util.List;
 
 public interface UserService {
-    Response<Boolean> registerUser(User user);
+    Response<User> registerUser(User user);
 
     Response<User> loginUser(String email, String password);
 
@@ -15,4 +15,8 @@ public interface UserService {
     void updateUser(User user);
 
     void deleteUser(User user);
+
+    void setLoginStatus(String email);
+
+    void logoutUser(String email);
 }
