@@ -1,5 +1,6 @@
 package dao;
 
+import entity.Guest;
 import entity.User;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface UserDao {
     void updateUserToInactive(User user);
 
     void updateUserToActive(User user);
+
+    void addAccompaniedGuest(Guest guest);
 }

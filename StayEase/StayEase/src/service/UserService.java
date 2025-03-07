@@ -1,5 +1,6 @@
 package service;
 
+import entity.Guest;
 import entity.User;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface UserService {
     int createUser(User user);
     void updateUserToInactive(User user);
     void updateUserToActive(User user);
-
+    void addAccompaniedGuest(Guest guest);
 }

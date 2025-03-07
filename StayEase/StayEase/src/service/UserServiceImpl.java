@@ -1,6 +1,7 @@
 package service;
 
 import dao.UserDao;
+import entity.Guest;
 import entity.User;
 
 import java.util.List;
@@ -69,6 +70,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserToActive(User user) {
         userDao.updateUserToActive(user);
+    }
+
+    @Override
+    public void addAccompaniedGuest(Guest guest) {
+        userDao.addAccompaniedGuest(guest);
     }
 }
 

@@ -424,7 +424,6 @@ public class Menu {
         String email = scanner.nextLine();
 
         User user = userController.getUserByEmail(email);
-
         if (user == null) {
             System.out.println("User not found! Creating a new user profile...");
 
@@ -434,42 +433,32 @@ public class Menu {
             System.out.print("Enter password: ");
             String password = scanner.nextLine();
 
-            UserRole role = UserRole.GUEST;
             boolean isActive = true;
-
             List<Guest> accompaniedGuests = new ArrayList<>();
-            if (role == UserRole.GUEST) {
-                System.out.print("Will the user have accompanied guests? (yes/no): ");
-                String hasGuests = scanner.nextLine().trim().toLowerCase();
-                if (hasGuests.equals("yes")) {
-                    System.out.print("Enter the number of guests: ");
-                    int guestCount = scanner.nextInt();
+            System.out.print("Will the user have accompanied guests? (yes/no): ");
+            String hasGuests = scanner.nextLine().trim().toLowerCase();
+            if (hasGuests.equals("yes")) {
+                System.out.print("Enter the number of guests: ");
+                int guestCount = scanner.nextInt();
+                scanner.nextLine();
+                for (int i = 0; i < guestCount; i++) {
+                    System.out.print("Enter guest name: ");
+                    String guestName = scanner.nextLine();
+                    System.out.print("Enter guest age: ");
+                    int guestAge = scanner.nextInt();
                     scanner.nextLine();
-                    for (int i = 0; i < guestCount; i++) {
-                        System.out.print("Enter guest name: ");
-                        String guestName = scanner.nextLine();
-                        System.out.print("Enter guest age: ");
-                        int guestAge = scanner.nextInt();
-                        scanner.nextLine();
-                        accompaniedGuests.add(new Guest(0, guestName, guestAge, 0)); // guestID & userID will be assigned later
-                    }
+                    accompaniedGuests.add(new Guest(0, guestName, guestAge, 0)); // guestID & userID will be assigned later
                 }
             }
 
-            if (role == UserRole.GUEST) {
-                user = new GuestUser(0, name, email, password, isActive, accompaniedGuests);
-            } else {
-                user = new User(0, name, email, password, role, isActive);
-            }
-
+            user = new GuestUser(0, name, email, password, isActive, accompaniedGuests);
             int newUserId = userController.createUser(user);
             user.setUserID(newUserId);
 
-            // Assign userID to guests if any
             if (user instanceof GuestUser) {
                 for (Guest guest : ((GuestUser) user).getAccompaniedGuests()) {
                     guest.setUserId(newUserId);
-                    guestController.addGuest(guest); // Save guest in DB
+                    userController.addAccompaniedGuest(guest);
                 }
             }
 
@@ -477,11 +466,6 @@ public class Menu {
         }
 
         System.out.println("User found: " + user.getName() + " (" + user.getEmail() + ")");
-
-//        if (!user.isActive()) {
-//            System.out.println("Your account is not active. Please contact admin for activation.");
-//            return;
-//        }
 
         List<Room> availableRooms = roomController.getAvailableRooms();
         if (availableRooms.isEmpty()) {

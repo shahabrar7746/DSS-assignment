@@ -238,4 +238,17 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void addAccompaniedGuest(Guest guest) {
+        String sql = "INSERT INTO guests(user_id, name, age) VALUES (?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, guest.getUserId());
+            preparedStatement.setString(2, guest.getName());
+            preparedStatement.setInt(3, guest.getAge());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+   }
 }
