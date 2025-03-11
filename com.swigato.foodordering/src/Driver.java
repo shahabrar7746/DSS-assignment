@@ -1,91 +1,64 @@
 
-import daoImpl.RepoFoodDao;
-import daoImpl.RepoOrderDao;
-import daoImpl.RepoRestaurantDao;
-import daoImpl.RepoUserDao;
+import config.AppConfig;
+import dao.FoodDao;
+import dao.OrderDao;
+import dao.RestaurantDao;
+import dao.UserDao;
 
-import entities.FoodItem;
-import entities.User;
-import enums.FoodCategory;
-import enums.UserRole;
-import serviceImpl.RestaurantServiceImpl;
-import serviceImpl.UserServiceImpl;
+import service.OrderService;
+import service.RestaurantService;
+import service.UserService;
+
 import ui.AdminUi;
 import ui.CustomerUi;
 import utility.ColourCodes;
 import utility.OperationsInfo;
-import utility.Response;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 
 public class Driver {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        AppConfig appConfig = new AppConfig();
 
-        RepoUserDao userDao = new RepoUserDao();
-        RepoFoodDao foodDao = new RepoFoodDao();
-        RepoOrderDao orderDao = new RepoOrderDao();
-        RepoRestaurantDao restaurantDao = new RepoRestaurantDao();
+        UserDao userDao = appConfig.getUserDao();
+        FoodDao foodDao = appConfig.getFoodDao();
+        RestaurantDao restaurantDao = appConfig.getRestaurantDao();
+        OrderDao orderDao = appConfig.getOrderDao(); //initializing dao's
 
-        UserServiceImpl userService = new UserServiceImpl(userDao);
-        RestaurantServiceImpl restaurantService = new RestaurantServiceImpl(restaurantDao, foodDao);
+        UserService userService = appConfig.getUserService(userDao);
+        RestaurantService restaurantService = appConfig.getRestaurantService(restaurantDao, foodDao);
+        OrderService orderService = appConfig.getOrderService(orderDao); //initializing services
 
-        AdminUi adminUi = new AdminUi(userService, restaurantService, orderDao);
-        CustomerUi customerUi = new CustomerUi(userService, restaurantService, orderDao);
+        appConfig.initializeUsers(userService);
+        appConfig.initializeFoodItems(foodDao);     //initializing users and food items
 
-
-        User user1 = new User("Chetan", "chetan@gmail.com", "chetan123", UserRole.CUSTOMER);
-        User user2 = new User("Saurav", "s", "s", UserRole.CUSTOMER);
-        userService.registerUser(user2);
-        User adminUser = new User("admin", "admin@gmai.com", "ds@123", UserRole.ADMIN);
-        User adminUser2 = new User("a", "a", "a", UserRole.ADMIN);
-        userService.registerUser(user1);
-        userService.registerUser(adminUser);
-        userService.registerUser(adminUser2);
-
-        FoodItem foodItem = new FoodItem("Pasta", 60, FoodCategory.VEG);
-        FoodItem foodItem2 = new FoodItem("PaneerTikka", 150, FoodCategory.VEG);
-        FoodItem foodItem3 = new FoodItem("ChickenCurry", 130, FoodCategory.NONVEG);
-        FoodItem foodItem4 = new FoodItem("DumBiryani", 200, FoodCategory.NONVEG);
-        FoodItem foodItem5 = new FoodItem("Lassi", 40, FoodCategory.BEVERAGES);
-        FoodItem foodItem6 = new FoodItem("ButterMilk", 40, FoodCategory.BEVERAGES);
-        foodDao.addFood(foodItem);
-        foodDao.addFood(foodItem2);
-        foodDao.addFood(foodItem3);
-        foodDao.addFood(foodItem4);
-        foodDao.addFood(foodItem5);
-        foodDao.addFood(foodItem6);
+        AdminUi adminUi = new AdminUi(userService, restaurantService, orderService);
+        CustomerUi customerUi = new CustomerUi(userService, restaurantService, orderService);
 
         int choice = 0;
-        while (choice != 3) {
+        while (choice != 4) {
             try {
                 List<String> menuItems = new ArrayList<>(List.of(ColourCodes.CYAN + " WELCOME TO FOOD ORDERING APPLICATION" + ColourCodes.RESET,
                         "---------------------------------------", "Your Logging in as: ",
-                        "1.Admin", "2.Customer", "3.Exit"));
+                        "1.Admin", "2.Customer", "3.Customer registration", "4.Exit"));
 
                 OperationsInfo.displayMenu(menuItems);
                 choice = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (choice) {
-
-                    case 1:
-                        adminUi.adminMenu(scanner);
-                        break;
-                    case 2:
-                        customerUi.customerMenu(scanner);
-                        break;
-                    case 3:
-                        System.out.println("Exiting...");
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please try again.");
+                    case 1 -> adminUi.initAdminScreen(scanner);
+                    case 2 -> customerUi.initCustomerScreen(scanner);
+                    case 3 -> customerUi.registerCustomer(scanner);
+                    case 4 -> System.out.println("Exiting...");
+                    default -> System.out.println("Invalid choice. Please try again.");
                 }
-            } catch (java.util.InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println(ColourCodes.RED + "Invalid input. Please enter a number." + ColourCodes.RESET);
                 scanner.nextLine();
             } catch (Exception e) {

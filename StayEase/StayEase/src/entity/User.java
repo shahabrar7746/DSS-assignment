@@ -2,6 +2,8 @@ package entity;
 
 import constants.UserRole;
 
+import java.util.List;
+
 public class User {
 
     private int userID;

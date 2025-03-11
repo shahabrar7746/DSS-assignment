@@ -17,17 +17,16 @@ public class User implements UserValidator, Formatable {
     private boolean isLoggedIn;
 
     public User(String name, String email, String password, UserRole role) {
-//        if (!isValidEmail(email) || !isValidPassword(password) || !isValidName(name)) {
-//            throw new IllegalArgumentException("Invalid user data.");
-//        }
-        this.id = (int) (Math.random()*10000000);
+       if (!isValidEmail(email) || !isValidPassword(password) || !isValidName(name)) {
+        throw new IllegalArgumentException("Invalid user data.");
+       }
+        this.id = (int) (Math.random() * 10000);
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
         this.isLoggedIn = false;
     }
-
 
     public int getId() {
         return id;
@@ -78,6 +77,7 @@ public class User implements UserValidator, Formatable {
     }
 
 
+
     @Override
     public boolean isValidEmail(String email) {
         return Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$").matcher(email).matches();
@@ -94,12 +94,13 @@ public class User implements UserValidator, Formatable {
 
     @Override
     public boolean isValidName(String name) {
-        return name != null && !name.trim().isEmpty();
+        return name != null && !name.trim().isEmpty() &&
+                Pattern.compile("^[A-Za-z\\s]+$").matcher(name).matches();
     }
 
     @Override
     public String toString() {
-        return "User{" +  ", id=" + id +
+        return "User{" + ", id=" + id +
                 ", name='" + name + '\'' +
                 "email='" + email + '\'' +
                 ", role=" + role +

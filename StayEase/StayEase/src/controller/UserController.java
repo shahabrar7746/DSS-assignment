@@ -1,5 +1,6 @@
 package controller;
 
+import entity.Guest;
 import entity.User;
 import service.UserService;
 
@@ -52,5 +53,9 @@ public class UserController {
 
     public List<User> getAllAdmins() {
         return userService.getAllAdmins();
+    }
+
+    public void addAccompaniedGuest(Guest guest) {
+        userService.addAccompaniedGuest(guest);
     }
 }

@@ -2,17 +2,26 @@ package utility;
 
 import enums.ResponseStatus;
 
-public class Response<D> {
+public  class Response<D> {
     private D data;
     private ResponseStatus responseStatus;
 
-    public Response(D data, ResponseStatus responseStatus) {
-        this.data = data;
-        this.responseStatus = responseStatus;
+    public String getMessage() {
+        return message;
     }
 
-    public Response(ResponseStatus responseStatus) {
+    private String message;
+
+    public Response(D data, ResponseStatus responseStatus,String message) {
+        this.data = data;
         this.responseStatus = responseStatus;
+        this.message = message;
+    }
+
+    public Response(ResponseStatus responseStatus,String message) {
+        this.responseStatus = responseStatus;
+        this.message = message;
+
     }
 
     public D getData() {

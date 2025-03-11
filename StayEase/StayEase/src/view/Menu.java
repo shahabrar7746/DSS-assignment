@@ -6,22 +6,22 @@ import controller.BookingController;
 import controller.InvoiceController;
 import controller.RoomController;
 import controller.UserController;
-import entity.Booking;
-import entity.Invoice;
-import entity.Room;
-import entity.User;
+import entity.*;
 import constants.PaymentStatus;
+import org.apache.logging.log4j.LogManager;
 
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class Menu {
 
@@ -33,9 +33,6 @@ public class Menu {
     private final InvoiceController invoiceController;
 
     private final AdminDashBoard adminDashBoard;
-    private StaffDashBoard staffDashBoard;
-    private SuperAdminDashboard superAdminDashboard;
-    private UserDashboard userDashboard;
 
     public Menu(RoomController roomController, UserController userController, BookingController bookingController, InvoiceController invoiceController, AdminDashBoard adminDashBoard) {
         this.roomController = roomController;
@@ -89,19 +86,18 @@ public class Menu {
         if (availableRooms.isEmpty()) {
             System.out.println("\nNo available rooms found.");
         } else {
-            System.out.println("\n==============================================================");
-            System.out.printf("%-10s %-15s %-15s %-10s %-15s%n",
-                    "Room ID", "Room Number", "Room Type", "Price", "Available");
-            System.out.println("==============================================================");
+            System.out.println("\n=======================================================");
+            System.out.printf("%-10s %-15s %-15s %-10s %n",
+                    "Room ID", "Room Number", "Room Type", "Price");
+            System.out.println("=======================================================");
             for (Room room : availableRooms) {
-                System.out.printf("%-10d %-15d %-15s Rs.%-9.2f %-15s%n",
+                System.out.printf("%-10d %-15d %-15s Rs.%-9.2f %n",
                         room.getRoomID(),
                         room.getRoomNumber(),
                         room.getRoomType().toString(),
-                        room.getPrice(),
-                        room.isAvailable() ? "Yes" : "No");
+                        room.getPrice());
             }
-            System.out.println("--------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------");
         }
     }
 
@@ -428,7 +424,6 @@ public class Menu {
         String email = scanner.nextLine();
 
         User user = userController.getUserByEmail(email);
-
         if (user == null) {
             System.out.println("User not found! Creating a new user profile...");
 
@@ -438,21 +433,39 @@ public class Menu {
             System.out.print("Enter password: ");
             String password = scanner.nextLine();
 
-            UserRole role = UserRole.GUEST;
             boolean isActive = true;
+            List<Guest> accompaniedGuests = new ArrayList<>();
+            System.out.print("Will the user have accompanied guests? (yes/no): ");
+            String hasGuests = scanner.nextLine().trim().toLowerCase();
+            if (hasGuests.equals("yes")) {
+                System.out.print("Enter the number of guests: ");
+                int guestCount = scanner.nextInt();
+                scanner.nextLine();
+                for (int i = 0; i < guestCount; i++) {
+                    System.out.print("Enter guest name: ");
+                    String guestName = scanner.nextLine();
+                    System.out.print("Enter guest age: ");
+                    int guestAge = scanner.nextInt();
+                    scanner.nextLine();
+                    accompaniedGuests.add(new Guest(0, guestName, guestAge, 0)); // guestID & userID will be assigned later
+                }
+            }
 
-            user = new User(0, name, email, password, role, isActive); // userID is auto-generated
+            user = new GuestUser(0, name, email, password, isActive, accompaniedGuests);
             int newUserId = userController.createUser(user);
             user.setUserID(newUserId);
+
+            if (user instanceof GuestUser) {
+                for (Guest guest : ((GuestUser) user).getAccompaniedGuests()) {
+                    guest.setUserId(newUserId);
+                    userController.addAccompaniedGuest(guest);
+                }
+            }
+
             System.out.println("New user created successfully!");
         }
 
         System.out.println("User found: " + user.getName() + " (" + user.getEmail() + ")");
-
-//        if (!user.isActive()) {
-//            System.out.println("Your account is not active. Please contact admin for activation.");
-//            return;
-//        }
 
         List<Room> availableRooms = roomController.getAvailableRooms();
         if (availableRooms.isEmpty()) {

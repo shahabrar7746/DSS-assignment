@@ -66,6 +66,4 @@ public class FoodItem {
     public int hashCode() {
         return Objects.hash(name, price, category);
     }
-
-
 }

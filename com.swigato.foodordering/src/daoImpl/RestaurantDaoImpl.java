@@ -3,7 +3,7 @@ package daoImpl;
 import dao.RestaurantDao;
 import entities.Restaurant;
 
-public class RepoRestaurantDao implements RestaurantDao {
+public class RestaurantDaoImpl implements RestaurantDao {
     private Restaurant restaurant;
 
     @Override

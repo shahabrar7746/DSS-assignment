@@ -29,8 +29,6 @@ public class Formatter {
 
     }
 
-
-
     public static String multiplychar(int x, char ch) {
         String temp = "";
         for (int i = 0; i < x + Formatable.EXTRA_CHAR; i++) {
