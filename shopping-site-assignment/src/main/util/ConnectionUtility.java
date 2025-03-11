@@ -23,10 +23,8 @@ public final class ConnectionUtility {
                 Properties properties = new Properties();
                 FileInputStream fileInputStream = new FileInputStream("src/config.properties");
                 properties.load(fileInputStream);
-                String url = properties.getProperty("database.url");
-                String user = properties.getProperty("database.username");
-                String password = properties.getProperty("database.password");
-                con = DriverManager.getConnection(url, user, password);
+                String url = properties.getProperty("url");
+                con = DriverManager.getConnection(url,properties);
             } catch (SQLException | IOException ex) {
                 System.out.println("Properties file not found");
             }

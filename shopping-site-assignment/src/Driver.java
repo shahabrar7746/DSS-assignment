@@ -2,7 +2,7 @@
 import main.exceptions.NoProductFoundException;
 import main.repository.interfaces.ProductRepository;
 
-import main.repositoryjdbcimpl.ProductJDBCRepository;
+import main.repositoryjdbcimpl.ProductRepositoryImpl;
 import main.serviceimlementation.AuthenticationServiceImplementation;
 
 import main.services.AuthenticationService;
@@ -16,7 +16,7 @@ public class Driver {
     public static void main(String[] args) throws SQLException, NoProductFoundException {
 
        // logger.info("this is for test");
-        final ProductRepository productRepository = new ProductJDBCRepository();
+        final ProductRepository productRepository = new ProductRepositoryImpl();
         final  AuthenticationService auth = AuthenticationService.getInstance();
         System.out.println(ColorCodes.GREEN + "***********WELCOME*************" + ColorCodes.RESET);
         System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);

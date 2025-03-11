@@ -23,8 +23,8 @@ import main.repositoryjdbcimpl.SellerRepositoryImpl;
 import main.services.CustomerService;
 
 
-
-
+import main.ui.CustomerUI;
+import main.ui.UI;
 import main.util.ColorCodes;
 import main.util.Response;
 
@@ -59,22 +59,15 @@ private CustomerServiceImplementation() {
     }
 
 
-    public void browse(final Customer customer) throws SQLException {
-        System.out.println(ColorCodes.GREEN + "******BROWSE*******" + ColorCodes.RESET);
-        String operation = "";
-        while (!operation.equalsIgnoreCase("back")) {
+    public void browse(final Customer customer, String operation) throws SQLException {
+
+
             Response response = null;
             try {
                 System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
             }catch (NoProductFoundException e){
                 System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
             }
-            System.out.println("PRESS 1 FOR TO START ORDERING");
-            System.out.println("PRESS 2 TO VIEW ORDERS");
-            System.out.println("PRESS 3 TO CANCEL ORDER");
-            System.out.println("PRESS 4 TO ORDER ITEMS FROM CART");
-            System.out.println("TYPE 'BACK' TO GO BACK");
-            System.out.print("Operation : ");
             operation = sc.nextLine();
 
                 switch (operation) {
@@ -102,7 +95,7 @@ private CustomerServiceImplementation() {
                 System.out.println(ColorCodes.RED + response  + response.getData() + ColorCodes.RESET);
             }
 
-        }
+
     }
 
     /**

@@ -13,9 +13,8 @@ import main.exceptions.NoProductFoundException;
 import main.repository.interfaces.CustomerRepository;
 import main.repository.interfaces.ProductRepository;
 import main.repository.interfaces.SellerRepository;
-import main.repositoryjdbcimpl.CustomerJDBCRepository;
-import main.repositoryjdbcimpl.ProductJDBCRepository;
-import main.repositoryjdbcimpl.SellerJDBCRepository;
+import main.repositoryjdbcimpl.*;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,9 +25,9 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ResultSetUtility {
-private static CustomerRepository  customerRepository = new CustomerJDBCRepository();
-private  static SellerRepository   sellerRepository = new SellerJDBCRepository();
-private static ProductRepository productRepository = new ProductJDBCRepository();
+private static CustomerRepository  customerRepository = new CustomerRepositoryImpl();
+private  static SellerRepository   sellerRepository = new SellerRepositoryImpl();
+private static ProductRepository productRepository = new ProductRepositoryImpl();
 
 
 

@@ -110,7 +110,8 @@ public static AuthenticationServiceImplementation getInstance(){
         String password = sc.nextLine();
         if (register(email, password, name, address)) {
             Customer customer = login(email, password, true);
-            customerService.browse(customer);
+            UI customerUi = new CustomerUI();
+            customerUi.initAdminServices(customer);
         } else {
             throw new UserAlreadyExistsException("User already exist");
         }

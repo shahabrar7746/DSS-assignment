@@ -38,21 +38,22 @@ public class AdminUI extends UI {
         String operation = "";
         while (!operation.equalsIgnoreCase("back")) {
             final String response = "Response : ";
-            System.out.println("Press 1 to get all the customer");
+            List<String> option = new ArrayList<>();
+            option.add("Press 1 to get all the customer");
+            option.add("Press 2 to get all products");
+            option.add("Press 3 to get customer by id");
+            option.add("Press 4 to get all delivered orders");
+            option.add("Press 5 to get the products by their type");
+            option.add("Press 6 to fetch all admins");
             boolean isExit = false;
-            System.out.println("Press 2 to get all products");
-            System.out.println("Press 3 to get customer by id");
-            System.out.println("Press 4 to get all delivered orders");
-            System.out.println("Press 5 to get the products by their type");
-            System.out.println("Press 6 to fetch all admins");
             if (isSuperAdmin) {
-                System.out.println("Press 7 to cancel a order");
-                System.out.println("Press 8 to delete customer");
-                System.out.println("Press 9 to grant admin access to customer");
-                System.out.println("Press 10 to revoke access from customer");
+                option.add("Press 7 to cancel a order");
+              option.add("Press 8 to delete customer");
+             option.add("Press 9 to grant admin access to customer");
+                option.add("Press 10 to revoke access from customer");
             }
-
-            System.out.println("Enter 'back' to go to previous page");
+            option.add("Enter 'back' to go to previous page");
+            super.displayOptions(option);
             operation = sc.nextLine();
 
                 Response resp = null;
