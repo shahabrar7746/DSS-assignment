@@ -125,7 +125,7 @@ public class CustomerUi extends Ui {
 
     private void viewMenu() {
         System.out.println(ColourCodes.CYAN + "\nMENU" + ColourCodes.RESET);
-        System.out.println(String.format(ColourCodes.PURPLE + "| %-15s | %-10s | %-10s |" + ColourCodes.RESET, "Food Name", "Item Price", "Food Category"));
+        System.out.printf(ColourCodes.PURPLE + "| %-15s | %-10s | %-10s |" + ColourCodes.RESET + "%n", "Food Name", "Item Price", "Food Category");
         List<FoodItem> foodItems = restaurantService.getAllFood();
         foodItems.forEach(System.out::println);
     }

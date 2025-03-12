@@ -19,7 +19,6 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class Driver {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -63,7 +62,6 @@ public class Driver {
                 scanner.nextLine();
             } catch (Exception e) {
                 System.out.println(ColourCodes.RED + "An unexpected error occurred: " + e.getMessage() + ColourCodes.RESET);
-                e.printStackTrace();
                 scanner.nextLine();
             }
         }

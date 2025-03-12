@@ -6,6 +6,7 @@ import validation.UserValidator;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class User implements UserValidator, Formatable {
@@ -20,7 +21,8 @@ public class User implements UserValidator, Formatable {
        if (!isValidEmail(email) || !isValidPassword(password) || !isValidName(name)) {
         throw new IllegalArgumentException("Invalid user data.");
        }
-        this.id = (int) (Math.random() * 10000);
+        Random random = new Random();
+        this.id = random.nextInt(1000);
         this.name = name;
         this.email = email;
         this.password = password;
@@ -75,8 +77,6 @@ public class User implements UserValidator, Formatable {
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
     }
-
-
 
     @Override
     public boolean isValidEmail(String email) {

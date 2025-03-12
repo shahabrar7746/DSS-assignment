@@ -6,7 +6,6 @@ import enums.FoodCategory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FoodDaoImpl implements FoodDao {
     private final List<FoodItem> foodItems = new ArrayList<>();
@@ -28,7 +27,9 @@ public class FoodDaoImpl implements FoodDao {
 
     @Override
     public List<FoodItem> getFoodByCategory(FoodCategory category) {
-        return foodItems.stream().filter(f -> f.getCategory() == category).collect(Collectors.toList());
+        return foodItems.stream()
+                .filter(f -> f.getCategory() == category)
+                .toList();
     }
 
     @Override

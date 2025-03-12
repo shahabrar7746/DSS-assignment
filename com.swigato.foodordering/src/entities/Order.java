@@ -71,17 +71,6 @@ public class Order implements Formatable {
         return total;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Order{" +
-//                "id=" + id +
-//                ", orderStatus=" + orderStatus +
-//                ", customer=" + customer +
-//                ", orderOn='" + orderOn + '\'' +
-//                ", orderItems=" + orderItems +
-//                '}';
-//    }
-
     @Override
     public List<String> fieldsToDisplay() {
         return List.of("Order id", "Order status", "Customer", "Order on");

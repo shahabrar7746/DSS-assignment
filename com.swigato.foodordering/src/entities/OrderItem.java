@@ -3,6 +3,7 @@ package entities;
 import utility.Formatable;
 
 import java.util.List;
+import java.util.Random;
 
 public class OrderItem implements Formatable {
     private int id;
@@ -10,7 +11,8 @@ public class OrderItem implements Formatable {
     private int quantity;
 
     public OrderItem(FoodItem foodItem, int quantity) {
-        this.id = (int) (Math.random() * 1000);
+        Random random = new Random();
+        this.id = random.nextInt(1000);
         this.foodItem = foodItem;
         this.quantity = quantity;
     }
@@ -25,10 +27,6 @@ public class OrderItem implements Formatable {
 
     public FoodItem getFood() {
         return foodItem;
-    }
-
-    public void setFood(FoodItem foodItem) {
-        this.foodItem = foodItem;
     }
 
     public int getQuantity() {

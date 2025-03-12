@@ -32,6 +32,7 @@ public class FoodItem {
         this.name = name;
     }
 
+
     public double getPrice() {
         return price;
     }
