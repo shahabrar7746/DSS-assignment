@@ -6,9 +6,12 @@ import main.repositoryjdbcimpl.ProductRepositoryImpl;
 import main.serviceimlementation.AuthenticationServiceImplementation;
 
 import main.services.AuthenticationService;
+import main.ui.CustomerUI;
+import main.ui.UI;
 import main.util.ColorCodes;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Driver {
@@ -21,10 +24,10 @@ public class Driver {
         System.out.println(ColorCodes.GREEN + "***********WELCOME*************" + ColorCodes.RESET);
         System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
         String operation = "";
+        UI ui = new CustomerUI();
+        ui.displayOptions(List.of("Press 1 for log in.", "Press 2 for registration","Operation : " ));
         while (!operation.equalsIgnoreCase("exit")) {
             Scanner sc = new Scanner(System.in);
-            System.out.println("Press 1 for log in.\nPress 2 for registration");
-            System.out.print("Operation : ");
             operation = sc.nextLine();
             try {
                 if (operation.equalsIgnoreCase("1")) {

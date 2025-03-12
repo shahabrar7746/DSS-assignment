@@ -60,16 +60,12 @@ private CustomerServiceImplementation() {
 
 
     public void browse(final Customer customer, String operation) throws SQLException {
-
-
             Response response = null;
             try {
                 System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
             }catch (NoProductFoundException e){
                 System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
             }
-            operation = sc.nextLine();
-
                 switch (operation) {
                     case "1":
                       response =  intiateCart(customer, false);
