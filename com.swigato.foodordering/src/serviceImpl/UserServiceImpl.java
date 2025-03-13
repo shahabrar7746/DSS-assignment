@@ -28,11 +28,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Response<User> loginUser(String email, String password) {
-        User user = userDao.getUserByEmail(email);
-        if (user != null && user.getPassword().equals(password)) {
-            return new Response<>(user, ResponseStatus.SUCCESS, "User successfully validated: Returning from service");
+        Response<User> response = null;
+        try {
+            User user = userDao.getUserByEmail(email);
+            if (user != null && user.getPassword().equals(password)) {
+                response = new Response<>(user, ResponseStatus.SUCCESS, "User successfully validated: Returning from service");
+            }
+//            if(){
+//
+//            }
+        } catch (Exception ex) {
+            System.out.println("Error...");
+            response = new Response<>(ResponseStatus.FAILURE, "User not found: Returning from service");
         }
-        return new Response<>(ResponseStatus.FAILURE, "User not found: Returning from service");
+
+        return response;
     }
 
     @Override

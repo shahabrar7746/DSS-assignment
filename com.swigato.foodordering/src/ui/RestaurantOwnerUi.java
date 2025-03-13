@@ -19,7 +19,7 @@ public class RestaurantOwnerUi {
                 List<String> menuItems = new ArrayList<>(List.of(ColourCodes.CYAN + "\nMANAGE FOOD ITEMS" + ColourCodes.RESET,
                         "1. Add Food Item", "2. Remove Food Item", "3. Update Food Item", "4. Display All Food Items",
                         "5. Display Food by Category", "6. Back to Admin Menu"));
-                OperationsInfo.displayMenu(menuItems);
+                OperationsInfo.displayMenu(menuItems); // TODO
 
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -104,7 +104,7 @@ public class RestaurantOwnerUi {
 
     private static void displayAllFoodItems(RestaurantService restaurantService) {
         System.out.println(ColourCodes.CYAN + "\nMENU" + ColourCodes.RESET);
-        System.out.println(String.format(ColourCodes.PURPLE + "| %-15s | %-10s | %-10s |" + ColourCodes.RESET, "Food Name", "Item Price", "Food Category"));
+        System.out.printf(ColourCodes.PURPLE + "| %-15s | %-10s | %-10s |" + ColourCodes.RESET + "%n", "Food Name", "Item Price", "Food Category");
         List<FoodItem> foodItems = restaurantService.getAllFood();
         foodItems.forEach(System.out::println);
     }

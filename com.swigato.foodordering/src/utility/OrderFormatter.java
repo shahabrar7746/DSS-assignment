@@ -1,11 +1,14 @@
 package utility;
 
+import entities.FoodItem;
 import entities.Order;
 import entities.OrderItem;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 public class OrderFormatter {
 
@@ -18,7 +21,14 @@ public class OrderFormatter {
         sb.append(ColourCodes.BLUE+"Items:\n"+ColourCodes.RESET);
 
         List<OrderItem> items = order.getOrderItems();
-        for (OrderItem item : items) {
+        Predicate<FoodItem> predicate = (foodItem) -> {
+            if(Objects.nonNull(foodItem.getName()) && )
+          return true;
+        }; // TODO
+        items.stream().filter(r -> predicate.test(r)).forEach(item -> {
+
+        });
+        for (OrderItem item : items) { // traditional approach
             sb.append("  - ").append(item.getFood().getName()).append(ColourCodes.BLUE+" (Quantity: ,"+ColourCodes.RESET).append(item.getQuantity()).append(ColourCodes.BLUE+" Price: "+ColourCodes.RESET)
                     .append(roundToTwoDecimalPlaces(item.getTotalPrice())).append(")\n");
         }

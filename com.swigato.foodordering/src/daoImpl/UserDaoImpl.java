@@ -3,7 +3,6 @@ package daoImpl;
 import dao.UserDao;
 import entities.User;
 import enums.ResponseStatus;
-import enums.UserRole;
 import utility.Response;
 
 import java.util.ArrayList;
@@ -12,23 +11,12 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
     private final List<User> users = new ArrayList<>();
 
-//    public UserDaoImpl() {
-//        init();
-//    }
-//
-//    public void init() {
-//        User user1 = new User("Chetan", "chetan@gmail.com", "chetan123", UserRole.CUSTOMER);
-//        User user2 = new User("Saurav", "s", "s", UserRole.CUSTOMER);
-//        User adminUser = new User("admin", "admin@gmai.com", "ds@123", UserRole.ADMIN);
-//        User adminUser2 = new User("a", "a", "a", UserRole.ADMIN);
-//        addUser(user1);
-//        addUser(user2);
-//        addUser(adminUser);
-//        addUser(adminUser2);
-//    }
-
     @Override
-    public Response<Boolean> addUser(User user) {
+    public Response<Boolean> addUser(User user) { // TODO update Response model
+        // TODO use try catch, use single object ex: Response response = null;
+        if (users.contains(user)){
+            return new Response<>(ResponseStatus.FAILURE, "User already exists: Returning from Dao ");
+        }
         boolean success = users.add(user);
         if (success) {
             return new Response<>(Boolean.TRUE, ResponseStatus.SUCCESS, "User found : Returning from Dao");
