@@ -348,6 +348,7 @@ private void init(){
 
     @Override
     public Response deleteCustomer(boolean isAuthorized) {
+        Response response = new Response(null, );
         if (!isAuthorized) {//checks if the operation performed by superadmin or not.
             return new Response(null, "Your are not authorized to access this service");
         }
@@ -355,11 +356,16 @@ private void init(){
                 try {
 
                     allCustomer = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
+                    customer = null;
+                    if(Objects.isNull(customer)) {
+                        response = new Response(null, Sucess, "USer not found !!")
+                    }
                     if (allCustomer.isEmpty()) {
                         return new Response(null, "No customers are present");
                     }
                 } catch (Exception e) {
-                    return  new Response(null, e.getLocalizedMessage());
+                    log.erro('''/')
+                    return  new Response(null, );
                 }
 
         System.out.println(ColorCodes.BLUE + "Customers : " + allCustomer + ColorCodes.RESET);
@@ -378,7 +384,7 @@ private void init(){
         } catch (Exception e) {
             return new Response(null, e.getLocalizedMessage());
         }
-        return new Response("Customer deleted");
+        return response;
 
     }
 
