@@ -19,6 +19,9 @@ import serviceImpl.OrderServiceImpl;
 import serviceImpl.RestaurantServiceImpl;
 import serviceImpl.UserServiceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AppConfig {
     public UserDao getUserDao() {
         return new UserDaoImpl();
@@ -60,6 +63,7 @@ public class AppConfig {
     }
 
     public void initializeFoodItems(FoodDao foodDao) {
+        List<FoodItem> foodItemList = new ArrayList<>();// TODO
         FoodItem foodItem = new FoodItem("Pasta", 60, FoodCategory.VEG);
         FoodItem foodItem2 = new FoodItem("PaneerTikka", 150, FoodCategory.VEG);
         FoodItem foodItem3 = new FoodItem("ChickenCurry", 130, FoodCategory.NONVEG);

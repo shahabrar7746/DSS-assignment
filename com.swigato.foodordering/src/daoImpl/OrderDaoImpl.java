@@ -16,7 +16,7 @@ public class OrderDaoImpl implements OrderDao
     }
 
     @Override
-    public Order getOrderById(int id) {
+    public Order getOrderById(int id) { //TODO optional
         return orders.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
     }
 

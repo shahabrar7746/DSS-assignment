@@ -12,7 +12,8 @@ public class UserDaoImpl implements UserDao {
     private final List<User> users = new ArrayList<>();
 
     @Override
-    public Response<Boolean> addUser(User user) {
+    public Response<Boolean> addUser(User user) { // TODO update Response model
+        // TODO use try catch, use single object ex: Response response = null;
         if (users.contains(user)){
             return new Response<>(ResponseStatus.FAILURE, "User already exists: Returning from Dao ");
         }
