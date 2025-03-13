@@ -25,6 +25,8 @@ public class CustomerUi extends Ui {
     private User loggedInCustomer;
     private CustomerService customerService;
 
+//    private Scanner scanner = new Scanner(System.in);// TODO check
+
     public CustomerUi(UserService userService, RestaurantService restaurantService, OrderService orderService) {
         this.userService = userService;
         this.restaurantService = restaurantService;
@@ -48,11 +50,11 @@ public class CustomerUi extends Ui {
 
         while (!isExit) {
             try {
-                List<String> menuItems = new ArrayList<>(List.of(ColourCodes.CYAN + "\nCUSTOMER MENU" + ColourCodes.RESET, "1. View Menu"
-                        , "2. Add to Cart", "3. View Cart", "4. Track Order Status", "5. View order history",
-                        "6. Logout")
-                );
-                OperationsInfo.displayMenu(menuItems);
+//                List<String> menuItems = new ArrayList<>(List.of(ColourCodes.CYAN + "\nCUSTOMER MENU" + ColourCodes.RESET, "1. View Menu"
+//                        , "2. Add to Cart", "3. View Cart", "4. Track Order Status", "5. View order history",
+//                        "6. Logout")
+//                );
+//                OperationsInfo.displayMenu(menuItems); // TODO abstract options
 
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -101,9 +103,9 @@ public class CustomerUi extends Ui {
                 System.out.println(userResponse.getMessage());
             } else {
                 System.out.println("Enter correct input ");
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(ColourCodes.RED + e.getMessage() + ColourCodes.RESET);
+            } // TODO conditional Expession
+        } catch (IllegalArgumentException | NoSuchElementException ex) {
+            System.out.println(ColourCodes.RED + ex.getMessage() + ColourCodes.RESET);
         }
     }
 
@@ -114,6 +116,7 @@ public class CustomerUi extends Ui {
         String password = scanner.nextLine();
 
         Response<User> userResponse = userService.loginUser(email, password);
+        userResponse.getResponseStatus() == ResponseStatus.FAILURE;// TODO
         User customer = userResponse.getData();
         if (customer != null && customer.getRole() == UserRole.CUSTOMER) {
             userService.setLoginStatus(email);
@@ -190,11 +193,13 @@ public class CustomerUi extends Ui {
         System.out.println("Total bill: " + customerService.getCart().values().stream().mapToDouble(OrderItem::getTotalPrice).sum());
         System.out.println(ColourCodes.RED + "\nType 'exit' to return to the customer menu" + ColourCodes.RESET
                 + ColourCodes.BLUE + "\nType checkout to proceed to checkout: " + ColourCodes.RESET);
-        while (true) {
+        boolean stopExec = true;
+        while (stopExec) {
             String options = scanner.nextLine();
             if (options.equalsIgnoreCase("checkout")) {
                 proceedWithCheckout(scanner);
-                return;
+                stopExec = false;
+//                return;
             } else if (options.equalsIgnoreCase("exit")) {
                 return;
             } else {
@@ -259,7 +264,7 @@ public class CustomerUi extends Ui {
             return;
         }
 
-        int orderId = Integer.parseInt(confirmation);
+        int orderId = Integer.parseInt(confirmation); // TODO add optional & Streams
         Order order = orderService.getOrder(orderId);
 
         if (order == null || order.getId() != orderId) {

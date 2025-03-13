@@ -19,7 +19,7 @@ public class RestaurantOwnerUi {
                 List<String> menuItems = new ArrayList<>(List.of(ColourCodes.CYAN + "\nMANAGE FOOD ITEMS" + ColourCodes.RESET,
                         "1. Add Food Item", "2. Remove Food Item", "3. Update Food Item", "4. Display All Food Items",
                         "5. Display Food by Category", "6. Back to Admin Menu"));
-                OperationsInfo.displayMenu(menuItems);
+                OperationsInfo.displayMenu(menuItems); // TODO
 
                 int choice = scanner.nextInt();
                 scanner.nextLine();

@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class CustomerService {
 
-    private Map<Integer, OrderItem> cart;
+    private Map<Integer, OrderItem> cart = new HashMap<>();
     private final User customer;
     private final OrderService orderService;
 

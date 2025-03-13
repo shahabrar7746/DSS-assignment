@@ -4,8 +4,10 @@ import dao.FoodDao;
 import entities.FoodItem;
 import enums.FoodCategory;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class FoodDaoImpl implements FoodDao {
     private final List<FoodItem> foodItems = new ArrayList<>();
@@ -16,7 +18,8 @@ public class FoodDaoImpl implements FoodDao {
     }
 
     @Override
-    public FoodItem getFoodById(int id) {
+    public Optional<FoodItem> getFoodById(int id) {
+        Optional.of(foodItems.stream().fi)// TODO
         return foodItems.stream().filter(f -> f.getId() == id).findFirst().orElse(null);
     }
 
@@ -34,7 +37,7 @@ public class FoodDaoImpl implements FoodDao {
 
     @Override
     public void updateFood(FoodItem foodItem) {
-        this.foodItems.stream().filter(f -> f.getId() == foodItem.getId()).findFirst().ifPresent(f -> {
+        foodItems.stream().filter(f -> f.getId() == foodItem.getId()).findFirst().ifPresent(f -> {
             f.setName(foodItem.getName());
             f.setPrice(foodItem.getPrice());
             f.setCategory(foodItem.getCategory());
@@ -42,7 +45,7 @@ public class FoodDaoImpl implements FoodDao {
     }
 
     @Override
-    public void deleteFood(FoodItem foodItem) {
+    public void deleteFood(FoodItem foodItem) { // TODO remove this
         this.foodItems.removeIf(f -> f.getId() == foodItem.getId());
     }
 }
