@@ -32,7 +32,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public List<Order> getAllOrders() throws Exception {
+    public List<Order> getAllOrders() throws SQLException, CustomerNotFoundException, NoProductFoundException {
         String query = OrderQueries.getAllOrdersQuery();
         PreparedStatement statement = con.prepareStatement(query);
         return ResultSetUtility.getOrdersFromResultSet(statement.executeQuery());

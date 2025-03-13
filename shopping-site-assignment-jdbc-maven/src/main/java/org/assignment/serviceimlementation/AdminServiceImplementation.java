@@ -1,5 +1,7 @@
 package org.assignment.serviceimlementation;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.assignment.entities.Customer;
 import org.assignment.entities.Order;
 import org.assignment.entities.Product;
@@ -21,7 +23,9 @@ import org.assignment.services.AdminService;
 
 import org.assignment.repository.interfaces.CustomerRepository;
 
+import org.assignment.services.CustomerService;
 import org.assignment.util.ColorCodes;
+import org.assignment.util.LogUtil;
 import org.assignment.util.Response;
 
 import java.sql.SQLException;
@@ -34,7 +38,7 @@ public class AdminServiceImplementation implements AdminService {
     private  ProductRepository productRepository;
     private  CustomerRepository customerRepository;
     private  OrderRepository orderRepository;
-
+private final Logger logger = LogManager.getLogger(this.getClass());
     private AdminServiceImplementation() { // TODO update constructor
       init();
     }
@@ -94,25 +98,25 @@ private void init(){
 
     @Override
     public Response getCustomerById() {
-        try {
+
             Response response = getAllCustomer();
             if(response.getStatus() == ResponseStatus.ERROR){
                 return response;
             }
-            List<Customer> data = (List<Customer>) getAllCustomer().getData();
+            List<Customer> data = (List<Customer>) response.getData();
             if (data.isEmpty()) {
                 return new Response(null, "No customers are there");
             }
-        } catch (Exception e) {
-          return new Response(null, e.getLocalizedMessage());
-        }
+
         Optional<Customer> customer = Optional.empty();
                 System.out.print("Please provide the id of Customer : ");
         Long id = sc.nextLong();
         try {
            customer = customerRepository.fetchById(id);
-        } catch (CustomerNotFoundException | SQLException e) {
+        } catch (CustomerNotFoundException  e) {
            return new Response(null, e.getLocalizedMessage());
+        } catch (SQLException e) {
+          return  LogUtil.logError(e.getLocalizedMessage());
         }
         if ( customer.isEmpty() || customer.get().getRole() != Roles.CUSTOMER) {
           return new Response(null, "No customer found");
@@ -125,8 +129,11 @@ private void init(){
         List<Customer> allCustomer = null;
         try {
             allCustomer = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
-        } catch (Exception e) {
+        } catch (CustomerNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
+        } catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
+
         }
         if (allCustomer.isEmpty()) {
             return new Response(null, "Customer main.repository is empty"); //executed if no customer object is found
@@ -140,12 +147,14 @@ private void init(){
         List<Product> allProducts = null;
         try {
             allProducts = productRepository.fetchProducts();
-        } catch (Exception e) {
+        } catch (NoProductFoundException e) {
             return new Response(null, e.getLocalizedMessage());
+        } catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
         }
         if (allProducts.isEmpty()) {
             //executed if no product object is found
-            return new Response(null, "NO Products found");
+            return new Response(null, "No Products found");
         }
         return new Response(allProducts);// returns all the product.
     }
@@ -173,12 +182,15 @@ private void init(){
 
     @Override
     public Response getAllDeliveredOrders() {
-
+Response response = null;
         try {
-            return new Response(orderRepository.getAllDeliveredOrders());
-        } catch (Exception e) {
-            return new Response(null, e.getLocalizedMessage());
+            response = new Response(orderRepository.getAllDeliveredOrders());
+        } catch (SQLException e) {
+            response =  LogUtil.logError(e.getLocalizedMessage());
+        }catch (CustomerNotFoundException | OrderNotFoundException | NoProductFoundException e){
+            response = new Response(null, e.getLocalizedMessage());
         }
+        return response;
     }
 
 
@@ -187,11 +199,7 @@ private void init(){
         if (!isAuthorized) {//checks if the operation performed by superadmin or not.
             return new Response(null, "Your are not authorized to access this service");//if not, throws this exception.
         }
-        try {
             System.out.println(ColorCodes.BLUE + "Admins : " + getAllCustomer().getData() + ColorCodes.RESET);
-        } catch (Exception e) {
-            return new Response(null, e.getLocalizedMessage());
-        }
         System.out.print("Enter Customer id to whom you want to grant access to : ");
         String cid = sc.nextLine();
         int count = 3;
@@ -205,8 +213,10 @@ private void init(){
                 cid = sc.nextLine();
                 customer = customerRepository.fetchById(Long.valueOf(cid));//fetches customer by id.
             }
-        } catch (Exception e) {
+        } catch (CustomerNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
+        }catch (SQLException e){
+            return LogUtil.logError(e.getLocalizedMessage());
         }
         if (count < 0) {
             return new Response(null, "You have exceeded the try limit");// thrown if the try 'count' <= 0.
@@ -227,8 +237,10 @@ private void init(){
                 customer.get().setRole(Roles.ADMIN);//critical operation.
                 customerRepository.updateCustomer(customer.get());
             }
-        }catch (Exception e){
-            return  new Response(null, e.getLocalizedMessage());
+        }catch (SQLException e){
+            return  LogUtil.logError(e.getLocalizedMessage());
+        }catch (TrialLimitExceedException | WrongPasswordException e){
+            return new Response(null, e.getLocalizedMessage());
         }
         return new Response("Access granted !!");
 
@@ -253,7 +265,7 @@ private void init(){
             try {
                 customer = customerRepository.fetchAdminById(Long.valueOf(cid));
             } catch (SQLException e) {
-                return new Response(null, e.getLocalizedMessage());
+                return  LogUtil.logError(e.getLocalizedMessage());
             }
         }
         if (customer.isEmpty()) {
@@ -275,8 +287,11 @@ private void init(){
                 customer.get().setRole(Roles.CUSTOMER);
                 customerRepository.updateCustomer(customer.get());//critical section.
             }
-        } catch (Exception e) {
+        }catch (TrialLimitExceedException | WrongPasswordException e){
             return new Response(null, e.getLocalizedMessage());
+        }
+        catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
         }
         return  new Response("Access revoked");
     }
@@ -290,7 +305,10 @@ private void init(){
         List<Order> orders = null;//gets all orders present in the main.repository.
         try {
             orders = orderRepository.getAllOrders();
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
+        }
+        catch (CustomerNotFoundException |  NoProductFoundException e){
             return new Response(null, e.getLocalizedMessage());
         }
         if (orders.isEmpty()) {
@@ -301,7 +319,10 @@ private void init(){
         Optional<Order> order = Optional.empty();
         try {
             orders = orderRepository.getAllOrders();
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
+        }
+        catch (CustomerNotFoundException |  NoProductFoundException e){
             return new Response(null, e.getLocalizedMessage());
         }
       if(order.isEmpty()){
@@ -311,8 +332,10 @@ private void init(){
           if (authenticateSuperAdmin()) {//executed if Order object is found for the id.
               orderRepository.cancelOrder(order.get());
           }
-      } catch (Exception e) {
-          return new Response(null,e.getLocalizedMessage());
+      } catch (SQLException e) {
+          return  LogUtil.logError(e.getLocalizedMessage());
+      }catch (TrialLimitExceedException | WrongPasswordException e){
+          return new Response(null, e.getLocalizedMessage());
       }
       return new Response("Order cancelled successfully.");
      // thrown if no Order is found.
@@ -358,8 +381,10 @@ private void init(){
                     if (allCustomer.isEmpty()) {
                         return new Response(null, "No customers are present");
                     }
-                } catch (Exception e) {
+                } catch (CustomerNotFoundException e) {
                     return  new Response(null, e.getLocalizedMessage());
+                }catch (SQLException e){
+                    return  LogUtil.logError(e.getLocalizedMessage());
                 }
 
         System.out.println(ColorCodes.BLUE + "Customers : " + allCustomer + ColorCodes.RESET);
@@ -375,11 +400,12 @@ private void init(){
                 customerRepository.removeCustomer(customer.get());//critical section.
 
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
+        }catch (TrialLimitExceedException | CustomerNotFoundException |  WrongPasswordException e){
             return new Response(null, e.getLocalizedMessage());
         }
         return new Response("Customer deleted");
-
     }
 
     @Override
@@ -390,9 +416,12 @@ private void init(){
          if (admins.isEmpty()) {
              return new Response(null, "No admin found");//throws NoAdminFoundException if no admin found CustomerRepository.
          }
-     } catch (Exception e) {
-         return new Response(null, e.getLocalizedMessage());
+     } catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
      }
+        catch (CustomerNotFoundException e){
+            return new Response(null, e.getLocalizedMessage());
+        }
         return new Response(admins);//returns list of admins if any found.
     }
 

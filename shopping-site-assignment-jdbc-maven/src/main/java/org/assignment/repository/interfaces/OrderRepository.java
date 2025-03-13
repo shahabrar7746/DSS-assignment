@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository {
-      List<Order> getAllOrders() throws Exception;
+      List<Order> getAllOrders() throws SQLException, CustomerNotFoundException, NoProductFoundException;
     Optional<Order> fetchOrderById(Long id) throws Exception;
     boolean cancelOrder(Order order) throws SQLException;
     void addOrder(Order order) throws Exception;
