@@ -134,8 +134,8 @@ public class CustomerUi extends Ui {
     }
 
     private void addToCart(Scanner scanner) {
-        while (true) {
-            viewMenu();
+            while (true) {
+                viewMenu();
 
             System.out.println(ColourCodes.RED + "\nType 'exit' to return to the customer menu" +
                     "\nType 'cart' to jump to the cart: " + ColourCodes.RESET + ColourCodes.BLUE +
@@ -249,7 +249,7 @@ public class CustomerUi extends Ui {
     }
 
     private void vieOrderHistory(Scanner scanner) {
-        List<Order> allOrders = orderService.getAllOrders().stream().filter(order -> order.getCustomer().getId() == loggedInCustomer.getId()).toList();
+            List<Order> allOrders = orderService.getAllOrders().stream().filter(order -> order.getCustomer().getId() == loggedInCustomer.getId()).toList();
         Formatter.tableTemplate(allOrders.stream().toList());
         if (allOrders.isEmpty()) {
             System.out.println("You have no past orders.");

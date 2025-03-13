@@ -23,8 +23,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppConfig {
+    private static final AppConfig appConfigInstance = new AppConfig();
+
+    private AppConfig() {
+    }
+
+    public static AppConfig getAppConfig() {
+        return appConfigInstance;
+    }
+
     public UserDao getUserDao() {
-        return new UserDaoImpl();
+        return UserDaoImpl.getUserDaoImpl();
     }
 
     public FoodDao getFoodDao() {
@@ -59,22 +68,26 @@ public class AppConfig {
         //User adminUser2 = new User("a", "a", "a", UserRole.ADMIN);
         userService.registerUser(user1);
         userService.registerUser(adminUser);
-       // userService.registerUser(adminUser2);
+        // userService.registerUser(adminUser2);
     }
 
     public void initializeFoodItems(FoodDao foodDao) {
-        List<FoodItem> foodItemList = new ArrayList<>();// TODO
-        FoodItem foodItem = new FoodItem("Pasta", 60, FoodCategory.VEG);
-        FoodItem foodItem2 = new FoodItem("PaneerTikka", 150, FoodCategory.VEG);
-        FoodItem foodItem3 = new FoodItem("ChickenCurry", 130, FoodCategory.NONVEG);
-        FoodItem foodItem4 = new FoodItem("DumBiryani", 200, FoodCategory.NONVEG);
-        FoodItem foodItem5 = new FoodItem("Lassi", 40, FoodCategory.BEVERAGES);
-        FoodItem foodItem6 = new FoodItem("ButterMilk", 40, FoodCategory.BEVERAGES);
-        foodDao.addFood(foodItem);
-        foodDao.addFood(foodItem2);
-        foodDao.addFood(foodItem3);
-        foodDao.addFood(foodItem4);
-        foodDao.addFood(foodItem5);
-        foodDao.addFood(foodItem6);
+        List<FoodItem> foodItemList = new ArrayList<>();
+        foodItemList.add(new FoodItem("Pasta", 60, FoodCategory.VEG));
+        foodItemList.add(new FoodItem("PaneerTikka", 150, FoodCategory.VEG));
+        foodItemList.add(new FoodItem("ChickenCurry", 130, FoodCategory.NONVEG));
+        foodItemList.add(new FoodItem("DumBiryani", 200, FoodCategory.NONVEG));
+        foodItemList.add(new FoodItem("Lassi", 40, FoodCategory.BEVERAGES));
+        foodItemList.add(new FoodItem("Pasta", 60, FoodCategory.VEG));
+        foodItemList.add(new FoodItem("ButterMilk", 40, FoodCategory.BEVERAGES));
+
+        foodDao.addAllFood(foodItemList);
+
+//        foodDao.addFood(foodItem);
+//        foodDao.addFood(foodItem2);
+//        foodDao.addFood(foodItem3);
+//        foodDao.addFood(foodItem4);
+//        foodDao.addFood(foodItem5);
+//        foodDao.addFood(foodItem6);
     }
 }

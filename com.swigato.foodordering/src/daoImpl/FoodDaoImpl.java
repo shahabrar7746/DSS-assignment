@@ -5,16 +5,20 @@ import entities.FoodItem;
 import enums.FoodCategory;
 
 import javax.swing.text.html.Option;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class FoodDaoImpl implements FoodDao {
-    private final List<FoodItem> foodItems = new ArrayList<>();
+
+    private final List<FoodItem> foodItems = new ArrayList<> ();
+
+    public void addAllFood(List<FoodItem> foodItemsList){
+        foodItemsList.addAll(foodItems);
+    }
 
     @Override
     public void addFood(FoodItem foodItem) {
-        this.foodItems.add(foodItem);
+       foodItems.add(foodItem);
     }
 
     @Override

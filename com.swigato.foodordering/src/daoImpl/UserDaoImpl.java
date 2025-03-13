@@ -10,7 +10,14 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
     private final List<User> users = new ArrayList<>();
+    private static final UserDaoImpl userDao = new UserDaoImpl();
 
+    private UserDaoImpl() {
+    }
+
+   public static UserDaoImpl getUserDaoImpl(){
+        return userDao;
+   }
     @Override
     public Response<Boolean> addUser(User user) { // TODO update Response model
         // TODO use try catch, use single object ex: Response response = null;
