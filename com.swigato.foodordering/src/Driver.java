@@ -22,8 +22,8 @@ import java.util.Scanner;
 public class Driver {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        AppConfig appConfig = new AppConfig();
-
+      //  AppConfig appConfig = new AppConfig();
+       AppConfig appConfig = AppConfig.getAppConfig();
         UserDao userDao = appConfig.getUserDao();
         FoodDao foodDao = appConfig.getFoodDao();
         RestaurantDao restaurantDao = appConfig.getRestaurantDao();
