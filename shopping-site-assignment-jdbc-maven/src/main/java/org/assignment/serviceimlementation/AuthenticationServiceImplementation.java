@@ -66,6 +66,9 @@ public static AuthenticationServiceImplementation getInstance(){
             email = sc.nextLine();
             System.out.print("Enter password : ");
             password = sc.nextLine();
+            if(email.isEmpty() || email.isBlank() || password.isEmpty() || password.isBlank()){
+                continue;
+            }
 
         }
         if (count <= 0) {
@@ -111,7 +114,14 @@ public static AuthenticationServiceImplementation getInstance(){
         if (register(email, password, name, address)) {
             Customer customer = login(email, password, true);
             UI customerUi = new CustomerUI();
-            customerUi.initAdminServices(customer);
+            try {
+                customerUi.initCustomerServices(customer);
+            } catch (UnauthorizedOperationException e) {
+                System.err.println(e.getLocalizedMessage());
+            } catch (SQLException e) {
+                  LogUtil.logError(e.getLocalizedMessage());
+                System.err.println("Some error occured");
+            }
         } else {
             throw new UserAlreadyExistsException("User already exist");
         }
