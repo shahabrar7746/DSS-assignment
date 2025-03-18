@@ -27,9 +27,10 @@ public class Driver {
         System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
         String operation = "";
         UI ui = new CustomerUI();
-        ui.displayOptions(List.of("Press 1 for log in.", "Press 2 for registration","Operation : " ));
+        Scanner sc = new Scanner(System.in);
         while (!operation.equalsIgnoreCase("exit")) {
-            Scanner sc = new Scanner(System.in);
+            ui.displayOptions(List.of("Press 1 for log in.", "Press 2 for registration","Operation : " ));
+
             operation = sc.nextLine();
             try {
                 if (operation.equalsIgnoreCase("1")) {

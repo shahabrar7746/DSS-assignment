@@ -82,9 +82,9 @@ private CustomerServiceImplementation() {
                        response = new Response(null, "Invalid operation");
                 }
             if(response.getStatus() == ResponseStatus.ERROR){
-                System.out.println(ColorCodes.RED + "ERROR : " + response.getData() + ColorCodes.RESET);
+                System.out.println(ColorCodes.RED + "ERROR : " + response.getError() + ColorCodes.RESET);
             }else if(response.getStatus() == ResponseStatus.SUCCESSFUL) {
-                System.out.println(ColorCodes.RED + response  + response.getData() + ColorCodes.RESET);
+                System.out.println(ColorCodes.RED   + response.getData() + ColorCodes.RESET);
             }
 
 
@@ -128,7 +128,7 @@ if(optionalSeller.isEmpty()){
         } catch (Exception e) {
             return new Response(null, e.getLocalizedMessage());
         }
-        return new Response("Order booked");
+        return new Response("");
     }
 
     /**
@@ -188,7 +188,6 @@ if(optionalSeller.isEmpty()){
             for (Order o : removedOrderList){
                 orderRepository.cancelOrder(o);
             }
-            System.out.println("Orders removed");
         } else if(l.size() == 1) {
             Order removedOrder = l.get(0);
             orderRepository.cancelOrder(removedOrder);
@@ -259,7 +258,7 @@ if(optionalSeller.isEmpty()){
         }
         if (!cart.isEmpty()) {
             System.out.println("Proceeding to order the products in cart");
-            proceedToOrder(customer, totalPrice);
+           return proceedToOrder(customer, totalPrice);
         }
         return new Response(null, "cannot order from empty cart");
     }
@@ -287,6 +286,8 @@ if(optionalSeller.isEmpty()){
         if (cart.isEmpty()) {
             return new Response(null, "No products found in cart");
         }
+        Response pvtObject =  new Response("Order booked");
+        Response response = pvtObject;
         System.out.println(ColorCodes.GREEN + "******PROCEED*TO*ORDER*******" + ColorCodes.RESET);
         System.out.println(ColorCodes.BLUE + "Cart : " + cart);
         System.out.println("Your total amount is : " + totalPrice.get() + ColorCodes.RESET);
@@ -297,24 +298,25 @@ if(optionalSeller.isEmpty()){
                 cart.forEach(p ->
                         {
                             try {
-                                bookOrder(customer, p);
+                                 bookOrder(customer, p);
+
                             } catch (SQLException e) {
                                 throw new RuntimeException(e);
                             }
                         }
                 );
             } catch (Exception e) {
-                return new Response(null, e.getLocalizedMessage());
+                response = new Response(null, e.getLocalizedMessage());
             }
             cart.clear();
         } else if (operation.equalsIgnoreCase("n")) {
             try {
                 return intiateCart(customer, true);
             } catch (Exception e) {
-                return new Response(null, e.getLocalizedMessage());
+                response = new Response(null, e.getLocalizedMessage());
             }
         }
-        return new Response(null, "Invalid inputs");
+        return response == pvtObject && (!operation.equalsIgnoreCase("y") && !operation.equalsIgnoreCase("n")) ?  new Response(null, "Invalid inputs") : response;
     }
 
     /**

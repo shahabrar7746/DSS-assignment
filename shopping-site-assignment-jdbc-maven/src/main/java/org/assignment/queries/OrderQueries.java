@@ -43,7 +43,7 @@ public final class OrderQueries {
         return "select orders.* from customer, orders where customer.customer_id = orders.customer_id and orders.status = 'DELIVERED'";
     }
     public static String getOrdersByProductName(){
-        return "SELECT ORDER.* FROM ORDERS, PRODUCT WHERE orders.product_id = product.product_id AND product.product_name = ?";
+        return "SELECT ORDERS.* FROM ORDERS, PRODUCT WHERE orders.product_id = product.product_id AND product.product_name = ?";
     }
 
 }
