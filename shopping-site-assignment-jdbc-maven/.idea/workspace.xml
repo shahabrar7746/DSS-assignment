@@ -6,11 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="5405caaa-ed17-442c-bf7f-14ef15b22302" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/queries/CustomerQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/CustomerQueries.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/queries/OrderQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/OrderQueries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/CustomerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/CustomerRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/queries/ProductQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/ProductQueries.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/queries/SellerQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/SellerQueries.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/OrderCollectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/OrderCollectionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,11 +80,6 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/queries/CustomerQueries.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java</url>
           <line>265</line>
           <option name="timeStamp" value="5" />
@@ -95,6 +93,26 @@
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java</url>
           <line>267</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>238</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>251</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>253</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/queries/ProductQueries.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

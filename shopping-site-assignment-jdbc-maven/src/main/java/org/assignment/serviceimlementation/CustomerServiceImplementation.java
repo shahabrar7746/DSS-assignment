@@ -22,6 +22,7 @@ import org.assignment.repositoryjdbcimpl.SellerRepositoryImpl;
 import org.assignment.services.CustomerService;
 
 import org.assignment.util.ColorCodes;
+import org.assignment.util.LogUtil;
 import org.assignment.util.Response;
 
 import java.sql.SQLException;
@@ -104,7 +105,7 @@ private CustomerServiceImplementation() {
         try{
             orders = orderRepository.getOrderByCustomerId(customer.getId());
         } catch (CustomerNotFoundException | NoProductFoundException e) {
-            return new Response(e.getLocalizedMessage());
+            return new Response(null, e.getLocalizedMessage());
         }
         return orders.isEmpty() ? new Response(null, "No order found") :  new Response(orders);
     }
@@ -116,8 +117,13 @@ private CustomerServiceImplementation() {
      * @param product which product we need to order.
      * @see #cancelOrder(Customer) 
      */
-    private Response bookOrder(Customer customer, Product product) throws SQLException {
-Optional<Seller> optionalSeller = sellerRepository.fetchById(1L);
+    private Response bookOrder(Customer customer, Product product) {
+        Optional<Seller> optionalSeller = null;
+        try {
+            optionalSeller = sellerRepository.fetchById(1L);
+        } catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
+        }
 if(optionalSeller.isEmpty()){
     return new Response(null, "No seller found for this product");
 }
@@ -125,8 +131,8 @@ if(optionalSeller.isEmpty()){
         Order order = new Order(customer, product, optionalSeller.get(), OrderStatus.ORDERED, Currency.INR, LocalDateTime.now(), product.getPrice());
         try {
             orderRepository.addOrder(order);
-        } catch (Exception e) {
-            return new Response(null, e.getLocalizedMessage());
+        } catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
         }
         return new Response("");
     }
@@ -221,8 +227,10 @@ if(optionalSeller.isEmpty()){
         while (!exitCart) {
             try {
                 System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
-            } catch (Exception e){
+            } catch (NoProductFoundException e){
                 return new Response(null, e.getLocalizedMessage());
+            } catch (SQLException e) {
+                return  LogUtil.logError(e.getLocalizedMessage());
             }
             System.out.println("PRESS 0 TO REMOVE PRODUCT FROM CART");
             System.out.println("PRESS -1 TO EXIT CART");
@@ -242,8 +250,10 @@ if(optionalSeller.isEmpty()){
                 Optional<Product> product = null;
                 try {
                     product = productRepository.fetchProductByName(name);
-                } catch (Exception e){
+                } catch (NoProductFoundException e){
                     return new Response(null, e.getLocalizedMessage());
+                } catch (SQLException e) {
+                    return  LogUtil.logError(e.getLocalizedMessage());
                 }
                 if(product.isEmpty()){
                     return new Response(null, "Invalid product name please try again.");
@@ -294,20 +304,11 @@ if(optionalSeller.isEmpty()){
         System.out.print("Press 'y' to proceed further or 'n' to go back to cart : ");
         String operation = sc.nextLine();
         if (operation.equalsIgnoreCase("y")) {
-            try {
                 cart.forEach(p ->
                         {
-                            try {
                                  bookOrder(customer, p);
-
-                            } catch (SQLException e) {
-                                throw new RuntimeException(e);
-                            }
                         }
                 );
-            } catch (Exception e) {
-                response = new Response(null, e.getLocalizedMessage());
-            }
             cart.clear();
         } else if (operation.equalsIgnoreCase("n")) {
             try {

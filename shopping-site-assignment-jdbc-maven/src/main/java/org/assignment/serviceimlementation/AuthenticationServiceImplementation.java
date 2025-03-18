@@ -6,6 +6,7 @@ import org.assignment.enums.Roles;
 
 import org.assignment.exceptions.CustomerNotFoundException;
 import org.assignment.exceptions.TrialLimitExceedException;
+import org.assignment.exceptions.UnauthorizedOperationException;
 import org.assignment.exceptions.UserAlreadyExistsException;
 
 import org.assignment.repositoryjdbcimpl.CustomerRepositoryImpl;
@@ -19,6 +20,7 @@ import org.assignment.ui.CustomerUI;
 
 import org.assignment.ui.UI;
 import org.assignment.util.ColorCodes;
+import org.assignment.util.LogUtil;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -43,13 +45,9 @@ public static AuthenticationServiceImplementation getInstance(){
        init();
     }
     public void init(){
-    try {
         this.customerService = CustomerService.getInstance();
         this.customerRepository = new CustomerRepositoryImpl();
         this.sc = new Scanner(System.in);
-    } catch (Exception e) {
-        System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
-    }
 }
 
 
@@ -87,8 +85,11 @@ public static AuthenticationServiceImplementation getInstance(){
                 UI customerUI = new CustomerUI();
                 customerUI.initCustomerServices(c);
             }
-            } catch (Exception e) {
-                System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
+            } catch (SQLException e) {
+                  LogUtil.logError(e.getLocalizedMessage());
+                System.err.println("Some error occured");
+            }catch (UnauthorizedOperationException e){
+                System.err.println(e.getLocalizedMessage());
             }
         });
 

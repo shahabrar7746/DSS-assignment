@@ -6,6 +6,7 @@ import org.assignment.exceptions.OrderNotFoundException;
 import org.assignment.repository.interfaces.OrderRepository;
 
 
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,7 @@ public  class OrderCollectionRepository implements OrderRepository {
         return false;
     }
     @Override
-    public  void addOrder(Order order) {
+    public  void addOrder(Order order) throws SQLException {
         order.setId(new Random().nextLong(0, 90000));
         orders.add(order);
     }
