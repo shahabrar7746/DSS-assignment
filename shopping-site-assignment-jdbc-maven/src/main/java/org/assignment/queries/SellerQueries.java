@@ -11,7 +11,7 @@ public class SellerQueries {
         builder.append(columns[0]);
         builder.append(" = ? ");
         for(int i = 1;i<columns.length;i++) {
-            builder.append(" " + operation + " ");
+            builder.append(" ").append(operation).append(" ");
             builder.append(columns[i]);
             builder.append(" = ? ");
         }
