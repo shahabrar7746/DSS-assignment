@@ -11,5 +11,6 @@ public class Test {
 //        Logger logger = LogManager.getLogger(Test.class);
 //        Appender appender = logger.getAppender("src/resources/log4j2.xml");
 //        logger.info(System.getenv("SUPER_ADMIN_PASSWORD"));
+
     }
 }
