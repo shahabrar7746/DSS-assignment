@@ -3,21 +3,23 @@ package service;
 import entities.FoodItem;
 import entities.Restaurant;
 import enums.FoodCategory;
+import utility.Response;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RestaurantService {
-    Restaurant getRestaurant();
+    Response getRestaurant();
 
-    void updateRestaurant(Restaurant restaurant);
+    Response updateRestaurant(Restaurant restaurant);
 
-    void addFood(FoodItem foodItem);
+    Response addFood(FoodItem foodItem);
 
-    void removeFood(FoodItem foodItem);
+    Response removeFood(FoodItem foodItem);
 
-    void updateFood(FoodItem foodItem);
+    Response updateFood(FoodItem foodItem);
 
-    List<FoodItem> getAllFood();
+    Response getAllFood();
 
-    List<FoodItem> getFoodByCategory(FoodCategory category);
+    Response getFoodByCategory(FoodCategory category);
 }

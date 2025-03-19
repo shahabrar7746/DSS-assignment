@@ -3,72 +3,53 @@ package serviceImpl;
 import dao.UserDao;
 import entities.User;
 import enums.ResponseStatus;
+import exceptions.FailedToPerformOperation;
+import exceptions.ValueAlreadyExistsException;
 import service.UserService;
 import utility.Response;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    Response response;
 
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
     @Override
-    public Response<User> registerUser(User user) {
-        Response<Boolean> response = userDao.addUser(user);
-        if (response.getResponseStatus().equals(ResponseStatus.SUCCESS)) {
-            return new Response<>(user, ResponseStatus.SUCCESS, "User successfully registered ");
+    public Response getAllUsers() {
+        List<User> allUsers = userDao.getAllUsers();
+
+        if (allUsers.isEmpty()) {
+            response = new Response(ResponseStatus.FAILURE, "No users found.");
         } else {
-            return new Response<>(ResponseStatus.FAILURE,"User Not registered ");
+            response = new Response(allUsers, ResponseStatus.SUCCESS, "Users fetched successfully");
         }
-    }
-
-    @Override
-    public Response<User> loginUser(String email, String password) {
-        Response<User> response = null;
-        try {
-            User user = userDao.getUserByEmail(email);
-            if (user != null && user.getPassword().equals(password)) {
-                response = new Response<>(user, ResponseStatus.SUCCESS, "User successfully validated: Returning from service");
-            }
-//            if(){
-//
-//            }
-        } catch (Exception ex) {
-            System.out.println("Error...");
-            response = new Response<>(ResponseStatus.FAILURE, "User not found: Returning from service");
-        }
-
         return response;
     }
 
+
     @Override
-    public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+    public Response setLoginStatus(String email) {
+        Optional<User> optionalUser = userDao.getUserByEmail(email);
+
+        return optionalUser.map(user -> {
+            user.setLoggedIn(true);
+            return new Response(Boolean.TRUE, ResponseStatus.SUCCESS, "User successfully logged In.");
+        }).orElseGet(() -> new Response(ResponseStatus.FAILURE, "Fail to update the status. "));
     }
 
     @Override
-    public void updateUser(User user) {
-        userDao.updateUser(user);
-    }
+    public Response logoutUser(String email) {
+        Optional<User> optionalUser = userDao.getUserByEmail(email);
 
-    @Override
-    public void deleteUser(User user) {
-        userDao.deleteUser(user);
-    }
-
-    @Override
-    public void setLoginStatus(String email) {
-        User userByEmail = userDao.getUserByEmail(email);
-        userByEmail.setLoggedIn(true);
-    }
-
-    @Override
-    public void logoutUser(String email) {
-        User userByEmail = userDao.getUserByEmail(email);
-        userByEmail.setLoggedIn(false);
+        return optionalUser.map(user -> {
+            user.setLoggedIn(false);
+            return new Response(user, ResponseStatus.SUCCESS, "Logged out successfully.");
+        }).orElseGet(() -> new Response(ResponseStatus.FAILURE, "unable to log out: User not found."));
     }
 }

@@ -2,22 +2,29 @@ package daoImpl;
 
 import dao.OrderDao;
 import entities.Order;
+import serviceImpl.OrderServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class OrderDaoImpl implements OrderDao
-{
+public class OrderDaoImpl implements OrderDao {
+
     private final List<Order> orders = new ArrayList<>();
+    private final static OrderDaoImpl orderDao = new OrderDaoImpl();
+    private OrderDaoImpl(){}
 
+     public static OrderDaoImpl getOrderDao(){
+        return orderDao ;
+    }
     @Override
     public void addOrder(Order order) {
         orders.add(order);
     }
 
     @Override
-    public Order getOrderById(int id) { //TODO optional
-        return orders.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
+    public Optional<Order> getOrderById(int id) {
+        return orders.stream().filter(o -> o.getId() == id).findFirst();
     }
 
     @Override

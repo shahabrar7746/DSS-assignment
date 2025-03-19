@@ -2,12 +2,12 @@ package utility;
 
 import enums.ResponseStatus;
 
-public  class Response<D> {
-    private D data;
+public  class Response{
+    private Object data;
     private ResponseStatus responseStatus;
-    private String message;
+    private final String message;
 
-    public Response(D data, ResponseStatus responseStatus,String message) {
+    public Response(Object data, ResponseStatus responseStatus,String message) {
         this.data = data;
         this.responseStatus = responseStatus;
         this.message = message;
@@ -18,7 +18,7 @@ public  class Response<D> {
         this.message = message;
     }
 
-    public D getData() {
+    public Object getData() {
         return data;
     }
 
@@ -29,6 +29,7 @@ public  class Response<D> {
     public String getMessage() {
         return message;
     }
+
     public void setResponseStatus(ResponseStatus responseStatus) {
         this.responseStatus = responseStatus;
     }

@@ -9,12 +9,15 @@ import daoImpl.OrderDaoImpl;
 import daoImpl.RestaurantDaoImpl;
 import daoImpl.UserDaoImpl;
 import entities.FoodItem;
+import entities.Restaurant;
 import entities.User;
 import enums.FoodCategory;
 import enums.UserRole;
+import service.AuthenticationService;
 import service.OrderService;
 import service.RestaurantService;
 import service.UserService;
+import serviceImpl.AuthenticationServiceImpl;
 import serviceImpl.OrderServiceImpl;
 import serviceImpl.RestaurantServiceImpl;
 import serviceImpl.UserServiceImpl;
@@ -25,69 +28,98 @@ import java.util.List;
 public class AppConfig {
     private static final AppConfig appConfigInstance = new AppConfig();
 
+    private final UserDao userDao;
+    private final FoodDao foodDao;
+    private final OrderDao orderDao;
+    private final RestaurantDao restaurantDao;
+
+    private final UserService userService;
+    private final RestaurantService restaurantService;
+    private final OrderService orderService;
+    private final AuthenticationService authenticationService;
+
     private AppConfig() {
+        this.userDao = UserDaoImpl.getUserDaoImpl();
+        this.foodDao = FoodDaoImpl.getFoodDaoImpl();
+        this.orderDao = OrderDaoImpl.getOrderDao();
+        this.restaurantDao = RestaurantDaoImpl.getRestaurantDao();
+
+        this.userService = new UserServiceImpl(userDao);
+        this.restaurantService = new RestaurantServiceImpl(restaurantDao, foodDao);
+        this.orderService = new OrderServiceImpl(orderDao);
+        this.authenticationService = AuthenticationServiceImpl.getAuthenticationService(userDao);
     }
 
     public static AppConfig getAppConfig() {
         return appConfigInstance;
     }
 
+    public AuthenticationService getAuthenticationService() {
+        return authenticationService;
+    }
+
     public UserDao getUserDao() {
-        return UserDaoImpl.getUserDaoImpl();
+        return userDao;
     }
 
     public FoodDao getFoodDao() {
-        return new FoodDaoImpl();
+        return foodDao;
     }
 
     public OrderDao getOrderDao() {
-        return new OrderDaoImpl();
+        return orderDao;
     }
 
     public RestaurantDao getRestaurantDao() {
-        return new RestaurantDaoImpl();
+        return restaurantDao;
     }
 
-    public UserService getUserService(UserDao userDao) {
-        return new UserServiceImpl(userDao);
+    public UserService getUserService() {
+        return userService;
     }
 
-    public RestaurantService getRestaurantService(RestaurantDao restaurantDao, FoodDao foodDao) {
-        return new RestaurantServiceImpl(restaurantDao, foodDao);
+    public RestaurantService getRestaurantService() {
+        return restaurantService;
     }
 
-    public OrderService getOrderService(OrderDao orderDao) {
-        return new OrderServiceImpl(orderDao);
+    public OrderService getOrderService() {
+        return orderService;
     }
 
-    public void initializeUsers(UserService userService) {
-        User user1 = new User("Chetan", "chetan@gmail.com", "chetan123", UserRole.CUSTOMER);
-        //User user2 = new User("Saurav", "s", "s", UserRole.CUSTOMER);
-        //userService.registerUser(user2);
+    public void initializeUsers() {
+        User user1 = new User("Chetan", "chetan@gmail.com", "chetan@123", UserRole.CUSTOMER);
         User adminUser = new User("admin", "admin@gmail.com", "ds@123", UserRole.ADMIN);
-        //User adminUser2 = new User("a", "a", "a", UserRole.ADMIN);
-        userService.registerUser(user1);
-        userService.registerUser(adminUser);
-        // userService.registerUser(adminUser2);
+        authenticationService.registerUser(user1);
+        authenticationService.registerUser(adminUser);
     }
 
-    public void initializeFoodItems(FoodDao foodDao) {
-        List<FoodItem> foodItemList = new ArrayList<>();
-        foodItemList.add(new FoodItem("Pasta", 60, FoodCategory.VEG));
-        foodItemList.add(new FoodItem("PaneerTikka", 150, FoodCategory.VEG));
-        foodItemList.add(new FoodItem("ChickenCurry", 130, FoodCategory.NONVEG));
-        foodItemList.add(new FoodItem("DumBiryani", 200, FoodCategory.NONVEG));
-        foodItemList.add(new FoodItem("Lassi", 40, FoodCategory.BEVERAGES));
-        foodItemList.add(new FoodItem("Pasta", 60, FoodCategory.VEG));
-        foodItemList.add(new FoodItem("ButterMilk", 40, FoodCategory.BEVERAGES));
+    public void initializeFoodItems() {
+        try {
+            List<FoodItem> foodItemList = new ArrayList<>();
+            Restaurant data = (Restaurant) restaurantService.getRestaurant().getData();
+            int id = data.getId();
 
-        foodDao.addAllFood(foodItemList);
+            foodItemList.add(new FoodItem("PaneerTikka", 150, FoodCategory.VEG,id));
+            foodItemList.add(new FoodItem("ChickenCurry", 130, FoodCategory.NONVEG,id));
+            foodItemList.add(new FoodItem("DumBiryani", 200, FoodCategory.NONVEG,id));
+            foodItemList.add(new FoodItem("Lassi", 40, FoodCategory.BEVERAGES,id));
+            foodItemList.add(new FoodItem("Pasta", 60, FoodCategory.VEG, id));
+            foodItemList.add(new FoodItem("ButterMilk", 40, FoodCategory.BEVERAGES,id));
 
-//        foodDao.addFood(foodItem);
-//        foodDao.addFood(foodItem2);
-//        foodDao.addFood(foodItem3);
-//        foodDao.addFood(foodItem4);
-//        foodDao.addFood(foodItem5);
-//        foodDao.addFood(foodItem6);
+            foodDao.addAllFood(foodItemList);
+
+        } catch (Exception e) {
+            System.out.println("An error occurred.");
+        }
+    }
+
+    public void initializeRestaurant() {
+        try {
+            List<FoodItem> foodItemList = foodDao.getAllFood();
+            Restaurant restaurant1 = new Restaurant("Fast food corner", "shubham@10", foodItemList);
+            restaurantDao.addRestaurant(restaurant1);
+        } catch (Exception e) {
+            System.out.println("An error occurred.");
+        }
     }
 }

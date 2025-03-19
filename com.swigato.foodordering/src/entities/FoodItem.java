@@ -3,17 +3,22 @@ package entities;
 import enums.FoodCategory;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class FoodItem {
     private int id;
     private String name;
     private double price;
     private FoodCategory category;
+    private int restaurantId;
 
-    public FoodItem(String name, double price, FoodCategory category) {
+    public FoodItem(String name, double price, FoodCategory category, int restaurantId) {
+        Random random = new Random();
         this.name = name;
         this.price = price;
         this.category = category;
+        this.id = random.nextInt(1000);
+        this.restaurantId =restaurantId;
     }
 
     public int getId() {

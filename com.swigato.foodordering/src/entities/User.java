@@ -1,15 +1,11 @@
 package entities;
-
 import enums.UserRole;
 import utility.Formatable;
-import validation.UserValidator;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import java.util.regex.Pattern;
 
-public class User implements UserValidator, Formatable {
+public class User implements Formatable {
     private int id;
     private String name;
     private String email;
@@ -18,9 +14,6 @@ public class User implements UserValidator, Formatable {
     private boolean isLoggedIn;
 
     public User(String name, String email, String password, UserRole role) {
-       if (!isValidEmail(email) || !isValidPassword(password) || !isValidName(name)) {
-        throw new IllegalArgumentException("Invalid user data.");
-       }
         Random random = new Random();
         this.id = random.nextInt(1000);
         this.name = name;
@@ -78,25 +71,6 @@ public class User implements UserValidator, Formatable {
         isLoggedIn = loggedIn;
     }
 
-    @Override
-    public boolean isValidEmail(String email) {
-        return Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$").matcher(email).matches();
-    }
-
-    @Override
-    public boolean isValidPassword(String password) {
-        if (role == UserRole.ADMIN) {
-            return password != null && password.length() >= 8;
-        } else {
-            return password != null && password.length() >= 6;
-        }
-    }
-
-    @Override
-    public boolean isValidName(String name) {
-        return name != null && !name.trim().isEmpty() &&
-                Pattern.compile("^[A-Za-z\\s]+$").matcher(name).matches();
-    }
 
     @Override
     public String toString() {

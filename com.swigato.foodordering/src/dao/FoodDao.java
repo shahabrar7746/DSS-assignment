@@ -2,14 +2,16 @@ package dao;
 
 import entities.FoodItem;
 import enums.FoodCategory;
+import exceptions.FailedToPerformOperation;
+import exceptions.ValueAlreadyExistsException;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface FoodDao {
-    void addFood(FoodItem foodItem);
+    void addFood(FoodItem foodItem) throws ValueAlreadyExistsException, FailedToPerformOperation;
 
-    void addAllFood(List<FoodItem> foodItemsList);
+    void addAllFood(List<FoodItem> foodItemsList) throws ValueAlreadyExistsException, FailedToPerformOperation;
 
     Optional<FoodItem> getFoodById(int id);
 
@@ -17,7 +19,7 @@ public interface FoodDao {
 
     List<FoodItem> getFoodByCategory(FoodCategory category);
 
-    void updateFood(FoodItem foodItem);
+    boolean updateFood(FoodItem foodItem);
 
-    void deleteFood(FoodItem foodItem);
+    boolean deleteFood(FoodItem foodItem) throws FailedToPerformOperation;
 }

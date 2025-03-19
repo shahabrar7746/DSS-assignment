@@ -1,19 +1,21 @@
 package dao;
 
 import entities.User;
-import utility.Response;
+import exceptions.FailedToPerformOperation;
+import exceptions.ValueAlreadyExistsException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserDao {
 
-    Response<Boolean> addUser(User user);
+    void addUser(User user) throws ValueAlreadyExistsException, FailedToPerformOperation;
 
-    User getUserByEmail(String email);
+    Optional<User> getUserByEmail(String email);
 
     List<User> getAllUsers();
 
-    void updateUser(User user);
+    boolean updateUser(User user);
 
-    void deleteUser(User user);
+    Optional<User> deleteUser(User user);
 }

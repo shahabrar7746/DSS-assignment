@@ -1,37 +1,42 @@
 package ui;
 
 import entities.FoodItem;
+import entities.Restaurant;
 import enums.FoodCategory;
+import enums.ResponseStatus;
 import service.RestaurantService;
 import utility.ColourCodes;
 import utility.OperationsInfo;
+import utility.Response;
 
-import java.util.ArrayList;
+
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class RestaurantOwnerUi {
-    public static void manageFoodItems(Scanner scanner, RestaurantService restaurantService) {
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void manageFoodItems(RestaurantService restaurantService) {
         boolean isExit = false;
         while (!isExit) {
             try {
-                List<String> menuItems = new ArrayList<>(List.of(ColourCodes.CYAN + "\nMANAGE FOOD ITEMS" + ColourCodes.RESET,
-                        "1. Add Food Item", "2. Remove Food Item", "3. Update Food Item", "4. Display All Food Items",
-                        "5. Display Food by Category", "6. Back to Admin Menu"));
-                OperationsInfo.displayMenu(menuItems); // TODO
+                OperationsInfo.displayMenu("MANAGE FOOD ITEMS", List.of(
+                        " Add Food Item", " Remove Food Item", " Update Food Item", " Display All Food Items",
+                        " Display Food by Category", " Back to Admin Menu"));
 
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (choice) {
-                    case 1 ->  addFoodItem(scanner, restaurantService);
-                    case 2 ->  removeFoodItem(scanner, restaurantService);
-                    case 3 ->  updateFoodItem(scanner, restaurantService);
-                    case 4 ->  displayAllFoodItems(restaurantService);
-                    case 5 ->  displayFoodByCategory(scanner, restaurantService);
-                    case 6 ->  isExit = true;
-                    default ->   System.out.println("Invalid choice.");
+                    case 1 -> addFoodItem(restaurantService);
+                    case 2 -> removeFoodItem(restaurantService);
+                    case 3 -> updateFoodItem(restaurantService);
+                    case 4 -> displayAllFoodItems(restaurantService);
+                    case 5 -> displayFoodByCategory(restaurantService);
+                    case 6 -> isExit = true;
+                    default -> System.out.println("Invalid choice.");
                 }
 
             } catch (IllegalArgumentException | InputMismatchException e) {
@@ -41,7 +46,7 @@ public class RestaurantOwnerUi {
         }
     }
 
-    private static void addFoodItem(Scanner scanner, RestaurantService restaurantService) {
+    private static void addFoodItem(RestaurantService restaurantService) {
         System.out.println("Enter food name:");
         String name = scanner.nextLine();
         System.out.println("Enter food price:");
@@ -51,38 +56,52 @@ public class RestaurantOwnerUi {
         String categoryStr = scanner.nextLine().toUpperCase();
         FoodCategory category = FoodCategory.valueOf(categoryStr);
 
-        FoodItem foodItem = new FoodItem(name, price, category);
-        restaurantService.addFood(foodItem);
-        System.out.println("Food item added.");
-    }
+        Restaurant restaurantData = (Restaurant) restaurantService.getRestaurant().getData();
+        int id = restaurantData.getId();
 
-    private static void removeFoodItem(Scanner scanner, RestaurantService restaurantService) {
-        System.out.println("Enter food name:");
-        String foodName = scanner.nextLine();
-
-        FoodItem foodItem = restaurantService.getAllFood()
-                .stream()
-                .filter(f -> f.getName().equalsIgnoreCase(foodName))
-                .findFirst()
-                .orElse(null);
-        if (foodItem != null) {
-            restaurantService.removeFood(foodItem);
-            System.out.println("Food item removed.");
+        FoodItem foodItem = new FoodItem(name, price, category, id);
+        Response response = restaurantService.addFood(foodItem);
+        if (response.getResponseStatus() == ResponseStatus.SUCCESS) {
+            System.out.println(response.getMessage());
         } else {
-            System.out.println("Food item not found.");
+            System.out.println(response.getMessage());
         }
     }
 
-    private static void updateFoodItem(Scanner scanner, RestaurantService restaurantService) {
+    private static void removeFoodItem(RestaurantService restaurantService) {
         System.out.println("Enter food name:");
         String foodName = scanner.nextLine();
 
-        FoodItem foodItem = restaurantService.getAllFood()
-                .stream()
+        Response allFoodResponse = restaurantService.getAllFood();
+        List<FoodItem> foodItems = (List<FoodItem>) allFoodResponse.getData();
+
+        Optional<FoodItem> foodItemOptional = foodItems.stream()
                 .filter(f -> f.getName().equalsIgnoreCase(foodName))
-                .findFirst()
-                .orElse(null);
-        if (foodItem != null) {
+                .findFirst();
+
+        if (foodItemOptional.isPresent()) {
+            FoodItem foodItem = foodItemOptional.get();
+            Response response = restaurantService.removeFood(foodItem);
+            if (response.getResponseStatus() == ResponseStatus.SUCCESS) {
+                System.out.println(response.getMessage());
+            } else {
+                System.out.println(response.getMessage());
+            }
+        }
+    }
+
+    private static void updateFoodItem(RestaurantService restaurantService) {
+        System.out.println("Enter food name:");
+        String foodName = scanner.nextLine();
+
+        Response allFoodResponse = restaurantService.getAllFood();
+        List<FoodItem> foodItems = (List<FoodItem>) allFoodResponse.getData();
+
+        Optional<FoodItem> foodItemOptional = foodItems.stream().filter(f -> f.getName().equalsIgnoreCase(foodName))
+                .findFirst();
+        if (foodItemOptional.isPresent()) {
+            FoodItem foodItem = foodItemOptional.get();
+
             System.out.println("Enter new name:");
             String name = scanner.nextLine();
             System.out.println("Enter new price:");
@@ -95,26 +114,31 @@ public class RestaurantOwnerUi {
             foodItem.setName(name);
             foodItem.setPrice(price);
             foodItem.setCategory(category);
-            restaurantService.updateFood(foodItem);
-            System.out.println("Food item updated.");
-        } else {
-            System.out.println("Food item not found.");
+            Response response = restaurantService.updateFood(foodItem);
+            if (response.getResponseStatus() == ResponseStatus.SUCCESS) {
+                System.out.println(response.getMessage());
+
+            } else {
+                System.out.println(response.getMessage());
+            }
         }
     }
 
     private static void displayAllFoodItems(RestaurantService restaurantService) {
         System.out.println(ColourCodes.CYAN + "\nMENU" + ColourCodes.RESET);
         System.out.printf(ColourCodes.PURPLE + "| %-15s | %-10s | %-10s |" + ColourCodes.RESET + "%n", "Food Name", "Item Price", "Food Category");
-        List<FoodItem> foodItems = restaurantService.getAllFood();
+        Response allFoodResponse = restaurantService.getAllFood();
+        List<FoodItem> foodItems = (List<FoodItem>) allFoodResponse.getData();
         foodItems.forEach(System.out::println);
     }
 
-    private static void displayFoodByCategory(Scanner scanner, RestaurantService restaurantService) {
+    private static void displayFoodByCategory(RestaurantService restaurantService) {
         System.out.println("Enter category (VEG/NONVEG/BEVERAGES):");
         String categoryStr = scanner.nextLine().toUpperCase();
 
         FoodCategory category = FoodCategory.valueOf(categoryStr);
-        List<FoodItem> foodItems = restaurantService.getFoodByCategory(category);
+        Response foodByCategoryResponse = restaurantService.getFoodByCategory(category);
+        List<FoodItem> foodItems = (List<FoodItem>) foodByCategoryResponse.getData();
         foodItems.forEach(System.out::println);
     }
 }

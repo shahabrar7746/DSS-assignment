@@ -3,12 +3,16 @@ package serviceImpl;
 import dao.OrderDao;
 import entities.Order;
 import enums.OrderStatus;
+import enums.ResponseStatus;
 import service.OrderService;
+import utility.Response;
 
 import java.util.List;
+import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
     private final OrderDao orderDao;
+    Response response;
 
     public OrderServiceImpl(OrderDao orderDao) {
         this.orderDao = orderDao;
@@ -19,8 +23,21 @@ public class OrderServiceImpl implements OrderService {
         simulateOrderProcessing(order);
     }
 
-    public Order getOrder(int orderId) {
-        return orderDao.getOrderById(orderId);
+    public Response getOrder(int orderId) {
+        try {
+            Optional<Order> orderById = orderDao.getOrderById(orderId);
+
+            if (orderById.isPresent()) {
+                Order order = orderById.get();
+                response = new Response(order, ResponseStatus.SUCCESS, "Order details fetched successfully.");
+            } else {
+                response = new Response(ResponseStatus.FAILURE, "Invalid order ID or order not found.");
+            }
+        } catch (Exception e) {
+          //  System.out.println("Error fetching order :" + e.getMessage()); LOGGER
+            response = new Response(ResponseStatus.FAILURE, "An unexpected error occurred while retrieving the order.");
+        }
+        return response;
     }
 
     public List<Order> getAllOrders() {

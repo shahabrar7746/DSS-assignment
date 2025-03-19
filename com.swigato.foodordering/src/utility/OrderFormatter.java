@@ -21,18 +21,22 @@ public class OrderFormatter {
         sb.append(ColourCodes.BLUE+"Items:\n"+ColourCodes.RESET);
 
         List<OrderItem> items = order.getOrderItems();
-        Predicate<FoodItem> predicate = (foodItem) -> {
-            if(Objects.nonNull(foodItem.getName()) && )
-          return true;
-        }; // TODO
-        items.stream().filter(r -> predicate.test(r)).forEach(item -> {
+        Predicate<FoodItem> predicate = foodItem ->
+                Objects.nonNull(foodItem) && Objects.nonNull(foodItem.getName()) && !foodItem.getName().isBlank();
 
-        });
-        for (OrderItem item : items) { // traditional approach
-            sb.append("  - ").append(item.getFood().getName()).append(ColourCodes.BLUE+" (Quantity: ,"+ColourCodes.RESET).append(item.getQuantity()).append(ColourCodes.BLUE+" Price: "+ColourCodes.RESET)
-                    .append(roundToTwoDecimalPlaces(item.getTotalPrice())).append(")\n");
-        }
-        sb.append(ColourCodes.BLUE+"Total Bill Amount: "+ColourCodes.RESET).append(roundToTwoDecimalPlaces(order.getTotalBillAmount())).append("\n");
+        items.stream()
+                .filter(item -> predicate.test(item.getFood()))
+                .forEach(item -> sb.append("  - ")
+                        .append(item.getFood().getName())
+                        .append(ColourCodes.BLUE + " (Quantity: " + ColourCodes.RESET)
+                        .append(item.getQuantity())
+                        .append(ColourCodes.BLUE + " Price: " + ColourCodes.RESET)
+                        .append(roundToTwoDecimalPlaces(item.getTotalPrice()))
+                        .append(")\n"));
+
+        sb.append(ColourCodes.BLUE+"Total Bill Amount: "+ColourCodes.RESET)
+                .append(roundToTwoDecimalPlaces(order.getTotalBillAmount()))
+                .append("\n");
 
         return sb.toString();
     }

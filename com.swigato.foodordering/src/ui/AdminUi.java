@@ -1,11 +1,14 @@
 package ui;
 
+import entities.FoodItem;
 import entities.User;
 import enums.ResponseStatus;
 import enums.UserRole;
+import service.AuthenticationService;
 import service.OrderService;
 import service.RestaurantService;
 import service.UserService;
+import serviceImpl.ServiceContainer;
 import utility.*;
 
 import java.util.ArrayList;
@@ -18,40 +21,43 @@ public class AdminUi extends Ui {
     private final RestaurantService restaurantService;
     private User loggedInAdmin;
     private final OrderService orderService;
+    private final AuthenticationService authenticationService;
+    private final Scanner scanner = new Scanner(System.in);
 
-    public AdminUi(UserService userService, RestaurantService restaurantService, OrderService orderService) {
-        this.userService = userService;
-        this.restaurantService = restaurantService;
-        this.orderService = orderService;
+    public  AdminUi (ServiceContainer serviceContainer){
+        this.userService = serviceContainer.getUserService();
+        this.restaurantService =serviceContainer.getRestaurantService();
+        this.orderService = serviceContainer.getOrderService();
+        this.authenticationService = serviceContainer.getAuthenticationService();
     }
 
     @Override
-    public void initAdminScreen(Scanner scanner) {
+    public void initAdminScreen() {
         if (loggedInAdmin == null) {
-            Response<User> response = loginAdmin(scanner);
+            Response response = loginAdmin();
             if (response.getResponseStatus() == ResponseStatus.FAILURE) {
-                System.out.println(ColourCodes.RED +response.getMessage()+ ColourCodes.RESET);
+                System.out.println(ColourCodes.RED + response.getMessage() + ColourCodes.RESET);
                 return;
             }
-            System.out.println(ColourCodes.GREEN +response.getMessage()+ColourCodes.RESET);
-            loggedInAdmin = response.getData();
+            System.out.println(ColourCodes.GREEN + response.getMessage() + ColourCodes.RESET);
+            loggedInAdmin = (User) response.getData();
         }
+
         boolean isExit = false;
         while (!isExit) {
             try {
-                List<String> menuItems = new ArrayList<>(List.of(ColourCodes.CYAN + "\nADMIN MENU" + ColourCodes.RESET,
-                        "1. AddAdmin", "2. Display All Users", "3. Display All Orders",
-                        "4. Manage Food Items", "5. Logout"));
-                OperationsInfo.displayMenu(menuItems);
+                OperationsInfo.displayMenu("ADMIN MENU", List.of(
+                        " AddAdmin", " Display All Users", " Display All Orders",
+                        " Manage Food Items", " Logout"));
 
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (choice) {
-                    case 1 -> addNewAdmin(scanner);
+                    case 1 -> addNewAdmin();
                     case 2 -> displayAllUsers();
                     case 3 -> displayAllOrders();
-                    case 4 -> RestaurantOwnerUi.manageFoodItems(scanner, restaurantService);
+                    case 4 -> RestaurantOwnerUi.manageFoodItems(restaurantService);
                     case 5 -> {
                         logOutAdmin(loggedInAdmin);
                         isExit = true;
@@ -64,7 +70,7 @@ public class AdminUi extends Ui {
         }
     }
 
-    private void addNewAdmin(Scanner scanner) {
+    private void addNewAdmin() {
         System.out.println("Enter name: ");
         String name = scanner.nextLine();
         System.out.println("Enter email:");
@@ -73,42 +79,60 @@ public class AdminUi extends Ui {
         String password = scanner.nextLine();
         UserRole admin = UserRole.ADMIN;
 
-        Response<User> userResponse = userService.registerUser(new User(name, email, password, admin));
+        Response userResponse = authenticationService.registerUser(new User(name, email, password, admin));
 
         if (userResponse.getResponseStatus() == ResponseStatus.SUCCESS) {
             System.out.println(userResponse.getMessage());
-
-        } else if (userResponse.getResponseStatus() == ResponseStatus.FAILURE) {
-            System.out.println(userResponse.getResponseStatus() + userResponse.getMessage());
         } else {
-            System.out.println("Enter correct input ");
+            System.out.println("Error:" + userResponse.getMessage());
         }
     }
 
-    private Response<User> loginAdmin(Scanner scanner) {
+    private Response loginAdmin() {
         System.out.println("Enter email:");
         String email = scanner.nextLine();
         System.out.println("Enter password:");
         String password = scanner.nextLine();
 
-        Response<User> userResponse = userService.loginUser(email, password);
-        User admin = userResponse.getData();
+        Response userResponse = authenticationService.loginUser(email, password);
+
+        User admin = (User) userResponse.getData();
         if (admin != null && admin.getRole() == UserRole.ADMIN) {
-            userService.setLoginStatus(email);
-            return new Response<>(admin, ResponseStatus.SUCCESS,"Welcome "+ admin.getName().concat("!"));
+
+            Response setLoginResponse = userService.setLoginStatus(email);
+            if (setLoginResponse.getResponseStatus() != ResponseStatus.SUCCESS) {
+                System.out.println(setLoginResponse.getMessage());
+                return setLoginResponse;
+            }
+            return new Response(admin, ResponseStatus.SUCCESS, "Welcome " + admin.getName().concat("!"));
         } else {
-            return new Response<>(ResponseStatus.FAILURE, "Invalid credentials or not an admin.\n");
+            return new Response(ResponseStatus.FAILURE, "Invalid credentials or not an admin.\n");
         }
     }
 
     private void logOutAdmin(User admin) {
-        userService.logoutUser(admin.getEmail());
+
+        Response response = userService.logoutUser(admin.getEmail());
+        if (response.getResponseStatus() != ResponseStatus.SUCCESS){
+            System.out.println(response.getMessage());
+            return;
+        }
         loggedInAdmin = null;
-        System.out.println("Admin logged out.");
+        System.out.println(response.getMessage());
     }
 
     private void displayAllUsers() {
-        Formatter.tableTemplate(userService.getAllUsers().stream().toList());
+        Response allUsersResponse = userService.getAllUsers();
+        if (allUsersResponse.getResponseStatus() != ResponseStatus.SUCCESS) {
+            System.out.println(allUsersResponse.getMessage());
+            return;
+        }
+
+        List<User> users = (List<User>) allUsersResponse.getData();
+        if (users == null || users.isEmpty()) {
+            System.out.println("NO users available to display");
+        }
+        Formatter.tableTemplate(users);
     }
 
     private void displayAllOrders() {

@@ -6,17 +6,15 @@ public class Formatter {
     public static <T extends Formatable> void tableTemplate(List<T> list) {
         if (list.isEmpty()) return;
         T firstObject = list.get(0);
-        String fields = ColourCodes.PURPLE+"";
+        String fields = ColourCodes.PURPLE + "";
         String title = firstObject.getDisplayabletitle();
-//        displayable.stream().forEach((item)-> System.out.print(item+multiplychar(Formatable.max_gap-item.length(), ' ')));
         for (String field : firstObject.fieldsToDisplay()) {
             fields += field + multiplychar(Formatable.MAX_CHAR_LIMIT - field.length(), ' ');
         }
-        fields= fields+ColourCodes.RESET;
+        fields = fields + ColourCodes.RESET;
 
-//        int half_side = (fields.trim().length() - title.length()) / 2;
-        System.out.println(ColourCodes.BLUE+  title + ColourCodes.RESET );
-//        System.out.println(multiplychar(half_side, '=') + title + multiplychar(half_side, '='));
+        System.out.println(ColourCodes.BLUE + title + ColourCodes.RESET);
+
         System.out.println(fields);
 
         for (T item : list) {
@@ -24,9 +22,7 @@ public class Formatter {
             System.out.println();
         }
 
-//        System.out.println(multiplychar(fields.length() - title.length(), '=') + "\n");
-        System.out.println(ColourCodes.BLUE+multiplychar(fields.length(),'-') + ColourCodes.RESET );
-
+        System.out.println(ColourCodes.BLUE + multiplychar(fields.length(), '-') + ColourCodes.RESET);
     }
 
     public static String multiplychar(int x, char ch) {

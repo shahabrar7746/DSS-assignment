@@ -6,10 +6,9 @@ import entities.OrderItem;
 import entities.User;
 import enums.ResponseStatus;
 import enums.UserRole;
-import service.CustomerService;
-import service.OrderService;
-import service.RestaurantService;
-import service.UserService;
+import service.*;
+import serviceImpl.CustomerServiceImpl;
+import serviceImpl.ServiceContainer;
 import utility.ColourCodes;
 import utility.Formatter;
 import utility.OperationsInfo;
@@ -22,52 +21,58 @@ public class CustomerUi extends Ui {
     private final UserService userService;
     private final RestaurantService restaurantService;
     private final OrderService orderService;
+    private final AuthenticationService authenticationService;
     private User loggedInCustomer;
     private CustomerService customerService;
+    private final Scanner scanner = new Scanner(System.in);
 
-//    private Scanner scanner = new Scanner(System.in);// TODO check
-
-    public CustomerUi(UserService userService, RestaurantService restaurantService, OrderService orderService) {
-        this.userService = userService;
-        this.restaurantService = restaurantService;
-        this.orderService = orderService;
+    //    public CustomerUi(UserService userService, RestaurantService restaurantService, OrderService orderService) {
+//        this.userService = userService;
+//        this.restaurantService = restaurantService;
+//        this.orderService = orderService;
+//    }
+    public CustomerUi(ServiceContainer serviceContainer) {
+        this.userService = serviceContainer.getUserService();
+        this.restaurantService = serviceContainer.getRestaurantService();
+        this.orderService = serviceContainer.getOrderService();
+        this.authenticationService = serviceContainer.getAuthenticationService();
     }
 
     @Override
-    public void initCustomerScreen(Scanner scanner) {
+    public void initCustomerScreen() {
         if (loggedInCustomer == null) {
-            Response<User> response = loginAsCustomer(scanner);
+            Response response = loginAsCustomer();
             if (response.getResponseStatus() == ResponseStatus.FAILURE) {
                 System.out.println(ColourCodes.RED + response.getMessage() + ColourCodes.RESET);
                 return;
             }
 
             System.out.println(ColourCodes.GREEN + response.getMessage() + ColourCodes.RESET);
-            loggedInCustomer = response.getData();
-            customerService = new CustomerService(loggedInCustomer, orderService);
+            loggedInCustomer = (User) response.getData();
+            customerService = new CustomerServiceImpl(loggedInCustomer, orderService);
         }
-        boolean isExit = false;
 
+        boolean isExit = false;
         while (!isExit) {
             try {
-//                List<String> menuItems = new ArrayList<>(List.of(ColourCodes.CYAN + "\nCUSTOMER MENU" + ColourCodes.RESET, "1. View Menu"
-//                        , "2. Add to Cart", "3. View Cart", "4. Track Order Status", "5. View order history",
-//                        "6. Logout")
-//                );
-//                OperationsInfo.displayMenu(menuItems); // TODO abstract options
+                OperationsInfo.displayMenu("CUSTOMER MENU", List.of(" View Menu", " Add to Cart", " View Cart",
+                        " Track Order Status", " View order history"," logout"," Back to main menu"));
 
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (choice) {
                     case 1 -> viewMenu();
-                    case 2 -> addToCart(scanner);
-                    case 3 -> viewCart(scanner);
-                    case 4 -> trackOrderStatus(scanner);
-                    case 5 -> vieOrderHistory(scanner);
+                    case 2 -> addToCart();
+                    case 3 -> viewCart();
+                    case 4 -> trackOrderStatus();
+                    case 5 -> vieOrderHistory();
                     case 6 -> {
                         logoutCustomer();
                         isExit = true;
+                    }
+                    case 7 -> {
+                        return;
                     }
                     default -> System.out.println("Invalid choice.");
                 }
@@ -79,63 +84,71 @@ public class CustomerUi extends Ui {
         }
     }
 
-    public void registerCustomer(Scanner scanner) {
-        try {
-            System.out.println("Enter name: ");
-            String name = scanner.nextLine();
-            System.out.println("Enter email:");
-            String email = scanner.nextLine();
-            System.out.println("Enter password:");
-            String password = scanner.nextLine();
-            UserRole customer = UserRole.CUSTOMER;
+    public void registerCustomer() {
+        System.out.println("Enter name: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter email:");
+        String email = scanner.nextLine();
+        System.out.println("Enter password:");
+        String password = scanner.nextLine();
+        UserRole customer = UserRole.CUSTOMER;
 
-            Response<User> userResponse = userService.registerUser(new User(name, email, password, customer));
+        Response response = authenticationService.registerUser(new User(name, email, password, customer));
+        if (response.getResponseStatus() != ResponseStatus.SUCCESS) {
+            System.out.println("Error: " + response.getMessage());
+            return;
+        }
 
-            if (userResponse.getResponseStatus() == ResponseStatus.SUCCESS) {
-                User user = userResponse.getData();
-                userService.setLoginStatus(email);
-                loggedInCustomer = user;
-                customerService = new CustomerService(loggedInCustomer, orderService);
-                System.out.println(userResponse.getMessage());
-                initCustomerScreen(scanner);
-
-            } else if (userResponse.getResponseStatus() == ResponseStatus.FAILURE) {
-                System.out.println(userResponse.getMessage());
-            } else {
-                System.out.println("Enter correct input ");
-            } // TODO conditional Expession
-        } catch (IllegalArgumentException | NoSuchElementException ex) {
-            System.out.println(ColourCodes.RED + ex.getMessage() + ColourCodes.RESET);
+        User user = (User) response.getData();
+        if (user != null) {
+            Response loginStatusCheckResponse = userService.setLoginStatus(email);
+            if (loginStatusCheckResponse.getResponseStatus() != ResponseStatus.SUCCESS) {
+                System.out.println(loginStatusCheckResponse.getMessage());
+                return;
+            }
+            loggedInCustomer = user;
+            customerService = new CustomerServiceImpl(loggedInCustomer, orderService);
+            initCustomerScreen();
+        } else {
+            System.out.println("Unexpected error occurred : User data missing ");
         }
     }
 
-    private Response<User> loginAsCustomer(Scanner scanner) {
+    private Response loginAsCustomer() {
         System.out.println("Enter email:");
         String email = scanner.nextLine();
         System.out.println("Enter password:");
         String password = scanner.nextLine();
 
-        Response<User> userResponse = userService.loginUser(email, password);
-        userResponse.getResponseStatus() == ResponseStatus.FAILURE;// TODO
-        User customer = userResponse.getData();
-        if (customer != null && customer.getRole() == UserRole.CUSTOMER) {
-            userService.setLoginStatus(email);
-            return new Response<>(customer, ResponseStatus.SUCCESS, "Customer logged in successfully.");
+        Response userResponse = authenticationService.loginUser(email, password);
+        if (userResponse.getResponseStatus() == ResponseStatus.SUCCESS) {
+            User customer = (User) userResponse.getData();
+            if (customer.getRole() == UserRole.CUSTOMER) {
+                Response setLoginStatusResponse = userService.setLoginStatus(email);
+                if (setLoginStatusResponse.getResponseStatus() != ResponseStatus.SUCCESS) {
+                    System.out.println(setLoginStatusResponse.getMessage());
+                    return setLoginStatusResponse;
+                }
+                return userResponse;
+            } else {
+                return new Response(ResponseStatus.FAILURE, "Access denied :Only customer can log in.");
+            }
         } else {
-            return new Response<>(ResponseStatus.FAILURE, "Invalid credentials or not a customer.\n");
+            return userResponse;
         }
     }
 
     private void viewMenu() {
         System.out.println(ColourCodes.CYAN + "\nMENU" + ColourCodes.RESET);
         System.out.printf(ColourCodes.PURPLE + "| %-15s | %-10s | %-10s |" + ColourCodes.RESET + "%n", "Food Name", "Item Price", "Food Category");
-        List<FoodItem> foodItems = restaurantService.getAllFood();
+        Response allFoodResponse = restaurantService.getAllFood();
+        List<FoodItem> foodItems = (List<FoodItem>) allFoodResponse.getData();
         foodItems.forEach(System.out::println);
     }
 
-    private void addToCart(Scanner scanner) {
-            while (true) {
-                viewMenu();
+    private void addToCart() {
+        while (true) {
+            viewMenu();
 
             System.out.println(ColourCodes.RED + "\nType 'exit' to return to the customer menu" +
                     "\nType 'cart' to jump to the cart: " + ColourCodes.RESET + ColourCodes.BLUE +
@@ -148,19 +161,19 @@ public class CustomerUi extends Ui {
 
             } else if (foodName.equalsIgnoreCase("checkout")) {
                 boolean checkEmpty = customerService.getCart().isEmpty();
-                confirmCheckout(scanner, checkEmpty);
+                confirmCheckout(checkEmpty);
 
             } else if (foodName.equalsIgnoreCase("cart")) {
-                viewCart(scanner);
+                viewCart();
 
             } else {
                 Optional<FoodItem> foodItem = foodItemIsPresent(foodName);
-                foodItem.ifPresentOrElse(f -> proceedWithCart(scanner, f), () -> System.out.println("Food item not found."));
+                foodItem.ifPresentOrElse(f -> proceedWithCart(f), () -> System.out.println("Food item not found."));
             }
         }
     }
 
-    private void proceedWithCart(Scanner scanner, FoodItem item) {
+    private void proceedWithCart(FoodItem item) {
         System.out.println("Enter quantity:");
         int quantity = scanner.nextInt();
         scanner.nextLine();
@@ -176,13 +189,15 @@ public class CustomerUi extends Ui {
     }
 
     private Optional<FoodItem> foodItemIsPresent(String foodName) {
-        return restaurantService.getAllFood()
-                .stream()
+        Response allFoodResponse = restaurantService.getAllFood();
+        List<FoodItem> foodItems = (List<FoodItem>) allFoodResponse.getData();
+        return foodItems.stream()
                 .filter(f -> f.getName().equalsIgnoreCase(foodName))
                 .findFirst();
     }
 
-    private void viewCart(Scanner scanner) {
+
+    private void viewCart() {
         if (customerService.getCart().isEmpty()) {
             System.out.println("Your cart is empty");
             return;
@@ -197,9 +212,9 @@ public class CustomerUi extends Ui {
         while (stopExec) {
             String options = scanner.nextLine();
             if (options.equalsIgnoreCase("checkout")) {
-                proceedWithCheckout(scanner);
+                proceedWithCheckout();
                 stopExec = false;
-//                return;
+                return;
             } else if (options.equalsIgnoreCase("exit")) {
                 return;
             } else {
@@ -208,15 +223,15 @@ public class CustomerUi extends Ui {
         }
     }
 
-    private void confirmCheckout(Scanner scanner, boolean checkEmpty) {
+    private void confirmCheckout(boolean checkEmpty) {
         if (checkEmpty) {
             System.out.println("Your cart is empty.");
         } else {
-            proceedWithCheckout(scanner);
+            proceedWithCheckout();
         }
     }
 
-    private void proceedWithCheckout(Scanner scanner) {
+    private void proceedWithCheckout() {
         System.out.println("Do you want to place the order? (y/n)");
         String confirmation = scanner.nextLine();
 
@@ -229,9 +244,9 @@ public class CustomerUi extends Ui {
         }
     }
 
-    private void trackOrderStatus(Scanner scanner) {
+    private void trackOrderStatus() {
         List<Order> allOrders = orderService.getAllOrders();
-        if (allOrders.isEmpty()) {
+        if (allOrders == null || allOrders.isEmpty()) {
             System.out.println("You have no current orders.");
             return;
         }
@@ -240,45 +255,73 @@ public class CustomerUi extends Ui {
         int orderId = scanner.nextInt();
         scanner.nextLine();
 
-        Order order = orderService.getOrder(orderId);
-        if (order != null) {
+        Response responseOrder = orderService.getOrder(orderId);
+        if (responseOrder.getResponseStatus() == ResponseStatus.SUCCESS) {
+            Order order = (Order) responseOrder.getData();
             System.out.println("Order status: " + order.getOrderStatus());
         } else {
-            System.out.println("Order not found.");
+            System.out.println(responseOrder.getMessage());
         }
     }
 
-    private void vieOrderHistory(Scanner scanner) {
-            List<Order> allOrders = orderService.getAllOrders().stream().filter(order -> order.getCustomer().getId() == loggedInCustomer.getId()).toList();
-        Formatter.tableTemplate(allOrders.stream().toList());
-        if (allOrders.isEmpty()) {
-            System.out.println("You have no past orders.");
-            return;
+    private Boolean isUserLoggedIn() {
+        if (loggedInCustomer == null) {
+            System.out.println("You must need to login");
+            return false;
         }
+        return true;
+    }
+
+    private List<Order> getCustomerOrders() {
+        List<Order> allOrders = orderService.getAllOrders();
+        if (allOrders == null || allOrders.isEmpty()) {
+            System.out.println("You have no past orders");
+            return List.of();
+        }
+        return allOrders.stream()
+                .filter(order -> order.getCustomer().getId() == loggedInCustomer.getId())
+                .toList();
+    }
+
+    private void vieOrderHistory() {
+        if (Boolean.TRUE.equals((isUserLoggedIn()))) return;
+
+        List<Order> customerOrders = getCustomerOrders();
+        if (customerOrders.isEmpty()) return;
+
+        Formatter.tableTemplate(customerOrders.stream().toList());
 
         System.out.println("Enter order id to view order details: \n" +
                 ColourCodes.RED + "Or type exit to get back to previous menu: " + ColourCodes.RESET);
-        String confirmation = scanner.nextLine();
 
+        String confirmation = scanner.nextLine().trim();
         if (confirmation.equalsIgnoreCase("exit")) {
             return;
         }
+        if (!confirmation.matches("\\d+")) {
+            System.out.println("Invalid input, Please enter a valid numeric ID.");
+            return;
+        }
+        int orderId = Integer.parseInt(confirmation);
 
-        int orderId = Integer.parseInt(confirmation); // TODO add optional & Streams
-        Order order = orderService.getOrder(orderId);
-
-        if (order == null || order.getId() != orderId) {
-            System.out.println("Invalid Id!");
-        } else {
+        Response responseOrder = orderService.getOrder(orderId);
+        if (responseOrder.getResponseStatus() == ResponseStatus.SUCCESS || responseOrder.getData() != null) {
+            Order order = (Order) responseOrder.getData();
             List<OrderItem> orderItems = order.getOrderItems();
             Formatter.tableTemplate(orderItems);
+        } else {
+            System.out.println(responseOrder.getMessage());
         }
     }
 
     private void logoutCustomer() {
-        userService.logoutUser(loggedInCustomer.getEmail());
-        loggedInCustomer = null;
-        customerService = null;
-        System.out.println("Customer logged out.");
+        Response response = userService.logoutUser(loggedInCustomer.getEmail());
+        if (response.getResponseStatus() == ResponseStatus.SUCCESS) {
+            loggedInCustomer = null;
+            customerService = null;
+            System.out.println(response.getMessage());
+        } else {
+            System.out.println(response.getMessage());
+        }
     }
 }

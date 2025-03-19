@@ -1,11 +1,12 @@
 package service;
 
 import entities.Order;
+import utility.Response;
 
 import java.util.List;
 
 public interface OrderService {
-    Order getOrder(int orderId);
+    Response getOrder(int orderId);
 
     List<Order> getAllOrders();
 
