@@ -59,7 +59,7 @@ public class RestaurantOwnerUi {
         Restaurant restaurantData = (Restaurant) restaurantService.getRestaurant().getData();
         int id = restaurantData.getId();
 
-        FoodItem foodItem = new FoodItem(name, price, category, id);
+        FoodItem foodItem = new FoodItem(name, price, category);
         Response response = restaurantService.addFood(foodItem);
         if (response.getResponseStatus() == ResponseStatus.SUCCESS) {
             System.out.println(response.getMessage());
@@ -94,33 +94,31 @@ public class RestaurantOwnerUi {
         System.out.println("Enter food name:");
         String foodName = scanner.nextLine();
 
-        Response allFoodResponse = restaurantService.getAllFood();
-        List<FoodItem> foodItems = (List<FoodItem>) allFoodResponse.getData();
+        Response foodItemByNameOptional = restaurantService.getFoodByName(foodName);
+        if (foodItemByNameOptional.getResponseStatus() == ResponseStatus.FAILURE) {
+            System.out.println(foodItemByNameOptional.getMessage());
+            return;
+        }
 
-        Optional<FoodItem> foodItemOptional = foodItems.stream().filter(f -> f.getName().equalsIgnoreCase(foodName))
-                .findFirst();
-        if (foodItemOptional.isPresent()) {
-            FoodItem foodItem = foodItemOptional.get();
+        FoodItem foodItem = (FoodItem) foodItemByNameOptional.getData();
 
-            System.out.println("Enter new name:");
-            String name = scanner.nextLine();
-            System.out.println("Enter new price:");
-            double price = scanner.nextDouble();
-            scanner.nextLine();
-            System.out.println("Enter new category (VEG/NONVEG/BEVERAGES):");
-            String categoryStr = scanner.nextLine().toUpperCase();
-            FoodCategory category = FoodCategory.valueOf(categoryStr);
+        System.out.println("Enter new name:");
+        String name = scanner.nextLine();
+        System.out.println("Enter new price:");
+        double price = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.println("Enter new category (VEG/NONVEG/BEVERAGES):");
+        String categoryStr = scanner.nextLine().toUpperCase();
+        FoodCategory category = FoodCategory.valueOf(categoryStr);
 
-            foodItem.setName(name);
-            foodItem.setPrice(price);
-            foodItem.setCategory(category);
-            Response response = restaurantService.updateFood(foodItem);
-            if (response.getResponseStatus() == ResponseStatus.SUCCESS) {
-                System.out.println(response.getMessage());
-
-            } else {
-                System.out.println(response.getMessage());
-            }
+        foodItem.setName(name);
+        foodItem.setPrice(price);
+        foodItem.setCategory(category);
+        Response response = restaurantService.updateFood(foodItem);
+        if (response.getResponseStatus() == ResponseStatus.SUCCESS) {
+            System.out.println(response.getMessage());
+        } else {
+            System.out.println(response.getMessage());
         }
     }
 

@@ -26,7 +26,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Response getRestaurant() {
-        Optional<Restaurant> restaurantOptional = restaurantDao.getRestaurant();
+        Optional<Restaurant> restaurantOptional = restaurantDao.getAllRestaurants().stream().findFirst();
         if (restaurantOptional.isPresent()) {
             Restaurant restaurant = restaurantOptional.get();
             response = new Response(restaurant, ResponseStatus.SUCCESS, "Successfully fetched restaurant.");
@@ -49,13 +49,13 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Response addFood(FoodItem foodItem) {
         try {
-            Optional<Restaurant> optionalOfRestaurant = restaurantDao.getRestaurant();
+            Optional<Restaurant> optionalOfRestaurant = restaurantDao.getAllRestaurants().stream().findFirst();
 
             if (optionalOfRestaurant.isPresent()) {
                 foodDao.addFood(foodItem);
 
                 Restaurant restaurant = optionalOfRestaurant.get();
-                restaurant.addFoodItem(foodItem );
+                restaurant.getFoodItemIds().add(foodItem.getId());
                 restaurantDao.updateRestaurant(restaurant);
 
                 response = new Response(Boolean.TRUE, ResponseStatus.SUCCESS, "Food successfully added.");
@@ -76,20 +76,20 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Response removeFood(FoodItem foodItem) {
         try {
-            foodDao.deleteFood(foodItem);
-            Optional<Restaurant> restaurantOptional = restaurantDao.getRestaurant();
+            Optional<Restaurant> restaurantOptional = restaurantDao.getAllRestaurants().stream().findFirst();
             if (restaurantOptional.isPresent()) {
-
                 Restaurant restaurant = restaurantOptional.get();
 
-                restaurant.removeFoodItem(foodItem);
+               restaurant.getFoodItemIds().remove(foodItem.getId());
                 restaurantDao.updateRestaurant(restaurant);
+                foodDao.deleteFood(foodItem);
+
             response = new Response(Boolean.TRUE, ResponseStatus.SUCCESS, "Item deleted successfully");
             } else {
                 response = new Response(ResponseStatus.FAILURE, "Restaurant not found");
             }
         } catch (FailedToPerformOperation e) {
-            response = new Response(ResponseStatus.FAILURE, "Food item not found!");
+            response = new Response(ResponseStatus.FAILURE, "Error : Food item not found!");
         } catch (Exception e) {
             //TODO LOGGER
             response = new Response(ResponseStatus.FAILURE, "An error occurred");
@@ -112,9 +112,25 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Response getAllFood() {
         List<FoodItem> allFood = foodDao.getAllFood();
         if (allFood.isEmpty()) {
-            response = new Response(ResponseStatus.FAILURE, "No food found.");
+            response = new Response(ResponseStatus.FAILURE, "Error : No food found.");
         } else {
             response = new Response(allFood, ResponseStatus.SUCCESS, "Food fetched successfully");
+        }
+        return response;
+    }
+
+    @Override
+    public Response getFoodByName(String foodItem) {
+        List<FoodItem> allFood = foodDao.getAllFood();
+        if (allFood.isEmpty()){
+            return new Response(ResponseStatus.FAILURE, "Error : No food found");
+        }
+        Optional<FoodItem> foodItemOptional = allFood.stream().filter(f -> f.getName().equalsIgnoreCase(foodItem)).findFirst();
+        if (foodItemOptional.isPresent()){
+            FoodItem foodItem1 = foodItemOptional.get();
+            response = new Response(foodItem1, ResponseStatus.SUCCESS, " Food successfully fetched");
+        }else {
+            response = new Response(ResponseStatus.FAILURE, "Error : No food found");
         }
         return response;
     }
@@ -123,7 +139,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Response getFoodByCategory(FoodCategory category) {
         List<FoodItem> foodByCategory = foodDao.getFoodByCategory(category);
         if (foodByCategory.isEmpty()) {
-            response = new Response(ResponseStatus.FAILURE, "No food found.");
+            response = new Response(ResponseStatus.FAILURE, "Error : No food found.");
         } else {
             response = new Response(foodByCategory, ResponseStatus.SUCCESS, "Food fetched successfully");
         }

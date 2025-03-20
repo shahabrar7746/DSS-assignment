@@ -78,7 +78,7 @@ public class Order implements Formatable {
 
     @Override
     public List<String> getFieldValues() {
-        return List.of(String.valueOf(this.id),String.valueOf(this.orderStatus),String.valueOf(this.customer.getName()),
+        return List.of(String.valueOf(this.id), String.valueOf(this.orderStatus), String.valueOf(this.customer.getName()),
                 String.valueOf(this.orderOn));
     }
 

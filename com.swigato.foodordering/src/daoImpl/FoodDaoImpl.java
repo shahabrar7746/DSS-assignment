@@ -63,7 +63,6 @@ public class FoodDaoImpl implements FoodDao {
         if (foodItems == null || foodItems.isEmpty()) {
             return Collections.emptyList();
         }
-
         return foodItems.stream()
                 .filter(f -> f.getCategory() == category)
                 .toList();

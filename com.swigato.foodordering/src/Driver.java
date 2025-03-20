@@ -20,7 +20,7 @@ public class Driver {
 
         appConfig.initializeUsers();
         appConfig.initializeFoodItems();
-        appConfig.initializeRestaurant( );
+        appConfig.initializeRestaurant();
 
         AdminUi adminUi = new AdminUi(serviceContainer);
         CustomerUi customerUi = new CustomerUi(serviceContainer);

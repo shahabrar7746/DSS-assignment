@@ -4,21 +4,21 @@ import enums.FoodCategory;
 
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FoodItem {
     private int id;
     private String name;
     private double price;
     private FoodCategory category;
-    private int restaurantId;
+    private static final AtomicInteger nextFoodId = new AtomicInteger(1);
 
-    public FoodItem(String name, double price, FoodCategory category, int restaurantId) {
-        Random random = new Random();
+    public FoodItem(String name, double price, FoodCategory category) {
+
         this.name = name;
         this.price = price;
         this.category = category;
-        this.id = random.nextInt(1000);
-        this.restaurantId =restaurantId;
+        this.id = nextFoodId.getAndIncrement();
     }
 
     public int getId() {
@@ -58,7 +58,6 @@ public class FoodItem {
     public String toString() {
         return String.format("| %-15s | %-10.2f | %-13s |", name, price, category);
     }
-
 
     @Override
     public boolean equals(Object o) {

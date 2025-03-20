@@ -24,6 +24,8 @@ import serviceImpl.UserServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class AppConfig {
     private static final AppConfig appConfigInstance = new AppConfig();
@@ -96,15 +98,13 @@ public class AppConfig {
     public void initializeFoodItems() {
         try {
             List<FoodItem> foodItemList = new ArrayList<>();
-            Restaurant data = (Restaurant) restaurantService.getRestaurant().getData();
-            int id = data.getId();
 
-            foodItemList.add(new FoodItem("PaneerTikka", 150, FoodCategory.VEG,id));
-            foodItemList.add(new FoodItem("ChickenCurry", 130, FoodCategory.NONVEG,id));
-            foodItemList.add(new FoodItem("DumBiryani", 200, FoodCategory.NONVEG,id));
-            foodItemList.add(new FoodItem("Lassi", 40, FoodCategory.BEVERAGES,id));
-            foodItemList.add(new FoodItem("Pasta", 60, FoodCategory.VEG, id));
-            foodItemList.add(new FoodItem("ButterMilk", 40, FoodCategory.BEVERAGES,id));
+            foodItemList.add(new FoodItem("PaneerTikka", 150, FoodCategory.VEG));
+            foodItemList.add(new FoodItem("ChickenCurry", 130, FoodCategory.NONVEG));
+            foodItemList.add(new FoodItem("DumBiryani", 200, FoodCategory.NONVEG));
+            foodItemList.add(new FoodItem("Lassi", 40, FoodCategory.BEVERAGES));
+            foodItemList.add(new FoodItem("Pasta", 60, FoodCategory.VEG));
+            foodItemList.add(new FoodItem("ButterMilk", 40, FoodCategory.BEVERAGES));
 
             foodDao.addAllFood(foodItemList);
 
@@ -116,10 +116,13 @@ public class AppConfig {
     public void initializeRestaurant() {
         try {
             List<FoodItem> foodItemList = foodDao.getAllFood();
-            Restaurant restaurant1 = new Restaurant("Fast food corner", "shubham@10", foodItemList);
+            List<Integer> foodItemIds = foodItemList.stream()
+                    .map(FoodItem::getId)
+                    .collect(Collectors.toList());
+            Restaurant restaurant1 = new Restaurant("Fast food corner", "fastfoodcorner@gmail.com", foodItemIds);
             restaurantDao.addRestaurant(restaurant1);
         } catch (Exception e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred." + e.getMessage());
         }
     }
 }

@@ -21,5 +21,7 @@ public interface RestaurantService {
 
     Response getAllFood();
 
+    Response getFoodByName(String foodItem);
+
     Response getFoodByCategory(FoodCategory category);
 }

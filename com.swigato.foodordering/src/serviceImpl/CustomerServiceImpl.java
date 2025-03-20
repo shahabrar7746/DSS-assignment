@@ -55,5 +55,4 @@ public class CustomerServiceImpl implements CustomerService {
         clearCart();
         return order;
     }
-
 }
