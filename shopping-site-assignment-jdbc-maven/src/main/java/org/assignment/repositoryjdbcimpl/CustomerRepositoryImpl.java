@@ -45,7 +45,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         String query = CustomerQueries.getCustomerOrAdminByColumn(columns, "AND");
         PreparedStatement statement = con.prepareStatement(query);
         statement.setLong(1, id);
-        statement.setObject(2, Roles.CUSTOMER, Types.OTHER);
+        statement.setObject(2, Roles.ADMIN, Types.OTHER);
         List<Customer> customer =  ResultSetUtility.getCustomersFromResultSet(statement.executeQuery());
         return customer.isEmpty() ? Optional.empty() : Optional.of(customer.get(0));
     }
@@ -61,7 +61,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public void addCustomer(Customer customer) throws SQLException {
+    public Customer addCustomer(Customer customer) throws SQLException {
         String columns[] = {"EMAIL", "PASSWORD", "NAME", "ADDRESS", "ROLE"};
         String query =CustomerQueries.addCustomerQuery(columns);
         PreparedStatement statement = con.prepareStatement(query);
@@ -71,15 +71,15 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         statement.setString(4, customer.getAddress());
         statement.setObject(5, Roles.CUSTOMER, Types.OTHER);
         statement.executeUpdate();
+        return customer;
     }
 
     @Override
-    public void updateCustomer(Customer customer) throws SQLException {
+    public Customer updateCustomer(Customer customer) throws SQLException {
         String columns[] = {"EMAIL", "PASSWORD", "NAME", "ADDRESS", "ROLE"};
         String customerIdColumn = "CUSTOMER_ID";
         String query = CustomerQueries.updateCustomerQuery(columns, customerIdColumn);
             PreparedStatement statement = con.prepareStatement(query);
-
             statement.setString(1, customer.getEmail());
             statement.setString(2, customer.getPassword());
             statement.setString(3, customer.getName());
@@ -87,6 +87,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             statement.setObject(5, customer.getRole(), Types.OTHER);
             statement.setLong(6, customer.getId());
             statement.executeUpdate();
+            return customer;
     }
 
     @Override

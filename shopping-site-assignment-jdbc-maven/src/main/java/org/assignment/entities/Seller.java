@@ -1,17 +1,48 @@
 package org.assignment.entities;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.assignment.enums.Roles;
-
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-public class Seller {
+@Entity
+@Table(name = "seller")
+@Setter
+@Getter
+@NoArgsConstructor
+public class Seller implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "seller_id")
     private Long id;
+
+
+    @Column(name = "name")
     private String name;
-    private Roles role;
-private LocalDateTime registeredOn;
-    public Roles getRole() {
-        return role;
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        Seller seller = (Seller) object;
+        return Objects.equals(id, seller.id);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Roles role;
+    @Column(name = "registered_on")
+private LocalDateTime registeredOn;
+
 
     @Override
     public String toString() {
@@ -32,15 +63,4 @@ private LocalDateTime registeredOn;
         this.registeredOn = registeredOn;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

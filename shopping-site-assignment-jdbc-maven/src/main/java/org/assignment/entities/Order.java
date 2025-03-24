@@ -1,18 +1,26 @@
 package org.assignment.entities;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.assignment.enums.Currency;
 import org.assignment.enums.OrderStatus;
 import org.assignment.util.ColorCodes;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-public class Order {
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Table(name = "orders")
+public class Order implements Serializable {
     private double price;
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
     @Override
     public String toString() {
         return ColorCodes.YELLOW +
@@ -24,37 +32,28 @@ public class Order {
                 "+-------------------+-------------------+-------------------+-------------------+-------------------+\n" +
                 ColorCodes.RESET;
     }
-
-    public Long getId() {
-        return id;
-    }
-
+    @JoinColumn(name = "seller_id")
     private Seller seller;
-
-    public double getPrice() {
-        return price;
-    }
-
-    public Seller getSeller() {
-        return seller;
-    }
-
-    public void setSeller(Seller seller) {
-        this.seller = seller;
-    }
+    @Enumerated(EnumType.STRING)
     private Currency currency;
-
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @JoinColumn(name = "product_id")
+    @ManyToOne
     private Product product;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private Long id;
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
     private LocalDateTime orderedOn;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public Order(Customer customer, Product product, Seller seller, OrderStatus status, Currency currency, LocalDateTime orderedOn, double price){
+    public Order(Customer customer, Product product, Seller seller, OrderStatus status, Currency currency, LocalDateTime orderedOn, double price) {
         this.currency = currency;
         this.orderedOn = orderedOn;
         this.customer = customer;
@@ -64,38 +63,82 @@ public class Order {
         this.status = status;
     }
 
-    public LocalDateTime getOrderedOn() {
-        return orderedOn;
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        Order order = (Order) object;
+        return Objects.equals(id, order.id);
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     public Customer getCustomer() {
         return customer;
     }
 
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public Product getProduct() {
         return product;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        Order newOrder = (Order) obj;
-        return this.getOrderId().equals(newOrder.getOrderId());
-    }
-    @Override
-    public int hashCode() {
-        Integer hash = (int) (this.getOrderId() + this.getCustomer().getId());//making hashcode on basis of order id and customer id.
-        return hash.hashCode();
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public Long getOrderId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public OrderStatus getStatus() {
         return status;
     }
 
-    public Order() {
-        this.customer = null;
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
+
+    public LocalDateTime getOrderedOn() {
+        return orderedOn;
+    }
+
+    public void setOrderedOn(LocalDateTime orderedOn) {
+        this.orderedOn = orderedOn;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+
 }

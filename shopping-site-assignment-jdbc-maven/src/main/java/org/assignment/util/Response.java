@@ -2,6 +2,8 @@ package org.assignment.util;
 
 import org.assignment.enums.ResponseStatus;
 
+import java.util.Objects;
+
 public class Response {
     private Object data;//change to object class.
     private ResponseStatus status;//
@@ -34,5 +36,17 @@ private String error;
             return "";
         }
         return data.toString();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        Response response = (Response) object;
+        return status == response.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(status);
     }
 }

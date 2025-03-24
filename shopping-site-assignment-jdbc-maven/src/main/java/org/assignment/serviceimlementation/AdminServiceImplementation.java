@@ -16,6 +16,9 @@ import org.assignment.repository.interfaces.OrderRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 
 
+import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
+import org.assignment.repositoryhibernateimpl.OrderRepoHibernateImpl;
+import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
 import org.assignment.repositoryjdbcimpl.CustomerRepositoryImpl;
 import org.assignment.repositoryjdbcimpl.OrderRepositoryImpl;
 import org.assignment.repositoryjdbcimpl.ProductRepositoryImpl;
@@ -43,10 +46,10 @@ private final Logger logger = LogManager.getLogger(this.getClass());
       init();
     }
 private void init(){
-    this.productRepository = new ProductRepositoryImpl();
-    this.customerRepository = new CustomerRepositoryImpl();
+    this.productRepository = new ProductRepoHibernateImpl();
+    this.customerRepository = new CustomerRepoHibernateImpl();
     this.sc = new Scanner(System.in);
-    this.orderRepository = new OrderRepositoryImpl();
+    this.orderRepository = new OrderRepoHibernateImpl();
 }
     private static AdminServiceImplementation service;
 
@@ -116,7 +119,7 @@ private void init(){
         } catch (CustomerNotFoundException  e) {
            return new Response(null, e.getLocalizedMessage());
         } catch (SQLException e) {
-          return  LogUtil.logError(e.getLocalizedMessage());
+          return  LogUtil.logError(e.getStackTrace());
         }
         if ( customer.isEmpty() || customer.get().getRole() != Roles.CUSTOMER) {
           return new Response(null, "No customer found");
@@ -132,7 +135,7 @@ private void init(){
         } catch (CustomerNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
         } catch (SQLException e) {
-            return  LogUtil.logError(e.getLocalizedMessage());
+            return  LogUtil.logError(e.getStackTrace());
 
         }
         if (allCustomer.isEmpty()) {
@@ -150,7 +153,7 @@ private void init(){
         } catch (NoProductFoundException e) {
             return new Response(null, e.getLocalizedMessage());
         } catch (SQLException e) {
-            return  LogUtil.logError(e.getLocalizedMessage());
+            return  LogUtil.logError(e.getStackTrace());
         }
         if (allProducts.isEmpty()) {
             //executed if no product object is found
@@ -186,7 +189,7 @@ Response response = null;
         try {
             response = new Response(orderRepository.getAllDeliveredOrders());
         } catch (SQLException e) {
-            response =  LogUtil.logError(e.getLocalizedMessage());
+            response =  LogUtil.logError(e.getStackTrace());
         }catch (CustomerNotFoundException | OrderNotFoundException | NoProductFoundException e){
             response = new Response(null, e.getLocalizedMessage());
         }
@@ -216,7 +219,7 @@ Response response = null;
         } catch (CustomerNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
         }catch (SQLException e){
-            return LogUtil.logError(e.getLocalizedMessage());
+            return LogUtil.logError(e.getStackTrace());
         }
         if (count < 0) {
             return new Response(null, "You have exceeded the try limit");// thrown if the try 'count' <= 0.
@@ -238,7 +241,7 @@ Response response = null;
                 customerRepository.updateCustomer(customer.get());
             }
         }catch (SQLException e){
-            return  LogUtil.logError(e.getLocalizedMessage());
+            return  LogUtil.logError(e.getStackTrace());
         }catch (TrialLimitExceedException | WrongPasswordException e){
             return new Response(null, e.getLocalizedMessage());
         }
@@ -265,7 +268,7 @@ Response response = null;
             try {
                 customer = customerRepository.fetchAdminById(Long.valueOf(cid));
             } catch (SQLException e) {
-                return  LogUtil.logError(e.getLocalizedMessage());
+                return  LogUtil.logError(e.getStackTrace());
             }
         }
         if (customer.isEmpty()) {
@@ -291,7 +294,7 @@ Response response = null;
             return new Response(null, e.getLocalizedMessage());
         }
         catch (SQLException e) {
-            return  LogUtil.logError(e.getLocalizedMessage());
+            return  LogUtil.logError(e.getStackTrace());
         }
         return  new Response("Access revoked");
     }
@@ -306,7 +309,7 @@ Response response = null;
         try {
             orders = orderRepository.getAllOrders();
         } catch (SQLException e) {
-            return  LogUtil.logError(e.getLocalizedMessage());
+            return  LogUtil.logError(e.getStackTrace());
         }
         catch (CustomerNotFoundException |  NoProductFoundException e){
             return new Response(null, e.getLocalizedMessage());
@@ -320,7 +323,7 @@ Response response = null;
         try {
             orders = orderRepository.getAllOrders();
         } catch (SQLException e) {
-            return  LogUtil.logError(e.getLocalizedMessage());
+            return  LogUtil.logError(e.getStackTrace());
         }
         catch (CustomerNotFoundException |  NoProductFoundException e){
             return new Response(null, e.getLocalizedMessage());
@@ -333,7 +336,7 @@ Response response = null;
               orderRepository.cancelOrder(order.get());
           }
       } catch (SQLException e) {
-          return  LogUtil.logError(e.getLocalizedMessage());
+          return  LogUtil.logError(e.getStackTrace());
       }catch (TrialLimitExceedException | WrongPasswordException e){
           return new Response(null, e.getLocalizedMessage());
       }
@@ -384,7 +387,7 @@ Response response = null;
                 } catch (CustomerNotFoundException e) {
                     return  new Response(null, e.getLocalizedMessage());
                 }catch (SQLException e){
-                    return  LogUtil.logError(e.getLocalizedMessage());
+                    return  LogUtil.logError(e.getStackTrace());
                 }
 
         System.out.println(ColorCodes.BLUE + "Customers : " + allCustomer + ColorCodes.RESET);
@@ -401,7 +404,7 @@ Response response = null;
 
             }
         } catch (SQLException e) {
-            return  LogUtil.logError(e.getLocalizedMessage());
+            return  LogUtil.logError(e.getStackTrace());
         }catch (TrialLimitExceedException | CustomerNotFoundException |  WrongPasswordException e){
             return new Response(null, e.getLocalizedMessage());
         }
@@ -417,7 +420,7 @@ Response response = null;
              return new Response(null, "No admin found");//throws NoAdminFoundException if no admin found CustomerRepository.
          }
      } catch (SQLException e) {
-            return  LogUtil.logError(e.getLocalizedMessage());
+            return  LogUtil.logError(e.getStackTrace());
      }
         catch (CustomerNotFoundException e){
             return new Response(null, e.getLocalizedMessage());
