@@ -5,38 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5405caaa-ed17-442c-bf7f-14ef15b22302" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/CustomerRepoHibernateImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/OrderRepoHibernateImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/ProductRepoHibernateImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/SellerRepoHibernateImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/FormValidation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/logfile.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/logfile.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Seller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/enums/ProductType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/ProductType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/CustomerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/CustomerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/CustomerRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/OrderRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/OrderRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/CustomerCollectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/CustomerCollectionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/OrderCollectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/OrderCollectionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/ProductCollectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/ProductCollectionRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/services/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/util/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/Response.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/util/ResultSetUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/ResultSetUtility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,24 +41,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.AdminUI.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.Driver.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Test.executor&quot;: &quot;Run&quot;,
-    &quot;Application.UI.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;maven-jdbc&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/a.shaha/IdeaProjects/maven-jdbc/shopping-site-assignment-jdbc-maven&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/a.shaha/IdeaProjects/shopping-site-assignment-jdbc-maven/src/main/java/org/pract/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.AdminUI.executor": "Debug",
+    "Application.Driver.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.Test.executor": "Run",
+    "Application.UI.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "hibernate-dev",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/a.shaha/IdeaProjects/maven-jdbc/shopping-site-assignment-jdbc-maven",
+    "onboarding.tips.debug.path": "C:/Users/a.shaha/IdeaProjects/shopping-site-assignment-jdbc-maven/src/main/java/org/pract/Main.java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\a.shaha\IdeaProjects\shopping-site-assignment-jdbc-maven\src\main\resources" />

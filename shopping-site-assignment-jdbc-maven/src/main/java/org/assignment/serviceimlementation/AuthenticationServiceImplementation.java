@@ -94,7 +94,7 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
                     }
                     response = new Response("Logging out");
                 } catch (SQLException e) {
-                    response = LogUtil.logError(e.getLocalizedMessage());
+                    response = LogUtil.logError(e.getStackTrace());
                 } catch (UnauthorizedOperationException e) {
                     response = new Response(null, e.getLocalizedMessage());
                 }
@@ -127,7 +127,7 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
             } catch (UnauthorizedOperationException e) {
                 response = new Response(null, e.getLocalizedMessage());
             } catch (SQLException e) {
-                LogUtil.logError(e.getLocalizedMessage());
+                LogUtil.logError(e.getStackTrace());
                 response = new Response(null, "Some error occured");
             }
 

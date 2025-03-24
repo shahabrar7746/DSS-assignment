@@ -107,7 +107,7 @@ private CustomerServiceImplementation() {
         List<Order> orders = null;
         try{
             orders = orderRepository.getOrderByCustomerId(customer.getId());
-        } catch (CustomerNotFoundException | NoProductFoundException e) {
+        } catch (CustomerNotFoundException | NoProductFoundException | OrderNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
         }
         return orders.isEmpty() ? new Response(null, "No order found") :  new Response(orders);
@@ -125,7 +125,7 @@ private CustomerServiceImplementation() {
         try {
             optionalSeller = sellerRepository.fetchById(1L);
         } catch (SQLException e) {
-            return  LogUtil.logError(e.getLocalizedMessage());
+            return  LogUtil.logError(e.getStackTrace());
         }
 if(optionalSeller.isEmpty()){
     return new Response(null, "No seller found for this product");
@@ -135,7 +135,7 @@ if(optionalSeller.isEmpty()){
         try {
             orderRepository.addOrder(order);
         } catch (SQLException e) {
-            return  LogUtil.logError(e.getLocalizedMessage());
+            return  LogUtil.logError(e.getStackTrace());
         }
         return new Response("");
     }
@@ -152,7 +152,7 @@ if(optionalSeller.isEmpty()){
         List<Order> ordersByCustomer = null;
         try {
             ordersByCustomer = orderRepository.getOrderByCustomerId(customer.getId());
-        } catch (CustomerNotFoundException | NoProductFoundException e) {
+        } catch (CustomerNotFoundException | NoProductFoundException | OrderNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
         }
         System.out.println(ColorCodes.BLUE + "Your orders : " + ordersByCustomer + ColorCodes.RESET);
@@ -233,7 +233,7 @@ if(optionalSeller.isEmpty()){
             } catch (NoProductFoundException e){
                 return new Response(null, e.getLocalizedMessage());
             } catch (SQLException e) {
-                return  LogUtil.logError(e.getLocalizedMessage());
+                return  LogUtil.logError(e.getStackTrace());
             }
             System.out.println("PRESS 0 TO REMOVE PRODUCT FROM CART");
             System.out.println("PRESS -1 TO EXIT CART");
@@ -256,7 +256,7 @@ if(optionalSeller.isEmpty()){
                 } catch (NoProductFoundException e){
                     return new Response(null, e.getLocalizedMessage());
                 } catch (SQLException e) {
-                    return  LogUtil.logError(e.getLocalizedMessage());
+                    return  LogUtil.logError(e.getStackTrace());
                 }
                 if(product.isEmpty()){
                     return new Response(null, "Invalid product name please try again.");
