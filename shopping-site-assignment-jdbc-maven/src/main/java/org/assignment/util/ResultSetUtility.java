@@ -13,9 +13,6 @@ import org.assignment.exceptions.NoProductFoundException;
 import org.assignment.repository.interfaces.CustomerRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 import org.assignment.repository.interfaces.SellerRepository;
-import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
-import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
-import org.assignment.repositoryhibernateimpl.SellerRepoHibernateImpl;
 import org.assignment.repositoryjdbcimpl.*;
 
 
@@ -26,9 +23,9 @@ import java.sql.Timestamp;
 import java.util.*;
 
 public final class ResultSetUtility {
-private static CustomerRepository  customerRepository = new CustomerRepoHibernateImpl();
-private  static SellerRepository   sellerRepository = new SellerRepoHibernateImpl();
-private static ProductRepository productRepository = new ProductRepoHibernateImpl();
+private static CustomerRepository  customerRepository = new CustomerRepositoryImpl();
+private  static SellerRepository   sellerRepository = new SellerRepositoryImpl();
+private static ProductRepository productRepository = new ProductRepositoryImpl();
 
 
 
@@ -83,7 +80,7 @@ List<Customer> customers = new ArrayList<>();
             String pName = set.getString("product_name"); // TODO camelCase
             Currency currency = Currency.valueOf(set.getString("currency"));
             ProductType type = ProductType.valueOf(set.getString("product_type"));
-//            products.add(new Product(pid,pName,currency,price,type));
+            products.add(new Product(pid,pName,currency,price,type));
         }
         return  products;
     }

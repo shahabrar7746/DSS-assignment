@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="library-management-system">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/library-management-system/out/artifacts/library_management_system_jar/library-management-system.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -16,16 +16,12 @@ import org.assignment.exceptions.OrderNotFoundException;
 import org.assignment.repository.interfaces.OrderRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 import org.assignment.repository.interfaces.SellerRepository;
-import org.assignment.repositoryhibernateimpl.OrderRepoHibernateImpl;
-import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
-import org.assignment.repositoryhibernateimpl.SellerRepoHibernateImpl;
 import org.assignment.repositoryjdbcimpl.OrderRepositoryImpl;
 import org.assignment.repositoryjdbcimpl.ProductRepositoryImpl;
 import org.assignment.repositoryjdbcimpl.SellerRepositoryImpl;
 import org.assignment.services.CustomerService;
 
 import org.assignment.util.ColorCodes;
-import org.assignment.util.LogUtil;
 import org.assignment.util.Response;
 
 import java.sql.SQLException;
@@ -51,10 +47,10 @@ private CustomerServiceImplementation() {
         init();
     }
     private void init(){
-        this.sellerRepository = new SellerRepoHibernateImpl();
-        this.productRepository = new ProductRepoHibernateImpl();
+        this.sellerRepository = new SellerRepositoryImpl();
+        this.productRepository = new ProductRepositoryImpl();
         this.cart = new ArrayList<>();
-        this.orderRepository = new OrderRepoHibernateImpl();
+        this.orderRepository = new OrderRepositoryImpl();
         this.sc = new Scanner(System.in);
     }
 
@@ -86,9 +82,9 @@ private CustomerServiceImplementation() {
                        response = new Response(null, "Invalid operation");
                 }
             if(response.getStatus() == ResponseStatus.ERROR){
-                System.out.println(ColorCodes.RED + "ERROR : " + response.getError() + ColorCodes.RESET);
+                System.out.println(ColorCodes.RED + "ERROR : " + response.getData() + ColorCodes.RESET);
             }else if(response.getStatus() == ResponseStatus.SUCCESSFUL) {
-                System.out.println(ColorCodes.RED   + response.getData() + ColorCodes.RESET);
+                System.out.println(ColorCodes.RED + response  + response.getData() + ColorCodes.RESET);
             }
 
 
@@ -107,8 +103,8 @@ private CustomerServiceImplementation() {
         List<Order> orders = null;
         try{
             orders = orderRepository.getOrderByCustomerId(customer.getId());
-        } catch (CustomerNotFoundException | NoProductFoundException | OrderNotFoundException e) {
-            return new Response(null, e.getLocalizedMessage());
+        } catch (CustomerNotFoundException | NoProductFoundException e) {
+            return new Response(e.getLocalizedMessage());
         }
         return orders.isEmpty() ? new Response(null, "No order found") :  new Response(orders);
     }
@@ -120,13 +116,8 @@ private CustomerServiceImplementation() {
      * @param product which product we need to order.
      * @see #cancelOrder(Customer) 
      */
-    private Response bookOrder(Customer customer, Product product) {
-        Optional<Seller> optionalSeller = null;
-        try {
-            optionalSeller = sellerRepository.fetchById(1L);
-        } catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
-        }
+    private Response bookOrder(Customer customer, Product product) throws SQLException {
+Optional<Seller> optionalSeller = sellerRepository.fetchById(1L);
 if(optionalSeller.isEmpty()){
     return new Response(null, "No seller found for this product");
 }
@@ -134,10 +125,10 @@ if(optionalSeller.isEmpty()){
         Order order = new Order(customer, product, optionalSeller.get(), OrderStatus.ORDERED, Currency.INR, LocalDateTime.now(), product.getPrice());
         try {
             orderRepository.addOrder(order);
-        } catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
+        } catch (Exception e) {
+            return new Response(null, e.getLocalizedMessage());
         }
-        return new Response("");
+        return new Response("Order booked");
     }
 
     /**
@@ -152,7 +143,7 @@ if(optionalSeller.isEmpty()){
         List<Order> ordersByCustomer = null;
         try {
             ordersByCustomer = orderRepository.getOrderByCustomerId(customer.getId());
-        } catch (CustomerNotFoundException | NoProductFoundException | OrderNotFoundException e) {
+        } catch (CustomerNotFoundException | NoProductFoundException e) {
             return new Response(null, e.getLocalizedMessage());
         }
         System.out.println(ColorCodes.BLUE + "Your orders : " + ordersByCustomer + ColorCodes.RESET);
@@ -197,6 +188,7 @@ if(optionalSeller.isEmpty()){
             for (Order o : removedOrderList){
                 orderRepository.cancelOrder(o);
             }
+            System.out.println("Orders removed");
         } else if(l.size() == 1) {
             Order removedOrder = l.get(0);
             orderRepository.cancelOrder(removedOrder);
@@ -230,10 +222,8 @@ if(optionalSeller.isEmpty()){
         while (!exitCart) {
             try {
                 System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
-            } catch (NoProductFoundException e){
+            } catch (Exception e){
                 return new Response(null, e.getLocalizedMessage());
-            } catch (SQLException e) {
-                return  LogUtil.logError(e.getStackTrace());
             }
             System.out.println("PRESS 0 TO REMOVE PRODUCT FROM CART");
             System.out.println("PRESS -1 TO EXIT CART");
@@ -253,10 +243,8 @@ if(optionalSeller.isEmpty()){
                 Optional<Product> product = null;
                 try {
                     product = productRepository.fetchProductByName(name);
-                } catch (NoProductFoundException e){
+                } catch (Exception e){
                     return new Response(null, e.getLocalizedMessage());
-                } catch (SQLException e) {
-                    return  LogUtil.logError(e.getStackTrace());
                 }
                 if(product.isEmpty()){
                     return new Response(null, "Invalid product name please try again.");
@@ -271,7 +259,7 @@ if(optionalSeller.isEmpty()){
         }
         if (!cart.isEmpty()) {
             System.out.println("Proceeding to order the products in cart");
-           return proceedToOrder(customer, totalPrice);
+            proceedToOrder(customer, totalPrice);
         }
         return new Response(null, "cannot order from empty cart");
     }
@@ -299,28 +287,34 @@ if(optionalSeller.isEmpty()){
         if (cart.isEmpty()) {
             return new Response(null, "No products found in cart");
         }
-        Response pvtObject =  new Response("Order booked");
-        Response response = pvtObject;
         System.out.println(ColorCodes.GREEN + "******PROCEED*TO*ORDER*******" + ColorCodes.RESET);
         System.out.println(ColorCodes.BLUE + "Cart : " + cart);
         System.out.println("Your total amount is : " + totalPrice.get() + ColorCodes.RESET);
         System.out.print("Press 'y' to proceed further or 'n' to go back to cart : ");
         String operation = sc.nextLine();
         if (operation.equalsIgnoreCase("y")) {
+            try {
                 cart.forEach(p ->
                         {
-                                 bookOrder(customer, p);
+                            try {
+                                bookOrder(customer, p);
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                 );
+            } catch (Exception e) {
+                return new Response(null, e.getLocalizedMessage());
+            }
             cart.clear();
         } else if (operation.equalsIgnoreCase("n")) {
             try {
                 return intiateCart(customer, true);
             } catch (Exception e) {
-                response = new Response(null, e.getLocalizedMessage());
+                return new Response(null, e.getLocalizedMessage());
             }
         }
-        return response == pvtObject && (!operation.equalsIgnoreCase("y") && !operation.equalsIgnoreCase("n")) ?  new Response(null, "Invalid inputs") : response;
+        return new Response(null, "Invalid inputs");
     }
 
     /**

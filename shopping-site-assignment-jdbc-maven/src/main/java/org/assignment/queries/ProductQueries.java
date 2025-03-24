@@ -1,12 +1,11 @@
 package org.assignment.queries;
 
 public class ProductQueries {
-    private static final String SELECT_BASE_QUERY = " SELECT * FROM product ";
     public static  String getAllProducts(){
-        return SELECT_BASE_QUERY;
+        return "SELECT * FROM PRODUCT";
     }
     public static  String getProductsByColumns(String columns[], String operation){
-        StringBuilder builder = new StringBuilder(SELECT_BASE_QUERY);
+        StringBuilder builder = new StringBuilder(" SELECT * FROM PRODUCT ");
         builder.append(" WHERE ");
         builder.append(columns[0]);
         builder.append(" = ? ");

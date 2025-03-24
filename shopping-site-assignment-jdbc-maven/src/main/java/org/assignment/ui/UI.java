@@ -4,7 +4,6 @@ package org.assignment.ui;
 import org.assignment.entities.Customer;
 import org.assignment.exceptions.UnauthorizedOperationException;
 import org.assignment.repository.interfaces.ProductRepository;
-import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
 import org.assignment.repositoryjdbcimpl.ProductRepositoryImpl;
 import org.assignment.services.AuthenticationService;
 import org.assignment.util.ColorCodes;
@@ -23,7 +22,7 @@ public abstract class UI {
     }
 
     public static void main(String[] args) {
-        final ProductRepository productRepository = new ProductRepoHibernateImpl();
+        final ProductRepository productRepository = new ProductRepositoryImpl();
         final AuthenticationService auth = AuthenticationService.getInstance();
         System.out.println(ColorCodes.GREEN + "***********WELCOME*************" + ColorCodes.RESET);
         try {

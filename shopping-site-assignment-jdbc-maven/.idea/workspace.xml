@@ -5,32 +5,104 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5405caaa-ed17-442c-bf7f-14ef15b22302" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/logfile.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/logfile.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CollectionFramework/CollectionFramework.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-application-client/chat-application-client.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-application-message-queue/chat-application-message-queue.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-application-test-message-queue/chat-application-test-message-queue.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/java/org/example/Aadhar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/java/org/example/Bank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/java/org/example/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/java/org/example/Customer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/java/org/example/Human.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/java/org/example/Laptop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/java/org/example/Main3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/java/org/example/Student.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/java/org/example/repo/CRUDRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/java/org/example/repo/Main2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hibernate-demo/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../java8/java8.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/java/org/pract/CustomPersistenceConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/java/org/pract/Test2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/java/org/pract/entity/Human.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/java/org/pract/entity/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/java/org/pract/entity/School.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/java/org/pract/entity/Student.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/java/org/pract/generators/MyCustomGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/java/org/pract/keys/ProductKeys.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/resources/hibernate-cfg.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jpa -practise/src/main/resources/log4j2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/Driver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Customer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Order.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Seller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/Currency.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/OrderStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/ProductType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/ResponseStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/Roles.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/exceptions/CustomerNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/exceptions/EmptyCartException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/exceptions/NoAdminFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/exceptions/NoProductFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/exceptions/OrderNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/exceptions/TrialLimitExceedException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/exceptions/UnauthorizedOperationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/exceptions/UserAlreadyExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/exceptions/WrongPasswordException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/Clauses.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/CustomerQueries.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/OrderQueries.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/ProductQueries.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/SellerQueries.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/CustomerRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/OrderRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/SellerRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/CustomerRepositoryImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/OrderRepositoryImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/ProductRepositoryImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/SellerRepositoryImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/resources/log4j2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/CustomerCollectionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/OrderCollectionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/ProductCollectionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/SellerCollectionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/AdminService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/AuthenticationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/CustomerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/UI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/ColorCodes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/ConnectionUtility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/CustomerUtility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/Response.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/ResultSetUtility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/config.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../table-multithreading-mini-project/table-multithreading-mini-project.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="package-info" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$MAVEN_REPOSITORY$/org/hibernate/orm/hibernate-core/7.0.0.Alpha2/hibernate-core-7.0.0.Alpha2.jar!/org/hibernate/annotations/Type.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/org/hibernate/orm/hibernate-core/7.0.0.Alpha2/hibernate-core-7.0.0.Alpha2.jar!/org/hibernate/usertype/UserType.class" root0="SKIP_INSPECTION" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 0
-}</component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
   <component name="ProjectId" id="2uFWo4IYC9sKiiQOY6vbrLMMSQ4" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -41,20 +113,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.AdminUI.executor": "Debug",
     "Application.Driver.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.Test.executor": "Run",
-    "Application.UI.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "hibernate-dev",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/a.shaha/IdeaProjects/maven-jdbc/shopping-site-assignment-jdbc-maven",
-    "onboarding.tips.debug.path": "C:/Users/a.shaha/IdeaProjects/shopping-site-assignment-jdbc-maven/src/main/java/org/pract/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0"
+    "last_opened_file_path": "C:/Users/a.shaha/IdeaProjects/shopping-site-assignment-jdbc-maven/src/main/resources",
+    "onboarding.tips.debug.path": "C:/Users/a.shaha/IdeaProjects/shopping-site-assignment-jdbc-maven/src/main/java/org/pract/Main.java"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -62,29 +127,6 @@
       <recent name="C:\Users\a.shaha\IdeaProjects\shopping-site-assignment-jdbc-maven\src\main\resources" />
       <recent name="C:\Users\a.shaha\IdeaProjects\shopping-site-assignment-jdbc-maven\src\main\java\org\pract" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\a.shaha\IdeaProjects\DSS-assignment\shopping-site-assignment-jdbc-maven\src\main\resources\META-INF" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.assignment.Main" />
-      <module name="shopping-site-assignment-jdbc-maven" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.assignment.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -101,84 +143,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java</url>
-          <line>102</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java</url>
-          <line>268</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java</url>
-          <line>266</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java</url>
-          <line>270</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
-          <line>241</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
-          <line>254</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
-          <line>256</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/queries/ProductQueries.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java</url>
-          <line>120</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/Main.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/Main.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/Main.java</url>
-          <line>20</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/org/hibernate/orm/hibernate-core/7.0.0.Alpha2/hibernate-core-7.0.0.Alpha2.jar!/org/hibernate/type/descriptor/java/spi/UnknownBasicJavaType.class</url>
-          <line>49</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/org/hibernate/orm/hibernate-core/7.0.0.Alpha2/hibernate-core-7.0.0.Alpha2.jar!/org/hibernate/boot/model/process/internal/InferredBasicValueResolver.class</url>
-          <line>193</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/Driver.java</url>
-          <line>50</line>
-          <option name="timeStamp" value="24" />
+          <line>13</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

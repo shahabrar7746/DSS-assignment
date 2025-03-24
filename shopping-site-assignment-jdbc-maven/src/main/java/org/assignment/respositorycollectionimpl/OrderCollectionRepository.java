@@ -6,7 +6,6 @@ import org.assignment.exceptions.OrderNotFoundException;
 import org.assignment.repository.interfaces.OrderRepository;
 
 
-import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,22 +25,21 @@ public  class OrderCollectionRepository implements OrderRepository {
     }
     @Override
     public  Optional<Order> fetchOrderById(Long id) {
-       // Map<Long, Order> map = orders.stream().collect(Collectors.toConcurrentMap(Order::getOrderId, o -> o));
-       // return map.containsKey(id) ? Optional.of(map.get(id)) : Optional.empty();
-        return Optional.empty();
+        Map<Long, Order> map = orders.stream().collect(Collectors.toConcurrentMap(Order::getOrderId, o -> o));
+        return map.containsKey(id) ? Optional.of(map.get(id)) : Optional.empty();
     }
     @Override
-    public  void cancelOrder(Order order) {
+    public  boolean cancelOrder(Order order) {
         if (orders.contains(order)) {
             orders.remove(order);
+            return true;
         }
-
+        return false;
     }
     @Override
-    public  Order addOrder(Order order) throws SQLException {
+    public  void addOrder(Order order) {
         order.setId(new Random().nextLong(0, 90000));
         orders.add(order);
-        return order;
     }
     @Override
     public  List<Order> fetchOrderByProductName(String name)
