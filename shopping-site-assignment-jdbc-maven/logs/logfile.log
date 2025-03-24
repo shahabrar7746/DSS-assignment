@@ -774,3 +774,65 @@
 2025-03-24 11:42:09 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
 2025-03-24 11:42:09 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001115: Connection pool size: 20 (min=1)
 2025-03-24 11:42:09 [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@6108c962] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2025-03-24 12:15:50 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: myPersistenceUnit]
+2025-03-24 12:15:50 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 7.0.0.Alpha2
+2025-03-24 12:15:50 [main] WARN  org.hibernate.orm.deprecation - HHH90000021: Encountered deprecated setting [javax.persistence.jdbc.user], use [jakarta.persistence.jdbc.user] instead
+2025-03-24 12:15:50 [main] WARN  org.hibernate.orm.deprecation - HHH90000021: Encountered deprecated setting [javax.persistence.jdbc.password], use [jakarta.persistence.jdbc.password] instead
+2025-03-24 12:15:50 [main] WARN  org.hibernate.orm.deprecation - HHH90000021: Encountered deprecated setting [javax.persistence.jdbc.url], use [jakarta.persistence.jdbc.url] instead
+2025-03-24 12:15:50 [main] WARN  org.hibernate.orm.deprecation - HHH90000021: Encountered deprecated setting [javax.persistence.jdbc.driver], use [jakarta.persistence.jdbc.driver] instead
+2025-03-24 12:15:50 [main] INFO  org.hibernate.cache.internal.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-24 12:15:51 [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using built-in connection pool (not intended for production use)
+2025-03-24 12:15:51 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: Loaded JDBC driver class: org.postgresql.Driver
+2025-03-24 12:15:51 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001012: Connecting with JDBC URL [jdbc:postgresql://172.16.1.195:5331/]
+2025-03-24 12:15:51 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {user=dbhuser, password=****}
+2025-03-24 12:15:51 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+2025-03-24 12:15:51 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001115: Connection pool size: 20 (min=1)
+2025-03-24 12:15:51 [main] WARN  org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator - HHH000342: Could not obtain connection to query metadata
+java.lang.IllegalStateException: Cannot get a connection as the driver manager is not properly initialized
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl.getConnection(DriverManagerConnectionProviderImpl.java:257) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:446) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:61) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:294) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:122) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:76) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:52) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:136) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:247) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.connections.internal.BasicConnectionCreator.convertSqlException(BasicConnectionCreator.java:133) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.connections.internal.DriverConnectionCreator.makeConnection(DriverConnectionCreator.java:43) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.connections.internal.BasicConnectionCreator.createConnection(BasicConnectionCreator.java:61) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections.addConnections(DriverManagerConnectionProviderImpl.java:497) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections.<init>(DriverManagerConnectionProviderImpl.java:370) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections$Builder.build(DriverManagerConnectionProviderImpl.java:548) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl.buildPool(DriverManagerConnectionProviderImpl.java:99) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl.configure(DriverManagerConnectionProviderImpl.java:79) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:136) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:247) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.buildJdbcConnectionAccess(JdbcEnvironmentInitiator.java:413) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:280) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:122) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:76) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:279) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:212) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:218) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:197) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1431) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1502) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at org.hibernate.jpa.HibernatePersistenceProvider.createEntityManagerFactory(HibernatePersistenceProvider.java:57) ~[hibernate-core-7.0.0.Alpha2.jar:7.0.0.Alpha2]
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:90) ~[jakarta.persistence-api-3.2.0-M2.jar:3.2.0]
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:66) ~[jakarta.persistence-api-3.2.0-M2.jar:3.2.0]
+	at org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl.<init>(ProductRepoHibernateImpl.java:13) ~[classes/:?]
+	at org.assignment.Driver.main(Driver.java:27) ~[classes/:?]
