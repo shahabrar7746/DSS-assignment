@@ -1,26 +1,18 @@
 package org.assignment.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.assignment.enums.Currency;
 import org.assignment.enums.OrderStatus;
 import org.assignment.util.ColorCodes;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Table(name = "orders")
-public class Order implements Serializable {
+public class Order {
     private double price;
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
     @Override
     public String toString() {
         return ColorCodes.YELLOW +
@@ -32,51 +24,15 @@ public class Order implements Serializable {
                 "+-------------------+-------------------+-------------------+-------------------+-------------------+\n" +
                 ColorCodes.RESET;
     }
-    @JoinColumn(name = "seller_id")
+
+    public Long getId() {
+        return id;
+    }
+
     private Seller seller;
-    @Enumerated(EnumType.STRING)
-    private Currency currency;
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
-    @JoinColumn(name = "product_id")
-    @ManyToOne
-    private Product product;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
-    private Long id;
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
-    private LocalDateTime orderedOn;
-
-
-    public Order(Customer customer, Product product, Seller seller, OrderStatus status, Currency currency, LocalDateTime orderedOn, double price) {
-        this.currency = currency;
-        this.orderedOn = orderedOn;
-        this.customer = customer;
-        this.price = price;
-        this.seller = seller;
-        this.product = product;
-        this.status = status;
-    }
-
-
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        Order order = (Order) object;
-        return Objects.equals(id, order.id);
-    }
 
     public double getPrice() {
         return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public Seller getSeller() {
@@ -86,44 +42,25 @@ public class Order implements Serializable {
     public void setSeller(Seller seller) {
         this.seller = seller;
     }
+    private Currency currency;
 
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Long getId() {
-        return id;
-    }
+    private Customer customer;
+    private Product product;
+    private Long id;
+    private OrderStatus status;
+    private LocalDateTime orderedOn;
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
+    public Order(Customer customer, Product product, Seller seller, OrderStatus status, Currency currency, LocalDateTime orderedOn, double price){
+        this.currency = currency;
+        this.orderedOn = orderedOn;
+        this.customer = customer;
+        this.price = price;
+        this.seller = seller;
+        this.product = product;
         this.status = status;
     }
 
@@ -131,14 +68,34 @@ public class Order implements Serializable {
         return orderedOn;
     }
 
-    public void setOrderedOn(LocalDateTime orderedOn) {
-        this.orderedOn = orderedOn;
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 
     @Override
+    public boolean equals(Object obj) {
+        Order newOrder = (Order) obj;
+        return this.getOrderId().equals(newOrder.getOrderId());
+    }
+    @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        Integer hash = (int) (this.getOrderId() + this.getCustomer().getId());//making hashcode on basis of order id and customer id.
+        return hash.hashCode();
     }
 
+    public Long getOrderId() {
+        return id;
+    }
 
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public Order() {
+        this.customer = null;
+    }
 }

@@ -1,44 +1,41 @@
 package org.assignment.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.assignment.enums.Roles;
 
 import org.assignment.util.ColorCodes;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Table(name = "customer")
-public class Customer implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
-    private Long id;
-    @Column(name = "email")
+public class Customer {
     private String email;
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "name")
-    private String name;
-    @Column(name = "address")
-    private String address;
+    public String getName() {
+        return name;
+    }
 
-    @Column(name = "registered_on")
+    public String getAddress() {
+        return address;
+    }
+
+    private String name;
+    private String address;
+    private Long id;
+
     private LocalDateTime registeredOn;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
     private Roles role;
 
+    public LocalDateTime getRegisteredOn() {
+        return registeredOn;
+    }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Customer(String name, String email, String password, String address, LocalDateTime registeredOn, Roles role) {
 
@@ -49,6 +46,14 @@ public class Customer implements Serializable {
         this.id = id;
         this.registeredOn = registeredOn;
         this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
@@ -75,5 +80,11 @@ public class Customer implements Serializable {
         return hash.hashCode();
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setRole(Roles role) {
+        this.role = role;
+    }
 }

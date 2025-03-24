@@ -90,17 +90,16 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
     }
 
     @Override
-    public Customer addCustomer(Customer customer) {
+    public void addCustomer(Customer customer) {
 
         addCustomer(customer.getName(), customer.getEmail(), customer.getAddress(), customer.getPassword(), customer.getRole());
-    return customer;
     }
 
     @Override
-    public Customer updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) {
         customers.remove(customer);
         customers.add(customer);
-return customer;
+
     }
 
     @Override

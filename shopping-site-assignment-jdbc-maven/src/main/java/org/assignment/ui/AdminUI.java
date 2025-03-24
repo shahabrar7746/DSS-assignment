@@ -91,16 +91,16 @@ public class AdminUI extends UI {
                         resp = service.revokeAccess(isSuperAdmin);
                         break;
                     case "back", "BACK":
-                        resp = new Response("Going back");
                         isExit = true;
                         break;
                     default:
+                        System.err.println();
                         resp = new Response(null, "Unsupported operation");
             }
 if(resp.getStatus() == ResponseStatus.ERROR){
-    System.out.println(ColorCodes.RED + "ERROR : " + resp.getError() + ColorCodes.RESET);
+    System.out.println(ColorCodes.RED + "ERROR : " + resp.getData() + ColorCodes.RESET);
 }else if(resp.getStatus() == ResponseStatus.SUCCESSFUL) {
-    System.out.println(ColorCodes.GREEN + response  + resp.getData() + ColorCodes.RESET);
+    System.out.println(ColorCodes.RED + response  + resp.getData() + ColorCodes.RESET);
 }
             if (isExit) {
                 break;

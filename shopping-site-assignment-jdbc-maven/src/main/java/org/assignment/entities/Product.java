@@ -1,43 +1,53 @@
 package org.assignment.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.assignment.enums.Currency;
 import org.assignment.enums.ProductType;
 import org.assignment.util.ColorCodes;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeRegistration;
-import org.hibernate.annotations.TypeRegistrations;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-@Entity
-@Table(name = "product")
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter @Setter
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private Long id;
-
-    @Column(name = "price")
     private double price;
-@Enumerated(EnumType.STRING)
-    @Column(name = "currency")
     private Currency currency;
-
-    @Column(name = "product_name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "product_type")
+    public double getPrice() {
+        return price;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    private Long id;
     private ProductType type;
+  //  private Seller seller;
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public ProductType getType() {
+        return type;
+    }
+
+//    public Seller getSeller() {
+//        return seller;
+//    }
+public Product(Long id, String name, Currency currency, double price, ProductType type){
+    this.name = name;
+    this.price = price;
+    this.type = type;
+    this.currency = currency;
+        this.id = id;
+}
+    @Override
+    public int hashCode() {
+
+        return id.hashCode();
+    }
 
     @Override
     public String toString() {

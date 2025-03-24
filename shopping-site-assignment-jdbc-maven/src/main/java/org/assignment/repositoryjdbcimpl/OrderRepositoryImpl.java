@@ -18,7 +18,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     private Connection con;
 
 
-    public OrderRepositoryImpl() {
+    public OrderRepositoryImpl() {// TODO
         init();
     }
 
@@ -47,14 +47,15 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public void cancelOrder(Order order) throws SQLException {
+    public boolean cancelOrder(Order order) throws SQLException {
         String query = OrderQueries.deleteOrderQuery("ORDER_ID");
         PreparedStatement statement = con.prepareStatement(query);
-        statement.setLong(1, order.getId());
+        statement.setLong(1, order.getOrderId());
+        return statement.executeUpdate() == 1;
     }
 
     @Override
-    public Order addOrder(Order order) throws SQLException {
+    public void addOrder(Order order) throws SQLException {
         String columns[] = {"CUSTOMER_ID", "PRODUCT_ID", "STATUS", "ORDERED_ON", "SELLER_ID", "CURRENCY", "PRICE"};
         String query = OrderQueries.addOrderQuery(columns);
         PreparedStatement statement = con.prepareStatement(query);
@@ -66,7 +67,6 @@ public class OrderRepositoryImpl implements OrderRepository {
         statement.setObject(6, order.getCurrency(), Types.OTHER);
         statement.setDouble(7, order.getPrice());
         statement.executeUpdate();
-        return order;
     }
 
     @Override
