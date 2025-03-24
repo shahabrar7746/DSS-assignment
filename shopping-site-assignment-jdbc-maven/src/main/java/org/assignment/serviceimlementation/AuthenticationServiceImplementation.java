@@ -9,6 +9,7 @@ import org.assignment.exceptions.TrialLimitExceedException;
 import org.assignment.exceptions.UnauthorizedOperationException;
 import org.assignment.exceptions.UserAlreadyExistsException;
 
+import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
 import org.assignment.repositoryjdbcimpl.CustomerRepositoryImpl;
 import org.assignment.repository.interfaces.CustomerRepository;
 
@@ -20,7 +21,9 @@ import org.assignment.ui.CustomerUI;
 
 import org.assignment.ui.UI;
 import org.assignment.util.ColorCodes;
+import org.assignment.util.FormValidation;
 import org.assignment.util.LogUtil;
+import org.assignment.util.Response;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -32,28 +35,31 @@ import java.util.stream.Collectors;
 public class AuthenticationServiceImplementation implements AuthenticationService {
 
     private CustomerService customerService;
-    private  Scanner sc;
-private  CustomerRepository customerRepository;
-private static AuthenticationServiceImplementation service;
-public static AuthenticationServiceImplementation getInstance(){
-    if(service == null){
-        service = new AuthenticationServiceImplementation();
-    }
-    return service;
-}
-    private AuthenticationServiceImplementation()  {
-       init();
-    }
-    public void init(){
-        this.customerService = CustomerService.getInstance();
-        this.customerRepository = new CustomerRepositoryImpl();
-        this.sc = new Scanner(System.in);
-}
+    private Scanner sc;
+    private CustomerRepository customerRepository;
+    private static AuthenticationServiceImplementation service;
 
+    public static AuthenticationServiceImplementation getInstance() {
+        if (service == null) {
+            service = new AuthenticationServiceImplementation();
+        }
+        return service;
+    }
+
+    private AuthenticationServiceImplementation() {
+        init();
+    }
+
+    public void init() {
+        this.customerService = CustomerService.getInstance();
+        this.customerRepository = new CustomerRepoHibernateImpl();
+        this.sc = new Scanner(System.in);
+    }
 
 
     @Override
-    public void login() throws TrialLimitExceedException, SQLException {
+    public Response login() throws TrialLimitExceedException, SQLException {
+        Response response = null;
         System.out.println(ColorCodes.GREEN + "*************LOG-IN*****************" + ColorCodes.RESET);
         System.out.print("Enter email : ");
         String email = sc.nextLine();
@@ -66,71 +72,94 @@ public static AuthenticationServiceImplementation getInstance(){
             email = sc.nextLine();
             System.out.print("Enter password : ");
             password = sc.nextLine();
-            if(email.isEmpty() || email.isBlank() || password.isEmpty() || password.isBlank()){
+            if (email.isEmpty() || email.isBlank() || password.isEmpty() || password.isBlank()) {
                 continue;
             }
 
         }
         if (count <= 0) {
-            throw new TrialLimitExceedException("Try limit exceed");
+            response = new Response(null, "Try limit exceed");
         }
-        Optional<Customer> customer = customerRepository.fetchByEmail(email);
-        customer.ifPresent(c -> {
-            try {
-            if (c.getRole() == Roles.ADMIN || c.getRole() == Roles.SUPER_ADMIN) {
-
-
-                  UI  adminUI = new AdminUI();
-                    adminUI.initAdminServices(c);
-
-
-            } else if(c.getRole() == Roles.CUSTOMER){
-                UI customerUI = new CustomerUI();
-                customerUI.initCustomerServices(c);
+        if (response == null) {
+            Optional<Customer> customer = customerRepository.fetchByEmail(email);
+            if (customer.isPresent()) {
+                Customer c = customer.get();
+                try {
+                    if (c.getRole() == Roles.ADMIN || c.getRole() == Roles.SUPER_ADMIN) {
+                        UI adminUI = new AdminUI();
+                        adminUI.initAdminServices(c);
+                    } else if (c.getRole() == Roles.CUSTOMER) {
+                        UI customerUI = new CustomerUI();
+                        customerUI.initCustomerServices(c);
+                    }
+                    response = new Response("Logging out");
+                } catch (SQLException e) {
+                    response = LogUtil.logError(e.getLocalizedMessage());
+                } catch (UnauthorizedOperationException e) {
+                    response = new Response(null, e.getLocalizedMessage());
+                }
             }
-            } catch (SQLException e) {
-                  LogUtil.logError(e.getLocalizedMessage());
-                System.err.println("Some error occured");
-            }catch (UnauthorizedOperationException e){
-                System.err.println(e.getLocalizedMessage());
-            }
-        });
-
+        }
+        return response;
     }
 
-
-
     @Override
-    public void register() throws UserAlreadyExistsException, CustomerNotFoundException, SQLException {
+    public Response register() throws UserAlreadyExistsException, CustomerNotFoundException, SQLException {
+        Response response = null;
         System.out.println(ColorCodes.GREEN + "*******REGISTRATION*******" + ColorCodes.RESET);
         System.out.print("Your name : ");
         String name = sc.nextLine();
-        System.out.print("Your email : ");
-        String email = sc.nextLine();
         System.out.print("Your Address : ");
         String address = sc.nextLine();
+        System.out.print("Your email : ");
+        String email = sc.nextLine();
         System.out.print("Your Password : ");
         String password = sc.nextLine();
-        if (register(email, password, name, address)) {
+        final boolean validEmail = FormValidation.validateEmail(email);
+        final boolean validPassword = FormValidation.validatePassword(password);
+        final boolean credentialValidation = validPassword && validEmail;
+        if (credentialValidation && register(email, password, name, address)) {
             Customer customer = login(email, password, true);
             UI customerUi = new CustomerUI();
             try {
                 customerUi.initCustomerServices(customer);
+                response = new Response("Logging out");
             } catch (UnauthorizedOperationException e) {
-                System.err.println(e.getLocalizedMessage());
+                response = new Response(null, e.getLocalizedMessage());
             } catch (SQLException e) {
-                  LogUtil.logError(e.getLocalizedMessage());
-                System.err.println("Some error occured");
+                LogUtil.logError(e.getLocalizedMessage());
+                response = new Response(null, "Some error occured");
             }
+
+        } else if (!validEmail) {
+            response = new Response(null,
+                    "Disclaimer : \n" +
+                            "Email must follow the standard email format: example@domain.com.\n" +
+                            "The local part (before the @ symbol) can include letters, digits, underscores (_), plus (+), and hyphen (-).\n" +
+                            "The domain part (after the @ symbol) must include letters, digits, and periods (e.g., example.com, example.co.uk).\n" +
+                            "The domain extension should be between 2 and 7 characters long (e.g., .com, .net, .org, etc.)."
+            );
+        } else if (!validPassword) {
+            response = new Response(null,
+                    "Disclaimer : \n" +
+                            "Password must be at least 8 characters long.\n" +
+                            "Password must contain at least one uppercase letter.\n" +
+                            "Password must contain at least one lowercase letter.\n" +
+                            "Password must contain at least one digit.\n" +
+                            "Password must contain at least one special character\n"
+            );
+
         } else {
-            throw new UserAlreadyExistsException("User already exist");
+            response = new Response(null, "User already exist");
         }
+        return response;
     }
 
     /**
      * Used to log in System to access main.services.
-     * @param email used to register customer using this email.
-     * @param password used to verify customers authenticity.
+     *
+     * @param email        used to register customer using this email.
+     * @param password     used to verify customers authenticity.
      * @param isRedirected indicates if the called after registration.
      * @return Customer object on successful log in, if not found returns null.
      */
@@ -144,11 +173,12 @@ public static AuthenticationServiceImplementation getInstance(){
 
     /**
      * Validates log in using provided email and password.
-     * @param email stores user email.
+     *
+     * @param email    stores user email.
      * @param password stores user password.
      * @return true on valid email and password or else false.
      */
-    private  boolean validateLogin(String email, String password) throws SQLException {
+    private boolean validateLogin(String email, String password) throws SQLException {
         Optional<Customer> optionalCustomer = customerRepository.fetchByEmail(email);
         return optionalCustomer.isPresent() ? optionalCustomer.get().getPassword().equals(password) : optionalCustomer.isPresent();
     }

@@ -11,10 +11,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public  class ProductCollectionRepository implements ProductRepository {
-
-
     private List<Product> products =  new ArrayList<>();
-
     public ProductCollectionRepository() {
      init();
     }
@@ -30,8 +27,14 @@ public  class ProductCollectionRepository implements ProductRepository {
     }
     private  void populate(String name, Currency currency, double price, ProductType type, String sellerName){
        Long id = new Random().nextLong(0, 9000);
-
-        products.add( new Product(id, name, currency, price, type));
+        Product product = new Product();
+        product.setId(id);
+        product.setName(name);
+        product.setCurrency(currency);
+        product.setPrice(price);
+        product.setType(type);
+        products.add(product);
+//        products.add( new Product(id, name, currency, price, type));
     }
     public    List<Product> fetchProducts() throws NoProductFoundException {
         if(products.isEmpty()) {

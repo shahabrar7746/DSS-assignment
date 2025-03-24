@@ -16,6 +16,9 @@ import org.assignment.repository.interfaces.OrderRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 
 
+import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
+import org.assignment.repositoryhibernateimpl.OrderRepoHibernateImpl;
+import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
 import org.assignment.repositoryjdbcimpl.CustomerRepositoryImpl;
 import org.assignment.repositoryjdbcimpl.OrderRepositoryImpl;
 import org.assignment.repositoryjdbcimpl.ProductRepositoryImpl;
@@ -43,10 +46,10 @@ private final Logger logger = LogManager.getLogger(this.getClass());
       init();
     }
 private void init(){
-    this.productRepository = new ProductRepositoryImpl();
-    this.customerRepository = new CustomerRepositoryImpl();
+    this.productRepository = new ProductRepoHibernateImpl();
+    this.customerRepository = new CustomerRepoHibernateImpl();
     this.sc = new Scanner(System.in);
-    this.orderRepository = new OrderRepositoryImpl();
+    this.orderRepository = new OrderRepoHibernateImpl();
 }
     private static AdminServiceImplementation service;
 

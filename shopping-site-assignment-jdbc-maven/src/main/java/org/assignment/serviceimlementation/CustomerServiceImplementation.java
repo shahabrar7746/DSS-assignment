@@ -16,6 +16,9 @@ import org.assignment.exceptions.OrderNotFoundException;
 import org.assignment.repository.interfaces.OrderRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 import org.assignment.repository.interfaces.SellerRepository;
+import org.assignment.repositoryhibernateimpl.OrderRepoHibernateImpl;
+import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
+import org.assignment.repositoryhibernateimpl.SellerRepoHibernateImpl;
 import org.assignment.repositoryjdbcimpl.OrderRepositoryImpl;
 import org.assignment.repositoryjdbcimpl.ProductRepositoryImpl;
 import org.assignment.repositoryjdbcimpl.SellerRepositoryImpl;
@@ -48,10 +51,10 @@ private CustomerServiceImplementation() {
         init();
     }
     private void init(){
-        this.sellerRepository = new SellerRepositoryImpl();
-        this.productRepository = new ProductRepositoryImpl();
+        this.sellerRepository = new SellerRepoHibernateImpl();
+        this.productRepository = new ProductRepoHibernateImpl();
         this.cart = new ArrayList<>();
-        this.orderRepository = new OrderRepositoryImpl();
+        this.orderRepository = new OrderRepoHibernateImpl();
         this.sc = new Scanner(System.in);
     }
 

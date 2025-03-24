@@ -98,7 +98,7 @@ public class AdminUI extends UI {
                         resp = new Response(null, "Unsupported operation");
             }
 if(resp.getStatus() == ResponseStatus.ERROR){
-    System.out.println(ColorCodes.RED + "ERROR : " + resp.getData() + ColorCodes.RESET);
+    System.out.println(ColorCodes.RED + "ERROR : " + resp.getError() + ColorCodes.RESET);
 }else if(resp.getStatus() == ResponseStatus.SUCCESSFUL) {
     System.out.println(ColorCodes.GREEN + response  + resp.getData() + ColorCodes.RESET);
 }
