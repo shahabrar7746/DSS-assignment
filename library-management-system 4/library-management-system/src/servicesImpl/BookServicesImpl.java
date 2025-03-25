@@ -25,7 +25,7 @@ public class BookServicesImpl implements BookService {
 
     public static BookServicesImpl getBookInstance(){
         if(Objects.isNull(bookInstance)){
-            return new BookServicesImpl();
+           bookInstance = new BookServicesImpl();
         }
         return bookInstance;
     }
@@ -116,8 +116,7 @@ public class BookServicesImpl implements BookService {
     @Override
     public void DisplayBook() {
         List<Book> books = bookDao.getBooks();
-        System.out.println(books);
-        if (books.isEmpty()) {
+        if (! books.isEmpty()) {
             System.out.println(" ");
             System.out.println("+----------------+--------------------+------------+----------------+-------------------------------------------------------+----------------------------------------------------------------------------------------------+");
             System.out.println(String.format("|%-4s | %-50s | %-32s | %-15s | %-16s |%-16s |%-16s  |%-16s  |%-16s ", "Borrow ID", "BookID", "User", "Date of Borrow", "Due Date", "Return Date", "Fine", "Status", "Book Condition"));

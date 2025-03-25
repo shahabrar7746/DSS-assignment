@@ -28,6 +28,7 @@ public class DashBoardAdmin extends AbstractUi {
     static Scanner sc = new Scanner(System.in);
     private static final Logger logger = Logger.getLogger(DashBoardAdmin.class.getName());
     BookDao bookDao = BookDaoImpl.getBookInstance();
+    BookServicesImpl bookServices = BookServicesImpl.getBookInstance();
     UserDao userDao = new UserDaoImpl();
     UserServicesimpl userServicesimpl=new UserServicesimpl(userDao);
 
@@ -64,7 +65,7 @@ public class DashBoardAdmin extends AbstractUi {
                     break;
                 }
                 case 2: {
-                     BookServicesImpl.getBookInstance().DisplayBook();
+                     bookServices.DisplayBook();
                     break;
                 }
                 case 3: {

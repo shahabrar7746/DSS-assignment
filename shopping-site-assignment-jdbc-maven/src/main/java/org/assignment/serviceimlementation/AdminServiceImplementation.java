@@ -1,9 +1,10 @@
 package org.assignment.serviceimlementation;
 
+import lombok.extern.java.Log;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.assignment.entities.Customer;
-import org.assignment.entities.Order;
+
 import org.assignment.entities.Product;
 
 import org.assignment.enums.ProductType;
@@ -26,7 +27,6 @@ import org.assignment.services.AdminService;
 
 import org.assignment.repository.interfaces.CustomerRepository;
 
-import org.assignment.services.CustomerService;
 import org.assignment.util.ColorCodes;
 import org.assignment.util.LogUtil;
 import org.assignment.util.Response;
@@ -41,16 +41,16 @@ public class AdminServiceImplementation implements AdminService {
     private  ProductRepository productRepository;
     private  CustomerRepository customerRepository;
     private  OrderRepository orderRepository;
-private final Logger logger = LogManager.getLogger(this.getClass());
-    private AdminServiceImplementation() { // TODO update constructor
-      init();
+    private final Logger logger = LogManager.getLogger(this.getClass());
+    private AdminServiceImplementation() {
+        init();
     }
-private void init(){
-    this.productRepository = new ProductRepoHibernateImpl();
-    this.customerRepository = new CustomerRepoHibernateImpl();
-    this.sc = new Scanner(System.in);
-    this.orderRepository = new OrderRepoHibernateImpl();
-}
+    private void init(){
+        this.productRepository = new ProductRepoHibernateImpl();
+        this.customerRepository = new CustomerRepoHibernateImpl();
+        this.sc = new Scanner(System.in);
+        this.orderRepository = new OrderRepoHibernateImpl();
+    }
     private static AdminServiceImplementation service;
 
     public static AdminServiceImplementation getInstance() {
@@ -60,69 +60,30 @@ private void init(){
         return service;
     }
 
-
-    @Override
-    public Response getProductsByType() {
-
-
-        String operation;
-        Response response = null;
-        boolean isFinished = false;
-        while (!isFinished) {
-            System.out.print("Press : \n 1 for PHONE \n 2 for FURNITURE \n 3 for APPLIANCES \n 4 for MAKEUP \n 5 for CLOTHING \n operation : ");
-            operation = sc.nextLine();
-            switch (operation) {
-                case "1":
-                    response = helperForGetProductsByType(ProductType.PHONE);
-                    isFinished = true;
-                    break;
-                case "2":
-                    response = helperForGetProductsByType(ProductType.FURNITURE);
-                    isFinished = true;
-                    break;
-                case "3":
-                    response = helperForGetProductsByType(ProductType.APPLIANCES);
-                    isFinished = true;
-                    break;
-                case "4":
-                    response = helperForGetProductsByType(ProductType.MAKEUP);
-                    isFinished = true;
-                    break;
-                case "5":
-                    response = helperForGetProductsByType(ProductType.CLOTHING);
-                    isFinished = true;
-                    break;
-                default:
-                    System.out.println(ColorCodes.RED + "Wrong operation choosen" + ColorCodes.RESET);//executed if the type is of the defined main.enums.
-            }
-        }
-        return response;//returns list of product of same type.
-    }
-
     @Override
     public Response getCustomerById() {
 
-            Response response = getAllCustomer();
-            if(response.getStatus() == ResponseStatus.ERROR){
-                return response;
-            }
-            List<Customer> data = (List<Customer>) response.getData();
-            if (data.isEmpty()) {
-                return new Response(null, "No customers are there");
-            }
+        Response response = getAllCustomer();
+        if(response.getStatus() == ResponseStatus.ERROR){
+            return response;
+        }
+        List<Customer> data = (List<Customer>) response.getData();
+        if (data.isEmpty()) {
+            return new Response(null, "No customers are there");
+        }
 
         Optional<Customer> customer = Optional.empty();
-                System.out.print("Please provide the id of Customer : ");
+        System.out.print("Please provide the id of Customer : ");
         Long id = sc.nextLong();
         try {
-           customer = customerRepository.fetchById(id);
+            customer = customerRepository.fetchById(id);
         } catch (CustomerNotFoundException  e) {
-           return new Response(null, e.getLocalizedMessage());
+            return new Response(null, e.getLocalizedMessage());
         } catch (SQLException e) {
-          return  LogUtil.logError(e.getStackTrace());
+            return  LogUtil.logError(e.getLocalizedMessage());
         }
         if ( customer.isEmpty() || customer.get().getRole() != Roles.CUSTOMER) {
-          return new Response(null, "No customer found");
+            return new Response(null, "No customer found");
         }
         return new Response(customer.get());// returns the found customer.
     }
@@ -135,7 +96,7 @@ private void init(){
         } catch (CustomerNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
         } catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
+            return  LogUtil.logError(e.getLocalizedMessage());
 
         }
         if (allCustomer.isEmpty()) {
@@ -153,7 +114,7 @@ private void init(){
         } catch (NoProductFoundException e) {
             return new Response(null, e.getLocalizedMessage());
         } catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
+            return  LogUtil.logError(e.getLocalizedMessage());
         }
         if (allProducts.isEmpty()) {
             //executed if no product object is found
@@ -169,12 +130,14 @@ private void init(){
      * @see #getAllProdcuts()
      */
 
-    private Response helperForGetProductsByType(ProductType type) {
+    public Response getProductsByType(ProductType type) {
         List<Product> products = null;// fetches List of product to be searched in.
         try {
             products = productRepository.fetchProducts();
-        } catch (Exception e) {
-            return new Response(e.getLocalizedMessage());
+        } catch (NoProductFoundException e) {
+            return new Response(null, e.getLocalizedMessage());
+        } catch (SQLException e) {
+            return LogUtil.logError(e.getStackTrace());
         }
         Map<ProductType, List<Product>> map = products.stream().collect(Collectors.groupingByConcurrent(Product::getType));
         if (!map.containsKey(type)) {
@@ -185,11 +148,11 @@ private void init(){
 
     @Override
     public Response getAllDeliveredOrders() {
-Response response = null;
+        Response response = null;
         try {
             response = new Response(orderRepository.getAllDeliveredOrders());
         } catch (SQLException e) {
-            response =  LogUtil.logError(e.getStackTrace());
+            response =  LogUtil.logError(e.getLocalizedMessage());
         }catch (CustomerNotFoundException | OrderNotFoundException | NoProductFoundException e){
             response = new Response(null, e.getLocalizedMessage());
         }
@@ -198,52 +161,22 @@ Response response = null;
 
 
     @Override
-    public Response grantAccess(boolean isAuthorized) {
-        if (!isAuthorized) {//checks if the operation performed by superadmin or not.
-            return new Response(null, "Your are not authorized to access this service");//if not, throws this exception.
-        }
-            System.out.println(ColorCodes.BLUE + "Admins : " + getAllCustomer().getData() + ColorCodes.RESET);
-        System.out.print("Enter Customer id to whom you want to grant access to : ");
-        String cid = sc.nextLine();
-        int count = 3;
-        Optional<Customer> customer = Optional.empty();
+    public Response grantAccess(Long id) {
+        Optional<Customer> customer = null;
         try {
-
-            customer = customerRepository.fetchById(Long.valueOf(cid));
-            while (customer.isEmpty() && count-- >= 0) {
-                System.out.println("Wrong customer id, enter correct customer id");
-                System.out.print(ColorCodes.BLUE + "Enter Customer id to whom you want to grant access to : " + ColorCodes.RESET);
-                cid = sc.nextLine();
-                customer = customerRepository.fetchById(Long.valueOf(cid));//fetches customer by id.
+             customer = customerRepository.fetchById(id);
+            if ( customer.get().getRole() == Roles.ADMIN) {
+                return  new Response(null, "Already a Admin");//indicates if the customer is already a admin.
             }
-        } catch (CustomerNotFoundException e) {
-            return new Response(null, e.getLocalizedMessage());
-        }catch (SQLException e){
+            if (customer.get().getRole() == Roles.SUPER_ADMIN) {//executed if super admins authority is tried to overridden.
+                return new Response(null, "action not allowed");
+            }
+            customer.get().setRole(Roles.ADMIN);
+            customerRepository.updateCustomer(customer.get());
+        }catch (CustomerNotFoundException e){
+            return new Response(e.getLocalizedMessage());
+        }catch (Exception e){
             return LogUtil.logError(e.getStackTrace());
-        }
-        if (count < 0) {
-            return new Response(null, "You have exceeded the try limit");// thrown if the try 'count' <= 0.
-        }
-        if(customer.isEmpty()){
-            return  new Response(null, "No customer found");
-        }
-        if ( customer.get().getRole() == Roles.ADMIN) {
-            return  new Response(null, "Already a Admin");//indicates if the customer is already a admin.
-
-        }
-        if (customer.get().getRole() == Roles.SUPER_ADMIN) {//executed if super admins authority is tried to overridden.
-           return new Response(null, "action not allowed");
-
-        }
-        try {
-            if (authenticateSuperAdmin()) {//if 'true' lets you perform critical operation.
-                customer.get().setRole(Roles.ADMIN);//critical operation.
-                customerRepository.updateCustomer(customer.get());
-            }
-        }catch (SQLException e){
-            return  LogUtil.logError(e.getStackTrace());
-        }catch (TrialLimitExceedException | WrongPasswordException e){
-            return new Response(null, e.getLocalizedMessage());
         }
         return new Response("Access granted !!");
 
@@ -251,98 +184,26 @@ Response response = null;
 
 
     @Override
-    public Response revokeAccess(boolean isAuthorized)  {
-        if (!isAuthorized) {//checks if the operation performed by superadmin or not.
-           return new Response(null, "Your are not authorized to access this service");
-        }
-        System.out.println(ColorCodes.BLUE + "Customers : " + fetchAllAdmins() + ColorCodes.RESET);
-        System.out.print("Enter Customer id to whom you want to revoke access to : ");
-        String cid = sc.nextLine();
-        Optional<Customer> customer = Optional.empty();//fetches admins based on id.
-
-        int count = 3;//sets try limit.
-        while (customer.isEmpty() && count-- >= 0) {
-            System.out.println("Wrong customer id, enter correct customer id");
-            System.out.print("Enter Customer id to whom you want to revoke access to : ");
-            cid = sc.nextLine();//keeps on requesting id if no object is found for the previous id, keeps on going until count is not equals to 0 or less than 0
-            try {
-                customer = customerRepository.fetchAdminById(Long.valueOf(cid));
-            } catch (SQLException e) {
-                return  LogUtil.logError(e.getStackTrace());
-            }
-        }
-        if (customer.isEmpty()) {
-            return new Response(null, "No admin found");
-
-        }
-        if (count < 0) {
-          return new Response(null, "Trial limit exceed");
-        }
-        if (customer.isPresent() && customer.get().getRole() == Roles.SUPER_ADMIN) {
-           return new Response(null, "Cannot perform action");
-        }
-        if (customer.isPresent() && customer.get().getRole() == Roles.CUSTOMER) {
-           return new Response(null, "The chosen user is already a customer");
-        }
-
+    public Response revokeAccess(Long id)  {
+        Response response = null;
         try {
-            if (customer.isPresent() && authenticateSuperAdmin()) {//checks performing critical section.
-                customer.get().setRole(Roles.CUSTOMER);
-                customerRepository.updateCustomer(customer.get());//critical section.
+            Optional<Customer> customer = customerRepository.fetchAdminById(id);
+            if (customer.isPresent() && customer.get().getRole() == Roles.SUPER_ADMIN) {
+                return new Response(null, "Cannot perform action");
             }
-        }catch (TrialLimitExceedException | WrongPasswordException e){
-            return new Response(null, e.getLocalizedMessage());
+            if (customer.isPresent() && customer.get().getRole() == Roles.CUSTOMER) {
+                return new Response(null, "The chosen user is already a customer");
+            }
+            customer.get().setRole(Roles.CUSTOMER);
+            customerRepository.updateCustomer(customer.get());//critical section.
+            response = new Response(null, "Access revoked");
+        }catch (Exception e){
+         response = LogUtil.logError(e.getStackTrace());
         }
-        catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
-        }
-        return  new Response("Access revoked");
+        return  response;
     }
 
 
-    @Override
-    public Response cancelOrder(boolean isAuthorized) {
-        if (!isAuthorized) {//checks if the operation performed by superadmin or not.
-           return new Response(null, "Your are not authorized to access this service");
-        }
-        List<Order> orders = null;//gets all orders present in the main.repository.
-        try {
-            orders = orderRepository.getAllOrders();
-        } catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
-        }
-        catch (CustomerNotFoundException |  NoProductFoundException e){
-            return new Response(null, e.getLocalizedMessage());
-        }
-        if (orders.isEmpty()) {
-            return new Response(null, orders.size() + " orders found to be cancelled");// throws exception if no orders are present in the OrderRepository.
-        }
-        System.out.println(ColorCodes.BLUE + "Orders : " + orders + ColorCodes.RESET);
-        System.out.print("Enter order id to be cancelled : ");
-        Optional<Order> order = Optional.empty();
-        try {
-            orders = orderRepository.getAllOrders();
-        } catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
-        }
-        catch (CustomerNotFoundException |  NoProductFoundException e){
-            return new Response(null, e.getLocalizedMessage());
-        }
-      if(order.isEmpty()){
-          return new Response(null, "The order id is incorrect");
-      }
-      try {
-          if (authenticateSuperAdmin()) {//executed if Order object is found for the id.
-              orderRepository.cancelOrder(order.get());
-          }
-      } catch (SQLException e) {
-          return  LogUtil.logError(e.getStackTrace());
-      }catch (TrialLimitExceedException | WrongPasswordException e){
-          return new Response(null, e.getLocalizedMessage());
-      }
-      return new Response("Order cancelled successfully.");
-     // thrown if no Order is found.
-    }
 
     /**
      * Below method requests for super admin password for variable 'count' times which is default set to 6.
@@ -352,43 +213,49 @@ Response response = null;
      * @throws WrongPasswordException    if the password is incorrect even on last try.
      * @throws TrialLimitExceedException if the try limit exceeds.
      */
-    private boolean authenticateSuperAdmin() throws TrialLimitExceedException, WrongPasswordException {
-        int count = 6;
-        String password = "";
-
-        while (!password.equals(SUPER_ADMIN_PASSWORD) && count-- > 0) {
-            if (count < 5) {
-                System.err.println("Try again");
-            }
-            System.out.println("Provide Super Admin password to procced further\nPassword : ");
-            password = sc.nextLine();
-        }
-        if (count <= 0) {
-            throw new TrialLimitExceedException("you have tried too many times, please try again later");
-        }
-        if (!password.equals(SUPER_ADMIN_PASSWORD)) {
-            throw new WrongPasswordException("you have entered the wrong password");
-        }
-        return true;
+   public   boolean authenticateSuperAdmin(String password){
+      return password.equals(SUPER_ADMIN_PASSWORD);
     }
 
     @Override
-    public Response deleteCustomer(boolean isAuthorized) {
+    public Response customerExists(Long id) {
+        Response response = null;
+        try {
+            response = new Response(customerRepository.fetchById(id).get().getRole() == Roles.CUSTOMER);
+        }catch (Exception e){
+            response = LogUtil.logError(e.getStackTrace());
+        }
+        return response;
+    }
+
+    @Override
+    public Response isAdmin(Long id) {
+       Response response = null;
+       try {
+           response = new Response(customerRepository.fetchAdminById(id).isPresent());
+       }catch (Exception e){
+           response = LogUtil.logError(e.getStackTrace());
+       }
+       return response;
+    }
+
+    @Override
+    public Response deleteCustomer(boolean isAuthorized) {//TODO
         if (!isAuthorized) {//checks if the operation performed by superadmin or not.
             return new Response(null, "Your are not authorized to access this service");
         }
         List<Customer> allCustomer = null;
-                try {
+        try {
 
-                    allCustomer = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
-                    if (allCustomer.isEmpty()) {
-                        return new Response(null, "No customers are present");
-                    }
-                } catch (CustomerNotFoundException e) {
-                    return  new Response(null, e.getLocalizedMessage());
-                }catch (SQLException e){
-                    return  LogUtil.logError(e.getStackTrace());
-                }
+            allCustomer = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
+            if (allCustomer.isEmpty()) {
+                return new Response(null, "No customers are present");
+            }
+        } catch (CustomerNotFoundException e) {
+            return  new Response(null, e.getLocalizedMessage());
+        }catch (SQLException e){
+            return  LogUtil.logError(e.getLocalizedMessage());
+        }
 
         System.out.println(ColorCodes.BLUE + "Customers : " + allCustomer + ColorCodes.RESET);
         System.out.print("Provide customer id : ");
@@ -399,29 +266,27 @@ Response response = null;
                 return new Response(null, "No Customer object found");
             }
 
-            if (authenticateSuperAdmin()) { //autheticates befores performing critical section. on any negative scenario a exception is thrown. or else true.
+            if (authenticateSuperAdmin("")) { //autheticates befores performing critical section. on any negative scenario a exception is thrown. or else true.
                 customerRepository.removeCustomer(customer.get());//critical section.
 
             }
-        } catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
-        }catch (TrialLimitExceedException | CustomerNotFoundException |  WrongPasswordException e){
-            return new Response(null, e.getLocalizedMessage());
+        } catch (CustomerNotFoundException | SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
         }
         return new Response("Customer deleted");
     }
 
     @Override
     public Response fetchAllAdmins() {//fetches all admins excluding super admin and customer.
-     List<Customer> admins = new ArrayList<>();
+        List<Customer> admins = new ArrayList<>();
         try {
-        admins = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.ADMIN).toList();
-         if (admins.isEmpty()) {
-             return new Response(null, "No admin found");//throws NoAdminFoundException if no admin found CustomerRepository.
-         }
-     } catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
-     }
+            admins = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.ADMIN).toList();
+            if (admins.isEmpty()) {
+                return new Response(null, "No admin found");//throws NoAdminFoundException if no admin found CustomerRepository.
+            }
+        } catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
+        }
         catch (CustomerNotFoundException e){
             return new Response(null, e.getLocalizedMessage());
         }

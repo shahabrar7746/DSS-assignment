@@ -1,6 +1,8 @@
 package org.assignment.respositorycollectionimpl;
 
+import org.assignment.entities.Customer;
 import org.assignment.entities.Order;
+import org.assignment.entities.Product;
 import org.assignment.enums.OrderStatus;
 import org.assignment.exceptions.OrderNotFoundException;
 import org.assignment.repository.interfaces.OrderRepository;
@@ -44,15 +46,15 @@ public  class OrderCollectionRepository implements OrderRepository {
         return order;
     }
     @Override
-    public  List<Order> fetchOrderByProductName(String name)
+    public  List<Order> fetchOrderByProductAndCustomer(Product product, Customer customer)
     {
-        List<Order> orderList = orders.stream().filter(o->o.getProduct().getName().equalsIgnoreCase(name)).toList();
+        List<Order> orderList = orders.stream().filter(o->o.getProduct().getId().equals(product) && o.getCustomer().getId().equals(customer.getId())).toList();
         return orderList;
     }
 
     @Override
-    public List<Order> getOrderByCustomerId(Long id) {
-        return orders.stream().filter(o-> o.getCustomer().getId().equals(id)).toList();
+    public List<Order> getOrderByCustomer(final Customer customer) {
+        return orders.stream().filter(o-> o.getCustomer().getId().equals(customer.getId())).toList();
     }
 
     @Override

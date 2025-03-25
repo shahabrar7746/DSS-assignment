@@ -43,9 +43,6 @@ public class CustomerUI  extends  UI {
             operation = sc.nextLine();
             service.browse(customer, operation);
         }
-
         super.displayOptions(List.of("Program ended"));
     }
-
-
 }

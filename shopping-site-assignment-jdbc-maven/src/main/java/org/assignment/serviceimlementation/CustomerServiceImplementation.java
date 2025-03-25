@@ -1,5 +1,7 @@
 package org.assignment.serviceimlementation;
 
+import jakarta.persistence.PersistenceException;
+import lombok.extern.java.Log;
 import org.assignment.entities.Customer;
 import org.assignment.entities.Order;
 import org.assignment.entities.Product;
@@ -8,25 +10,27 @@ import org.assignment.entities.Seller;
 import org.assignment.enums.Currency;
 import org.assignment.enums.OrderStatus;
 import org.assignment.enums.ResponseStatus;
+import org.assignment.enums.Roles;
 import org.assignment.exceptions.CustomerNotFoundException;
 import org.assignment.exceptions.EmptyCartException;
 import org.assignment.exceptions.NoProductFoundException;
 import org.assignment.exceptions.OrderNotFoundException;
 
+import org.assignment.repository.interfaces.CustomerRepository;
 import org.assignment.repository.interfaces.OrderRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 import org.assignment.repository.interfaces.SellerRepository;
+import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
 import org.assignment.repositoryhibernateimpl.OrderRepoHibernateImpl;
 import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
 import org.assignment.repositoryhibernateimpl.SellerRepoHibernateImpl;
-import org.assignment.repositoryjdbcimpl.OrderRepositoryImpl;
-import org.assignment.repositoryjdbcimpl.ProductRepositoryImpl;
-import org.assignment.repositoryjdbcimpl.SellerRepositoryImpl;
+
 import org.assignment.services.CustomerService;
 
 import org.assignment.util.ColorCodes;
 import org.assignment.util.LogUtil;
 import org.assignment.util.Response;
+import org.hibernate.HibernateException;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -35,67 +39,84 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class CustomerServiceImplementation implements CustomerService {
-    private  Scanner sc;
-    private  List<Product> cart;
-private  OrderRepository orderRepository;
-private  ProductRepository productRepository;
-private  SellerRepository sellerRepository;
-private static CustomerServiceImplementation service;
-public  static  CustomerServiceImplementation getInstance(){
-    if(service == null){
-        service = new CustomerServiceImplementation();
+    private Scanner sc;
+    private List<Product> cart;
+    private CustomerRepository repository;
+    private OrderRepository orderRepository;
+    private ProductRepository productRepository;
+    private SellerRepository sellerRepository;
+    private static CustomerServiceImplementation service;
+private CustomerRepository customerRepository;
+    public static CustomerServiceImplementation getInstance() {
+        if (service == null) {
+            service = new CustomerServiceImplementation();
+        }
+        return service;
     }
-    return  service;
-}
-private CustomerServiceImplementation() {
+
+    @Override
+    public Optional<Customer> findByEmail(String email) {
+        Optional<Customer> optionalCustomer = null;
+        try{
+            optionalCustomer = repository.fetchByEmail(email);
+        }catch (SQLException | PersistenceException e){
+            LogUtil.logError(e.getStackTrace());
+        }
+        return optionalCustomer == null ? Optional.empty() : optionalCustomer;
+    }
+
+
+    private CustomerServiceImplementation() {
         init();
     }
-    private void init(){
+
+    private void init() {
         this.sellerRepository = new SellerRepoHibernateImpl();
         this.productRepository = new ProductRepoHibernateImpl();
         this.cart = new ArrayList<>();
         this.orderRepository = new OrderRepoHibernateImpl();
         this.sc = new Scanner(System.in);
+        this.repository = new CustomerRepoHibernateImpl();
+
     }
 
 
     public void browse(final Customer customer, String operation) throws SQLException {
-            Response response = null;
-            try {
-                System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
-            }catch (NoProductFoundException e){
-                System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
-            }
-                switch (operation) {
-                    case "1":
-                      response =  intiateCart(customer, false);
-                        break;
-                    case "2":
-                        response = getAllOrders(customer);
-                        break;
-                    case "3":
-                       response = cancelOrder(customer);
-                        break;
-                    case "4":
-                       response = proceedToOrder(customer, getTotal());
-                        break;
-                    case "back", "BACK":
-                        response = new Response("Going back");
-                        break;
-                    default:
-                       response = new Response(null, "Invalid operation");
-                }
-            if(response.getStatus() == ResponseStatus.ERROR){
-                System.out.println(ColorCodes.RED + "ERROR : " + response.getError() + ColorCodes.RESET);
-            }else if(response.getStatus() == ResponseStatus.SUCCESSFUL) {
-                System.out.println(ColorCodes.RED   + response.getData() + ColorCodes.RESET);
-            }
+        Response response = null;
+        try {
+            System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
+        } catch (NoProductFoundException e) {
+            System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
+        }
+        switch (operation) {
+            case "1":
+                response = intiateCart(customer, false);
+                break;
+            case "2":
+                response = getAllOrders(customer);
+                break;
+            case "3":
+                response = cancelOrder(customer);
+                break;
+            case "4":
+                response = proceedToOrder(customer, getTotal());
+                break;
+            case "back", "BACK":
+                response = new Response("Going back");
+                break;
+            default:
+                response = new Response(null, "Invalid operation");
+        }
+        if (response.getStatus() == ResponseStatus.ERROR) {
+            System.out.println(ColorCodes.RED + "ERROR : " + response.getError() + ColorCodes.RESET);
+        } else if (response.getStatus() == ResponseStatus.SUCCESSFUL) {
+            System.out.println(ColorCodes.RED + response.getData() + ColorCodes.RESET);
+        }
 
 
     }
 
     /**
-     *
      * @param customer whose orders need to be searched.
      * @return List of orders of provided objects.
      * @throws OrderNotFoundException if no order found for the customer.
@@ -105,43 +126,44 @@ private CustomerServiceImplementation() {
     private Response getAllOrders(Customer customer) throws SQLException {
         System.out.println(ColorCodes.GREEN + "******YOUR*ORDERS******" + ColorCodes.RESET);
         List<Order> orders = null;
-        try{
-            orders = orderRepository.getOrderByCustomerId(customer.getId());
+        try {
+            orders = orderRepository.getOrderByCustomer(customer);
         } catch (CustomerNotFoundException | NoProductFoundException | OrderNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
+        }catch (SQLException | HibernateException e){
+            return LogUtil.logError(e.getStackTrace());
         }
-        return orders.isEmpty() ? new Response(null, "No order found") :  new Response(orders);
+        return orders.isEmpty() ? new Response(null, "No order found") : new Response(orders);
     }
 
     /**
-     *
      * injects Product object inside order list of customer.
+     *
      * @param customer for whom we want to place order.
-     * @param product which product we need to order.
-     * @see #cancelOrder(Customer) 
+     * @param product  which product we need to order.
+     * @see #cancelOrder(Customer)
      */
     private Response bookOrder(Customer customer, Product product) {
         Optional<Seller> optionalSeller = null;
         try {
             optionalSeller = sellerRepository.fetchById(1L);
         } catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
+            return LogUtil.logError(e.getStackTrace());
         }
-if(optionalSeller.isEmpty()){
-    return new Response(null, "No seller found for this product");
-}
+        if (optionalSeller.isEmpty()) {
+            return new Response(null, "No seller found for this product");
+        }
 
         Order order = new Order(customer, product, optionalSeller.get(), OrderStatus.ORDERED, Currency.INR, LocalDateTime.now(), product.getPrice());
         try {
             orderRepository.addOrder(order);
-        } catch (SQLException e) {
-            return  LogUtil.logError(e.getStackTrace());
+        } catch (SQLException  | HibernateException e) {
+            return LogUtil.logError(e.getStackTrace());
         }
         return new Response("");
     }
 
     /**
-     *
      * @param customer whose order need to be cancelled.
      * @throws OrderNotFoundException if no orders found for the customer or order list is empty of the provided customer.
      * @see #bookOrder(Customer, Product)
@@ -151,9 +173,11 @@ if(optionalSeller.isEmpty()){
         System.out.println(ColorCodes.GREEN + "*****CANCEL*ORDER*****" + ColorCodes.RESET);
         List<Order> ordersByCustomer = null;
         try {
-            ordersByCustomer = orderRepository.getOrderByCustomerId(customer.getId());
+            ordersByCustomer = orderRepository.getOrderByCustomer(customer);
         } catch (CustomerNotFoundException | NoProductFoundException | OrderNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
+        }catch (SQLException | HibernateException e){
+            return LogUtil.logError(e.getStackTrace());
         }
         System.out.println(ColorCodes.BLUE + "Your orders : " + ordersByCustomer + ColorCodes.RESET);
         if (ordersByCustomer.isEmpty()) {
@@ -165,24 +189,32 @@ if(optionalSeller.isEmpty()){
             String productName = sc.nextLine().toUpperCase();
             List<Order> orders = null;
             try {
-                orders = orderRepository.fetchOrderByProductName(productName);
-            } catch (CustomerNotFoundException  | NoProductFoundException e) {
+                Optional<Product> product = productRepository.fetchProductByName(productName);
+                if (product.isEmpty()) {
+                    System.out.println(ColorCodes.RED + "incorrect product name" + ColorCodes.RESET);
+                    continue;
+                }
+                orders = orderRepository.fetchOrderByProductAndCustomer(product.get(), customer);
+            } catch (CustomerNotFoundException | NoProductFoundException e) {
                 return new Response(null, e.getLocalizedMessage());
+            }catch (SQLException | HibernateException e){
+                return LogUtil.logError(e.getStackTrace());
             }
-            if(!orders.isEmpty()){
+            if (!orders.isEmpty()) {
                 order = Optional.of(orders);
             }
-           if(order.isPresent()){
-               helperForCancelOrder(order.get(),customer);
-           }
-            if(order.isPresent()){
+            if (order.isPresent()) {
+                helperForCancelOrder(order.get(), customer);
+            }
+            if (order.isPresent()) {
                 return new Response("Order cancelled..");
             }
 
         }
         return new Response(null, "Incorrect product name.....");
     }
-    private void helperForCancelOrder(List<Order> l,Customer customer) throws SQLException {
+
+    private void helperForCancelOrder(List<Order> l, Customer customer) throws SQLException {
         System.out.println(ColorCodes.BLUE + "Your orders : " + l + ColorCodes.RESET);
         if (l.size() > 1) {
             System.out.println("and your quantity of order : " + l.size());
@@ -194,10 +226,10 @@ if(optionalSeller.isEmpty()){
                 quantity = sc.nextLong();
             }
             List<Order> removedOrderList = l.stream().limit(quantity).toList();
-            for (Order o : removedOrderList){
+            for (Order o : removedOrderList) {
                 orderRepository.cancelOrder(o);
             }
-        } else if(l.size() == 1) {
+        } else if (l.size() == 1) {
             Order removedOrder = l.get(0);
             orderRepository.cancelOrder(removedOrder);
         }
@@ -205,8 +237,8 @@ if(optionalSeller.isEmpty()){
 
 
     /**
-     *
      * Calculates total price of products from cart.
+     *
      * @return AtomicReference<Double> containing total amount of cart.
      * @see #getTotalFromCart()
      */
@@ -216,7 +248,8 @@ if(optionalSeller.isEmpty()){
 
     /**
      * Intiates cart for user.
-     * @param customer used for creating cart against provided customer object.
+     *
+     * @param customer     used for creating cart against provided customer object.
      * @param cartIntiated used to print banner.
      */
     private Response intiateCart(Customer customer, boolean cartIntiated) {
@@ -230,10 +263,10 @@ if(optionalSeller.isEmpty()){
         while (!exitCart) {
             try {
                 System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
-            } catch (NoProductFoundException e){
+            } catch (NoProductFoundException e) {
                 return new Response(null, e.getLocalizedMessage());
-            } catch (SQLException e) {
-                return  LogUtil.logError(e.getStackTrace());
+            } catch (SQLException | HibernateException e) {
+                return LogUtil.logError(e.getStackTrace());
             }
             System.out.println("PRESS 0 TO REMOVE PRODUCT FROM CART");
             System.out.println("PRESS -1 TO EXIT CART");
@@ -253,15 +286,15 @@ if(optionalSeller.isEmpty()){
                 Optional<Product> product = null;
                 try {
                     product = productRepository.fetchProductByName(name);
-                } catch (NoProductFoundException e){
+                } catch (NoProductFoundException e) {
                     return new Response(null, e.getLocalizedMessage());
                 } catch (SQLException e) {
-                    return  LogUtil.logError(e.getStackTrace());
+                    return LogUtil.logError(e.getStackTrace());
                 }
-                if(product.isEmpty()){
+                if (product.isEmpty()) {
                     return new Response(null, "Invalid product name please try again.");
                 }
-                final  Product p = product.get();
+                final Product p = product.get();
                 cart.add(p);
 
                 totalPrice.updateAndGet(price -> price + p.getPrice());
@@ -271,13 +304,14 @@ if(optionalSeller.isEmpty()){
         }
         if (!cart.isEmpty()) {
             System.out.println("Proceeding to order the products in cart");
-           return proceedToOrder(customer, totalPrice);
+            return proceedToOrder(customer, totalPrice);
         }
         return new Response(null, "cannot order from empty cart");
     }
 
     /**
      * Used to calculate total price of cart.
+     *
      * @return Double containing total price of products present inside cart.
      * @see #getTotal()
      */
@@ -291,7 +325,8 @@ if(optionalSeller.isEmpty()){
 
     /**
      * Called to place order for products from cart. if not placed. products in cart will exist until they are removed or ordered.
-     * @param customer for whom the orders are being placed.
+     *
+     * @param customer   for whom the orders are being placed.
      * @param totalPrice indicates total price of cart or produces inside it.
      * @throws EmptyCartException if cart is empty.
      */
@@ -299,7 +334,7 @@ if(optionalSeller.isEmpty()){
         if (cart.isEmpty()) {
             return new Response(null, "No products found in cart");
         }
-        Response pvtObject =  new Response("Order booked");
+        Response pvtObject = new Response("Order booked");
         Response response = pvtObject;
         System.out.println(ColorCodes.GREEN + "******PROCEED*TO*ORDER*******" + ColorCodes.RESET);
         System.out.println(ColorCodes.BLUE + "Cart : " + cart);
@@ -307,25 +342,26 @@ if(optionalSeller.isEmpty()){
         System.out.print("Press 'y' to proceed further or 'n' to go back to cart : ");
         String operation = sc.nextLine();
         if (operation.equalsIgnoreCase("y")) {
-                cart.forEach(p ->
-                        {
-                                 bookOrder(customer, p);
-                        }
-                );
+            cart.forEach(p ->
+                    {
+                        bookOrder(customer, p);
+                    }
+            );
             cart.clear();
         } else if (operation.equalsIgnoreCase("n")) {
             try {
                 return intiateCart(customer, true);
             } catch (Exception e) {
-                response = new Response(null, e.getLocalizedMessage());
+                response = LogUtil.logError(e.getStackTrace());
             }
         }
-        return response == pvtObject && (!operation.equalsIgnoreCase("y") && !operation.equalsIgnoreCase("n")) ?  new Response(null, "Invalid inputs") : response;
+        return response == pvtObject && (!operation.equalsIgnoreCase("y") && !operation.equalsIgnoreCase("n")) ? new Response(null, "Invalid inputs") : response;
     }
 
     /**
      * Removes products from cart.
-     * @param cart contains product which need to removed.
+     *
+     * @param cart  contains product which need to removed.
      * @param total represents total price of cart or products from cart.
      * @throws EmptyCartException if the cart is empty, indicating removal operation is not possible for empty cart.
      */

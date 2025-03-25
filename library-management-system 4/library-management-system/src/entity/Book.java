@@ -90,7 +90,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return String.format("| %-4s | %-50s | %-32s | %-32s | %-16d | %-16d  |%n", bookId, name, category, author, numberOfCoupies);
+        return String.format("| %-4s | %-50s | %-32s | %-32s  |%n", bookId, name, category, author, numberOfCoupies);
     }
 
 

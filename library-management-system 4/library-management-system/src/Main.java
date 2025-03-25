@@ -12,9 +12,10 @@ import java.io.IOException;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args){
+BookServicesImpl bookServices = BookServicesImpl.getBookInstance();
+         bookServices.addBook(new Book("The Art of Cooking", "Jane Smith", BookCategory.valueOf("COOKING"),  9));
 
-         BookServicesImpl.getBookInstance().addBook(new Book("The Art of Cooking", "Jane Smith", BookCategory.valueOf("COOKING"),  9));
-//        new BookServicesImpl(new BookDaoImpl()).addBook(new Book("The Art of Cooking", "Jane Smith", BookCategory.valueOf("COOKING"),  9));
+         //        new BookServicesImpl(new BookDaoImpl()).addBook(new Book("The Art of Cooking", "Jane Smith", BookCategory.valueOf("COOKING"),  9));
 //        new BookServicesImpl(new BookDaoImpl()).addBook(new Book("The History of Time", "Stephen Hawking", BookCategory.valueOf("SCIENCE"),  10));
 //        new BookServicesImpl(new BookDaoImpl()).addBook(new Book("A Brief History of Time", "Stephen Hawking", BookCategory.valueOf("SCIENCE"), 10));
 //        new BookServicesImpl(new BookDaoImpl()).addBook(new Book("The Alchemist", "Paulo Coelho", BookCategory.valueOf("FICTION"), 15));

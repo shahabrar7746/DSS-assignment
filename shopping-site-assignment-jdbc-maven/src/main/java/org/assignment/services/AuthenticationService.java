@@ -15,13 +15,13 @@ public interface AuthenticationService {
      *
      * @throws TrialLimitExceedException if try limit exceeds.
      */
-    Response login() throws TrialLimitExceedException, SQLException;
-
+    Response login(String email, String password) ;
+    Response save(String email, String password, String address, String name);
     /**
      * Registers user as customer. lets user register their credentials if they do not exist in system.
      * @throws UserAlreadyExistsException if credentials already exist in main.repository.
      */
-    Response register() throws UserAlreadyExistsException, CustomerNotFoundException, SQLException;
+
     static AuthenticationService getInstance(){
         return AuthenticationServiceImplementation.getInstance();
     }

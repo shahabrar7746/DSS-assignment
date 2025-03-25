@@ -31,14 +31,6 @@ private String error;
     }
 
     @Override
-    public String toString() {
-        if(status == ResponseStatus.ERROR){
-            return "";
-        }
-        return data.toString();
-    }
-
-    @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
         Response response = (Response) object;
@@ -49,4 +41,13 @@ private String error;
     public int hashCode() {
         return Objects.hashCode(status);
     }
+
+    @Override
+    public String toString() {
+        if(status == ResponseStatus.ERROR){
+            return "";
+        }
+        return data.toString();
+    }
+
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
-        <!-- Console Appender -->
+        <!-- Console Appender
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
         </Console>
+        -->
 
         <!-- File Appender with Rolling -->
         <RollingFile name="File" fileName="logs/logfile.log" filePattern="logfile-%d{yyyy-MM-dd}.log">
@@ -18,10 +19,9 @@
     </Appenders>
 
     <Loggers>
-        <!-- Root logger configuration -->
         <Root level="INFO">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
-        </Root>
-    </Loggers>
-</Configuration>
+            <!--     <AppenderRef ref="Console"/> -->
+                <AppenderRef ref="File"/>
+            </Root>
+        </Loggers>
+    </Configuration>

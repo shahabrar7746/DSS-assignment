@@ -1,5 +1,8 @@
 package org.assignment.queries;
 
+import org.assignment.entities.Customer;
+import org.assignment.entities.Product;
+
 public final class OrderQueries {
     private static final String SELECT_BASE_QUERY = " SELECT * FROM orders ";
     private static final String     DELETE_BASE_QUERY = " DELETE FROM orders ";
@@ -45,8 +48,8 @@ public final class OrderQueries {
     public static String deliveredOrderQuery(){
         return "SELECT orders.* FROM customer, orders WHERE customer.customer_id = orders.customer_id AND orders.status = 'DELIVERED'";
     }
-    public static String getOrdersByProductName(){
-        return "SELECT orders.* FROM orders, product WHERE orders.product_id = product.product_id AND product.product_name = ?";
+    public static String getOrdersByProductAndCustomer(){
+        return "SELECT * FROM orders WHERE orders.customer_id = ? AND orders.product_id = ?";
     }
 
 }

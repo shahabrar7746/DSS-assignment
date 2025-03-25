@@ -8,15 +8,15 @@ import java.util.stream.Stream;
 
 public class BookDaoImpl implements repository.dao.BookDao {
 
-    private  List<Book> bookDb = new LinkedList<>();
+    private final List<Book> bookDb = new ArrayList<>();
     private static BookDaoImpl bookInstance;
 
 
     private BookDaoImpl(){};
 
     public static BookDaoImpl getBookInstance(){
-        if(Objects.isNull(bookInstance)){
-           return new BookDaoImpl();
+        if(bookInstance == null){
+          bookInstance = new BookDaoImpl();
         }
         return bookInstance;
     }
@@ -32,6 +32,7 @@ public class BookDaoImpl implements repository.dao.BookDao {
                 bookDb.add(book);
                 bookData = book;
             }
+
         } catch (Exception e) {
             throw new Exception(e);
         }

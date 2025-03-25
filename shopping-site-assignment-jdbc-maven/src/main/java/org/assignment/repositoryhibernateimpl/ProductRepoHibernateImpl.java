@@ -28,8 +28,9 @@ public class ProductRepoHibernateImpl implements ProductRepository {
 
     @Override
     public Optional<Product> fetchProductByName(String name) throws SQLException, NoProductFoundException {
-        String jpql = BASE_SELECTION_QUERY + " WHERE p.name :name";
+        String jpql = BASE_SELECTION_QUERY + " WHERE p.name =:name";
         TypedQuery<Product> query = manager.createQuery(jpql, Product.class);
+        query.setParameter("name", name);
         Product product = query.getSingleResultOrNull();
         return product == null ? Optional.empty() : Optional.of(product);
     }

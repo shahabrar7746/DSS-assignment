@@ -33,8 +33,10 @@ public class Order implements Serializable {
                 ColorCodes.RESET;
     }
     @JoinColumn(name = "seller_id")
+    @ManyToOne
     private Seller seller;
     @Enumerated(EnumType.STRING)
+    @Column(name = "currency")
     private Currency currency;
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -49,7 +51,9 @@ public class Order implements Serializable {
     @Column(name = "order_id")
     private Long id;
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private OrderStatus status;
+@Column(name = "ordered_on")
     private LocalDateTime orderedOn;
 
 
