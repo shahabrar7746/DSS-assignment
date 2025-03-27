@@ -13,7 +13,15 @@ public class ProductRepoHibernateImpl implements ProductRepository {
     private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("myPersistenceUnit");
     private final EntityManager manager = factory.createEntityManager();
     private final String BASE_SELECTION_QUERY = " SELECT p FROM Product p ";
-
+private static ProductRepoHibernateImpl singletonInstance;
+private ProductRepoHibernateImpl() {}
+public static ProductRepoHibernateImpl getInstance(){
+    if(singletonInstance == null)
+    {
+        singletonInstance = new ProductRepoHibernateImpl();
+    }
+    return singletonInstance;
+}
     @Override
     public List<Product> fetchProducts() throws NoProductFoundException, SQLException {
         TypedQuery<Product> query = manager.createQuery(BASE_SELECTION_QUERY, Product.class);

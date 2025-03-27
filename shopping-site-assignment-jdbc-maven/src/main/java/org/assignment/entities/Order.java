@@ -1,10 +1,7 @@
 package org.assignment.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.assignment.enums.Currency;
 import org.assignment.enums.OrderStatus;
 import org.assignment.util.ColorCodes;
@@ -19,6 +16,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Table(name = "orders")
+@Builder
 public class Order implements Serializable {
     private double price;
     @Override
@@ -47,7 +45,7 @@ public class Order implements Serializable {
     private Product product;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "order_id")
     private Long id;
     @Enumerated(EnumType.STRING)

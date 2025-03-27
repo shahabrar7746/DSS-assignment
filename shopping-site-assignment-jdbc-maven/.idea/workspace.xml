@@ -5,81 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5405caaa-ed17-442c-bf7f-14ef15b22302" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AuthUi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/library-management-system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/library-management-system/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/library-management-system/src/entity/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/library-management-system/src/entity/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/library-management-system/src/repository/daoimpl/BookDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/library-management-system/src/repository/daoimpl/BookDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/library-management-system/src/servicesImpl/BookServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/library-management-system/src/servicesImpl/BookServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/library-management-system/src/ui/dashboard/DashBoardAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/library-management-system/src/ui/dashboard/DashBoardAdmin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/customexception/DataDeleteException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/customexception/DataDeleteException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/customexception/DataInsertException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/customexception/DataInsertException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/customexception/DataReadException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/customexception/DataReadException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/customexception/DataUpdateException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/customexception/DataUpdateException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/customexception/LoginException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/customexception/LoginException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/entity/Book.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/entity/Book.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/entity/BookBorrowed.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/entity/BookBorrowed.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/entity/BookCopy.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/entity/BookCopy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/entity/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/entity/Category.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/enums/BookCategory.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/enums/BookCategory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/enums/BookCondition.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/enums/BookCondition.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/enums/ResponseStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/enums/ResponseStatus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/enums/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/enums/Role.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/enums/Status.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/enums/Status.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/DataBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/DataBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/dao/AuthenticationDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/dao/AuthenticationDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/dao/BookDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/dao/BookDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/dao/BorrowDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/dao/BorrowDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/dao/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/dao/UserDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/AdminDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/AdminDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/AuthenticationDoaImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/AuthenticationDoaImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/BaseDaoImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/BaseDaoImp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/BookDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/BookDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/BorrowDoaImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/BorrowDoaImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/DataBaseImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/DataBaseImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/UserDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/repository/daoimpl/UserDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/AuthenticationServices.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/AuthenticationServices.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/BookService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/BookService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/BorrowedBookServices.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/BorrowedBookServices.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/LibraryServices.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/LibraryServices.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/LoginAndSignUpServices.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/LoginAndSignUpServices.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/UserServices.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/server/UserServices.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/servicesImpl/AuthenticationServicesImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/servicesImpl/AuthenticationServicesImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/servicesImpl/BookServicesImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/servicesImpl/BookServicesImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/servicesImpl/BorrowedBookServicesImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/servicesImpl/BorrowedBookServicesImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/servicesImpl/DataBaseServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/servicesImpl/DataBaseServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/servicesImpl/UserServicesimpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/servicesImpl/UserServicesimpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/ui/AbstractUi.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/ui/AbstractUi.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/ui/Home.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/ui/Home.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/ui/dashboard/DashBoardAdmin.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/ui/dashboard/DashBoardAdmin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/ui/dashboard/DashboardUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/ui/dashboard/DashboardUser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/ui/dashboard/UserFunctionality.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/ui/dashboard/UserFunctionality.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/utils/RandomID.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/utils/RandomID.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/utils/Response.class" beforeDir="false" afterPath="$PROJECT_DIR$/../library-management-system 4/out/production/library-management-system 4/utils/Response.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/CartItems.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/CartService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/wrappers/ProductWrappers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/logfile.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/logfile.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/queries/OrderQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/OrderQueries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/enums/ResponseStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/ResponseStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/CustomerRepoHibernateImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/CustomerRepoHibernateImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/OrderRepoHibernateImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/OrderRepoHibernateImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/ProductRepoHibernateImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/ProductRepoHibernateImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/OrderRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/OrderRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/OrderCollectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/OrderCollectionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/SellerRepoHibernateImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/SellerRepoHibernateImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/SellerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/SellerRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/resources/log4j2.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/services/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/AuthenticationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/CustomerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AuthUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AuthUi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/UI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/util/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/Response.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/util/ResultSetUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/ResultSetUtility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +44,7 @@
       <list>
         <option value="package-info" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -121,7 +75,7 @@
     &quot;Application.UI.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;hibernate-dev&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/a.shaha/IdeaProjects/DSS-assignment/library-management-system 4&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/a.shaha/IdeaProjects/shopping-site-assignment-jdbc-maven/src/main/java/org/pract/Main.java&quot;,
@@ -139,7 +93,20 @@
       <recent name="C:\Users\a.shaha\IdeaProjects\DSS-assignment\shopping-site-assignment-jdbc-maven\src\main\resources\META-INF" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Driver">
+    <configuration name="Driver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.assignment.Driver" />
+      <module name="shopping-site-assignment-jdbc-maven" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.assignment.Main" />
       <module name="shopping-site-assignment-jdbc-maven" />
@@ -155,6 +122,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Driver" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -175,18 +143,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
-          <line>274</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
-          <line>287</line>
+          <line>173</line>
           <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
-          <line>289</line>
-          <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/queries/ProductQueries.java</url>
@@ -220,37 +178,95 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/Driver.java</url>
-          <line>60</line>
+          <line>59</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/Driver.java</url>
-          <line>50</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java</url>
-          <line>100</line>
+          <line>110</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/AuthUi.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="30" />
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>184</line>
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java</url>
-          <line>69</line>
-          <option name="timeStamp" value="33" />
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java</url>
+          <line>127</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>162</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java</url>
+          <line>132</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>252</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/OrderRepoHibernateImpl.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>242</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/CustomerRepoHibernateImpl.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/CustomerRepoHibernateImpl.java</url>
+          <line>81</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>260</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>253</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java</url>
+          <line>259</line>
+          <properties>
+            <option name="lambda-ordinal" value="-1" />
+          </properties>
+          <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/services/AuthenticationService.java</url>
-          <line>17</line>
-          <properties class="org.assignment.services.AuthenticationService" method="login">
+          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/services/CustomerService.java</url>
+          <line>27</line>
+          <properties class="org.assignment.services.CustomerService" method="orderFromCart">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="25" />
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

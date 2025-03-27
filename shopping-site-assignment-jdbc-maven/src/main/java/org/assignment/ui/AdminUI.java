@@ -5,6 +5,7 @@ import org.assignment.enums.ProductType;
 import org.assignment.enums.ResponseStatus;
 import org.assignment.enums.Roles;
 
+import org.assignment.exceptions.CustomerNotFoundException;
 import org.assignment.exceptions.UnauthorizedOperationException;
 
 import org.assignment.services.AdminService;
@@ -24,18 +25,14 @@ public class AdminUI extends UI {
     private final AdminService service = AdminService.getInstance();
     private final CustomerService customerService = CustomerService.getInstance();
 
-    public AdminUI()  {
+    public AdminUI() {
     }
-
 
 
     public void initAdminServices(Customer admin) {
         boolean isSuperAdmin = Objects.equals(admin.getRole(), Roles.SUPER_ADMIN);
-//        String msg = isSuperAdmin ? "akjakjnadna"  : "jhabhdjbadba"; // TODO
-//        System.out.println(msg);
         String message = isSuperAdmin ? "SUPER_ADMIN" : "ADMIN";
-
-        System.out.println(ColorCodes.GREEN + "*********WELCOME-"+ message + "****************" + ColorCodes.RESET);
+        System.out.println(ColorCodes.GREEN + "*********WELCOME-" + message + "****************" + ColorCodes.RESET);
 
         String operation = "";
         while (!operation.equalsIgnoreCase("back")) {
@@ -67,7 +64,7 @@ public class AdminUI extends UI {
                     resp = service.getAllProdcuts();
                     break;
                 case "3":
-                    resp = service.getCustomerById();
+                    resp = getCustomerById();
                     break;
                 case "4":
                     resp = service.getAllDeliveredOrders();
@@ -79,13 +76,13 @@ public class AdminUI extends UI {
                     resp = service.fetchAllAdmins();
                     break;
                 case "7":
-                    resp = service.deleteCustomer(isSuperAdmin);
+                    resp = deleteCustomer();
                     break;
                 case "8":
-                    resp = grantAccess(isSuperAdmin);
+                    resp = grantAccess();
                     break;
                 case "9":
-                    resp = revokeAccess(isSuperAdmin);
+                    resp = revokeAccess();
                     break;
                 case "back", "BACK":
                     resp = new Response("Going back");
@@ -95,10 +92,10 @@ public class AdminUI extends UI {
                     System.err.println();
                     resp = new Response(null, "Unsupported operation");
             }
-            if(resp.getStatus() == ResponseStatus.ERROR){
+            if (resp.getStatus() == ResponseStatus.ERROR) {
                 System.out.println(ColorCodes.RED + "ERROR : " + resp.getError() + ColorCodes.RESET);
-            }else if(resp.getStatus() == ResponseStatus.SUCCESSFUL) {
-                System.out.println(ColorCodes.RED + response  + resp.getData() + ColorCodes.RESET);
+            } else if (resp.getStatus() == ResponseStatus.SUCCESSFUL) {
+                System.out.println(ColorCodes.RED + response + resp.getData() + ColorCodes.RESET);
             }
             if (isExit) {
                 break;
@@ -109,6 +106,7 @@ public class AdminUI extends UI {
 
     /**
      * Used to check if the thread has authority to access below methods.
+     *
      * @param isSuperAdmin used to indicate whether the user can access the requested service or not.
      * @throws UnauthorizedOperationException if the user does not have permission to access the service.
      */
@@ -117,8 +115,8 @@ public class AdminUI extends UI {
             throw new UnauthorizedOperationException("Your are not authorized to access this service");
         }
     }
-    private Response getProductByType()
-    {
+
+    private Response getProductByType() {
 
         String operation;
         Response response = null;
@@ -153,63 +151,56 @@ public class AdminUI extends UI {
         }
         return response;//returns list of product of same type.
     }
-    private  Response grantAccess(boolean superAdmin){
-        if(! superAdmin){
-            return new Response(null, "Action not allowed");
-        }
+
+    private Response grantAccess() {
         Response customerResponse = service.getAllCustomer();
-        if(customerResponse.getStatus() == ResponseStatus.ERROR){
+        if (customerResponse.getStatus() == ResponseStatus.ERROR) {
             return customerResponse;
         }
-        System.out.println(ColorCodes.BLUE + "Admins : " + customerResponse.getData()  + ColorCodes.RESET);
+        System.out.println(ColorCodes.BLUE + "Admins : " + customerResponse.getData() + ColorCodes.RESET);
         System.out.print("Enter Customer id to whom you want to grant access to : ");
         String cid = sc.nextLine();
         Response isCustomer = service.customerExists(Long.valueOf(cid));
-        if(isCustomer.getStatus() == ResponseStatus.ERROR){
+        if (isCustomer.getStatus() == ResponseStatus.ERROR) {
             return isCustomer;
         }
-        boolean condition = (Boolean) isCustomer.getData();
+        boolean condition = (boolean) isCustomer.getData();
         int count = 5;
-        while(! condition && count-- > 0){
+        while (!condition && count-- > 0) {
             System.out.println("Wrong customer id, enter correct customer id");
             System.out.print(ColorCodes.BLUE + "Enter Customer id to whom you want to grant access to : " + ColorCodes.RESET);
             cid = sc.nextLine();
             isCustomer = service.customerExists(Long.valueOf(cid));
-            if(isCustomer.getStatus() == ResponseStatus.ERROR){
+            if (isCustomer.getStatus() == ResponseStatus.ERROR) {
                 return isCustomer;
             }
             condition = (boolean) isCustomer.getData();
         }
-        if(count == 0){
-            return new Response(null, "try limit exceed");
-        }
         Response authResponse = authenticate();
-       return authResponse.getStatus() == ResponseStatus.ERROR ? authResponse : service.grantAccess(Long.valueOf(cid));
+        return authResponse.getStatus() == ResponseStatus.ERROR ? authResponse : service.grantAccess(Long.valueOf(cid));
     }
-    private Response authenticate(){
+
+    private Response authenticate() {
         System.out.println("please provide the super admin password for further action : ");
         String password = sc.nextLine();
         int count = 5;
         Response response = null;
-        while(! service.authenticateSuperAdmin(password) && count-- > 0){
+        while (!service.authenticateSuperAdmin(password) && count-- > 0) {
             System.out.println("Incorrect password please try again...");
             password = sc.nextLine();
         }
-        if(! service.authenticateSuperAdmin(password)){
+        if (!service.authenticateSuperAdmin(password)) {
             response = new Response(null, "Incorrect password");
         }
-        if(response == null && count == 0){
+        if (response == null && count == 0) {
             response = new Response(null, "try limit exceed");
         }
         return response == null ? new Response("Authenticated") : response;
     }
-    private Response revokeAccess(boolean superAdmin)
-    {
-        if (! superAdmin) {//checks if the operation performed by superadmin or not.
-            return new Response(null, "Your are not authorized to access this service");
-        }
+
+    private Response revokeAccess() {
         Response admins = service.fetchAllAdmins();
-        if(admins.getStatus() == ResponseStatus.ERROR){
+        if (admins.getStatus() == ResponseStatus.ERROR) {
             return admins;
         }
         System.out.println(ColorCodes.BLUE + "Admins : " + admins.getData() + ColorCodes.RESET);
@@ -217,25 +208,49 @@ public class AdminUI extends UI {
         String cid = sc.nextLine();
         Optional<Customer> customer = Optional.empty();//fetches admins based on id.
         Response adminResponse = service.isAdmin(Long.valueOf(cid));
-        if(adminResponse.getStatus() == ResponseStatus.ERROR){
+        if (adminResponse.getStatus() == ResponseStatus.ERROR) {
             return adminResponse;
         }
-boolean condition = (boolean) adminResponse.getData();
-        int count = 3;//sets try limit.
-        while (! condition && count-- >= 0) {
+        boolean condition = (boolean) adminResponse.getData();
+        while (!condition ) {
             System.out.println("Wrong customer id, enter correct customer id");
             System.out.print("Enter Customer id to whom you want to revoke access to : ");
             cid = sc.nextLine();//keeps on requesting id if no object is found for the previous id, keeps on going until count is not equals to 0 or less than 0
             admins = service.isAdmin(Long.valueOf(cid));
-            if(admins.getStatus() == ResponseStatus.ERROR){
+            if (admins.getStatus() == ResponseStatus.ERROR) {
                 return admins;
             }
             condition = (Boolean) admins.getData();
         }
-        if(count == 0){
-            return new Response(null, "try limit exceed");
-        }
+
         Response authResponse = authenticate();
         return authResponse.getStatus() == ResponseStatus.ERROR ? authResponse : service.revokeAccess(Long.valueOf(cid));
+    }
+
+    private Response getCustomerById() {
+        Response response = service.getAllCustomer();
+        if (response.getStatus() == ResponseStatus.ERROR) {
+            return response;
+        }
+        List<Customer> data = (List<Customer>) response.getData();
+        if (data.isEmpty()) {
+            return new Response(null, "No customers are there");
+        }
+        Optional<Customer> customer = Optional.empty();
+        System.out.print("Please provide the id of Customer : ");
+        Long id = sc.nextLong();
+        return service.getCustomerById(id);
+    }
+
+    private Response deleteCustomer() {
+        List<Customer> allCustomer = null;
+        Response customerResponse = service.getAllCustomer();
+        if (customerResponse.getStatus() == ResponseStatus.ERROR) {
+            return customerResponse;
+        }
+        System.out.println(ColorCodes.BLUE + "Customers : " + allCustomer + ColorCodes.RESET);
+        System.out.print("Provide customer id : ");
+        Long cid = sc.nextLong();
+        return service.deleteCustomer(cid);
     }
 }

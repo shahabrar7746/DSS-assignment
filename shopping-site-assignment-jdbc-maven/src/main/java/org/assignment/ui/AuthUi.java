@@ -2,22 +2,14 @@ package org.assignment.ui;
 
 import org.assignment.entities.Customer;
 import org.assignment.enums.ResponseStatus;
-import org.assignment.enums.Roles;
-import org.assignment.exceptions.UnauthorizedOperationException;
 
-import org.assignment.serviceimlementation.AuthenticationServiceImplementation;
-import org.assignment.serviceimlementation.CustomerServiceImplementation;
 import org.assignment.services.AuthenticationService;
 import org.assignment.services.CustomerService;
 import org.assignment.util.ColorCodes;
 import org.assignment.util.FormValidation;
-import org.assignment.util.LogUtil;
-import org.assignment.util.Response;
-import org.hibernate.HibernateException;
 
-import java.sql.SQLException;
-import java.text.Normalizer;
-import java.time.LocalDateTime;
+import org.assignment.util.Response;
+
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -33,14 +25,7 @@ public class AuthUi extends UI {
 
     private static AuthUi singletonObject;
 
-    private AuthUi() {
-    }
-
-    public static AuthUi getInstance() {
-        if (singletonObject == null) {
-            singletonObject = new AuthUi();
-        }
-        return singletonObject;
+    public AuthUi() {
     }
 
     public Response login() {

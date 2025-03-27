@@ -17,7 +17,7 @@ public class SellerRepositoryImpl implements SellerRepository {
 
     private Connection con;
 
-    public SellerRepositoryImpl() { // TODO update constructor remove unnecessary initialization create initMethod for initilizing instance
+    public SellerRepositoryImpl() {
         init();
     }
 

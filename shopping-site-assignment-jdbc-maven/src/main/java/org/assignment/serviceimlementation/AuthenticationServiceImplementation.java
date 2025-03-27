@@ -54,17 +54,18 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
 
     public void init() {
         this.customerService = CustomerService.getInstance();
-        this.customerRepository = new CustomerRepoHibernateImpl();
+        this.customerRepository = CustomerRepoHibernateImpl.getInstance();
         this.sc = new Scanner(System.in);
     }
+
     @Override
     public Response login(String email, String pasword) {
         Response response = null;
         if (response == null) {
             try {
-            Optional<Customer> customer = customerRepository.fetchByEmail(email);
-            if (customer.isPresent()) {
-                Customer c = customer.get();
+                Optional<Customer> customer = customerRepository.fetchByEmail(email);
+                if (customer.isPresent()) {
+                    Customer c = customer.get();
                     if (c.getRole() == Roles.ADMIN || c.getRole() == Roles.SUPER_ADMIN) {
                         UI adminUI = new AdminUI();
                         adminUI.initAdminServices(c);
@@ -90,18 +91,27 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
      */
     @Override
     public Response save(String email, String password, String address, String name) {
-       Response response = null;
+        Response response = null;
         try {
             Optional<Customer> optionalCustomer = customerRepository.fetchByEmail(email);
             if (optionalCustomer.isPresent()) {
-               response = new Response(null, "User already exists");
+                response = new Response(null, "User already exists");
             }
-            if(response == null) {
-                Customer newCustomer = new Customer(name, email, password, address, LocalDateTime.now(), Roles.CUSTOMER);
+            if (response == null) {
+                Customer newCustomer = Customer.builder()
+                        .role(Roles.CUSTOMER)
+                        .address(address)
+                        .email(email)
+                        .name(name)
+                        .password(password)
+                        .registeredOn(LocalDateTime.now())
+                        .build();
+
+                //new Customer(name, email, password, address, LocalDateTime.now(), Roles.CUSTOMER);
                 customerRepository.addCustomer(newCustomer);
                 response = new Response(newCustomer);
             }
-        }catch (SQLException | PersistenceException e){
+        } catch (SQLException | PersistenceException e) {
             response = LogUtil.logError(e.getStackTrace());
         }
         return response;

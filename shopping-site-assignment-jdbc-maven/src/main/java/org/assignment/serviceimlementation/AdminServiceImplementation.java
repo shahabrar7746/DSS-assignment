@@ -1,6 +1,6 @@
 package org.assignment.serviceimlementation;
 
-import lombok.extern.java.Log;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.assignment.entities.Customer;
@@ -16,13 +16,10 @@ import org.assignment.exceptions.*;
 import org.assignment.repository.interfaces.OrderRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 
-
 import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
 import org.assignment.repositoryhibernateimpl.OrderRepoHibernateImpl;
 import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
-import org.assignment.repositoryjdbcimpl.CustomerRepositoryImpl;
-import org.assignment.repositoryjdbcimpl.OrderRepositoryImpl;
-import org.assignment.repositoryjdbcimpl.ProductRepositoryImpl;
+
 import org.assignment.services.AdminService;
 
 import org.assignment.repository.interfaces.CustomerRepository;
@@ -46,10 +43,10 @@ public class AdminServiceImplementation implements AdminService {
         init();
     }
     private void init(){
-        this.productRepository = new ProductRepoHibernateImpl();
-        this.customerRepository = new CustomerRepoHibernateImpl();
+        this.productRepository =  ProductRepoHibernateImpl.getInstance();
+        this.customerRepository = CustomerRepoHibernateImpl.getInstance();
         this.sc = new Scanner(System.in);
-        this.orderRepository = new OrderRepoHibernateImpl();
+        this.orderRepository = OrderRepoHibernateImpl.getInstance();
     }
     private static AdminServiceImplementation service;
 
@@ -61,26 +58,14 @@ public class AdminServiceImplementation implements AdminService {
     }
 
     @Override
-    public Response getCustomerById() {
-
-        Response response = getAllCustomer();
-        if(response.getStatus() == ResponseStatus.ERROR){
-            return response;
-        }
-        List<Customer> data = (List<Customer>) response.getData();
-        if (data.isEmpty()) {
-            return new Response(null, "No customers are there");
-        }
-
-        Optional<Customer> customer = Optional.empty();
-        System.out.print("Please provide the id of Customer : ");
-        Long id = sc.nextLong();
+    public Response getCustomerById(Long id) {
+Optional<Customer> customer = null;
         try {
             customer = customerRepository.fetchById(id);
+        }catch (SQLException e) {
+            return  LogUtil.logError(e.getLocalizedMessage());
         } catch (CustomerNotFoundException  e) {
             return new Response(null, e.getLocalizedMessage());
-        } catch (SQLException e) {
-            return  LogUtil.logError(e.getLocalizedMessage());
         }
         if ( customer.isEmpty() || customer.get().getRole() != Roles.CUSTOMER) {
             return new Response(null, "No customer found");
@@ -92,7 +77,11 @@ public class AdminServiceImplementation implements AdminService {
     public Response getAllCustomer() {
         List<Customer> allCustomer = null;
         try {
-            allCustomer = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
+            allCustomer = customerRepository
+                    .getCustomers()
+                    .stream()
+                    .filter(c -> c.getRole() == Roles.CUSTOMER)
+                    .toList();
         } catch (CustomerNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
         } catch (SQLException e) {
@@ -100,7 +89,7 @@ public class AdminServiceImplementation implements AdminService {
 
         }
         if (allCustomer.isEmpty()) {
-            return new Response(null, "Customer main.repository is empty"); //executed if no customer object is found
+            return new Response(null, "Customer main repository is empty"); //executed if no customer object is found
         }
         return new Response(allCustomer);// returns all the customer.
     }
@@ -139,7 +128,9 @@ public class AdminServiceImplementation implements AdminService {
         } catch (SQLException e) {
             return LogUtil.logError(e.getStackTrace());
         }
-        Map<ProductType, List<Product>> map = products.stream().collect(Collectors.groupingByConcurrent(Product::getType));
+        Map<ProductType, List<Product>> map = products
+                .stream()
+                .collect(Collectors.groupingByConcurrent(Product::getType));
         if (!map.containsKey(type)) {
             return new Response(null, "No product found for this category"); // throws exception if no product is found for the provided type.
         }
@@ -202,9 +193,6 @@ public class AdminServiceImplementation implements AdminService {
         }
         return  response;
     }
-
-
-
     /**
      * Below method requests for super admin password for variable 'count' times which is default set to 6.
      * If number of tries exceeds the default set count then 'TrialLimitExceedException' exception is thrown.
@@ -240,37 +228,17 @@ public class AdminServiceImplementation implements AdminService {
     }
 
     @Override
-    public Response deleteCustomer(boolean isAuthorized) {//TODO
-        if (!isAuthorized) {//checks if the operation performed by superadmin or not.
-            return new Response(null, "Your are not authorized to access this service");
-        }
-        List<Customer> allCustomer = null;
-        try {
-
-            allCustomer = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.CUSTOMER).toList();
-            if (allCustomer.isEmpty()) {
-                return new Response(null, "No customers are present");
-            }
-        } catch (CustomerNotFoundException e) {
-            return  new Response(null, e.getLocalizedMessage());
-        }catch (SQLException e){
-            return  LogUtil.logError(e.getLocalizedMessage());
-        }
-
-        System.out.println(ColorCodes.BLUE + "Customers : " + allCustomer + ColorCodes.RESET);
-        System.out.print("Provide customer id : ");
-        Long cid = sc.nextLong();
+    public Response deleteCustomer(Long cid) {
         try {
             Optional<Customer> customer = customerRepository.fetchById(cid);//fetch customer by provided id.
             if (customer.isEmpty() || customer.get().getRole() != Roles.CUSTOMER) {
                 return new Response(null, "No Customer object found");
             }
-
-            if (authenticateSuperAdmin("")) { //autheticates befores performing critical section. on any negative scenario a exception is thrown. or else true.
-                customerRepository.removeCustomer(customer.get());//critical section.
-
-            }
-        } catch (CustomerNotFoundException | SQLException e) {
+            customerRepository.removeCustomer(customer.get());//critical section.
+        }catch (SQLException e){
+            return LogUtil.logError(e.getStackTrace());
+        }
+        catch (CustomerNotFoundException e) {
             return  LogUtil.logError(e.getLocalizedMessage());
         }
         return new Response("Customer deleted");
@@ -280,7 +248,10 @@ public class AdminServiceImplementation implements AdminService {
     public Response fetchAllAdmins() {//fetches all admins excluding super admin and customer.
         List<Customer> admins = new ArrayList<>();
         try {
-            admins = customerRepository.getCustomers().stream().filter(c -> c.getRole() == Roles.ADMIN).toList();
+            admins = customerRepository.getCustomers()
+                    .stream()
+                    .filter(c -> c.getRole() == Roles.ADMIN)
+                    .toList();
             if (admins.isEmpty()) {
                 return new Response(null, "No admin found");//throws NoAdminFoundException if no admin found CustomerRepository.
             }
@@ -292,6 +263,5 @@ public class AdminServiceImplementation implements AdminService {
         }
         return new Response(admins);//returns list of admins if any found.
     }
-
 
 }

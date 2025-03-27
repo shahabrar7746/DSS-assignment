@@ -16,9 +16,20 @@ public class CustomerRepoHibernateImpl implements CustomerRepository {
     private final EntityTransaction transaction = manager.getTransaction();
     private final String BASE_SELECTION_QUERY = " SELECT c FROM Customer c ";
 
+    private CustomerRepoHibernateImpl() {
+    }
+
+    private static CustomerRepoHibernateImpl singletonInstance;
+
+    public static CustomerRepoHibernateImpl getInstance() {
+        if (singletonInstance == null) {
+            singletonInstance = new CustomerRepoHibernateImpl();
+        }
+        return singletonInstance;
+    }
+
     @Override
     public List<Customer> getCustomers() throws CustomerNotFoundException, SQLException {
-
         TypedQuery<Customer> query = manager.createQuery(BASE_SELECTION_QUERY, Customer.class);
         return query.getResultList();
     }
@@ -44,7 +55,11 @@ public class CustomerRepoHibernateImpl implements CustomerRepository {
         String jpql = BASE_SELECTION_QUERY + " WHERE c.email = :email";
         TypedQuery<Customer> query = manager.createQuery(jpql, Customer.class);
         query.setParameter("email", email);
+
         Customer data = query.getSingleResultOrNull();
+        if (data != null) {
+            manager.detach(data);
+        }
         return data == null ? Optional.empty() : Optional.of(data);
     }
 

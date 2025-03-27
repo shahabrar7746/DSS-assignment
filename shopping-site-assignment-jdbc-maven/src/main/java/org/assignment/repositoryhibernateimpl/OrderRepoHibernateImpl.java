@@ -20,7 +20,16 @@ public class OrderRepoHibernateImpl implements OrderRepository {
     private final EntityManager manager = factory.createEntityManager();
     private final EntityTransaction transaction = manager.getTransaction();
     private final String BASE_SELECTION_QUERY = "SELECT o FROM Order o ";
-private final CustomerRepository customerRepository = new CustomerRepoHibernateImpl();
+private final CustomerRepository customerRepository = CustomerRepoHibernateImpl.getInstance();
+private static OrderRepoHibernateImpl singletonInstance;
+private OrderRepoHibernateImpl(){}
+public static OrderRepoHibernateImpl getInstance()
+{
+    if(singletonInstance == null){
+        singletonInstance = new OrderRepoHibernateImpl();
+    }
+    return singletonInstance;
+}
     @Override
     public List<Order> getAllOrders() throws SQLException, CustomerNotFoundException, NoProductFoundException {
         TypedQuery<Order> query = manager.createQuery(BASE_SELECTION_QUERY, Order.class);

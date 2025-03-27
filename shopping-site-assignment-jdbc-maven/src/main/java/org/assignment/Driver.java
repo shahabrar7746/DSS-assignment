@@ -23,16 +23,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Driver {
-    //  private static  final Logger logger = LoggerFactory.getLogger(Driver.class);
     public static void main(String[] args) throws SQLException, NoProductFoundException {
          ProductRepository productRepository = null;
         AuthUi ui = null;
     try {
-         productRepository = new ProductRepoHibernateImpl();
+         productRepository =  ProductRepoHibernateImpl.getInstance();
 
         System.out.println(ColorCodes.GREEN + "***********WELCOME*************" + ColorCodes.RESET);
         System.out.println(ColorCodes.BLUE + "Products : " + productRepository.fetchProducts() + ColorCodes.RESET);
-        ui = AuthUi.getInstance();
+        ui = new AuthUi();
     }catch (HibernateException e){
         LogUtil.logError(e.getStackTrace());
     }
@@ -59,6 +58,7 @@ public class Driver {
                 }
             } catch (Exception e) {
                 System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
+                e.printStackTrace();
             }
         }
         if(productRepository == null){

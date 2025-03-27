@@ -1,52 +1,55 @@
 package org.assignment.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.assignment.enums.Roles;
 
 import org.assignment.util.ColorCodes;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "customer")
 public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private Long id;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "password")
     private String password;
 
     @Column(name = "name")
     private String name;
+
     @Column(name = "address")
     private String address;
 
     @Column(name = "registered_on")
     private LocalDateTime registeredOn;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Roles role;
 
+@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "customer", cascade =  {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+private List<CartItems> cart;
 
     public Customer(String name, String email, String password, String address, LocalDateTime registeredOn, Roles role) {
-
         this.name = name;
         this.password = password;
         this.email = email;
         this.address = address;
-        this.id = id;
         this.registeredOn = registeredOn;
         this.role = role;
     }

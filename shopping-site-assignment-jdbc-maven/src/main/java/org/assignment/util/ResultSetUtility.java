@@ -26,9 +26,9 @@ import java.sql.Timestamp;
 import java.util.*;
 
 public final class ResultSetUtility {
-private static CustomerRepository  customerRepository = new CustomerRepoHibernateImpl();
-private  static SellerRepository   sellerRepository = new SellerRepoHibernateImpl();
-private static ProductRepository productRepository = new ProductRepoHibernateImpl();
+private static CustomerRepository  customerRepository =  CustomerRepoHibernateImpl.getInstance();
+private  static SellerRepository   sellerRepository =  SellerRepoHibernateImpl.getInstance();
+private static ProductRepository productRepository =  ProductRepoHibernateImpl.getInstance();
 
 
 
@@ -80,7 +80,7 @@ List<Customer> customers = new ArrayList<>();
         while(set.next()){
             Long pid = set.getLong("product_id");
             double price = set.getDouble("price");
-            String pName = set.getString("product_name"); // TODO camelCase
+            String pName = set.getString("product_name");
             Currency currency = Currency.valueOf(set.getString("currency"));
             ProductType type = ProductType.valueOf(set.getString("product_type"));
 //            products.add(new Product(pid,pName,currency,price,type));

@@ -18,15 +18,9 @@ public interface AdminService {
      * @see #getAllCustomer()
      */
 
-    Response getCustomerById();
+    Response getCustomerById(Long id);
 
-    /**
-     * Fetches all customer from main.repository excluding customer with admin authority.
-     *
-     * @return List of Customer from main.repository excluding admins and super admins.
-     * @throws CustomerNotFoundException if no customer object is found inside repositry.
-     * @see #getCustomerById()
-     */
+
     Response getAllProdcuts();
 
     Response getAllCustomer();
@@ -83,7 +77,7 @@ public interface AdminService {
      * @throws UnauthorizedOperationException if not authorized or called by any other entity except super admin.
      */
 
-    Response deleteCustomer(boolean isAuthorized);
+    Response deleteCustomer(Long cid);
 
     /**
      * Used to fetch all admins from main.repository.

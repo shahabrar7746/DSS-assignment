@@ -36,7 +36,11 @@ private String error;
         Response response = (Response) object;
         return status == response.status;
     }
-
+public Response(ResponseStatus status, Object data, String error){
+        this.status = status;
+        this.error = error;
+        this.data = data;
+}
     @Override
     public int hashCode() {
         return Objects.hashCode(status);

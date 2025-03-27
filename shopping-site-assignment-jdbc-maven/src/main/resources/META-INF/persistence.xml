@@ -5,22 +5,23 @@
         <class>org.assignment.entities.Order</class>
         <class>org.assignment.entities.Product</class>
         <class>org.assignment.entities.Customer</class>
+        <class>org.assignment.entities.CartItems</class>
         <properties>
-
+<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="false"/>
-            <property name="hibernate.transaction.jta.platform" value="hibernate.jpa.HibernatePersistenceProvider"/>
+
             <!-- JDBC URL -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.16.1.195:5331/dbhdemo"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://172.16.1.195:5331/dbhdemo"/>
 
             <!-- JDBC username -->
-            <property name="javax.persistence.jdbc.user" value="dbhuser"/>
+            <property name="jakarta.persistence.jdbc.user" value="dbhuser"/>
 
             <!-- JDBC password -->
-            <property name="javax.persistence.jdbc.password" value="Fy2aWdXt"/>
+            <property name="jakarta.persistence.jdbc.password" value="Fy2aWdXt"/>
 
             <!-- JDBC driver class -->
-            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
 
             <!-- Hibernate properties -->
 
