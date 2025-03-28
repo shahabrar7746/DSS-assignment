@@ -45,7 +45,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         String query = CustomerQueries.getCustomerOrAdminByColumn(columns, "AND");
         PreparedStatement statement = con.prepareStatement(query);
         statement.setLong(1, id);
-        statement.setObject(2, Roles.CUSTOMER, Types.OTHER);
+        statement.setObject(2, Roles.ADMIN, Types.OTHER);
         List<Customer> customer =  ResultSetUtility.getCustomersFromResultSet(statement.executeQuery());
         return customer.isEmpty() ? Optional.empty() : Optional.of(customer.get(0));
     }
