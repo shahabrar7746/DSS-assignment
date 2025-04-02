@@ -14,15 +14,7 @@ import java.util.Optional;
 public class SellerRepoHibernateImpl implements SellerRepository {
     private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("myPersistenceUnit");
     private final EntityManager manager = factory.createEntityManager();
-   private final String BASE_SELECTION_QUERY = " SELECT s FROM Seller s ";
-   private static SellerRepoHibernateImpl singletonInstance;
-   private SellerRepoHibernateImpl(){}
-   public static SellerRepoHibernateImpl getInstance(){
-       if(singletonInstance == null){
-           singletonInstance = new SellerRepoHibernateImpl();
-       }
-       return singletonInstance;
-   }
+   private static final String BASE_SELECTION_QUERY = " SELECT s FROM Seller s ";
     @Override
     public List<Seller> fetchSellers() throws SQLException {
         TypedQuery<Seller> query = manager.createQuery(BASE_SELECTION_QUERY, Seller.class);

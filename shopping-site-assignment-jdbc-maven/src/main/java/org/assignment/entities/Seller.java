@@ -1,9 +1,7 @@
 package org.assignment.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.assignment.enums.Roles;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,6 +11,8 @@ import java.util.Objects;
 @Table(name = "seller")
 @Setter
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Seller implements Serializable {
 
@@ -53,14 +53,6 @@ private LocalDateTime registeredOn;
         table.append(String.format("| %-10s | %-15s | %-10s |\n", "ID: " + id, "Name: " + name, "Role: " + role));
         table.append("+------------+-----------------+------------+\n");
         return table.toString();
-    }
-
-
-    public Seller(Long id, String name, Roles role, LocalDateTime registeredOn){
-        this.id = id;
-        this.name = name;
-        this.role = role;
-        this.registeredOn = registeredOn;
     }
 
 }

@@ -1,9 +1,13 @@
 package org.assignment.util;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.assignment.enums.ResponseStatus;
 
 import java.util.Objects;
-
+@NoArgsConstructor
 public class Response {
     private Object data;//change to object class.
     private ResponseStatus status;//

@@ -42,17 +42,8 @@ public class Customer implements Serializable {
     @Column(name = "role")
     private Roles role;
 
-@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "customer", cascade =  {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-private List<CartItems> cart;
-
-    public Customer(String name, String email, String password, String address, LocalDateTime registeredOn, Roles role) {
-        this.name = name;
-        this.password = password;
-        this.email = email;
-        this.address = address;
-        this.registeredOn = registeredOn;
-        this.role = role;
-    }
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<CartItems> cart;
 
     @Override
     public String toString() {

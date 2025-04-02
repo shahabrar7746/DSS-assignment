@@ -14,20 +14,19 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class AuthUi extends UI {
-    private CustomerService customerService = CustomerService.getInstance();
+    private CustomerService customerService;
     private Scanner sc = new Scanner(System.in);
-    private static AuthenticationService service = AuthenticationService.getInstance();
+    private  AuthenticationService service;
+
+    public AuthUi(CustomerService customerService, AuthenticationService service) {
+        this.customerService = customerService;
+        this.service = service;
+    }
 
     @Override
     public void initAuthServices() {
 
     }
-
-    private static AuthUi singletonObject;
-
-    public AuthUi() {
-    }
-
     public Response login() {
         Response response = null;
         System.out.println(ColorCodes.GREEN + "*************LOG-IN*****************" + ColorCodes.RESET);

@@ -17,7 +17,7 @@ public abstract class UI {
 
     public void initAdminServices(Customer admin){}
     public void initAuthServices(){}
-    public void initCustomerServices(Customer customer) throws UnauthorizedOperationException, SQLException {}
+    public void initCustomerServices(Customer customer) {}
 
     public static void displayOptions(List<String> options){
         options.forEach(System.out::println);

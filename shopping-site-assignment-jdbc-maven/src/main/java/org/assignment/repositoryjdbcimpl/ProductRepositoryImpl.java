@@ -26,37 +26,30 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<Product> fetchProducts() throws NoProductFoundException, SQLException {
+    public List<Product> fetchProducts() throws SQLException {
         String query = ProductQueries.getAllProducts();
         PreparedStatement statement = con.prepareStatement(query);
         List<Product> products = ResultSetUtility.getProductsFromResultSet(statement.executeQuery());
-        if(products.isEmpty()) {
-            throw new NoProductFoundException("Product main.repository is empty");
-        }
         return products;
     }
 
     @Override
-    public Optional<Product> fetchProductById(Long id) throws SQLException, NoProductFoundException {
+    public Optional<Product> fetchProductById(Long id) throws SQLException {
+        Optional<Product> productOptional = Optional.empty();
         String query = ProductQueries.getProductsByColumns(new String[]{"PRODUCT_ID"}, null);
         PreparedStatement statement = con.prepareStatement(query);
         statement.setLong(1, id);
         List<Product> products =  ResultSetUtility.getProductsFromResultSet(statement.executeQuery());
-         if (products.isEmpty()){
-             throw new NoProductFoundException("Product not found");
-         }
-         return Optional.of(products.get(0));
+         return products.isEmpty() ? productOptional : Optional.of(products.get(0));
     }
 
     @Override
-    public Optional<Product> fetchProductByName(String name) throws SQLException, NoProductFoundException {
+    public Optional<Product> fetchProductByName(String name) throws SQLException {
+        Optional<Product> productOptional = Optional.empty();
         String query = ProductQueries.getProductsByColumns(new String[]{"PRODUCT_NAME"}, null);
         PreparedStatement statement = con.prepareStatement(query);
         statement.setString(1, name);
         List<Product> products =  ResultSetUtility.getProductsFromResultSet(statement.executeQuery());
-        if (products.isEmpty()){
-            throw new NoProductFoundException("Product not found");
-        }
-        return Optional.of(products.get(0));
+        return products.isEmpty() ? productOptional : Optional.of(products.get(0));
     }
 }

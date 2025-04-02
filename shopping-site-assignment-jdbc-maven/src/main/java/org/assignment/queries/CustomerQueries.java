@@ -1,5 +1,7 @@
 package org.assignment.queries;
 
+import static org.assignment.queries.Clauses.WHERE;
+
 public class CustomerQueries {
     private static final String SELECT_BASE_QUERY = " SELECT * FROM customer ";
     private static final String INSERT_BASE_QUERY = " INSERT INTO customer ";
@@ -7,18 +9,19 @@ public class CustomerQueries {
     private static final String DELETE_BASE_QUERY = " DELETE FROM customer ";
     private static final String EQUALS = " = ";
     private static final String PLACEHOLDER = " ? ";
-
+    private static final String SPACE = " ";
+private static final  String WHERE = "";
     public static String getAllCustomerQuery() {
         return SELECT_BASE_QUERY;
     }
 
     public static String getCustomerOrAdminByColumn(String columns[], String operation) {
         StringBuilder builder = new StringBuilder(SELECT_BASE_QUERY);
-        builder.append(Clauses.WHERE);
+        builder.append(WHERE);
         builder.append(columns[0]);
         builder.append(EQUALS).append(PLACEHOLDER);
         for (int i = 1; i < columns.length; i++) {
-            builder.append(" ").append(operation).append(" ");
+            builder.append(SPACE).append(operation).append(SPACE);
             builder.append(columns[i]);
             builder.append(EQUALS).append(PLACEHOLDER);
         }

@@ -8,18 +8,15 @@ import lombok.Setter;
 import org.assignment.enums.Currency;
 import org.assignment.enums.ProductType;
 import org.assignment.util.ColorCodes;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeRegistration;
-import org.hibernate.annotations.TypeRegistrations;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "product")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
+@Entity
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +25,8 @@ public class Product {
 
     @Column(name = "price")
     private double price;
-@Enumerated(EnumType.STRING)
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "currency")
     private Currency currency;
 
@@ -38,6 +36,18 @@ public class Product {
     @Enumerated(EnumType.STRING)
     @Column(name = "product_type")
     private ProductType type;
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        Product product = (Product) object;
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 
     @Override
     public String toString() {

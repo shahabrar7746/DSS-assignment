@@ -5,29 +5,25 @@ import org.assignment.enums.ProductType;
 import org.assignment.enums.ResponseStatus;
 import org.assignment.enums.Roles;
 
-import org.assignment.exceptions.CustomerNotFoundException;
 import org.assignment.exceptions.UnauthorizedOperationException;
 
 import org.assignment.services.AdminService;
 
-import org.assignment.serviceimlementation.AdminServiceImplementation;
-
 import org.assignment.services.CustomerService;
 import org.assignment.util.ColorCodes;
-import org.assignment.util.LogUtil;
 import org.assignment.util.Response;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public class AdminUI extends UI {
     private final Scanner sc = new Scanner(System.in);
-    private final AdminService service = AdminService.getInstance();
-    private final CustomerService customerService = CustomerService.getInstance();
+    private final AdminService service;
+    private final CustomerService customerService;
 
-    public AdminUI() {
+    public AdminUI(AdminService service, CustomerService customerService) {
+        this.service = service;
+        this.customerService = customerService;
     }
-
 
     public void initAdminServices(Customer admin) {
         boolean isSuperAdmin = Objects.equals(admin.getRole(), Roles.SUPER_ADMIN);

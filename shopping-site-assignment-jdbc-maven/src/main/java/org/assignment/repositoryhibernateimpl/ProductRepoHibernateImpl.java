@@ -2,40 +2,31 @@ package org.assignment.repositoryhibernateimpl;
 
 import jakarta.persistence.*;
 import org.assignment.entities.Product;
-import org.assignment.exceptions.NoProductFoundException;
+
 import org.assignment.repository.interfaces.ProductRepository;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public class ProductRepoHibernateImpl implements ProductRepository {
-    private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("myPersistenceUnit");
-    private final EntityManager manager = factory.createEntityManager();
-    private final String BASE_SELECTION_QUERY = " SELECT p FROM Product p ";
-private static ProductRepoHibernateImpl singletonInstance;
-private ProductRepoHibernateImpl() {}
-public static ProductRepoHibernateImpl getInstance(){
-    if(singletonInstance == null)
-    {
-        singletonInstance = new ProductRepoHibernateImpl();
-    }
-    return singletonInstance;
-}
+    private  final EntityManagerFactory factory = Persistence.createEntityManagerFactory("myPersistenceUnit");
+    private  final EntityManager manager = factory.createEntityManager();
+    private static final String BASE_SELECTION_QUERY = " SELECT p FROM Product p ";
+
     @Override
-    public List<Product> fetchProducts() throws NoProductFoundException, SQLException {
+    public List<Product> fetchProducts() {
         TypedQuery<Product> query = manager.createQuery(BASE_SELECTION_QUERY, Product.class);
         return query.getResultList();
     }
 
     @Override
-    public Optional<Product> fetchProductById(Long id) throws SQLException, NoProductFoundException {
+    public Optional<Product> fetchProductById(Long id) {
         Product product = manager.find(Product.class, id);
         return product == null ? Optional.empty() : Optional.of(product);
     }
 
     @Override
-    public Optional<Product> fetchProductByName(String name) throws SQLException, NoProductFoundException {
+    public Optional<Product> fetchProductByName(String name){
         String jpql = BASE_SELECTION_QUERY + " WHERE p.name =:name";
         TypedQuery<Product> query = manager.createQuery(jpql, Product.class);
         query.setParameter("name", name);

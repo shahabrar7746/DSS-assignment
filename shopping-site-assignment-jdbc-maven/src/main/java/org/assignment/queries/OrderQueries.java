@@ -3,29 +3,35 @@ package org.assignment.queries;
 import org.assignment.entities.Customer;
 import org.assignment.entities.Product;
 
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 public final class OrderQueries {
-    private static final String SELECT_BASE_QUERY = " SELECT * FROM orders ";
-    private static final String     DELETE_BASE_QUERY = " DELETE FROM orders ";
+    public static final String SELECT_BASE_QUERY = " SELECT * FROM orders ";
+    private static final String DELETE_BASE_QUERY = " DELETE FROM orders ";
     private static final String INSERT_BASE_QUERY = " INSERT INTO orders ";
+
     public static  String getAllOrdersQuery(){
         return SELECT_BASE_QUERY;
     }
+
+
     public  static  String getOrdersByColumns(String columns[], String operation){
         StringBuilder builder = new StringBuilder(SELECT_BASE_QUERY);
         builder.append(" WHERE ");
         builder.append(columns[0]);
         builder.append(" = ? ");
-        for(int i = 1;i<columns.length;i++) {
+        IntStream.range(1, columns.length).forEach(index -> {
             builder.append(" " + operation + " ");
-            builder.append(columns[i]);
+            builder.append(columns[index]);
             builder.append(" = ? ");
-        }
+        });
         return builder.toString();
     }
-    public static  String deleteOrderQuery(String orderIdColumnName){
+    public static  String deleteOrderQuery(String orderId){
         StringBuilder builder = new StringBuilder(DELETE_BASE_QUERY);
         builder.append(" WHERE ");
-        builder.append(orderIdColumnName);
+        builder.append(orderId);
         builder.append(" = ? ");
         return builder.toString();
     }

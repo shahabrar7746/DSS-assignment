@@ -36,10 +36,7 @@ public  class ProductCollectionRepository implements ProductRepository {
         products.add(product);
 //        products.add( new Product(id, name, currency, price, type));
     }
-    public    List<Product> fetchProducts() throws NoProductFoundException {
-        if(products.isEmpty()) {
-            throw new NoProductFoundException("Product main.repository is empty");
-        }
+    public    List<Product> fetchProducts(){
         return products;
     }
     public    Optional<Product> fetchProductById(Long id) {

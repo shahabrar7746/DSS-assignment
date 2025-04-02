@@ -14,26 +14,23 @@ import java.util.stream.Collectors;
 /**
  * Replicates functionality of database.
  */
-public  class CustomerCollectionRepository  implements CustomerRepository {
-    private   List<Customer> customers;
+public class CustomerCollectionRepository implements CustomerRepository {
+    private List<Customer> customers;
 
 
     @Override
-    public  List<Customer> getCustomers() throws CustomerNotFoundException {
-        if(customers.isEmpty()){
-            throw new CustomerNotFoundException("No customers found");
-        }
+    public List<Customer> getCustomers()  {
         return customers;
-
     }
 
     /*
      * Used to populate List of customers.
      */
     public CustomerCollectionRepository() {
-      init();
+        init();
     }
-    private void init(){
+
+    private void init() {
         this.customers = new ArrayList<>();
         addCustomer("Abrar", "superAdmin@gmail.com", "mumbai", System.getenv("SUPER_ADMIN_PASSWORD"), Roles.SUPER_ADMIN);//change to super admin after final review
         addCustomer("sam", "admin@gmail.com", "ambernath", "admin", Roles.ADMIN);
@@ -41,40 +38,45 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
     }
 
 
-    private  void addCustomer(String name, String email, String address, String password, Roles role) {
-        Customer customer = new Customer(name, email, password, address, LocalDateTime.now(), Roles.CUSTOMER);
+    private void addCustomer(String name, String email, String address, String password, Roles role) {
         long id = new Random().nextLong(0, 9000);
-        customer.setId(id);
-        customer.setRole(role);
+        Customer customer = Customer.builder()
+                .email(email)
+                .name(name)
+                .address(address)
+                .password(password)
+                .registeredOn(LocalDateTime.now())
+                .id(id)
+                .role(Roles.CUSTOMER)
+                .build();
         customers.add(customer);
     }
 
 
     @Override
-    public  Optional<Customer> fetchById(Long id) throws CustomerNotFoundException {
-        Map<Long, Customer> map = customers.stream().collect(Collectors.toConcurrentMap(Customer::getId, c -> c ));
+    public Optional<Customer> fetchById(Long id) {
+        Map<Long, Customer> map = customers.stream().collect(Collectors.toConcurrentMap(Customer::getId, c -> c));
 
-        Optional<Customer> customer =  map.containsKey(id) && map.get(id).getRole() == Roles.CUSTOMER ? Optional.of(map.get(id))   : Optional.empty();
-          if(customer.isEmpty()){
-              throw  new CustomerNotFoundException("No Customer found for this id");
-          }
-          return customer;
+        Optional<Customer> customer = map.containsKey(id) && map.get(id).getRole() == Roles.CUSTOMER ? Optional.of(map.get(id)) : Optional.empty();
+
+        return customer;
     }
 
     /**
      * Searches for admin based on the id.
+     *
      * @param id id to be searched.
      * @return returns Optional of customer if any admin with the same id is found or else false.
      */
     @Override
-    public  Optional<Customer> fetchAdminById(Long id){
-        Map<Long, Customer> map = customers.stream().collect(Collectors.toConcurrentMap(Customer::getId, c -> c ));
-        return map.containsKey(id) && map.get(id).getRole() == Roles.ADMIN ? Optional.of(map.get(id))   : Optional.empty();
+    public Optional<Customer> fetchAdminById(Long id) {
+        Map<Long, Customer> map = customers.stream().collect(Collectors.toConcurrentMap(Customer::getId, c -> c));
+        return map.containsKey(id) && map.get(id).getRole() == Roles.ADMIN ? Optional.of(map.get(id)) : Optional.empty();
     }
 
 
     @Override
-    public  Optional<Customer> fetchByEmail(String email) {
+    public Optional<Customer> fetchByEmail(String email) {
         Map<String, Customer> map = null;
         boolean isNull = true;
         try {
@@ -93,14 +95,14 @@ public  class CustomerCollectionRepository  implements CustomerRepository {
     public Customer addCustomer(Customer customer) {
 
         addCustomer(customer.getName(), customer.getEmail(), customer.getAddress(), customer.getPassword(), customer.getRole());
-    return customer;
+        return customer;
     }
 
     @Override
     public Customer updateCustomer(Customer customer) {
         customers.remove(customer);
         customers.add(customer);
-return customer;
+        return customer;
     }
 
     @Override

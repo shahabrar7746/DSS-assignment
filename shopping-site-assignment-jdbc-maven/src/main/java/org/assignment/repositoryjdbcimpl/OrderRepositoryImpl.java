@@ -19,9 +19,13 @@ import java.util.*;
 public class OrderRepositoryImpl implements OrderRepository {
     private Connection con;
 
-
     public OrderRepositoryImpl() {
         init();
+    }
+
+    @Override
+    public List<Order> getOrdersByStatusAndCustomer(Customer customer, OrderStatus status) {
+        return List.of();
     }
 
     private void init() {
@@ -99,5 +103,10 @@ public class OrderRepositoryImpl implements OrderRepository {
             throw new OrderNotFoundException("No delievered orders found");
         }
         return orders;
+    }
+
+    @Override
+    public Order updateOrder(Order order) {
+        return null;
     }
 }

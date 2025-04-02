@@ -71,5 +71,15 @@ public  class OrderCollectionRepository implements OrderRepository {
         return deliveredOrders;
     }
 
+    @Override
+    public Order updateOrder(Order order) {
+        return null;
+    }
+
+    @Override
+    public List<Order> getOrdersByStatusAndCustomer(Customer customer, OrderStatus status) {
+        return List.of();
+    }
+
 
 }

@@ -14,13 +14,13 @@ public interface CustomerRepository {
      * Used to get all customers including customers with admin authority.
      * @return List of all registered customers
      */
-     List<Customer> getCustomers() throws CustomerNotFoundException, SQLException, PersistenceException;
+     List<Customer> getCustomers() throws SQLException, PersistenceException;
       /**
      * Fetches Customer on the basis of id. converts list to map for efficient search operation.
      * @param id id to search.
      * @return Optional of Customer if data found or else empty Optional.
      */
-     Optional<Customer> fetchById(Long id) throws CustomerNotFoundException, SQLException, PersistenceException;
+     Optional<Customer> fetchById(Long id)  throws  SQLException, PersistenceException;
     /**
      * Searches for admin based on the id.
      * @param id id to be searched.

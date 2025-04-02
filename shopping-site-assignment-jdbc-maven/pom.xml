@@ -13,16 +13,28 @@
         <artifactId>postgresql</artifactId>
         <version>42.7.5</version>
     </dependency>
-    <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-api</artifactId>
-        <version>2.17.2</version> <!-- Replace with the desired version -->
-    </dependency>
-    <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-core</artifactId>
-        <version>2.17.2</version>
-    </dependency>
+        <!-- SLF4J API (this is the logging facade) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+<version>2.0.16</version>
+        </dependency>
+
+        <!-- Logback Classic (Logback implementation for SLF4J) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+<version>1.5.6</version>
+        </dependency>
+
+        <!-- Logback Core (required by logback-classic) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+<version>1.5.6</version>
+        </dependency>
+
+
     <dependency>
         <groupId>jakarta.persistence</groupId>
         <artifactId>jakarta.persistence-api</artifactId>
@@ -33,6 +45,7 @@
         <artifactId>postgresql</artifactId>
         <version>42.7.5</version>
     </dependency>
+
     <dependency>
         <groupId>org.hibernate.orm</groupId>
         <artifactId>hibernate-core</artifactId>

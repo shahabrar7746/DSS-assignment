@@ -12,7 +12,8 @@ import java.util.Optional;
 public class SellerCollectionRepository implements SellerRepository {
    List<Seller> sellers = new ArrayList<>();
     {
-        sellers.add(new Seller(1L, "Crompton", Roles.SELLER, LocalDateTime.now()));
+//        sellers.add(new Seller(1L, "Crompton", Roles.SELLER, LocalDateTime.now()));
+//        sellers.
     }
     @Override
     public List<Seller> fetchSellers() {

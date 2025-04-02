@@ -3,83 +3,65 @@ package org.assignment.serviceimlementation;
 import jakarta.persistence.PersistenceException;
 import org.assignment.entities.Customer;
 
+import org.assignment.enums.ResponseStatus;
 import org.assignment.enums.Roles;
 
-import org.assignment.exceptions.CustomerNotFoundException;
-import org.assignment.exceptions.TrialLimitExceedException;
-import org.assignment.exceptions.UnauthorizedOperationException;
-import org.assignment.exceptions.UserAlreadyExistsException;
-
-import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
-import org.assignment.repositoryjdbcimpl.CustomerRepositoryImpl;
 import org.assignment.repository.interfaces.CustomerRepository;
 
+import org.assignment.services.AdminService;
 import org.assignment.services.AuthenticationService;
-import org.assignment.services.CustomerService;
 
+import org.assignment.services.CustomerService;
+import org.assignment.services.OrderService;
 import org.assignment.ui.AdminUI;
 import org.assignment.ui.CustomerUI;
 
 import org.assignment.ui.UI;
-import org.assignment.util.ColorCodes;
-import org.assignment.util.FormValidation;
-import org.assignment.util.LogUtil;
+import org.assignment.util.Constants;
 import org.assignment.util.Response;
-import org.hibernate.HibernateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Map;
+
 import java.util.Optional;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class AuthenticationServiceImplementation implements AuthenticationService {
-
-    private CustomerService customerService;
-    private Scanner sc;
+private  final Logger log = LoggerFactory.getLogger(this.getClass());
     private CustomerRepository customerRepository;
-    private static AuthenticationServiceImplementation service;
+private CustomerService customerService;
+private AdminService adminService;
 
-    public static AuthenticationServiceImplementation getInstance() {
-        if (service == null) {
-            service = new AuthenticationServiceImplementation();
-        }
-        return service;
+    public AuthenticationServiceImplementation(OrderService orderService, AdminService adminService, CustomerService customerService, CustomerRepository customerRepository) {
+        this.orderService = orderService;
+        this.adminService = adminService;
+        this.customerService = customerService;
+        this.customerRepository = customerRepository;
     }
 
-    private AuthenticationServiceImplementation() {
-        init();
-    }
+    private final OrderService orderService;
 
-    public void init() {
-        this.customerService = CustomerService.getInstance();
-        this.customerRepository = CustomerRepoHibernateImpl.getInstance();
-        this.sc = new Scanner(System.in);
-    }
 
     @Override
     public Response login(String email, String pasword) {
         Response response = null;
-        if (response == null) {
-            try {
-                Optional<Customer> customer = customerRepository.fetchByEmail(email);
-                if (customer.isPresent()) {
-                    Customer c = customer.get();
-                    if (c.getRole() == Roles.ADMIN || c.getRole() == Roles.SUPER_ADMIN) {
-                        UI adminUI = new AdminUI();
-                        adminUI.initAdminServices(c);
-                    } else if (c.getRole() == Roles.CUSTOMER) {
-                        UI customerUI = new CustomerUI();
-                        customerUI.initCustomerServices(c);
-                    }
-                    response = new Response("Logging out");
+        try {
+            Optional<Customer> customer = customerRepository.fetchByEmail(email);
+            if (customer.isPresent()) {
+                Customer c = customer.get();
+                if (c.getRole() == Roles.ADMIN || c.getRole() == Roles.SUPER_ADMIN) {
+                    UI adminUI = new AdminUI(adminService,customerService);
+                    adminUI.initAdminServices(c);
+                } else if (c.getRole() == Roles.CUSTOMER) {
+                    UI customerUI = new CustomerUI(customerService, orderService);
+                    customerUI.initCustomerServices(c);
                 }
-            } catch (SQLException e) {
-                response = LogUtil.logError(e.getStackTrace());
-            } catch (UnauthorizedOperationException e) {
-                response = new Response(null, e.getLocalizedMessage());
+                response = new Response("Logging out");
             }
+        } catch (SQLException e) {
+           log.error("Some error occured while log in for email {} and password {} ",email, pasword, e);
+        response  = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
         }
         return response;
     }
@@ -106,13 +88,12 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
                         .password(password)
                         .registeredOn(LocalDateTime.now())
                         .build();
-
-                //new Customer(name, email, password, address, LocalDateTime.now(), Roles.CUSTOMER);
                 customerRepository.addCustomer(newCustomer);
                 response = new Response(newCustomer);
             }
         } catch (SQLException | PersistenceException e) {
-            response = LogUtil.logError(e.getStackTrace());
+            log.error("Some error occured while registering customer with email {} and password {} ",email, password, e);
+            response  = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
         }
         return response;
     }

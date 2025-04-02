@@ -2,15 +2,15 @@ package org.assignment.serviceimlementation;
 
 import jakarta.persistence.PersistenceException;
 
+import lombok.extern.slf4j.Slf4j;
 import org.assignment.entities.*;
 
 import org.assignment.enums.Currency;
 import org.assignment.enums.OrderStatus;
 import org.assignment.enums.ResponseStatus;
 
-import org.assignment.enums.Roles;
 import org.assignment.exceptions.CustomerNotFoundException;
-import org.assignment.exceptions.EmptyCartException;
+
 import org.assignment.exceptions.NoProductFoundException;
 import org.assignment.exceptions.OrderNotFoundException;
 
@@ -18,108 +18,64 @@ import org.assignment.repository.interfaces.CustomerRepository;
 import org.assignment.repository.interfaces.OrderRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 import org.assignment.repository.interfaces.SellerRepository;
-import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
-import org.assignment.repositoryhibernateimpl.OrderRepoHibernateImpl;
-import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
-import org.assignment.repositoryhibernateimpl.SellerRepoHibernateImpl;
+
 
 import org.assignment.services.CustomerService;
 
-import org.assignment.util.ColorCodes;
-import org.assignment.util.LogUtil;
+import org.assignment.util.Constants;
+import org.assignment.util.MathUtil;
 import org.assignment.util.Response;
-import org.assignment.wrappers.ProductWrappers;
+import org.assignment.wrappers.ProductCountWrappers;
 import org.hibernate.HibernateException;
 
 import java.sql.SQLException;
-import java.sql.SQLOutput;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class CustomerServiceImplementation implements CustomerService {
-    private Scanner sc;
-    private List<Product> cart;
     private CustomerRepository repository;
     private OrderRepository orderRepository;
     private ProductRepository productRepository;
     private SellerRepository sellerRepository;
-    private static CustomerServiceImplementation service;
-    private CustomerRepository customerRepository;
 
-    public static CustomerServiceImplementation getInstance() {
-        if (service == null) {
-            service = new CustomerServiceImplementation();
-        }
-        return service;
+    public CustomerServiceImplementation(CustomerRepository repository, OrderRepository orderRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
+        this.repository = repository;
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+        this.sellerRepository = sellerRepository;
     }
+
 
     @Override
     public Optional<Customer> findByEmail(String email) {
-        Optional<Customer> optionalCustomer = null;
+        Optional<Customer> optionalCustomer = Optional.empty();
         try {
             optionalCustomer = repository.fetchByEmail(email);
         } catch (SQLException | PersistenceException e) {
-            LogUtil.logError(e.getStackTrace());
+            log.error("Some error occured while finding customer by email, mail {}", email, e);
         }
-        return optionalCustomer == null ? Optional.empty() : optionalCustomer;
+        return optionalCustomer;
     }
 
-
-    private CustomerServiceImplementation() {
-        init();
-    }
-
-    private void init() {
-        this.sellerRepository = SellerRepoHibernateImpl.getInstance();
-        this.productRepository = ProductRepoHibernateImpl.getInstance();
-        this.cart = new ArrayList<>();
-        this.orderRepository = OrderRepoHibernateImpl.getInstance();
-        this.sc = new Scanner(System.in);
-        this.repository = CustomerRepoHibernateImpl.getInstance();
-        this.customerRepository = CustomerRepoHibernateImpl.getInstance();
-    }
 
     public Response getAllOrders(Customer customer) {
-        List<Order> orders = null;
+        List<Order> orders = new ArrayList<>();
         try {
             orders = orderRepository.getOrderByCustomer(customer);
         } catch (CustomerNotFoundException | NoProductFoundException | OrderNotFoundException e) {
             return new Response(null, e.getLocalizedMessage());
         } catch (SQLException | HibernateException e) {
-            return LogUtil.logError(e.getStackTrace());
+            log.error("Some error occured while fetching orders for customer {} ", customer.getId(), e);
+            return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
         }
         return orders.isEmpty() ? new Response(null, "No order found") : new Response(orders);
     }
 
-    private Response bookOrder(Customer customer, Product product) {
-        Optional<Seller> optionalSeller = null;
-        try {
-            optionalSeller = sellerRepository.fetchById(1L);
-        } catch (SQLException e) {
-            return LogUtil.logError(e.getStackTrace());
-        }
-        if (optionalSeller.isEmpty()) {
-            return new Response(null, "No seller found for this product");
-        }
-
-        Order order = new Order(customer, product, optionalSeller.get(), OrderStatus.ORDERED, Currency.INR, LocalDateTime.now(), product.getPrice());
-        try {
-            orderRepository.addOrder(order);
-        } catch (SQLException | HibernateException e) {
-            return LogUtil.logError(e.getStackTrace());
-        }
-        return new Response("");
-    }
-
-    /**
-     * @param customer whose order need to be cancelled.
-     * @throws OrderNotFoundException if no orders found for the customer or order list is empty of the provided customer.
-     * @see #bookOrder(Customer, Product)
-     */
-
-    public Response cancelOrder(int count, Customer customer, String productName) {
+    public Response cancelOrder(int count, Customer customer, String productName, boolean multiple) {
         Optional<List<Order>> order = Optional.empty();
         Response resp = null;
         List<Order> orders = null;
@@ -134,42 +90,45 @@ public class CustomerServiceImplementation implements CustomerService {
         } catch (CustomerNotFoundException | NoProductFoundException e) {
             resp = new Response(null, e.getLocalizedMessage());
         } catch (SQLException | HibernateException e) {
-            resp = LogUtil.logError(e.getStackTrace());
+            log.error("Some error occured while order cancelation for customer {} ", customer.getId(), e);
+            resp = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
         }
         if (orders != null && !orders.isEmpty()) {
             order = Optional.of(orders);
         }
-        if (resp == null && orders.size() > 1 && count == 0) {
-            resp = new Response(ResponseStatus.PROCESSING, new ProductWrappers(productName, orders.size()), null);
+        if (resp == null && orders != null && orders.size() > 1 && count == 1 && !multiple) {
+            resp = new Response(ResponseStatus.PROCESSING
+                    , new ProductCountWrappers(productName, orders.size())
+                    , null);
         }
         if (resp == null && order.isPresent()) {
             try {
-                helperForCancelOrder(count, order.get(), customer);
+                helperForCancelOrder(count, order.get());
             } catch (SQLException e) {
-                resp = new Response(ResponseStatus.ERROR, null, "Some error occured");
+                resp = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
             }
         }
         if (resp == null && order.isPresent()) {
-            resp = new Response("Order cancelled..");
+            resp = new Response(count + " Order cancelled..");
         }
         return resp;
     }
 
 
-    private void helperForCancelOrder(int count, List<Order> l, Customer customer) throws SQLException {
+    private void helperForCancelOrder(int count, List<Order> orders) throws SQLException {
         int index = 0;
-        while (index != count) {
-            Order removedOrder = l.get(index);
-            orderRepository.cancelOrder(removedOrder);
+        while (index < count) {
+            Order removedOrder = orders.get(index);
+            removedOrder.setStatus(OrderStatus.CANCELED);
+            orderRepository.updateOrder(removedOrder);
             index++;
         }
     }
 
-
-    public Response intiateCart(Customer customer, String name) {
-        Response response = null;
-        Optional<Product> product = null;
-        Seller s = null;
+    public Response intiateCart(Customer customer, String name, int quantity) {
+        Response response;
+        Optional<Product> product;
+        Seller s;
         try {
             product = productRepository.fetchProductByName(name);
             s = sellerRepository.fetchById(1L).get();
@@ -179,17 +138,28 @@ public class CustomerServiceImplementation implements CustomerService {
                         .customer(customer)
                         .seller(s)
                         .product(p)
+                        .quantity(quantity)
                         .build();
-                customer.getCart().add(item);
-                customerRepository.updateCustomer(customer);
+                if(customer.getCart().contains(item)){//edits the quantity if the product already exists in cart
+                   int index = customer.getCart().indexOf(item);
+                   CartItems storedItem = customer.getCart().get(index);
+                   int oldQuantity = storedItem.getQuantity();
+                   item.setQuantity(oldQuantity + quantity);
+                   item.setId(storedItem.getId());
+                   customer.getCart().set(index, item);
+                   updateCustomerAndCart(customer);
+                }else{//else inserts product into cart
+                    customer.getCart().add(item);
+                    repository.updateCustomer(customer);
+                }
+
                 response = new Response("Item added");
             } else {
                 response = new Response(null, "Invalid product name please try again.");
             }
-        } catch (NoProductFoundException e) {
-            response = new Response(null, e.getLocalizedMessage());
         } catch (SQLException e) {
-            response = LogUtil.logError(e.getStackTrace());
+            log.error("Some error occured while intiating cart for customer {} ", customer.getId(), e);
+            return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
         }
 
         return response;
@@ -197,7 +167,7 @@ public class CustomerServiceImplementation implements CustomerService {
 
 
     public Response removeFromCart(Customer customer, String pname) {
-        Response response = null;
+        Response response;
         List<CartItems> cartItems = customer.getCart();
         cartItems = cartItems
                 .stream()
@@ -206,67 +176,144 @@ public class CustomerServiceImplementation implements CustomerService {
                         .equalsIgnoreCase(pname))
                 .toList();
         if (cartItems.size() == customer.getCart().size()) {
-            response = new Response(ResponseStatus.ERROR, "", "Could not find product");
+            response = new Response(ResponseStatus.ERROR, null, "Could not find product");
         } else {
             customer.setCart(new ArrayList<>(cartItems));
             try {
-                customerRepository.updateCustomer(customer);
+                repository.updateCustomer(customer);
                 response = new Response(ResponseStatus.SUCCESSFUL, "Removed successfully", null);
             } catch (SQLException | PersistenceException e) {
-                response = LogUtil.logError(e.getStackTrace());
+                log.error("Some error occured while removing items from cart for customer {} ", customer.getId(), e);
+                return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
             }
         }
         return response;
     }
 
     public Response hasProduct(Customer customer, String productName) {
-        Response resp = null;
         boolean exists = customer
                 .getCart()
                 .stream()
-                .filter(item -> item.getProduct()
+                .anyMatch(item -> item
+                        .getProduct()
                         .getName()
-                        .equalsIgnoreCase(productName))
-                .findFirst()
-                .isPresent();
+                        .equalsIgnoreCase(productName));
         return new Response(ResponseStatus.SUCCESSFUL, exists, null);
     }
 
-    public Response orderFromCart(Customer customer, String name) {
+    public Response orderFromCart(Customer customer, String name, int quantity, boolean edited) {
         Response resp = null;
-        CartItems item = customer
+        List<CartItems> items = customer
                 .getCart()
                 .stream()
                 .filter(i -> i.getProduct().getName().equalsIgnoreCase(name))
-                .findFirst()
-                .get();
-        Order order = Order.builder()
-                .orderedOn(LocalDateTime.now())
-                .customer(customer)
-                .price(item.getProduct().getPrice())
-                .seller(item.getSeller())
-                .status(OrderStatus.ORDERED)
-                .currency(Currency.INR)
-                .product(item.getProduct())
-                .build();
+                .toList();
+
+        for (CartItems item : items) {
+            if (!edited) {
+                quantity = item.getQuantity();
+            }
+            double total = MathUtil.getTotalFromPriceAndQuantity(item.getProduct().getPrice(), quantity);
+            Order order = Order.builder()
+                    .orderedOn(LocalDateTime.now())
+                    .customer(customer)
+                    .price(total)
+                    .seller(item.getSeller())
+                    .status(OrderStatus.ORDERED)
+                    .currency(Currency.INR)
+                    .quantity(quantity)
+                    .product(item.getProduct())
+                    .build();
+            try {
+                orderRepository.addOrder(order);
+            } catch (Exception e) {
+                log.error("Some error occured while placing orders from cart of customer {} ", customer.getId(), e);
+                resp = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
+            }
+        }
         try {
-            orderRepository.addOrder(order);
             List<CartItems> newCart = customer
                     .getCart()
                     .stream()
                     .filter(i -> !i.getProduct().getName().equalsIgnoreCase(name))
                     .collect(Collectors.toList());
             customer.setCart(newCart);
-            newCart.forEach(cartItems -> cartItems.setCustomer(customer));
-            customerRepository.updateCustomer(customer);
-
-            resp = new Response(ResponseStatus.SUCCESSFUL, "Ordered", null);
+            updateCustomerAndCart(customer);
         } catch (SQLException e) {
-            resp = new Response(ResponseStatus.ERROR, null, "some error occured");
-        } catch (Exception e) {
-
+            log.error("Some error occured while placing orders from cart of customer {} ", customer.getId(), e);
+            resp = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
         }
+        resp = resp == null ? new Response(ResponseStatus.SUCCESSFUL, items.size() + " items Ordered", null)
+                : resp;
         return resp;
     }
 
+    @Override
+    public Response incrementQuantity(Customer customer, String productName, final int newQuantity) {
+        Optional<CartItems> itemsOptional = findCartItemByName(customer, productName);
+        Response response = null;
+        if (itemsOptional.isEmpty()) {
+            return new Response(ResponseStatus.ERROR, null, "Could not find product by the provided name");
+        }
+        CartItems item = itemsOptional.get();
+        int currentQuantity = item.getQuantity();
+        int updatedQuantity = newQuantity + currentQuantity;
+        item.setQuantity(updatedQuantity);
+        try {
+            updateCustomerAndCart(customer);
+            response = new Response(ResponseStatus.SUCCESSFUL, "Quantity updated !! ", null);
+        } catch (Exception e) {
+            response = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
+            log.error("Some error occured while incrementing quantity for customer ", customer.getId(), e);
+        }
+        return response;
+    }
+
+    @Override
+    public Response decrementQuantity(Customer customer, String productName, int newQuantity) {
+        Optional<CartItems> itemsOptional = findCartItemByName(customer, productName);
+        Response response = null;
+        if (itemsOptional.isEmpty()) {
+            return new Response(ResponseStatus.ERROR, null, "Could not find product by the provided name");
+        }
+        CartItems item = itemsOptional.get();
+        if(item.getQuantity() < newQuantity)
+        {
+            return new Response(ResponseStatus.ERROR, null, "Quantity must be lesser than existing quantity of product");
+        }
+        if(item.getQuantity() == newQuantity)
+        {
+            return removeFromCart(customer, productName);
+        }
+        int currentQuantity = item.getQuantity();
+        int updatedQuantity = currentQuantity - newQuantity;
+        item.setQuantity(updatedQuantity);
+        try {
+            updateCustomerAndCart(customer);
+            response = new Response(ResponseStatus.SUCCESSFUL, "Quantity updated !! ", null);
+        } catch (Exception e) {
+            response = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
+            log.error("Some error occured while incrementing quantity for customer ", customer.getId(), e);
+        }
+        return response;
+    }
+
+    private Optional<CartItems> findCartItemByName(Customer customer, String productName) {
+        return customer
+                .getCart()
+                .stream()
+                .filter(cartItems -> cartItems
+                        .getProduct()
+                        .getName()
+                        .equalsIgnoreCase(productName))
+                .findFirst();
+    }
+
+    private void updateCustomerAndCart(Customer customer) throws SQLException {
+        customer.getCart()
+                .forEach(cartItems -> {
+                    cartItems.setCustomer(customer);
+                });
+        repository.updateCustomer(customer);
+    }
 }

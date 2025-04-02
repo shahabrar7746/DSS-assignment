@@ -1,12 +1,7 @@
 package org.assignment.services;
 
-import org.assignment.exceptions.CustomerNotFoundException;
-import org.assignment.exceptions.TrialLimitExceedException;
 import org.assignment.exceptions.UserAlreadyExistsException;
-import org.assignment.serviceimlementation.AuthenticationServiceImplementation;
 import org.assignment.util.Response;
-
-import java.sql.SQLException;
 
 public interface AuthenticationService {
 
@@ -22,7 +17,5 @@ public interface AuthenticationService {
      * @throws UserAlreadyExistsException if credentials already exist in main.repository.
      */
 
-    static AuthenticationService getInstance(){
-        return AuthenticationServiceImplementation.getInstance();
-    }
+
 }

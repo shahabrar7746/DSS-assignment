@@ -46,36 +46,13 @@ public interface AdminService {
      */
     Response getAllDeliveredOrders();
 
-    /**
-     * Grants admin access to a regular customer, only called and used  by Super admin.
-     *
-     * @param isAuthorized provided and called by super admin.
-     * @return
-     * @throws OperationNotSupportedException if the operation is not performed by super admin.
-     * @throws TrialLimitExceedException      if the try limit exceeds.
-     * @see #revokeAccess(boolean)
-     */
+
     Response grantAccess(Long id);
 
-    /**
-     * Revokes admin access for any customer. must be performed by Super admin.
-     *
-     * @return
-     * @throws UnauthorizedOperationException if the user is not super admin.
-     * @throws NoAdminFoundException          if no admin found in main.repository.
-     * @throws TrialLimitExceedException      try limit exceeds.
-     * @see #grantAccess(boolean)
-     */
+
     Response revokeAccess(Long id);
 
-    /**
-     * Cancels order placed by customer.
-     *
-     * @param isAuthorized to check if the user is super admin or not.
-     * @return
-     * @throws OrderNotFoundException         if no order is found for the id or order is empty.
-     * @throws UnauthorizedOperationException if not authorized or called by any other entity except super admin.
-     */
+
 
     Response deleteCustomer(Long cid);
 
@@ -92,7 +69,5 @@ public interface AdminService {
     Response customerExists(Long id);
     Response isAdmin(Long id);
 
-    static AdminService getInstance() {
-        return AdminServiceImplementation.getInstance();
-    }
+
 }
