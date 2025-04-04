@@ -7,7 +7,7 @@
         <class>org.assignment.entities.Customer</class>
         <class>org.assignment.entities.CartItems</class>
         <properties>
-<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="false"/>
 
@@ -23,13 +23,13 @@
             <!-- JDBC driver class -->
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
 
-            <!-- Hibernate properties -->
+            <!-- Connection pool properties (HikariCP) -->
+            <property name="hibernate.c3p0.min_size" value="5"/>
+            <property name="hibernate.c3p0.max_size" value="20"/>
+            <property name="hibernate.c3p0.timeout" value="300"/>
+            <property name="hibernate.c3p0.max_statements" value="50"/>
+            <property name="hibernate.c3p0.idle_test_period" value="300"/>
 
-            <!--  <property name="hibernate.hbm2ddl.auto" value="none"/> Automatically update schema -->
-            <!--  <property name="hibernate.show_sql" value="false"/>  Show SQL in console -->
-            <!-- <property name="hibernate.format_sql" value="true"/>  Format SQL -->
-            <!--   <property name="hibernate.use_sql_comments" value="true"/>
-               -->
         </properties>
     </persistence-unit>
 </persistence>

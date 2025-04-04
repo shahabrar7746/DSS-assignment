@@ -1,22 +1,20 @@
 package org.assignment.repositoryhibernateimpl;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 import org.assignment.entities.Seller;
 import org.assignment.repository.interfaces.SellerRepository;
+import org.assignment.util.ConnectionUtility;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public class SellerRepoHibernateImpl implements SellerRepository {
-    private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("myPersistenceUnit");
-    private final EntityManager manager = factory.createEntityManager();
+    private final EntityManager manager = ConnectionUtility.getEntityManager();
    private static final String BASE_SELECTION_QUERY = " SELECT s FROM Seller s ";
     @Override
-    public List<Seller> fetchSellers() throws SQLException {
+    public List<Seller> fetchSellers() {
         TypedQuery<Seller> query = manager.createQuery(BASE_SELECTION_QUERY, Seller.class);
         return query.getResultList();
     }

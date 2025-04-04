@@ -1,16 +1,18 @@
 package org.assignment.repositoryhibernateimpl;
 
 import jakarta.persistence.*;
+import jakarta.persistence.spi.PersistenceUnitInfo;
 import org.assignment.entities.Product;
 
 import org.assignment.repository.interfaces.ProductRepository;
+import org.assignment.util.ConnectionUtility;
 
 import java.util.List;
 import java.util.Optional;
 
 public class ProductRepoHibernateImpl implements ProductRepository {
-    private  final EntityManagerFactory factory = Persistence.createEntityManagerFactory("myPersistenceUnit");
-    private  final EntityManager manager = factory.createEntityManager();
+
+    private EntityManager manager = ConnectionUtility.getEntityManager();
     private static final String BASE_SELECTION_QUERY = " SELECT p FROM Product p ";
 
     @Override
@@ -26,7 +28,7 @@ public class ProductRepoHibernateImpl implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> fetchProductByName(String name){
+    public Optional<Product> fetchProductByName(String name) {
         String jpql = BASE_SELECTION_QUERY + " WHERE p.name =:name";
         TypedQuery<Product> query = manager.createQuery(jpql, Product.class);
         query.setParameter("name", name);

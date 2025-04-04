@@ -1,6 +1,7 @@
 package org.assignment.serviceimlementation;
 
 import jakarta.persistence.PersistenceException;
+import lombok.AllArgsConstructor;
 import org.assignment.entities.Customer;
 
 import org.assignment.enums.ResponseStatus;
@@ -8,11 +9,8 @@ import org.assignment.enums.Roles;
 
 import org.assignment.repository.interfaces.CustomerRepository;
 
-import org.assignment.services.AdminService;
-import org.assignment.services.AuthenticationService;
+import org.assignment.services.*;
 
-import org.assignment.services.CustomerService;
-import org.assignment.services.OrderService;
 import org.assignment.ui.AdminUI;
 import org.assignment.ui.CustomerUI;
 
@@ -27,21 +25,15 @@ import java.time.LocalDateTime;
 
 import java.util.Optional;
 
+@AllArgsConstructor
 public class AuthenticationServiceImplementation implements AuthenticationService {
-private  final Logger log = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     private CustomerRepository customerRepository;
-private CustomerService customerService;
-private AdminService adminService;
-
-    public AuthenticationServiceImplementation(OrderService orderService, AdminService adminService, CustomerService customerService, CustomerRepository customerRepository) {
-        this.orderService = orderService;
-        this.adminService = adminService;
-        this.customerService = customerService;
-        this.customerRepository = customerRepository;
-    }
-
+    private CustomerService customerService;
+    private AdminService adminService;
+    private ProductService productService;
     private final OrderService orderService;
-
+    private final CartService cartService;
 
     @Override
     public Response login(String email, String pasword) {
@@ -51,17 +43,17 @@ private AdminService adminService;
             if (customer.isPresent()) {
                 Customer c = customer.get();
                 if (c.getRole() == Roles.ADMIN || c.getRole() == Roles.SUPER_ADMIN) {
-                    UI adminUI = new AdminUI(adminService,customerService);
+                    UI adminUI = new AdminUI(adminService, customerService, productService, orderService);
                     adminUI.initAdminServices(c);
                 } else if (c.getRole() == Roles.CUSTOMER) {
-                    UI customerUI = new CustomerUI(customerService, orderService);
+                    UI customerUI = new CustomerUI(orderService, productService, cartService);
                     customerUI.initCustomerServices(c);
                 }
                 response = new Response("Logging out");
             }
         } catch (SQLException e) {
-           log.error("Some error occured while log in for email {} and password {} ",email, pasword, e);
-        response  = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
+            log.error("Some error occured while log in for email {} and password {} ", email, pasword, e);
+            response = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
         }
         return response;
     }
@@ -92,8 +84,8 @@ private AdminService adminService;
                 response = new Response(newCustomer);
             }
         } catch (SQLException | PersistenceException e) {
-            log.error("Some error occured while registering customer with email {} and password {} ",email, password, e);
-            response  = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
+            log.error("Some error occured while registering customer with email {} and password {} ", email, password, e);
+            response = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
         }
         return response;
     }

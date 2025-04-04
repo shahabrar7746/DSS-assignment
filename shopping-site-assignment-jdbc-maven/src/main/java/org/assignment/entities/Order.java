@@ -10,13 +10,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+
+@Builder
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "orders")
-@Builder
 public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

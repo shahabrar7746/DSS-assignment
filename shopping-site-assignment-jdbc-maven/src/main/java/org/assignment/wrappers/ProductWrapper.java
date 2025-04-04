@@ -19,16 +19,16 @@ public class ProductWrapper {
         this.type = product.getType();
     }
 
-    private double price;
+    private final double price;
 
 
-    private Currency currency;
+    private final Currency currency;
 
 
-    private String name;
+    private final String name;
 
 
-    private ProductType type;
+    private final ProductType type;
 
     @Override
     public String toString() {

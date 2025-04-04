@@ -11,8 +11,6 @@
             <!-- Log file pattern (logfile will be rolled daily) -->
             <fileNamePattern>logs/application-%d{yyyy-MM-dd}.log</fileNamePattern>
 
-            <!-- Optional: Max size for each log file before rotating -->
-            <maxFileSize>10MB</maxFileSize>
         </rollingPolicy>
 
         <!-- Log file format -->

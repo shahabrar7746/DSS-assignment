@@ -1,5 +1,6 @@
 package org.assignment.services;
 
+import org.assignment.entities.CartItems;
 import org.assignment.entities.Customer;
 import org.assignment.serviceimlementation.CustomerServiceImplementation;
 import org.assignment.util.Response;
@@ -9,22 +10,20 @@ import java.util.Optional;
 
 public interface CustomerService {
 
+    Response getCustomerById(Long id);
 
     Optional<Customer> findByEmail(String email);
 
-    Response intiateCart(Customer customer, String name, int quantity);
 
-    Response removeFromCart(final Customer customer, String name);
+    Response getAllCustomer();
 
-    Response getAllOrders(Customer customer);
+    Response deleteCustomer(Long cid);
 
-    Response cancelOrder(int count, Customer customer, String productName, boolean multiple);
+    Response fetchAllAdmins();
 
-    Response hasProduct(Customer customer, String productName);
+    boolean authenticateSuperAdmin(String password);
 
-    Response orderFromCart(Customer customer, String name, int quantity, boolean edited);
+    Response customerExists(Long id);
 
-    Response incrementQuantity(Customer customer, String productName, int newQuantity);
-
-    Response decrementQuantity(Customer customer, String productName, int newQuantity);
+    Response isAdmin(Long id);
 }

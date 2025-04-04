@@ -5,6 +5,7 @@ import org.assignment.entities.Customer;
 import org.assignment.enums.Roles;
 
 import org.assignment.repository.interfaces.CustomerRepository;
+import org.assignment.util.ConnectionUtility;
 
 import javax.swing.text.html.Option;
 import java.sql.SQLException;
@@ -13,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class CustomerRepoHibernateImpl implements CustomerRepository {
-    private  final EntityManagerFactory factory = Persistence.createEntityManagerFactory("myPersistenceUnit");
-    private  final EntityManager manager = factory.createEntityManager();
+
+    private  final EntityManager manager = ConnectionUtility.getEntityManager();
     private  final EntityTransaction transaction = manager.getTransaction();
     private static final String BASE_SELECTION_QUERY = " SELECT c FROM Customer c ";
 

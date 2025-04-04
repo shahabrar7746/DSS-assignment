@@ -14,7 +14,6 @@ import org.assignment.repository.interfaces.CustomerRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 import org.assignment.repository.interfaces.SellerRepository;
 import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
-import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
 import org.assignment.repositoryhibernateimpl.SellerRepoHibernateImpl;
 import org.assignment.repositoryjdbcimpl.*;
 
@@ -26,7 +25,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 public final class ResultSetUtility {
-    private static CustomerRepository customerRepository = new CustomerRepoHibernateImpl();
+    private static CustomerRepository repository = new CustomerRepoHibernateImpl();
     private static SellerRepository sellerRepository = new SellerRepoHibernateImpl();
     private static ProductRepository productRepository = new ProductRepositoryImpl();
 
@@ -69,7 +68,7 @@ public final class ResultSetUtility {
             Long sellerId = set.getLong("seller_id");
             Currency currency = Currency.valueOf(set.getString("currency"));
             double price = set.getDouble("price");
-            Optional<Customer> customer = customerRepository.fetchById(customerId);
+            Optional<Customer> customer = repository.fetchById(customerId);
             if (customer.isPresent()) {
                 Order order = Order.builder()
                         .orderedOn(orderTimestamp.toLocalDateTime())
@@ -78,7 +77,7 @@ public final class ResultSetUtility {
                         .product(productRepository.fetchProductById(productId).get())
                         .currency(currency)
                         .price(price)
-                        .customer(customerRepository.fetchById(customerId).get())
+                        .customer(repository.fetchById(customerId).get())
                         .status(orderStatus)
                         .build();
                 orders.add(order);
@@ -132,7 +131,7 @@ public final class ResultSetUtility {
             Long sellerId = set.getLong("seller_id");
             Currency currency = Currency.valueOf(set.getString("currency"));
             double price = set.getDouble("price");
-            Optional<Customer> customer = customerRepository.fetchById(customerId);
+            Optional<Customer> customer = repository.fetchById(customerId);
             if (customer.isPresent()) {
                 Order order = Order.builder()
                         .orderedOn(orderTimestamp.toLocalDateTime())
@@ -141,7 +140,7 @@ public final class ResultSetUtility {
                         .product(productRepository.fetchProductById(productId).get())
                         .currency(currency)
                         .price(price)
-                        .customer(customerRepository.fetchById(customerId).get())
+                        .customer(repository.fetchById(customerId).get())
                         .status(orderStatus)
                         .build();
                 order.setId(orderId);

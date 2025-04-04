@@ -11,6 +11,9 @@ public interface OrderService {
 
     Response fetchOrdersByCustomerAndOrderStatus(Customer customer, OrderStatus status);
 
+    Response getAllOrders(Customer customer);
 
+    Response cancelOrder(int count, Customer customer, String productName, boolean multiple);
 
+    Response getAllDeliveredOrders();
 }

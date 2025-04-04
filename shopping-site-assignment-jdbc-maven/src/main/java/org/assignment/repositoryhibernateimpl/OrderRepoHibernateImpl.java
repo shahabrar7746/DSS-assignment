@@ -8,13 +8,14 @@ import org.assignment.enums.OrderStatus;
 
 import org.assignment.exceptions.OrderNotFoundException;
 import org.assignment.repository.interfaces.OrderRepository;
+import org.assignment.util.ConnectionUtility;
 
 import java.util.List;
 import java.util.Optional;
 
 public class OrderRepoHibernateImpl implements OrderRepository {
-    private final  EntityManagerFactory factory = Persistence.createEntityManagerFactory("myPersistenceUnit");
-    private final  EntityManager manager = factory.createEntityManager();
+
+    private final  EntityManager manager = ConnectionUtility.getEntityManager();
     private final  EntityTransaction transaction = manager.getTransaction();
     private final static String BASE_SELECTION_QUERY = "SELECT o FROM Order o ";
 

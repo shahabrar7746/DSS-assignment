@@ -47,15 +47,16 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return ColorCodes.BRIGHT_BLUE + "Customer{" +
-                "email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", id=" + id +
-                ", registeredOn=" + registeredOn +
-                ", role=" + role +
-                "}\n" + ColorCodes.RESET;
+        return ColorCodes.BRIGHT_BLUE +
+                "+-----------------+-------------------------+-------------------------+--------------------+-------------------------+-----------------+\n" +
+                "| Customer ID     | Email                   | Name                    | Address            | Registered On           | Role            |\n" +
+                "+-----------------+-------------------------+-------------------------+--------------------+-------------------------+-----------------+\n" +
+                String.format("| %-15d | %-23s | %-23s | %-18s | %-23s | %-15s |\n",
+                        id, email, name, address, registeredOn, role) +
+                "+-----------------+-------------------------+-------------------------+--------------------+-------------------------+-----------------+\n" +
+                ColorCodes.RESET;
     }
+
 
     @Override
     public boolean equals(Object obj) {
