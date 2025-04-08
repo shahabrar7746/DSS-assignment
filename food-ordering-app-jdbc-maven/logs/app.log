@@ -1,0 +1,252 @@
+2025-03-25 12:45:18 [main] INFO  Main - Application started..
+2025-03-26 12:29:02 [main] INFO  Main - Application started..
+2025-03-26 12:29:14 [main] WARN  AuthenticationServiceImpl - Incorrect password attempt for email: admin@gmail.com
+2025-03-26 12:29:14 [main] INFO  Main - Application started..
+2025-03-26 12:29:21 [main] ERROR Main - Error in main method: null
+java.util.InputMismatchException: null
+	at java.base/java.util.Scanner.throwFor(Scanner.java:947) ~[?:?]
+	at java.base/java.util.Scanner.next(Scanner.java:1602) ~[?:?]
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2267) ~[?:?]
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2221) ~[?:?]
+	at com.foodorder.app.Main.main(Main.java:40) [classes/:?]
+2025-03-26 12:29:21 [main] INFO  Main - Application started..
+2025-03-26 12:37:40 [main] ERROR ManageFoodItemsUi - Error from restaurant food Ui: 
+java.util.InputMismatchException: null
+	at java.base/java.util.Scanner.throwFor(Scanner.java:947) ~[?:?]
+	at java.base/java.util.Scanner.next(Scanner.java:1602) ~[?:?]
+	at java.base/java.util.Scanner.nextDouble(Scanner.java:2573) ~[?:?]
+	at com.foodorder.app.ui.ManageFoodItemsUi.addFoodItem(ManageFoodItemsUi.java:56) ~[classes/:?]
+	at com.foodorder.app.ui.ManageFoodItemsUi.manageFoodItems(ManageFoodItemsUi.java:36) [classes/:?]
+	at com.foodorder.app.ui.AdminUi.initAdminScreen(AdminUi.java:62) [classes/:?]
+	at com.foodorder.app.Main.navigateBasedOnRole(Main.java:159) [classes/:?]
+	at com.foodorder.app.Main.handleLogin(Main.java:152) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:44) [classes/:?]
+2025-03-26 12:55:18 [main] INFO  Main - Application started..
+2025-03-26 12:56:33 [main] INFO  Main - Application started..
+2025-03-26 12:56:42 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: chetan@\
+2025-03-26 12:56:42 [main] INFO  Main - Application started..
+2025-03-26 13:01:51 [main] INFO  Main - Application started..
+2025-03-26 13:01:54 [main] INFO  Main - Application started..
+2025-03-26 13:02:42 [main] INFO  Main - Application started..
+2025-03-26 13:03:45 [main] INFO  Main - Application started..
+2025-03-26 13:03:49 [main] INFO  Main - Application started..
+2025-03-26 13:03:52 [main] INFO  Main - Application started..
+2025-03-26 13:04:37 [main] INFO  Main - Application started..
+2025-03-26 13:07:56 [main] INFO  Main - Application started..
+2025-03-26 13:08:48 [main] INFO  Main - Application started..
+2025-03-26 13:09:12 [main] INFO  Main - Application started..
+2025-03-26 13:09:13 [main] INFO  Main - Application started..
+2025-03-26 13:09:14 [main] INFO  Main - Application started..
+2025-03-26 13:09:16 [main] INFO  Main - Application started..
+2025-03-26 13:09:26 [main] INFO  Main - Application started..
+2025-03-26 15:03:47 [main] INFO  Main - Application started..
+2025-03-26 15:05:12 [main] INFO  Main - Application started..
+2025-03-26 15:05:16 [main] INFO  Main - Application started..
+2025-03-26 15:54:34 [main] INFO  Main - Application started..
+2025-03-26 16:06:46 [main] INFO  Main - Application started..
+2025-03-26 16:33:14 [main] INFO  Main - Application started..
+2025-03-26 16:35:40 [main] INFO  Main - Application started..
+2025-03-26 17:18:07 [main] INFO  Main - Application started..
+2025-03-26 17:18:11 [main] INFO  Main - Application started..
+2025-03-26 17:19:09 [main] INFO  Main - Application started..
+2025-03-26 17:19:21 [main] INFO  Main - Application started..
+2025-03-26 17:29:58 [main] INFO  Main - Application started..
+2025-03-26 17:31:13 [main] INFO  Main - Application started..
+2025-03-26 17:35:21 [main] INFO  Main - Application started..
+2025-03-26 17:39:21 [main] INFO  Main - Application started..
+2025-03-26 17:39:36 [main] ERROR AuthenticationServiceImpl - Error from register user method value already exists: chetan@gmail.com
+com.foodorder.app.exceptions.ValueAlreadyExistsException: User already exists
+	at com.foodorder.app.daoImpl.UserDaoImpl.addUser(UserDaoImpl.java:25) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.registerUser(AuthenticationServiceImpl.java:63) [classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleRegisterAuth(AuthenticationServiceImpl.java:53) [classes/:?]
+	at com.foodorder.app.Main.handleRegister(Main.java:96) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:47) [classes/:?]
+2025-03-27 15:58:25 [main] INFO  Main - Application started..
+2025-03-27 15:58:59 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: Chetan@gmail.com
+2025-03-27 15:58:59 [main] INFO  Main - Application started..
+2025-03-27 15:59:25 [main] WARN  AuthenticationServiceImpl - Incorrect password attempt for email: chetan@gmail.com
+2025-03-27 15:59:25 [main] INFO  Main - Application started..
+2025-03-27 16:01:04 [main] ERROR Main - Error in main method: For input string: "897634634643656346464646346463464634745678546754"
+java.lang.NumberFormatException: For input string: "897634634643656346464646346463464634745678546754"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[?:?]
+	at java.base/java.lang.Integer.parseInt(Integer.java:662) ~[?:?]
+	at java.base/java.lang.Integer.parseInt(Integer.java:778) ~[?:?]
+	at com.foodorder.app.ui.CustomerUi.vieOrderHistory(CustomerUi.java:245) ~[classes/:?]
+	at com.foodorder.app.ui.CustomerUi.initCustomerScreen(CustomerUi.java:68) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.navigateBasedOnRole(AuthenticationServiceImpl.java:103) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleLoginAuth(AuthenticationServiceImpl.java:90) ~[classes/:?]
+	at com.foodorder.app.Main.handleLoginInput(Main.java:69) ~[classes/:?]
+	at com.foodorder.app.Main.main(Main.java:46) [classes/:?]
+2025-03-27 16:02:49 [main] INFO  Main - Application started..
+2025-03-27 20:22:17 [main] ERROR ConnectionUtility - properties file not found
+2025-03-27 20:22:17 [main] INFO  Main - Application started..
+2025-03-27 20:22:49 [main] INFO  Main - Application started..
+2025-03-27 20:23:29 [main] ERROR AuthenticationServiceImpl - Error from register user method: 
+java.lang.NullPointerException: Cannot invoke "java.sql.Connection.prepareStatement(String)" because "this.con" is null
+	at com.foodorder.app.jdbcImpl.UserDaoJdbcImpl.addUser(UserDaoJdbcImpl.java:38) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.registerUser(AuthenticationServiceImpl.java:68) [classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleRegisterAuth(AuthenticationServiceImpl.java:56) [classes/:?]
+	at com.foodorder.app.Main.handleRegister(Main.java:97) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:47) [classes/:?]
+2025-03-27 20:24:17 [main] ERROR ConnectionUtility - properties file not found
+2025-03-27 20:24:17 [main] INFO  Main - Application started..
+2025-03-27 20:25:06 [main] ERROR ConnectionUtility - properties file not found
+2025-03-27 20:25:06 [main] INFO  Main - Application started..
+2025-03-27 20:26:26 [main] ERROR AuthenticationServiceImpl - Error from register user method: 
+java.lang.NullPointerException: Cannot invoke "java.sql.Connection.prepareStatement(String)" because "this.con" is null
+	at com.foodorder.app.jdbcImpl.UserDaoJdbcImpl.addUser(UserDaoJdbcImpl.java:38) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.registerUser(AuthenticationServiceImpl.java:68) [classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleRegisterAuth(AuthenticationServiceImpl.java:56) [classes/:?]
+	at com.foodorder.app.Main.handleRegister(Main.java:97) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:47) [classes/:?]
+2025-03-27 20:28:42 [main] ERROR ConnectionUtility - properties file not found
+2025-03-27 20:28:42 [main] INFO  Main - Application started..
+2025-03-27 20:29:55 [main] ERROR ConnectionUtility - properties file not found
+2025-03-27 20:29:55 [main] INFO  Main - Application started..
+2025-03-27 20:30:27 [main] ERROR AuthenticationServiceImpl - Error from register user method: 
+java.lang.NullPointerException: Cannot invoke "java.sql.Connection.prepareStatement(String)" because "this.con" is null
+	at com.foodorder.app.jdbcImpl.UserDaoJdbcImpl.addUser(UserDaoJdbcImpl.java:38) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.registerUser(AuthenticationServiceImpl.java:68) [classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleRegisterAuth(AuthenticationServiceImpl.java:56) [classes/:?]
+	at com.foodorder.app.Main.handleRegister(Main.java:100) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:50) [classes/:?]
+2025-03-27 20:48:44 [main] INFO  Main - Application started..
+2025-03-27 20:49:09 [main] ERROR AuthenticationServiceImpl - Error from register user method: 
+java.lang.NullPointerException: Cannot invoke "java.sql.Connection.prepareStatement(String)" because "this.con" is null
+	at com.foodorder.app.jdbcImpl.UserDaoJdbcImpl.addUser(UserDaoJdbcImpl.java:38) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.registerUser(AuthenticationServiceImpl.java:68) [classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleRegisterAuth(AuthenticationServiceImpl.java:56) [classes/:?]
+	at com.foodorder.app.Main.handleRegister(Main.java:101) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:51) [classes/:?]
+2025-03-27 20:50:58 [main] INFO  Main - Application started..
+2025-03-27 20:51:10 [main] INFO  Main - Application started..
+2025-03-27 20:51:37 [main] ERROR AuthenticationServiceImpl - Error from register user method: 
+java.lang.NullPointerException: Cannot invoke "com.foodorder.app.enums.UserRole.name()" because the return value of "com.foodorder.app.entities.User.getRole()" is null
+	at com.foodorder.app.jdbcImpl.UserDaoJdbcImpl.addUser(UserDaoJdbcImpl.java:43) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.registerUser(AuthenticationServiceImpl.java:68) [classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleRegisterAuth(AuthenticationServiceImpl.java:56) [classes/:?]
+	at com.foodorder.app.Main.handleRegister(Main.java:101) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:51) [classes/:?]
+2025-03-27 20:53:20 [main] INFO  Main - Application started..
+2025-03-27 20:53:42 [main] ERROR AuthenticationServiceImpl - Error from register user method: 
+org.postgresql.util.PSQLException: ERROR: column "user_id" is of type integer but expression is of type character varying
+  Hint: You will need to rewrite or cast the expression.
+  Position: 27
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2725) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2412) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:371) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:502) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:419) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:194) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:155) ~[postgresql-42.7.2.jar:42.7.2]
+	at com.foodorder.app.jdbcImpl.UserDaoJdbcImpl.addUser(UserDaoJdbcImpl.java:45) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.registerUser(AuthenticationServiceImpl.java:68) [classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleRegisterAuth(AuthenticationServiceImpl.java:56) [classes/:?]
+	at com.foodorder.app.Main.handleRegister(Main.java:101) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:51) [classes/:?]
+2025-03-27 21:01:15 [main] INFO  Main - Application started..
+2025-03-27 21:01:36 [main] ERROR AuthenticationServiceImpl - Error from register user method: 
+org.postgresql.util.PSQLException: ERROR: column "user_type" of relation "users" does not exist
+  Position: 56
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2725) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2412) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:371) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:502) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:419) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:194) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:155) ~[postgresql-42.7.2.jar:42.7.2]
+	at com.foodorder.app.jdbcImpl.UserDaoJdbcImpl.addUser(UserDaoJdbcImpl.java:45) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.registerUser(AuthenticationServiceImpl.java:68) [classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleRegisterAuth(AuthenticationServiceImpl.java:56) [classes/:?]
+	at com.foodorder.app.Main.handleRegister(Main.java:101) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:51) [classes/:?]
+2025-03-27 21:02:34 [main] INFO  Main - Application started..
+2025-03-27 21:02:49 [main] ERROR AuthenticationServiceImpl - Error from register user method: 
+org.postgresql.util.PSQLException: ERROR: INSERT has more target columns than expressions
+  Position: 56
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2725) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2412) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:371) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:502) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:419) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:194) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:155) ~[postgresql-42.7.2.jar:42.7.2]
+	at com.foodorder.app.jdbcImpl.UserDaoJdbcImpl.addUser(UserDaoJdbcImpl.java:45) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.registerUser(AuthenticationServiceImpl.java:68) [classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleRegisterAuth(AuthenticationServiceImpl.java:56) [classes/:?]
+	at com.foodorder.app.Main.handleRegister(Main.java:101) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:51) [classes/:?]
+2025-03-27 21:04:35 [main] INFO  Main - Application started..
+2025-03-27 21:04:55 [main] INFO  Main - Application started..
+2025-03-28 11:19:25 [main] INFO  Main - Application started..
+2025-03-28 11:20:26 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: chetan@gmail.com
+2025-03-28 11:20:26 [main] INFO  Main - Application started..
+2025-03-28 11:21:17 [main] INFO  Main - Application started..
+2025-03-28 11:21:20 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: af
+2025-03-28 11:21:20 [main] INFO  Main - Application started..
+2025-03-28 11:21:30 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: omi@gmail.com
+2025-03-28 11:21:30 [main] INFO  Main - Application started..
+2025-03-28 11:21:44 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: omi@gmail.com
+2025-03-28 11:21:44 [main] INFO  Main - Application started..
+2025-03-28 11:22:27 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: Chetan@gmail.com
+2025-03-28 11:22:27 [main] INFO  Main - Application started..
+2025-03-28 11:22:39 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: chetan@gmail.com
+2025-03-28 11:22:39 [main] INFO  Main - Application started..
+2025-03-28 11:47:55 [main] INFO  Main - Application started..
+2025-03-28 11:48:08 [main] ERROR AuthenticationServiceImpl - Error from login user method data while receiving the data from database: 
+org.postgresql.util.PSQLException: ERROR: column "user_id" does not exist
+  Position: 8
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2725) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2412) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:371) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:502) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:419) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:194) ~[postgresql-42.7.2.jar:42.7.2]
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:137) ~[postgresql-42.7.2.jar:42.7.2]
+	at com.foodorder.app.jdbcImpl.UserDaoJdbcImpl.getUserByEmail(UserDaoJdbcImpl.java:59) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.loginUser(AuthenticationServiceImpl.java:118) [classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleLoginAuth(AuthenticationServiceImpl.java:89) [classes/:?]
+	at com.foodorder.app.Main.handleLoginInput(Main.java:70) [classes/:?]
+	at com.foodorder.app.Main.main(Main.java:47) [classes/:?]
+2025-03-28 11:48:08 [main] INFO  Main - Application started..
+2025-03-28 11:52:04 [main] INFO  Main - Application started..
+2025-03-28 11:52:13 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: omi@gmail.com
+2025-03-28 11:52:13 [main] INFO  Main - Application started..
+2025-03-28 11:52:40 [main] INFO  Main - Application started..
+2025-03-28 11:54:30 [main] INFO  Main - Application started..
+2025-03-28 11:59:34 [main] INFO  Main - Application started..
+2025-03-28 11:59:49 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: OMI@GMAIL.COM
+2025-03-28 11:59:49 [main] INFO  Main - Application started..
+2025-03-28 12:00:02 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: omi@gmail.com
+2025-03-28 12:00:02 [main] INFO  Main - Application started..
+2025-03-28 12:03:59 [main] INFO  Main - Application started..
+2025-03-28 12:04:06 [main] WARN  AuthenticationServiceImpl - Incorrect password attempt for email: omi@gmail.com
+2025-03-28 12:04:06 [main] INFO  Main - Application started..
+2025-03-28 12:05:35 [main] INFO  Main - Application started..
+2025-03-28 12:05:43 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: omi@12345
+2025-03-28 12:05:43 [main] INFO  Main - Application started..
+2025-03-28 12:05:52 [main] INFO  Main - Application started..
+2025-03-28 12:32:28 [main] INFO  Main - Application started..
+2025-03-28 12:33:12 [main] ERROR Main - Error in main method: Cannot invoke "com.foodorder.app.utility.Response.getResponseStatus()" because "response" is null
+java.lang.NullPointerException: Cannot invoke "com.foodorder.app.utility.Response.getResponseStatus()" because "response" is null
+	at com.foodorder.app.ui.CustomerUi.logoutCustomer(CustomerUi.java:259) ~[classes/:?]
+	at com.foodorder.app.ui.CustomerUi.initCustomerScreen(CustomerUi.java:70) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.navigateBasedOnRole(AuthenticationServiceImpl.java:108) ~[classes/:?]
+	at com.foodorder.app.serviceImpl.AuthenticationServiceImpl.handleLoginAuth(AuthenticationServiceImpl.java:95) ~[classes/:?]
+	at com.foodorder.app.Main.handleLoginInput(Main.java:70) ~[classes/:?]
+	at com.foodorder.app.Main.main(Main.java:47) [classes/:?]
+2025-03-28 12:33:12 [main] INFO  Main - Application started..
+2025-03-28 12:43:23 [main] INFO  Main - Application started..
+2025-03-28 12:44:42 [main] INFO  Main - Application started..
+2025-03-28 12:50:42 [main] INFO  Main - Application started..
+2025-03-28 12:50:54 [main] INFO  Main - Application started..
+2025-03-28 12:51:14 [main] INFO  Main - Application started..
+2025-03-28 12:54:15 [main] INFO  Main - Application started..
+2025-03-28 12:57:47 [main] INFO  Main - Application started..
+2025-03-28 12:58:07 [main] INFO  Main - Application started..
+2025-03-28 13:07:57 [main] INFO  Main - Application started..
+2025-03-28 13:08:02 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: a;lfa
+2025-03-28 13:08:02 [main] INFO  Main - Application started..
+2025-03-28 15:18:07 [main] INFO  Main - Application started..
+2025-03-28 15:18:15 [main] WARN  AuthenticationServiceImpl - Login failed: User not found with email: om@gmail.com
+2025-03-28 15:18:15 [main] INFO  Main - Application started..
