@@ -2,16 +2,18 @@ package org.assignment.ui;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.assignment.entities.Customer;
+import org.assignment.entities.User;
 import org.assignment.enums.ResponseStatus;
 
 import org.assignment.services.AuthenticationService;
-import org.assignment.services.CustomerService;
+import org.assignment.services.UserService;
 import org.assignment.services.ProductService;
 import org.assignment.util.ColorCodes;
+import org.assignment.util.Constants;
 import org.assignment.util.FormValidation;
 
 import org.assignment.util.Response;
+import org.assignment.wrappers.ProductWrapper;
 import org.hibernate.HibernateException;
 
 import java.util.List;
@@ -21,10 +23,14 @@ import java.util.Scanner;
 @AllArgsConstructor
 @Slf4j
 public class AuthUi extends UI {
-    private final CustomerService customerService;
+    private final UserService userService;
     private final Scanner sc = new Scanner(System.in);
     private final AuthenticationService service;
     private final ProductService productService;
+
+    @Override
+    public void initAdminServices(User admin) {
+    }
 
     @Override
     public void initAuthServices() {
@@ -33,72 +39,72 @@ public class AuthUi extends UI {
             System.out.println(ColorCodes.GREEN + "***********WELCOME*************" + ColorCodes.RESET);
             Response response = productService.getAllProduct();
             if (response.getStatus() == ResponseStatus.SUCCESSFUL) {
-                System.out.println(ColorCodes.BLUE + "Products : " + response.getData() + ColorCodes.RESET);
+                printProducts((List<ProductWrapper>) response.getData());
             } else {
-
                 System.out.println("Encountered some error... please contact admin");
-
             }
         } catch (HibernateException e) {
+            System.out.println("Encountered some error... please contact admin");
             log.error("Some error occured while starting application ", e);
+            return;
         }
 
         String operation = "";
-        while (!operation.equalsIgnoreCase("exit")) {
-            super.displayOptions(List.of("Press 1 for log in.", "Press 2 for registration", "Operation : "));
+        while (!operation.equalsIgnoreCase("0")) {
+            super.displayOptions(List.of("Press 0 for Log in.", "Press 1 for Registration","Press 2 to exit program", "Operation : "));
 
             operation = sc.nextLine();
             try {
-                Response response = new Response("No Inputs");
-                if (operation.equalsIgnoreCase("1")) {
+                Response response = new Response(ResponseStatus.ERROR, null, "No Inputs");
+                if (operation.equalsIgnoreCase("0")) {
                     response = login();
-                } else if (operation.equalsIgnoreCase("2")) {
+                } else if (operation.equalsIgnoreCase("1")) {
                     response = register();
+                } else if ( operation.equalsIgnoreCase("2")) {
+                   break;
                 }
-                if (response.getStatus().equals(ResponseStatus.SUCCESSFUL)) {
-                    System.out.println(ColorCodes.BLUE + response.getData() + ColorCodes.RESET);
-                } else {
-                    System.out.println(ColorCodes.RED + response.getError() + ColorCodes.RESET);
-                }
+                printResponse(response);
+
             } catch (Exception e) {
-                System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
-                e.printStackTrace();
+                log.error("Error occured while performing authentication operation", e);
+                System.out.println(ColorCodes.RED + Constants.ERROR_MESSAGE + ColorCodes.RESET);
             }
         }
     }
 
+    @Override
+    public void initCustomerServices(User user) {}
+
     private Response login() {
-        Response response = null;
         System.out.println(ColorCodes.GREEN + "*************LOG-IN*****************" + ColorCodes.RESET);
-        System.out.print("Enter email : ");
-        String email = sc.nextLine();
-        System.out.print("Enter password : ");
+        System.out.print("Enter Email : ");
+        String email = sc.nextLine().toUpperCase();
+        System.out.print("Enter Password : ");
         String password = sc.nextLine();
-        int count = 4;
-        while ((!email.isBlank() && !password.isBlank()) && !validateLogin(email, password) && count-- > 0) {
-            System.out.println("Try again");
+        Response authResponse = service.login(email, password);
+        while ((!email.isBlank() && !password.isBlank()) && authResponse.getStatus() == ResponseStatus.ERROR) {
+            printResponse(authResponse);
             System.out.print("Enter email : ");
-            email = sc.nextLine();
+            email = sc.nextLine().toUpperCase();
             System.out.print("Enter password : ");
             password = sc.nextLine();
+            authResponse = service.login(email, password);
         }
-        if (count <= 0) {
-            response = new Response(null, "Try limit exceed");
-        }
-        return response != null ? response : service.login(email, password);
+
+        return authResponse;
     }
 
     private Response register() {
         Response response;
         System.out.println(ColorCodes.GREEN + "*******REGISTRATION*******" + ColorCodes.RESET);
-        System.out.print("Your name : ");
+        System.out.print("Your Name : ");
         String name = sc.nextLine();
         System.out.print("Your Address : ");
         String address = sc.nextLine();
         boolean validEmail = false;
         String email = "";
         while (!validEmail) {
-            System.out.print("Your email : ");
+            System.out.print("Your Email : ");
             email = sc.nextLine();
             validEmail = FormValidation.validateEmail(email);
             if (!validEmail) {
@@ -117,14 +123,11 @@ public class AuthUi extends UI {
                 printPasswordDisclaimer();
             }
         }
+        email = email.toUpperCase();
         response = service.save(email, password, address, name);
-        return response.getStatus() == ResponseStatus.SUCCESSFUL ? service.login(email, password) : response;
+        return response.getStatus() == ResponseStatus.SUCCESSFUL ? login() : response;
     }
 
-    private boolean validateLogin(String email, String password) {
-        Optional<Customer> optionalCustomer = customerService.findByEmail(email);
-        return optionalCustomer.map(customer -> customer.getPassword().equals(password)).orElseGet(optionalCustomer::isPresent);
-    }
 
     private void printPasswordDisclaimer() {
         System.out.println(ColorCodes.RED + "Disclaimer : \n" +

@@ -1,23 +1,24 @@
 package org.assignment.repositoryhibernateimpl;
 
 import jakarta.persistence.*;
-import org.assignment.entities.Customer;
+import lombok.RequiredArgsConstructor;
+import org.assignment.entities.User;
 import org.assignment.entities.Order;
 import org.assignment.entities.Product;
 import org.assignment.enums.OrderStatus;
 
 import org.assignment.exceptions.OrderNotFoundException;
 import org.assignment.repository.interfaces.OrderRepository;
-import org.assignment.util.ConnectionUtility;
 
 import java.util.List;
 import java.util.Optional;
-
+@RequiredArgsConstructor
 public class OrderRepoHibernateImpl implements OrderRepository {
 
-    private final  EntityManager manager = ConnectionUtility.getEntityManager();
-    private final  EntityTransaction transaction = manager.getTransaction();
-    private final static String BASE_SELECTION_QUERY = "SELECT o FROM Order o ";
+    private final  EntityManager manager;
+    private final    EntityTransaction transaction;
+    private static final String BASE_SELECTION_QUERY = "SELECT o FROM Order o";
+    //Order o = new Order()
 
     @Override
     public List<Order> getAllOrders(){
@@ -28,7 +29,7 @@ public class OrderRepoHibernateImpl implements OrderRepository {
     @Override
     public Optional<Order> fetchOrderById(Long id)  {
         Order order = manager.find(Order.class, id);
-        return order == null ? Optional.empty() : Optional.of(order);
+        return Optional.ofNullable(order);
     }
 
     @Override
@@ -47,30 +48,30 @@ public class OrderRepoHibernateImpl implements OrderRepository {
     }
 
     @Override
-    public List<Order> fetchOrderByProductAndCustomer(Product product, Customer customer)  {
-        String jpql = BASE_SELECTION_QUERY + " WHERE o.product = :product AND o.customer = :customer AND o.status = :status";
+    public List<Order> fetchOrderByProductAndCustomer(Product product, User user)  {
+        String jpql = BASE_SELECTION_QUERY + " WHERE o.product = :product AND o.user = :user AND o.status = :status";
         TypedQuery<Order> query = manager.createQuery(jpql, Order.class);
         query.setParameter("product", product);
-        query.setParameter("customer", customer);
+        query.setParameter("user", user);
         query.setParameter("status", OrderStatus.ORDERED);
         return query.getResultList();
     }
 
     @Override
-    public List<Order> getOrderByCustomer(Customer customer) throws OrderNotFoundException{
-        String jpql = BASE_SELECTION_QUERY + " WHERE o.customer = :customer";
+    public List<Order> getOrderByCustomer(User user) throws OrderNotFoundException{
+        String jpql = BASE_SELECTION_QUERY + " WHERE o.user = :user";
         TypedQuery<Order> query = manager.createQuery(jpql, Order.class);
-        query.setParameter("customer", customer);
+        query.setParameter("user", user);
         List<Order> orders = query.getResultList();
         if (orders.isEmpty()) {
-            throw new OrderNotFoundException("No Order found for the customer");
+            throw new OrderNotFoundException("No Order found for the user");
         }
         return orders;
     }
 
     @Override
     public List<Order> getAllDeliveredOrders() throws OrderNotFoundException {
-        String jpql = BASE_SELECTION_QUERY + " WHERE o.status = : status";
+        String jpql = BASE_SELECTION_QUERY + " WHERE o.status = :status";
         TypedQuery<Order> query = manager.createQuery(jpql, Order.class);
         query.setParameter("status", OrderStatus.DELIVERED);
         List<Order> orders = query.getResultList();
@@ -89,10 +90,10 @@ public class OrderRepoHibernateImpl implements OrderRepository {
     }
 
     @Override
-    public List<Order> getOrdersByStatusAndCustomer(Customer customer, OrderStatus status) {
-        String jpql = BASE_SELECTION_QUERY + "WHERE o.customer = :customer AND o.status = :status";
+    public List<Order> getOrdersByStatusAndCustomer(User user, OrderStatus status) {
+        String jpql = BASE_SELECTION_QUERY + "WHERE o.user = :user AND o.status = :status";
         TypedQuery<Order> typedQuery = manager.createQuery(jpql, Order.class);
-        typedQuery.setParameter("customer", customer);
+        typedQuery.setParameter("user", user);
         typedQuery.setParameter("status", status);
         return typedQuery.getResultList();
     }

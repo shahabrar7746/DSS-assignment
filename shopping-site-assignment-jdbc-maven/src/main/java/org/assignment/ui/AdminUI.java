@@ -2,167 +2,277 @@ package org.assignment.ui;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.assignment.entities.Customer;
+import org.assignment.entities.Order;
+import org.assignment.entities.User;
 import org.assignment.enums.ProductType;
 import org.assignment.enums.ResponseStatus;
 import org.assignment.enums.Roles;
 
 import org.assignment.services.AdminService;
 
-import org.assignment.services.CustomerService;
+import org.assignment.services.UserService;
 import org.assignment.services.OrderService;
 import org.assignment.services.ProductService;
 import org.assignment.util.ColorCodes;
 import org.assignment.util.Constants;
 import org.assignment.util.Response;
+import org.assignment.wrappers.CustomerWrapper;
+import org.assignment.wrappers.ProductWrapper;
+import org.assignment.wrappers.SellerWrapper;
 
 import java.util.*;
+import java.util.List;
+
 @Slf4j
 @AllArgsConstructor
 public class AdminUI extends UI {
     private final Scanner sc = new Scanner(System.in);
     private final AdminService service;
 
-private final CustomerService customerService;
-private final ProductService productService;
-private  final OrderService orderService;
+    private final UserService userService;
+    private final ProductService productService;
+    private final OrderService orderService;
 
     @Override
-    public void initAdminServices(Customer admin) {
+    public void initAdminServices(User admin) {
         boolean isSuperAdmin = Objects.equals(admin.getRole(), Roles.SUPER_ADMIN);
         String message = isSuperAdmin ? "SUPER_ADMIN" : "ADMIN";
         System.out.println(ColorCodes.GREEN + "*********WELCOME-" + message + "****************" + ColorCodes.RESET);
 
         String operation = "";
-        while (!operation.equalsIgnoreCase("back")) {
-            final String response = "Response : ";
-            List<String> option = new ArrayList<>();
-            option.add("Press 1 to get all the customer");
-            option.add("Press 2 to get all products");
-            option.add("Press 3 to get customer by id");
-            option.add("Press 4 to get all delivered orders");
-            option.add("Press 5 to get the products by their type");
-            option.add("Press 6 to fetch all admins");
+        while (Boolean.FALSE.equals(operation.equalsIgnoreCase("0"))) {
             boolean isExit = false;
+
+            List<String> option = new ArrayList<>(); // List.of
+            option.add("Press 1 to display all the user");
+            option.add("Press 2 to display all products");
+            option.add("Press 3 to find user on basis of their id");
+            option.add("Press 4 to display all orders");
+            option.add("Press 5 to display the products by their category");
+            option.add("Press 6 to display all admins");
+            option.add("Press 7 to add product for seller");
             if (isSuperAdmin) {//todo
-                option.add("Press 7 to delete customer");
-                option.add("Press 8 to grant admin access to customer");
-                option.add("Press 9 to revoke access from customer");
+                option.add("Press 8 to grant admin access to user");
+                option.add("Press 9 to revoke access from user");
             }
-            option.add("Enter 'back' to go to previous page");
-            super.displayOptions(option);
+            option.add("Enter '0' to go to previous page");
+            displayOptions(option);
             operation = sc.nextLine();
 
             Response resp;
             switch (operation) {
-
                 case "1":
-                    resp = customerService.getAllCustomer();
+                    resp = userService.getAllCustomer();
+                    if (resp.getStatus() == ResponseStatus.SUCCESSFUL) {
+                        printCustomers((List<User>) resp.getData());
+                        resp = null;
+                    }
                     break;
                 case "2":
                     resp = productService.getAllProduct();
                     break;
                 case "3":
-                    resp = getCustomerById();
+                    resp = getCustomerByEmail("Enter customer email to view his/her details : ");
+                    if (resp.getStatus() == ResponseStatus.SUCCESSFUL) {
+                       displaySingleCustomer((Optional<User>) resp.getData());
+                        resp = null;
+                    }
+                    sc.nextLine();
                     break;
                 case "4":
-                    resp = orderService.getAllDeliveredOrders();
+                    resp = getOrdersByCustomer();
+                    if(resp.getStatus() == ResponseStatus.SUCCESSFUL)
+                    {
+                        printOrders((List<Order>) resp.getData());
+                        resp = null;
+                    }
                     break;
                 case "5":
                     resp = getProductByType();
+                    if (resp.getStatus() == ResponseStatus.SUCCESSFUL) {
+                        printProducts((List<ProductWrapper>) resp.getData());
+                        resp = null;
+                    }
                     break;
                 case "6":
-                    resp = customerService.fetchAllAdmins();
+                    resp = userService.fetchAllAdmins();
                     break;
                 case "7":
-                    resp = deleteCustomer();
+                    resp = addProduct();
+                    sc.nextLine();
                     break;
                 case "8":
                     resp = grantAccess();
+                    sc.nextLine();
                     break;
                 case "9":
                     resp = revokeAccess();
+                    sc.nextLine();
                     break;
-                case "back", "BACK":
-                    resp = new Response("Going back");
+                case "0":
+                    resp = new Response(ResponseStatus.SUCCESSFUL, "Going back", null);
                     isExit = true;
                     break;
                 default:
-                    System.err.println();
-                    resp = new Response(null, "Unsupported operation");
+                    resp = new Response(ResponseStatus.ERROR, null, "Unsupported operation");
             }
-            if (resp.getStatus() == ResponseStatus.ERROR) {
-                System.out.println(ColorCodes.RED + "ERROR : " + resp.getError() + ColorCodes.RESET);
-            } else if (resp.getStatus() == ResponseStatus.SUCCESSFUL) {
-                System.out.println(ColorCodes.RED + response + resp.getData() + ColorCodes.RESET);
-            }
+
+            printResponse(resp);
+
             if (isExit) {
                 break;
             }
         }
 
     }
+    private void displaySingleCustomer(Optional<User> customerOptional)
+    {
+        if(customerOptional.isEmpty())
+        {
+            System.out.println(ColorCodes.RED + "Invalid customer email " + ColorCodes.RESET);
+            return;
+        }
+        printCustomers(List.of(customerOptional.get()));
+    }
+
+    private Response addProduct() {
+        Response response = null;
+        while (response == null || response.getStatus() == ResponseStatus.ERROR) {
+            try {
+                System.out.println(ColorCodes.GREEN + "Please provide product name" + ColorCodes.RESET);
+                String productName = sc.nextLine().toUpperCase();
+                while (productName.isBlank())
+                {
+                    System.out.println(ColorCodes.RED + "product name cannot be blank" + ColorCodes.RESET);
+                    System.out.println(ColorCodes.GREEN + "Please provide product name" + ColorCodes.RESET);
+                    productName = sc.nextLine();
+                }
+                System.out.println(ColorCodes.GREEN + "Please choose Currency" + ColorCodes.RESET);
+                printAndDisplayOptionsForCurrencies();
+                int currencyIndex = sc.nextInt();
+
+                System.out.println(ColorCodes.GREEN + "Please choose Product Type" + ColorCodes.RESET);
+                printAndDisplayOptionsForProductTypes();
+                int productTypeIndex = sc.nextInt();
+
+                double price = 0.0;
+                while (price <= 0.0) {
+                    System.out.println(ColorCodes.RED + "Please provide price of the product(must be greater than 0) " + ColorCodes.RESET);
+                    price = sc.nextDouble();
+                }
+                Response sellerResponse = userService.fetchAllSellers();
+                if (sellerResponse.getStatus() == ResponseStatus.SUCCESSFUL && sellerResponse.getData() instanceof List) {
+                    printSellerWrappers((List<SellerWrapper>) sellerResponse.getData());
+                }
+                if (sellerResponse.getStatus() == ResponseStatus.ERROR) {
+                    return sellerResponse;
+                }
+
+                System.out.println(ColorCodes.GREEN + "Provide seller id" + ColorCodes.RESET);
+                long seller = sc.nextLong();
+                int stock = 0;
+                while (stock <= 0) {
+                    System.out.println(ColorCodes.RED + "Please provide stocks of the product(must be greater than 0) " + ColorCodes.RESET);
+                    stock = sc.nextInt();
+                }
+                response = productService.addProduct(productName, seller, productTypeIndex, currencyIndex, price, stock);
+                if (response.getStatus() == ResponseStatus.ERROR) {
+                    printResponse(response);
+                    sc.nextLine();
+                }
 
 
+            } catch (InputMismatchException e) {
+                System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
+                sc.next();
+            }
+        }
+
+        return response;
+    }
+
+    private Response getOrdersByCustomer() {
+        Response allCustomerResponse = userService.getAllMaskedCustomer();
+        if (allCustomerResponse.getStatus() == ResponseStatus.ERROR) {
+            return allCustomerResponse;
+        }
+        printCustomerWrappers((List<CustomerWrapper>) allCustomerResponse.getData());
+        String mesaage = "Please provide email of user whose order you want to display\nEmail:";
+        Response findByEmailResponse = getCustomerByEmail(mesaage);
+        while (Boolean.TRUE.equals(findByEmailResponse.getStatus() == ResponseStatus.SUCCESSFUL)
+                && (findByEmailResponse.getData() instanceof Optional<?> customerOptional
+                && customerOptional.isEmpty())) {
+             findByEmailResponse = getCustomerByEmail(mesaage);
+        }
+        if (Boolean.TRUE.equals(findByEmailResponse.getStatus() == ResponseStatus.ERROR)) {
+            return findByEmailResponse;
+        }
+        Optional<User> customerTobeFound = (Optional<User>) findByEmailResponse.getData();
+        User user = customerTobeFound.get();
+        Response orderResponse = orderService.getAllOrdersByCustomer(user);
+        return orderResponse;
+    }
 
     private Response getProductByType() {
-
         String operation;
         Response response = null;
         boolean isFinished = false;
-        while (!isFinished) {
-            System.out.print("Press : \n 1 for PHONE \n 2 for FURNITURE \n 3 for APPLIANCES \n 4 for MAKEUP \n 5 for CLOTHING \n operation : ");
+
+        while (Boolean.FALSE.equals(isFinished)) {
+            ProductType types[] = ProductType.values();
+            for (int i = 0; i < types.length; i++) {
+                System.out.println("Press " + i + " for " + types[i]);
+            }
+            System.out.println("Press " + types.length + " to display all product");
             operation = sc.nextLine();
-            switch (operation) {
-                case "1":
-                    response = productService.getProductsByType(ProductType.PHONE);
+            if (operation.matches("-?\\d+")) {
+                int index = Integer.parseInt(operation);
+                if (index < 0 || index > types.length) {
+                    isFinished = false;
+                } else if (index == types.length) {
+                    response = productService.getAllProduct();
                     isFinished = true;
-                    break;
-                case "2":
-                    response = productService.getProductsByType(ProductType.FURNITURE);
+                } else {
+                    response = productService.getProductsByType(types[index]);
                     isFinished = true;
-                    break;
-                case "3":
-                    response = productService.getProductsByType(ProductType.APPLIANCES);
-                    isFinished = true;
-                    break;
-                case "4":
-                    response = productService.getProductsByType(ProductType.MAKEUP);
-                    isFinished = true;
-                    break;
-                case "5":
-                    response = productService.getProductsByType(ProductType.CLOTHING);
-                    isFinished = true;
-                    break;
-                default:
-                    System.out.println(ColorCodes.RED + "Wrong operation choosen" + ColorCodes.RESET);//executed if the type is of the defined main.enums.
+                }
+
+            } else if (!isFinished) {
+                System.out.println(ColorCodes.RED + "Wrong operation choosen" + ColorCodes.RESET);//executed if the type is of the defined main.enums.
             }
         }
+
         return response;//returns list of product of same type.
     }
 
     private Response grantAccess() {
-        Response customerResponse = customerService.getAllCustomer();
+        Response customerResponse = userService.getAllCustomer();
+
         if (customerResponse.getStatus() == ResponseStatus.ERROR) {
             return customerResponse;
         }
+
         System.out.println(ColorCodes.BLUE + "Admins : " + customerResponse.getData() + ColorCodes.RESET);
-        System.out.print("Enter Customer id to whom you want to grant access to : ");
+        System.out.print("Enter User id to whom you want to grant access to : ");
         String cid = sc.nextLine();
-        Response isCustomer = customerService.customerExists(Long.valueOf(cid));
+
+        Response isCustomer = userService.customerExists(Long.valueOf(cid));
+
         if (isCustomer.getStatus() == ResponseStatus.ERROR) {
             return isCustomer;
         }
         boolean condition = (boolean) isCustomer.getData();
         int count = 5;
-        while (!condition && count-- > 0) {
-            System.out.println("Wrong customer id, enter correct customer id");
-            System.out.print(ColorCodes.BLUE + "Enter Customer id to whom you want to grant access to : " + ColorCodes.RESET);
+
+        while (!condition && (count-- > 0)) {
+            System.out.println("Wrong user id, enter correct user id");
+            System.out.print(ColorCodes.BLUE + "Enter User id to whom you want to grant access to : " + ColorCodes.RESET);
             cid = sc.nextLine();
-            isCustomer = customerService.customerExists(Long.valueOf(cid));
+            isCustomer = userService.customerExists(Long.valueOf(cid));
             if (isCustomer.getStatus() == ResponseStatus.ERROR) {
                 return isCustomer;
             }
+
             condition = (boolean) isCustomer.getData();
         }
         Response authResponse = authenticate();
@@ -174,77 +284,67 @@ private  final OrderService orderService;
         String password = sc.nextLine();
         int count = 5;
         Response response = null;
-        while (!customerService.authenticateSuperAdmin(password) && count-- > 0) {
+        while (!userService.authenticateSuperAdmin(password) && count-- > 0) {
             System.out.println("Incorrect password please try again...");
             password = sc.nextLine();
         }
-        if (!customerService.authenticateSuperAdmin(password)) {
-            response = new Response(null, "Incorrect password");
+        if (!userService.authenticateSuperAdmin(password)) {
+            response = new Response(ResponseStatus.ERROR, null, "Incorrect password");
         }
         if (response == null && count == 0) {
-            response = new Response(null, "try limit exceed");
+            response = new Response(ResponseStatus.ERROR, null, "try limit exceed");
         }
-        return response == null ? new Response("Authenticated") : response;
+        return response == null ? new Response(ResponseStatus.SUCCESSFUL, "Authenticated", null) : response;
     }
 
     private Response revokeAccess() {
-        Response admins = customerService.fetchAllAdmins();
+        Response admins = userService.fetchAllAdmins();
         if (admins.getStatus() == ResponseStatus.ERROR) {
             return admins;
         }
         System.out.println(ColorCodes.BLUE + "Admins : " + admins.getData() + ColorCodes.RESET);
-        System.out.print("Enter Customer id to whom you want to revoke access to : ");
+        System.out.print("Enter User id to whom you want to revoke access to : ");
         String cid = sc.nextLine();
-        Response adminResponse = customerService.isAdmin(Long.valueOf(cid));
+        Response adminResponse = userService.isAdmin(Long.valueOf(cid));
         if (adminResponse.getStatus() == ResponseStatus.ERROR) {
             return adminResponse;
         }
         boolean condition = (boolean) adminResponse.getData();
-        while (!condition ) {
-            System.out.println("Wrong customer id, enter correct customer id");
-            System.out.print("Enter Customer id to whom you want to revoke access to : ");
-            cid = sc.nextLine();//keeps on requesting id if no object is found for the previous id, keeps on going until count is not equals to 0 or less than 0
-            admins = customerService.isAdmin(Long.valueOf(cid));
-            if (admins.getStatus() == ResponseStatus.ERROR) {
-                return admins;
+        while (!condition) {
+            try {
+                System.out.println("Wrong user id, enter correct user id");
+                System.out.print("Enter User id to whom you want to revoke access to : ");
+                cid = sc.nextLine();//keeps on requesting id if no object is found for the previous id, keeps on going until count is not equals to 0 or less than 0
+                admins = userService.isAdmin(Long.valueOf(cid));
+                if (admins.getStatus() == ResponseStatus.ERROR) {
+                    return admins;
+                }
+                condition = (Boolean) admins.getData();
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                log.error("Some error occured while revoking access admin from cid ", e);
+                return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
             }
-            condition = (Boolean) admins.getData();
-        }
 
+        }
         Response authResponse = authenticate();
         return authResponse.getStatus() == ResponseStatus.ERROR ? authResponse : service.revokeAccess(Long.valueOf(cid));
     }
 
-    private Response getCustomerById() {
-        Response response = customerService.getAllCustomer();
-        if (response.getStatus() == ResponseStatus.ERROR) {
-            return response;
-        }
-        List<Customer> data = new ArrayList<>();
-        if(response.getData() instanceof  List l)
-        {
-            data = l;
-        }else{
-            log.error("Some error occured while getting all customers to be searched for id, response : ", response.getData());
-            return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
-        }
-        if (data.isEmpty()) {
-            return new Response(null, "No customers are there");
-        }
-        System.out.print("Please provide the id of Customer : ");
-        Long id = sc.nextLong();
-        return customerService.getCustomerById(id);
+    @Override
+    public void initAuthServices() {
     }
 
-    private Response deleteCustomer() {
-        List<Customer> allCustomer = null;
-        Response customerResponse = customerService.getAllCustomer();
-        if (customerResponse.getStatus() == ResponseStatus.ERROR) {
-            return customerResponse;
-        }
-        System.out.println(ColorCodes.BLUE + "Customers : " + allCustomer + ColorCodes.RESET);
-        System.out.print("Provide customer id : ");
-        Long cid = sc.nextLong();
-        return customerService.deleteCustomer(cid);
+    @Override
+    public void initCustomerServices(User user) {
     }
+
+    private Response getCustomerByEmail(String message) {
+        System.out.println(message);
+        String email = sc.nextLine().toUpperCase();
+        Response response = userService.findByEmail(email);
+        return response;
+    }
+
 }

@@ -3,10 +3,10 @@ package org.assignment.queries;
 import static org.assignment.queries.Clauses.WHERE;
 
 public class CustomerQueries {
-    private static final String SELECT_BASE_QUERY = " SELECT * FROM customer ";
-    private static final String INSERT_BASE_QUERY = " INSERT INTO customer ";
-    private static final String UPDATE_BASE_QUERY = " UPDATE customer SET ";
-    private static final String DELETE_BASE_QUERY = " DELETE FROM customer ";
+    private static final String SELECT_BASE_QUERY = " SELECT * FROM user ";
+    private static final String INSERT_BASE_QUERY = " INSERT INTO user ";
+    private static final String UPDATE_BASE_QUERY = " UPDATE user SET ";
+    private static final String DELETE_BASE_QUERY = " DELETE FROM user ";
     private static final String EQUALS = " = ";
     private static final String PLACEHOLDER = " ? ";
     private static final String SPACE = " ";

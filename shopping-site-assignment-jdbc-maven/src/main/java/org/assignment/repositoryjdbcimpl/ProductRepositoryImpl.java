@@ -34,6 +34,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public Product updateProduct(Product product) {
+        return null;
+    }
+
+    @Override
     public Optional<Product> fetchProductById(Long id) throws SQLException {
         Optional<Product> productOptional = Optional.empty();
         String query = ProductQueries.getProductsByColumns(new String[]{"PRODUCT_ID"}, null);
@@ -51,5 +56,10 @@ public class ProductRepositoryImpl implements ProductRepository {
         statement.setString(1, name);
         List<Product> products =  ResultSetUtility.getProductsFromResultSet(statement.executeQuery());
         return products.isEmpty() ? productOptional : Optional.of(products.get(0));
+    }
+
+    @Override
+    public void addProduct(Product product) {
+
     }
 }

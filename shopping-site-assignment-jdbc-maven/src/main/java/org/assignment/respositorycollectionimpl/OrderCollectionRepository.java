@@ -1,6 +1,6 @@
 package org.assignment.respositorycollectionimpl;
 
-import org.assignment.entities.Customer;
+import org.assignment.entities.User;
 import org.assignment.entities.Order;
 import org.assignment.entities.Product;
 import org.assignment.enums.OrderStatus;
@@ -10,7 +10,6 @@ import org.assignment.repository.interfaces.OrderRepository;
 
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public  class OrderCollectionRepository implements OrderRepository {
 
@@ -46,15 +45,15 @@ public  class OrderCollectionRepository implements OrderRepository {
         return order;
     }
     @Override
-    public  List<Order> fetchOrderByProductAndCustomer(Product product, Customer customer)
+    public  List<Order> fetchOrderByProductAndCustomer(Product product, User user)
     {
-        List<Order> orderList = orders.stream().filter(o->o.getProduct().getId().equals(product) && o.getCustomer().getId().equals(customer.getId())).toList();
+        List<Order> orderList = orders.stream().filter(o->o.getProduct().getId().equals(product) && o.getUser().getId().equals(user.getId())).toList();
         return orderList;
     }
 
     @Override
-    public List<Order> getOrderByCustomer(final Customer customer) {
-        return orders.stream().filter(o-> o.getCustomer().getId().equals(customer.getId())).toList();
+    public List<Order> getOrderByCustomer(final User user) {
+        return orders.stream().filter(o-> o.getUser().getId().equals(user.getId())).toList();
     }
 
     @Override
@@ -77,7 +76,7 @@ public  class OrderCollectionRepository implements OrderRepository {
     }
 
     @Override
-    public List<Order> getOrdersByStatusAndCustomer(Customer customer, OrderStatus status) {
+    public List<Order> getOrdersByStatusAndCustomer(User user, OrderStatus status) {
         return List.of();
     }
 

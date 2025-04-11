@@ -1,37 +1,40 @@
+import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
-import org.assignment.repository.interfaces.CustomerRepository;
+import org.assignment.repository.interfaces.UserRepository;
 import org.assignment.repository.interfaces.OrderRepository;
 import org.assignment.repository.interfaces.ProductRepository;
-import org.assignment.repository.interfaces.SellerRepository;
-import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
+import org.assignment.repositoryhibernateimpl.UserRepoHibernateImpl;
 import org.assignment.repositoryhibernateimpl.OrderRepoHibernateImpl;
 import org.assignment.repositoryhibernateimpl.ProductRepoHibernateImpl;
-import org.assignment.repositoryhibernateimpl.SellerRepoHibernateImpl;
 import org.assignment.serviceimlementation.*;
 import org.assignment.services.*;
 import org.assignment.ui.AuthUi;
 import org.assignment.ui.UI;
+import org.assignment.util.ConnectionUtility;
 
 @Slf4j
 public class Main {
     public static void main(String[] args) {
-        final OrderRepository orderRepository = new OrderRepoHibernateImpl();
-        final ProductRepository productRepository = new ProductRepoHibernateImpl();
-        final SellerRepository sellerRepository = new SellerRepoHibernateImpl();
-        final CustomerRepository customerRepository = new CustomerRepoHibernateImpl();
+        try(EntityManager manager = ConnectionUtility.getEntityManager()) {
+        final OrderRepository orderRepository = new OrderRepoHibernateImpl(manager, manager.getTransaction());
+        final ProductRepository productRepository = new ProductRepoHibernateImpl(manager, manager.getTransaction());
+        final UserRepository userRepository = new UserRepoHibernateImpl(manager, manager.getTransaction());
 
-        final ProductService productService = new ProductServiceImplementation(productRepository);
-        final CartService cartService = new CartServiceImplementation(productRepository, sellerRepository, orderRepository, customerRepository);
-        final OrderService orderService = new OrderServiceImplementation(orderRepository, productRepository);
-        final AdminService adminService = new AdminServiceImplementation(customerRepository);
-        final CustomerService customerService = new CustomerServiceImplementation(customerRepository);
-        final AuthenticationService authService = new AuthenticationServiceImplementation(customerRepository, customerService, adminService, productService, orderService, cartService);
+        final ProductService productService = new ProductServiceImplementation(productRepository, userRepository);
+        final UserService userService = new UserServiceImplementation(userRepository);
+        final CartService cartService = new CartServiceImplementation(productRepository, orderRepository, userRepository);
+        final OrderService orderService = new OrderServiceImplementation(orderRepository, productRepository, userService);
+        final AdminService adminService = new AdminServiceImplementation(userRepository);
 
-      final UI authUi = new AuthUi(customerService, authService, productService);
-        try {
+        final AuthenticationService authService = new AuthenticationServiceImplementation(userRepository, userService, adminService, productService, orderService, cartService);
+
+      final UI authUi = new AuthUi(userService, authService, productService);
+
+
            authUi.initAuthServices();
         } catch (Exception e) {
             log.error("Unable to start to application : ", e);
+            System.out.println("Enable to start application");
         }
 
 

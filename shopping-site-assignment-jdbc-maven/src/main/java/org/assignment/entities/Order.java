@@ -2,7 +2,6 @@ package org.assignment.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.assignment.enums.Currency;
 import org.assignment.enums.OrderStatus;
 import org.assignment.util.ColorCodes;
 
@@ -15,6 +14,8 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Table(name = "orders")
 public class Order implements Serializable {
     @Id
@@ -25,17 +26,10 @@ public class Order implements Serializable {
     @Column(name = "price")
     private double price;
 
-    @JoinColumn(name = "seller_id")
-    @ManyToOne
-    private Seller seller;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "currency")
-    private Currency currency;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private User user;
 
     @JoinColumn(name = "product_id")
     @ManyToOne
@@ -65,20 +59,16 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-       return ColorCodes.YELLOW +
-                "+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+\n" +
-                "| Order ID          | Product Name      | Seller            | Customer          | Status            | Ordered On        | Price             | Quantity          |\n" +
-                "+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+\n" +
-                String.format("| %-17s | %-17s | %-17s | %-17s | %-17s | %-17s | %-17.2f | %-17d |\n",
-                        id,
+        return
+                String.format("| %-17s | %-17s | %-17s | %-17s | %-17s | %-17.2f | %-17s | %-17d |\n",
                         product != null ? product.getName() : "N/A",
-                        seller != null ? seller.getName() : "N/A",
-                        customer != null ? customer.getName() : "N/A",
-                        status,
-                        orderedOn,
+                        product != null ? product.getSeller().getName() : "N/A",  // Assuming Product has a getSellerName() method
+                        user != null ? user.getName() : "N/A",
+                        status != null ? status.name() : "N/A",
+                        orderedOn != null ? orderedOn.toString() : "N/A",
                         price,
+                       product != null ? product.getCurrency() : "N/A",  // Assuming Currency enum has a meaningful name
                         quantity) +
-                "+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+\n" +
-                ColorCodes.RESET;
+                "+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+";
     }
 }

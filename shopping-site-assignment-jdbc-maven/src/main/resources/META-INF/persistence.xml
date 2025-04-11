@@ -4,7 +4,7 @@
         <class>org.assignment.entities.Seller</class>
         <class>org.assignment.entities.Order</class>
         <class>org.assignment.entities.Product</class>
-        <class>org.assignment.entities.Customer</class>
+        <class>org.assignment.entities.User</class>
         <class>org.assignment.entities.CartItems</class>
         <properties>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

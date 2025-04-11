@@ -1,10 +1,6 @@
 package org.assignment.queries;
 
-import org.assignment.entities.Customer;
-import org.assignment.entities.Product;
-
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public final class OrderQueries {
     public static final String SELECT_BASE_QUERY = " SELECT * FROM orders ";
@@ -52,7 +48,7 @@ public final class OrderQueries {
         return builder.toString();
     }
     public static String deliveredOrderQuery(){
-        return "SELECT orders.* FROM customer, orders WHERE customer.customer_id = orders.customer_id AND orders.status = 'DELIVERED'";
+        return "SELECT orders.* FROM user, orders WHERE user.customer_id = orders.customer_id AND orders.status = 'DELIVERED'";
     }
     public static String getOrdersByProductAndCustomer(){
         return "SELECT * FROM orders WHERE orders.customer_id = ? AND orders.product_id = ?";

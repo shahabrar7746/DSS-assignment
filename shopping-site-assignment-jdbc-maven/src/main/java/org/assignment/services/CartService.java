@@ -1,17 +1,22 @@
 package org.assignment.services;
 
-import org.assignment.entities.Customer;
+import org.assignment.entities.CartItems;
+import org.assignment.entities.User;
 import org.assignment.util.Response;
 
 public interface CartService {
+    Response intiateCart(User user, String name, int quantity);
 
-     Response intiateCart(Customer customer, String name, int quantity);
+    Response removeFromCartByProductName(final User user, String name);
 
-     Response removeFromCart(final Customer customer, String name);
-     Response orderFromCart(Customer customer, String name, int quantity, boolean edited);
+    Response removeFromCartByCartItemObject(final User user, CartItems items);
 
-     Response incrementQuantity(Customer customer, String productName, int newQuantity);
+    Response orderFromCart(User user, String name, int quantity, boolean edited);
 
-     Response decrementQuantity(Customer customer, String productName, int newQuantity);
-     Response getTotalBillFromCart(Customer customer);
+    Response changeQuantity(User user, CartItems item, int newQuantity);
+
+    Response getTotalBillFromCart(User user);
+
+    Response findCartItemByName(User user, String productName);
+
 }

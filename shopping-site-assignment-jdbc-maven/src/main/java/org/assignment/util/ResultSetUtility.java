@@ -1,20 +1,17 @@
 package org.assignment.util;
 
-import org.assignment.entities.Customer;
+import org.assignment.entities.User;
 import org.assignment.entities.Order;
 import org.assignment.entities.Product;
-import org.assignment.entities.Seller;
 
 import org.assignment.enums.*;
 import org.assignment.enums.Currency;
 
 import org.assignment.exceptions.CustomerNotFoundException;
 import org.assignment.exceptions.NoProductFoundException;
-import org.assignment.repository.interfaces.CustomerRepository;
+import org.assignment.repository.interfaces.UserRepository;
 import org.assignment.repository.interfaces.ProductRepository;
-import org.assignment.repository.interfaces.SellerRepository;
-import org.assignment.repositoryhibernateimpl.CustomerRepoHibernateImpl;
-import org.assignment.repositoryhibernateimpl.SellerRepoHibernateImpl;
+import org.assignment.repositoryhibernateimpl.UserRepoHibernateImpl;
 import org.assignment.repositoryjdbcimpl.*;
 
 
@@ -23,16 +20,14 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.*;
-
 public final class ResultSetUtility {
-    private static CustomerRepository repository = new CustomerRepoHibernateImpl();
-    private static SellerRepository sellerRepository = new SellerRepoHibernateImpl();
+    private static UserRepository repository = new UserRepoHibernateImpl(ConnectionUtility.getEntityManager(), ConnectionUtility.getEntityManager().getTransaction());
     private static ProductRepository productRepository = new ProductRepositoryImpl();
 
 
-    public static List<Customer> getCustomersFromResultSet(ResultSet set) throws SQLException {
+    public static List<User> getCustomersFromResultSet(ResultSet set) throws SQLException {
 
-        List<Customer> customers = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         while (set.next()) {
             Long id = set.getLong("customer_id");
             String email = set.getString("email");
@@ -41,7 +36,7 @@ public final class ResultSetUtility {
             String address = set.getString("address");
             Roles roles = Roles.valueOf(set.getString("role"));
             Timestamp timestamp = set.getTimestamp("registered_on");
-            Customer customer = Customer.builder()
+            User user = User.builder()
                     .registeredOn(timestamp.toLocalDateTime())
                     .id(id)
                     .email(email)
@@ -50,10 +45,10 @@ public final class ResultSetUtility {
                     .name(name)
                     .role(roles)
                     .build();
-            customers.add(customer);
+            users.add(user);
         }
         set.close();
-        return customers;
+        return users;
     }
 
     public static List<Order> getOrdersFromResultSet(ResultSet set) throws SQLException, CustomerNotFoundException, NoProductFoundException {
@@ -68,16 +63,14 @@ public final class ResultSetUtility {
             Long sellerId = set.getLong("seller_id");
             Currency currency = Currency.valueOf(set.getString("currency"));
             double price = set.getDouble("price");
-            Optional<Customer> customer = repository.fetchById(customerId);
+            Optional<User> customer = repository.fetchById(customerId);
             if (customer.isPresent()) {
                 Order order = Order.builder()
                         .orderedOn(orderTimestamp.toLocalDateTime())
-                        .seller(sellerRepository.fetchById(sellerId).get())
                         .id(orderId)
                         .product(productRepository.fetchProductById(productId).get())
-                        .currency(currency)
                         .price(price)
-                        .customer(repository.fetchById(customerId).get())
+                        .user(repository.fetchById(customerId).get())
                         .status(orderStatus)
                         .build();
                 orders.add(order);
@@ -102,20 +95,14 @@ public final class ResultSetUtility {
         return products;
     }
 
-    public static List<Seller> getSellerFromResultSet(ResultSet set) throws SQLException {
-        List<Seller> products = new ArrayList<>();
+    public static List<User> getSellerFromResultSet(ResultSet set) throws SQLException {
+        List<User> products = new ArrayList<>();
         while (set.next()) {
             Long sid = set.getLong("seller_id");
             String name = set.getString("name");
             Roles role = Roles.valueOf(set.getString("role"));
             Timestamp timestamp = set.getTimestamp("created_on");
-            Seller seller = Seller.builder()
-                    .name(name)
-                    .id(sid)
-                    .role(role)
-                    .registeredOn(timestamp.toLocalDateTime())
-                    .build();
-            products.add(seller);
+            products.add(new User());
         }
         return products;
     }
@@ -131,16 +118,14 @@ public final class ResultSetUtility {
             Long sellerId = set.getLong("seller_id");
             Currency currency = Currency.valueOf(set.getString("currency"));
             double price = set.getDouble("price");
-            Optional<Customer> customer = repository.fetchById(customerId);
+            Optional<User> customer = repository.fetchById(customerId);
             if (customer.isPresent()) {
                 Order order = Order.builder()
                         .orderedOn(orderTimestamp.toLocalDateTime())
-                        .seller(sellerRepository.fetchById(sellerId).get())
                         .id(orderId)
                         .product(productRepository.fetchProductById(productId).get())
-                        .currency(currency)
                         .price(price)
-                        .customer(repository.fetchById(customerId).get())
+                        .user(repository.fetchById(customerId).get())
                         .status(orderStatus)
                         .build();
                 order.setId(orderId);

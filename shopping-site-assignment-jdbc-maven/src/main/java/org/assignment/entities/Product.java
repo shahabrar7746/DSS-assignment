@@ -1,10 +1,7 @@
 package org.assignment.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.assignment.enums.Currency;
 import org.assignment.enums.ProductType;
 import org.assignment.util.ColorCodes;
@@ -12,9 +9,9 @@ import org.assignment.util.ColorCodes;
 import java.util.Objects;
 
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "product")
 public class Product {
@@ -37,6 +34,12 @@ public class Product {
     @Column(name = "product_type")
     private ProductType type;
 
+    @JoinColumn(name = "seller_id")
+    @ManyToOne
+    private User seller;
+    @Column(name = "stock")
+    private int stock;
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
@@ -52,12 +55,8 @@ public class Product {
     @Override
     public String toString() {
         return ColorCodes.PURPLE +
-                "+------------------+------------+------------------+------------------+\n" +
-                "| ProductName      | Price      | Currency         | Type             |\n" +
-                "-+------------------+------------+------------------+-----------------+\n" +
-                String.format("| %-16s | %-10.2f | %-16s | %-16s |\n",
-                        name, price, currency, type) +
-                "+-------------------+------------------+------------+-----------------+\n" +
-                ColorCodes.RESET;
+         String.format("| %-16s | %-10.2f | %-16s | %-16s |",
+                name, price, currency, type)
+                + ColorCodes.RESET;
     }
 }

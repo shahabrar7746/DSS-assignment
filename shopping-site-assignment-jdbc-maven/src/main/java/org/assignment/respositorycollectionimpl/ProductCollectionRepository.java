@@ -15,6 +15,12 @@ public  class ProductCollectionRepository implements ProductRepository {
     public ProductCollectionRepository() {
      init();
     }
+
+    @Override
+    public Product updateProduct(Product product) {
+        return null;
+    }
+
     private void  init(){
         this.products = new ArrayList<>();
         String []names = {"IPHONE", "Sofa", "MIXER", "T-shirt", "Maskara"};
@@ -46,6 +52,11 @@ public  class ProductCollectionRepository implements ProductRepository {
     public  Optional<Product> fetchProductByName(String name)
     {
         return products.stream().filter(p -> p.getName().equalsIgnoreCase(name)).findFirst();
+    }
+
+    @Override
+    public void addProduct(Product product) {
+
     }
 
 }

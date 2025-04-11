@@ -11,4 +11,7 @@ public interface ProductRepository{
     List<Product> fetchProducts() throws SQLException;
     Optional<Product> fetchProductById(Long id) throws SQLException;
     Optional<Product> fetchProductByName(String name) throws SQLException;
+    void addProduct(Product product);
+    Product updateProduct(Product product);
+
 }

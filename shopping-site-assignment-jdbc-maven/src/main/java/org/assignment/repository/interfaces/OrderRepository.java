@@ -1,6 +1,6 @@
 package org.assignment.repository.interfaces;
 
-import org.assignment.entities.Customer;
+import org.assignment.entities.User;
 import org.assignment.entities.Order;
 import org.assignment.entities.Product;
 import org.assignment.enums.OrderStatus;
@@ -17,10 +17,10 @@ public interface OrderRepository {
     Optional<Order> fetchOrderById(Long id) throws Exception;
     void cancelOrder(Order order) throws SQLException;
     Order addOrder(Order order) throws SQLException;
-    List<Order> fetchOrderByProductAndCustomer(Product product, Customer customer) throws SQLException, CustomerNotFoundException, NoProductFoundException;
-     List<Order> getOrderByCustomer(Customer customer) throws SQLException, CustomerNotFoundException, NoProductFoundException, OrderNotFoundException;
+    List<Order> fetchOrderByProductAndCustomer(Product product, User user) throws SQLException, CustomerNotFoundException, NoProductFoundException;
+     List<Order> getOrderByCustomer(User user) throws SQLException, CustomerNotFoundException, NoProductFoundException, OrderNotFoundException;
     List<Order> getAllDeliveredOrders() throws SQLException, CustomerNotFoundException, OrderNotFoundException, NoProductFoundException;
 Order updateOrder(Order order);
-List<Order> getOrdersByStatusAndCustomer(Customer customer, OrderStatus status);
+List<Order> getOrdersByStatusAndCustomer(User user, OrderStatus status);
 
 }

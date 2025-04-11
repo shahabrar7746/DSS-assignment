@@ -20,6 +20,7 @@
     </appender>
 
     <!-- Root logger configuration (logs everything at DEBUG level) -->
+    <!--logging as per package/classes-->
     <root level="DEBUG">
         <appender-ref ref="ROLLING_FILE"/>
     </root>

@@ -13,7 +13,7 @@ public class CartUtil {
         {
             sum += item.getProduct().getPrice() * item.getQuantity();
         }
-        return sum;
+        return  Math.round(sum * 100.0)/ 100.0;
 
     }
 }

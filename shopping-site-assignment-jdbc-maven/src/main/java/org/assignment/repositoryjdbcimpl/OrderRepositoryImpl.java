@@ -1,6 +1,6 @@
 package org.assignment.repositoryjdbcimpl;
 
-import org.assignment.entities.Customer;
+import org.assignment.entities.User;
 import org.assignment.entities.Order;
 import org.assignment.entities.Product;
 import org.assignment.enums.OrderStatus;
@@ -24,7 +24,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public List<Order> getOrdersByStatusAndCustomer(Customer customer, OrderStatus status) {
+    public List<Order> getOrdersByStatusAndCustomer(User user, OrderStatus status) {
         return List.of();
     }
 
@@ -64,31 +64,29 @@ public class OrderRepositoryImpl implements OrderRepository {
         String columns[] = {"CUSTOMER_ID", "PRODUCT_ID", "STATUS", "ORDERED_ON", "SELLER_ID", "CURRENCY", "PRICE"};
         String query = OrderQueries.addOrderQuery(columns);
         PreparedStatement statement = con.prepareStatement(query);
-        statement.setLong(1, order.getCustomer().getId());
+        statement.setLong(1, order.getUser().getId());
         statement.setLong(2, order.getProduct().getId());
         statement.setObject(3, OrderStatus.ORDERED, Types.OTHER);
         statement.setTimestamp(4, Timestamp.valueOf(order.getOrderedOn()));
-        statement.setLong(5, order.getSeller().getId());
-        statement.setObject(6, order.getCurrency(), Types.OTHER);
         statement.setDouble(7, order.getPrice());
         statement.executeUpdate();
         return order;
     }
 
     @Override
-    public List<Order> fetchOrderByProductAndCustomer(Product product, Customer customer) throws SQLException, CustomerNotFoundException, NoProductFoundException {
+    public List<Order> fetchOrderByProductAndCustomer(Product product, User user) throws SQLException, CustomerNotFoundException, NoProductFoundException {
         String query = OrderQueries.getOrdersByProductAndCustomer();
         PreparedStatement statement = con.prepareStatement(query);
-        statement.setLong(1, customer.getId());
+        statement.setLong(1, user.getId());
         statement.setLong(2, product.getId());
         return ResultSetUtility.getOrdersFromResultSet(statement.executeQuery());
     }
 
     @Override
-    public List<Order> getOrderByCustomer(Customer customer) throws SQLException, CustomerNotFoundException, NoProductFoundException {
+    public List<Order> getOrderByCustomer(User user) throws SQLException, CustomerNotFoundException, NoProductFoundException {
         String query = OrderQueries.getOrdersByColumns(new String[]{"CUSTOMER_ID"}, null);
         PreparedStatement statement = con.prepareStatement(query);
-        statement.setLong(1, customer.getId());
+        statement.setLong(1, user.getId());
         return ResultSetUtility.getOrdersFromResultSet(statement.executeQuery());
     }
 
