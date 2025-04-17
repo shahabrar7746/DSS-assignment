@@ -50,7 +50,7 @@ public class OrderServiceImplementation implements OrderService {
     public Response cancelOrder(User user, int index) {
 
         try {
-            List<Order> orders = orderRepository.getOrderByCustomer(user)
+            List<Order> orders = orderRepository.getOrdersByStatusAndCustomer(user, OrderStatus.ORDERED)
                     .stream()
                     .sorted()
                     .collect(Collectors.toList());
@@ -85,15 +85,13 @@ public class OrderServiceImplementation implements OrderService {
         if (user.getCart().isEmpty()) {
             return new Response(ResponseStatus.ERROR, null, "Cart is empty");
         }
+        Response response;
         double total = CartUtil.getCartTotal(user.getCart());
         Currency currency = user.getCart().getFirst().getProduct().getCurrency();
         String message = canOrder(user.getCart());
         if (!message.isBlank()) {
             return new Response(ResponseStatus.ERROR, null, message);
         }
-        Response response;
-
-
         List<OrderedProduct> productLst = user.getCart()
                 .stream()
                 .map(items -> {
@@ -104,6 +102,7 @@ public class OrderServiceImplementation implements OrderService {
                     return orderedProduct;
                 })
                 .collect(Collectors.toList());
+
         Order order = Order.builder()
                 .orderedOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .user(user)
@@ -112,9 +111,9 @@ public class OrderServiceImplementation implements OrderService {
                 .orderedProducts(productLst)
                 .build();
         try {
-            orderRepository.addOrder(order);
-            decreaseQuantity(productLst);
+
             Invoice invoice = invoiceService.generateInvoice(order);
+            decreaseQuantity(productLst);
             StringBuilder messageBuilder = new StringBuilder(invoice.toString());
             messageBuilder.append("Your grand total amount is " + total + " " + currency.getSymbol());
             response = new Response(ResponseStatus.SUCCESSFUL, messageBuilder.toString(), null);

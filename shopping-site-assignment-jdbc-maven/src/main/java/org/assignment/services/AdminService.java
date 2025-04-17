@@ -13,9 +13,6 @@ public interface AdminService {
 
     Response grantAccess(Long id);
 
-
     Response revokeAccess(Long id);
-
-
 
 }

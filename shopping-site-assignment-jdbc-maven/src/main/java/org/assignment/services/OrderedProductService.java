@@ -7,5 +7,5 @@ import java.util.List;
 public interface OrderedProductService {
 
 
-    public void save(List<OrderedProduct> orderedProducts);
+     void save(List<OrderedProduct> orderedProducts);
 }

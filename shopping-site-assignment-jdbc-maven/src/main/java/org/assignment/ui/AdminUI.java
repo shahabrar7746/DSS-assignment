@@ -1,11 +1,12 @@
 package org.assignment.ui;
 
-import ch.qos.logback.core.util.InterruptUtil;
-import ch.qos.logback.core.util.StringUtil;
 import lombok.AllArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+
 import org.assignment.entities.Order;
 import org.assignment.entities.User;
 import org.assignment.enums.ProductType;
@@ -87,7 +88,7 @@ public class AdminUI extends UI {
                     resp = getOrdersByCustomer();
                     if(resp.getStatus() == ResponseStatus.SUCCESSFUL)
                     {
-                        printOrders((List<Order>) resp.getData());
+                        printOrdersForRole(true, (List<Order>) resp.getData());
                         resp = null;
                     }
                     break;
@@ -188,7 +189,6 @@ public class AdminUI extends UI {
                     sc.nextLine();
                 }
 
-
             } catch (InputMismatchException e) {
                 System.out.println(ColorCodes.RED + e.getLocalizedMessage() + ColorCodes.RESET);
                 sc.next();
@@ -217,8 +217,7 @@ public class AdminUI extends UI {
         }
         Optional<User> customerTobeFound = (Optional<User>) findByEmailResponse.getData();
         User user = customerTobeFound.get();
-        Response orderResponse = orderService.getAllOrdersByCustomer(user);
-        return orderResponse;
+        return orderService.getAllOrdersByCustomer(user);
     }
 
     private Response getProductByType() {
@@ -334,27 +333,26 @@ public class AdminUI extends UI {
                 log.error("Some error occured while revoking access admin from cid ", e);
                 return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
             }
-
         }
         Response authResponse = authenticate();
-        return authResponse.getStatus() == ResponseStatus.ERROR ? authResponse : service.revokeAccess(Long.valueOf(cid));
+        return authResponse.getStatus() == ResponseStatus.ERROR ? authResponse
+                : service.revokeAccess(Long.valueOf(cid));
     }
 
     @Override
-    public void initAuthServices() {
-    }
+    public void initAuthServices() {}
 
     @Override
-    public void initCustomerServices(User user) {
-    }
+    public void initCustomerServices(User user) {}
 
     private Response getCustomerByEmail(String message) {
         System.out.println(message);
         String email = sc.nextLine().toUpperCase();
         if(StringUtils.isBlank(email))return new Response(ResponseStatus.ERROR, null, "Email cannot be blank");
         Response response = userService.findByEmail(email);
-
         return response;
     }
+
+
 
 }

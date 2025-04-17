@@ -23,7 +23,8 @@ public class Invoice {
     @Column(name = "invoice_id")
     private Long invoiceId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @CreationTimestamp

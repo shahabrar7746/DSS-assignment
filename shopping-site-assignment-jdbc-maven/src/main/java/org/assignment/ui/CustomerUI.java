@@ -1,21 +1,19 @@
 package org.assignment.ui;
 
 import lombok.AllArgsConstructor;
+
 import org.apache.commons.lang3.StringUtils;
+
 import org.assignment.entities.CartItems;
 import org.assignment.entities.Order;
 import org.assignment.entities.User;
-
 import org.assignment.enums.OrderStatus;
 import org.assignment.enums.ResponseStatus;
-
 import org.assignment.services.CartService;
-
 import org.assignment.services.OrderService;
 import org.assignment.services.ProductService;
 import org.assignment.util.ColorCodes;
 import org.assignment.util.Response;
-import org.assignment.wrappers.ProductCountWrappers;
 import org.assignment.wrappers.ProductWrapper;
 
 
@@ -208,7 +206,7 @@ public class CustomerUI extends UI {
             printResponse(response);
             return;
         }
-        printOrders((List<Order>) response.getData());
+        printOrdersForRole(false, (List<Order>) response.getData());
 
     }
 
@@ -219,7 +217,7 @@ public class CustomerUI extends UI {
             return;
         }
         System.out.println("Your orders : ");
-        printOrders((List<Order>) response.getData());
+        printOrdersForRole(false, (List<Order>) response.getData());
         int index = -1;
         while (index < 1) {
             System.out.println("Please provide index of order \n" +
@@ -341,10 +339,7 @@ public class CustomerUI extends UI {
                 sc.next();
             }
             sc.nextLine();
-
         }
-
         return quantity;
     }
-
 }

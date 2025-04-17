@@ -4,16 +4,14 @@ import org.assignment.entities.User;
 import org.assignment.util.Response;
 
 public interface UserService {
-    Response getAllMaskedCustomer();
 
+    Response getAllMaskedCustomer();
 
     Response findByEmail(String email);
 
     Response updateCustomerAndCart(User user);
 
     Response getAllCustomer();
-
-
 
     Response fetchAllAdmins();
 

@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.assignment.enums.OrderStatus;
 import org.assignment.util.ColorCodes;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.CurrentTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -43,13 +45,14 @@ public class Order implements Serializable, Comparable<Order> {
     private OrderStatus status;
 
 
-    @OneToOne
-    private Invoice invoice;
-
-
-    @CurrentTimestamp
+    @CreationTimestamp
     @Column(name = "ordered_on")
     private LocalDateTime orderedOn;
+
+
+    @UpdateTimestamp
+    @Column(name = "updated_on")
+    private LocalDateTime updatedOn;
 
     @Override
     public boolean equals(Object object) {
@@ -102,22 +105,6 @@ public class Order implements Serializable, Comparable<Order> {
         }
         return null;
     }
-
-    @Transient
-    static final String FOOTER = "====================================================\n";
-    @Transient
-    static final String PRODUCT_NAME = "Product name         : ";
-    @Transient
-    static final String QUANTITY = "Quantity             : ";
-    @Transient
-    static final String PRICE_PER_QUANTITY = "Price per quantity   : ";
-    @Transient
-    static final String TOTAL_PRODUCT_PRICE = "Total Product Amount : ";
-    @Transient
-    static final String banner = "======================INVOICES======================\n";
-    @Transient
-    static final String header = "======================PRODUCTS======================\n\n";
-
 
     @Override
     public int compareTo(Order o) {

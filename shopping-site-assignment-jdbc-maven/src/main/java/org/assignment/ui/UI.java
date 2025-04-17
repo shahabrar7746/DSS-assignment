@@ -4,6 +4,7 @@ package org.assignment.ui;
 import jdk.swing.interop.SwingInterOpUtils;
 import org.assignment.entities.CartItems;
 import org.assignment.entities.Order;
+import org.assignment.entities.OrderedProduct;
 import org.assignment.entities.User;
 import org.assignment.enums.ProductType;
 import org.assignment.util.ColorCodes;
@@ -12,6 +13,8 @@ import org.assignment.wrappers.CustomerWrapper;
 import org.assignment.wrappers.ProductWrapper;
 import org.assignment.wrappers.SellerWrapper;
 
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -142,5 +145,49 @@ public abstract class UI {
         orders.forEach(System.out::println);
         System.out.println(ColorCodes.RESET);
     }
-    
+    public static final String FOOTER = "==================================================";
+    public void printOrdersForRole(boolean isAdmin, List<Order> orders)
+    {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < orders.size(); i++) {
+            Order order = orders.get(i);
+            int index = i +1;
+            String secondaryBuilder = "=====================Order-" + index +"=====================";
+            builder.append(secondaryBuilder+"\n");
+            if(isAdmin)
+            {
+                builder.append("Order id : " + order.getId() + "\n")
+                        .append("Ordered by : " + order.getUser().getName() + "\n");
+            }else {
+                builder.append("Order Index : " + index +"\n");
+            }
+            builder.append("Ordered on : " + order
+                            .getOrderedOn()
+                            .truncatedTo(ChronoUnit.SECONDS)
+                            .format(DateTimeFormatter.ofPattern("dd/mm/yyyy HH:mm:ss"))+ "\n")
+                    .append("Order Status : " + order.getStatus() + "\n");
+
+            List<OrderedProduct> orderedProducts = order.getOrderedProducts();
+            for (int j = 0; j < orderedProducts.size(); j++) {
+                OrderedProduct orderedProduct = orderedProducts.get(j);
+                char  currency = orderedProduct
+                        .getProduct()
+                        .getCurrency()
+                        .getSymbol();
+index = j+1;
+                secondaryBuilder = "====================Product-" + index +"====================";
+                builder.append(secondaryBuilder+"\n")
+                        .append("Product name : " + orderedProduct.getProduct().getName() + "\n")
+                        .append("Product quantity : " + orderedProduct.getQuantity() + "\n")
+                        .append("Product amount : " + orderedProduct.getProduct().getPrice()  + currency + "\n")
+                        .append("Total amount for the product : " + orderedProduct
+                                .getQuantity() * orderedProduct.getProduct().getPrice() + currency + "\n");
+            }
+            builder.append(FOOTER + "\n");
+        }
+        String body = builder.toString();
+        System.out.println(body);
+    }
+
+
 }
