@@ -1,6 +1,7 @@
 package org.assignment.ui;
 
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.assignment.entities.CartItems;
 import org.assignment.entities.Order;
 import org.assignment.entities.User;
@@ -219,29 +220,15 @@ public class CustomerUI extends UI {
         }
         System.out.println("Your orders : ");
         printOrders((List<Order>) response.getData());
-        System.out.print("Please provide the product name whose order you want to cancel : ");
-        String productName = sc.nextLine().toUpperCase();
-        response = orderService.cancelOrder(1, user, productName, false);
-        if (response.getStatus() == ResponseStatus.SUCCESSFUL) {
-            System.out.println(ColorCodes.GREEN + "Order cancelled" + ColorCodes.RESET);
-        } else if (response.getStatus() == ResponseStatus.PROCESSING) {
-            proceedToMultipleCancellation(user, (ProductCountWrappers) response.getData());
-        } else {
-            System.out.println(ColorCodes.RED + response.getError() + ColorCodes.RESET);
+        int index = -1;
+        while (index < 1) {
+            System.out.println("Please provide index of order \n" +
+                               "Note : Index must be equals or greater than zero\n" +
+                               "Choice : ");
+            index = sc.nextInt();
         }
-    }
-
-    private void proceedToMultipleCancellation(User user, ProductCountWrappers wrappers) {
-        System.out.println(ColorCodes.YELLOW + wrappers + ColorCodes.RESET);
-        System.out.println("Please provide the quantity of the product : ");
-        int count = sc.nextInt();
-        while (count > wrappers.getQuantity() || count <= 0) {
-            System.err.println("quantity must not be greater or lesser than quantity");
-            count = sc.nextInt();
-        }
-        Response response = orderService.cancelOrder(count, user, wrappers.getProductName(), true);
+        response = orderService.cancelOrder(user, index-1);
         printResponse(response);
-        sc.nextLine();
     }
 
     private void orderFromCart(User user) {
@@ -263,7 +250,10 @@ public class CustomerUI extends UI {
         while (!exists) {
             System.out.println(ColorCodes.RED + "Incorrect product name" + ColorCodes.RESET + "\nplease provide the correct product name :");
             System.out.println("Type '-1' to exit");
-            productName = sc.nextLine();
+            productName = sc.nextLine().toUpperCase();
+            if (StringUtils.isBlank(productName)) {
+                continue;
+            }
             if (productName.trim().equalsIgnoreCase("-1")) {
                 break;
             }
@@ -275,7 +265,6 @@ public class CustomerUI extends UI {
                 disclaimerForQuantity();
                 System.out.println("Please provide the quantity for the product");
                 quantity = sc.nextInt();
-
             }
             Response response = cartService.orderFromCart(user, productName, quantity, true);
             printResponse(response);
@@ -307,7 +296,7 @@ public class CustomerUI extends UI {
             isBack = Boolean.FALSE.equals(product.equalsIgnoreCase("back"));
             isEmpty = Boolean.TRUE.equals(cartItemsOptional.isEmpty());
             check = Boolean.logicalAnd(isBack, isEmpty);
-        }//todo the program is removing item from the cart even on decresing or insreasing the qty.
+        }
         if (product.equalsIgnoreCase("back")) {
             return;
         }
@@ -321,7 +310,16 @@ public class CustomerUI extends UI {
     }
 
     private void changeQuantity(User user, CartItems item) {
-        int quantity = getValidInputsForQuantityUpdate();
+        int quantity = 0;
+        while (quantity == 0) {
+            System.out.println("Do you want remove the product (y/n) ?\nChoice : ");
+            String choice = sc.nextLine();
+            if (choice.equalsIgnoreCase("y")) {
+                break;
+            } else if (choice.equalsIgnoreCase("n")) {
+                quantity = getValidInputsForQuantityUpdate();
+            }
+        }
         Response response = cartService.changeQuantity(user, item, quantity);
         printResponse(response);
 

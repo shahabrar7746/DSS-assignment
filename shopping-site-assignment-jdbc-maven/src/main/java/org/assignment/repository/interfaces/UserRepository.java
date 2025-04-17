@@ -2,6 +2,9 @@ package org.assignment.repository.interfaces;
 
 import jakarta.persistence.PersistenceException;
 import org.assignment.entities.User;
+import org.assignment.enums.Roles;
+import org.assignment.wrappers.CustomerWrapper;
+import org.assignment.wrappers.SellerWrapper;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,7 +16,7 @@ public interface UserRepository {
      * Used to get all customers including customers with admin authority.
      * @return List of all registered customers
      */
-     List<User> getCustomers() throws SQLException, PersistenceException;
+
       /**
      * Fetches User on the basis of id. converts list to map for efficient search operation.
      * @param id id to search.
@@ -25,7 +28,7 @@ public interface UserRepository {
      * @param id id to be searched.
      * @return returns Optional of user if any admin with the same id is found or else false.
      */
-    Optional<User> fetchAdminById(Long id) throws SQLException, PersistenceException;
+
     /**
      * returns user corresponding to provided email.
      * @param email
@@ -38,9 +41,8 @@ public interface UserRepository {
 
     User updateCustomer(User user) throws PersistenceException, SQLException;
 
-    void removeCustomer(User user) throws  PersistenceException;
-
-    Optional<User> fetchSellerById(Long id);
-
-    List<User> fetchAllSellers();
+    Optional<User> fetchUserByIdAndRole(Long id, Roles role) throws SQLException;
+    List<User> fetchUserByRole(Roles role) throws SQLException;
+    public List<SellerWrapper> fetchSellers();
+    List<CustomerWrapper> fetchCustomerWrappers();
 }

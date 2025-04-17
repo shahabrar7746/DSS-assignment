@@ -20,6 +20,9 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
 
+    @Column(name = "product_name")
+    private String name;
+
     @Column(name = "price")
     private double price;
 
@@ -27,19 +30,19 @@ public class Product {
     @Column(name = "currency")
     private Currency currency;
 
-    @Column(name = "product_name")
-    private String name;
+
 
     @Enumerated(EnumType.STRING)
     @Column(name = "product_type")
     private ProductType type;
 
+
+    @Column(name = "available_quantity")
+    private int stock;
+
     @JoinColumn(name = "seller_id")
     @ManyToOne
     private User seller;
-    @Column(name = "stock")
-    private int stock;
-
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;

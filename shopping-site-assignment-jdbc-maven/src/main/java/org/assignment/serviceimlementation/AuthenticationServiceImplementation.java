@@ -41,13 +41,8 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
         User c;
         try {
             Optional<User> customer = userRepository.fetchByEmail(email);
-            if(customer.isEmpty())
+            if(customer.isPresent() && customer.get().getPassword().equals(pasword))
             {
-                response = new Response(ResponseStatus.ERROR, null, "Invalid Credentials...");
-            }
-
-           else if ( customer.get().getEmail().equalsIgnoreCase(email) && customer.get().getPassword().equals(pasword)) {
-
                 c = customer.get();
                 c.setLoggedIn(true);
                 userService.updateCustomerAndCart(c);
@@ -60,9 +55,10 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
                 }
                 c.setLoggedIn(false);
                 userService.updateCustomerAndCart(c);
-                response = new Response(ResponseStatus.SUCCESSFUL, "Loggin out", null);
-            }  else  {
-              response = new Response(ResponseStatus.ERROR, null, "Could not log in");
+                response = new Response(ResponseStatus.SUCCESSFUL, "Logged out !!", null);
+            }
+            else  {
+                response = new Response(ResponseStatus.ERROR, null, "Invalid Credentials...");
             }
         } catch (Exception e) {
             log.error("Some error occured while log in for email {} and password {} ", email, pasword, e);
@@ -83,7 +79,7 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
                 User newUser = User.builder()
                         .role(Roles.CUSTOMER)
                         .address(address)
-                        .email(email)
+                        .email(email.toUpperCase())
                         .name(name)
                         .password(password)
                         .registeredOn(LocalDateTime.now())

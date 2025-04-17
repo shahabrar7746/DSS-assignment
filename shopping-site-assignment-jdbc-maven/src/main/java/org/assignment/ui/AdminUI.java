@@ -1,7 +1,11 @@
 package org.assignment.ui;
 
+import ch.qos.logback.core.util.InterruptUtil;
+import ch.qos.logback.core.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.assignment.entities.Order;
 import org.assignment.entities.User;
 import org.assignment.enums.ProductType;
@@ -141,11 +145,14 @@ public class AdminUI extends UI {
             try {
                 System.out.println(ColorCodes.GREEN + "Please provide product name" + ColorCodes.RESET);
                 String productName = sc.nextLine().toUpperCase();
-                while (productName.isBlank())
+                boolean condition = Boolean.logicalOr(StringUtils.isAllBlank(productName),StringUtils.isNumeric(productName));
+
+                while (condition)
                 {
                     System.out.println(ColorCodes.RED + "product name cannot be blank" + ColorCodes.RESET);
                     System.out.println(ColorCodes.GREEN + "Please provide product name" + ColorCodes.RESET);
-                    productName = sc.nextLine();
+                    productName = sc.nextLine().toUpperCase();
+                    condition = Boolean.logicalOr(StringUtils.isAllBlank(productName),StringUtils.isNumeric(productName));
                 }
                 System.out.println(ColorCodes.GREEN + "Please choose Currency" + ColorCodes.RESET);
                 printAndDisplayOptionsForCurrencies();
@@ -199,7 +206,8 @@ public class AdminUI extends UI {
         printCustomerWrappers((List<CustomerWrapper>) allCustomerResponse.getData());
         String mesaage = "Please provide email of user whose order you want to display\nEmail:";
         Response findByEmailResponse = getCustomerByEmail(mesaage);
-        while (Boolean.TRUE.equals(findByEmailResponse.getStatus() == ResponseStatus.SUCCESSFUL)
+        while (Boolean.logicalOr(ObjectUtils.anyNull(findByEmailResponse),
+                Boolean.TRUE.equals(findByEmailResponse.getStatus() == ResponseStatus.SUCCESSFUL))
                 && (findByEmailResponse.getData() instanceof Optional<?> customerOptional
                 && customerOptional.isEmpty())) {
              findByEmailResponse = getCustomerByEmail(mesaage);
@@ -343,7 +351,9 @@ public class AdminUI extends UI {
     private Response getCustomerByEmail(String message) {
         System.out.println(message);
         String email = sc.nextLine().toUpperCase();
+        if(StringUtils.isBlank(email))return new Response(ResponseStatus.ERROR, null, "Email cannot be blank");
         Response response = userService.findByEmail(email);
+
         return response;
     }
 

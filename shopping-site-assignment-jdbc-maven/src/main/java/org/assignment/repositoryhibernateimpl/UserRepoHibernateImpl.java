@@ -6,43 +6,40 @@ import org.assignment.entities.User;
 import org.assignment.enums.Roles;
 
 import org.assignment.repository.interfaces.UserRepository;
+import org.assignment.wrappers.CustomerWrapper;
+import org.assignment.wrappers.SellerWrapper;
 
+import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class UserRepoHibernateImpl implements UserRepository {
+    @Override
+    public List<CustomerWrapper> fetchCustomerWrappers() {
+        String jpql = "SELECT NEW  org.assignment.wrappers.CustomerWrapper(u.email, u.name) FROM User u " + " WHERE u.role = :role";
+        TypedQuery<CustomerWrapper> query = manager.createQuery(jpql, CustomerWrapper.class);
+        query.setParameter("role", Roles.CUSTOMER);
+        return query.getResultList();
+    }
 
     private final EntityManager manager;
     private final EntityTransaction transaction;
-    private static final String BASE_SELECTION_QUERY = " SELECT c FROM User c ";
+    private static final String BASE_SELECTION_QUERY = " SELECT u FROM User u ";
 
 
-    @Override
-    public List<User> getCustomers() {
-        TypedQuery<User> query = manager.createQuery(BASE_SELECTION_QUERY, User.class);
-        return query.getResultList();
-    }
 
     @Override
     public Optional<User> fetchById(Long id) {
         return Optional.ofNullable(manager.find(User.class, id));
     }
 
-    @Override
-    public Optional<User> fetchAdminById(Long id) {
-        String jpql = BASE_SELECTION_QUERY + " WHERE c.id =:id AND c.role =:role";
-        TypedQuery<User> query = manager.createQuery(jpql, User.class);
-        query.setParameter("id", id);
-        query.setParameter("role", Roles.ADMIN);
-        User data = query.getSingleResultOrNull();
-        return Optional.ofNullable(data);
-    }
+
 
     @Override
     public Optional<User> fetchByEmail(String email) {
-        String jpql = BASE_SELECTION_QUERY + " WHERE c.email = :email";
+        String jpql = BASE_SELECTION_QUERY + " WHERE u.email = :email";
         TypedQuery<User> query = manager.createQuery(jpql, User.class);
         query.setParameter("email", email);
 
@@ -60,11 +57,9 @@ public class UserRepoHibernateImpl implements UserRepository {
             user.setRole(Roles.CUSTOMER);
             transaction.begin();
             manager.persist(user);
-
+            transaction.commit();
         } catch (EntityExistsException e) {
             throw new RuntimeException("User already exist");
-        } finally {
-            transaction.commit();
         }
         return user;
     }
@@ -77,27 +72,30 @@ public class UserRepoHibernateImpl implements UserRepository {
         return user;
     }
 
-    @Override
-    public void removeCustomer(User user) {
-        transaction.begin();
-        manager.remove(user);
-        transaction.commit();
-    }
 
     @Override
-    public Optional<User> fetchSellerById(Long id) {
-        String jpql = BASE_SELECTION_QUERY + " WHERE c.id = :id AND c.role = :role";
+    public Optional<User> fetchUserByIdAndRole(Long id, Roles role) {
+        String jpql = BASE_SELECTION_QUERY + " WHERE u.id = :id AND u.role = :role";
         TypedQuery<User> typedQuery = manager.createQuery(jpql, User.class);
         typedQuery.setParameter("id", id);
-        typedQuery.setParameter("role", Roles.SELLER);
+        typedQuery.setParameter("role", role);
         return Optional.ofNullable(typedQuery.getSingleResultOrNull());
     }
 
     @Override
-    public List<User> fetchAllSellers() {
-        String jpql = BASE_SELECTION_QUERY + " WHERE c.role = :role";
-        TypedQuery<User> typedQuery = manager.createQuery(jpql, User.class);
-        typedQuery.setParameter("role", Roles.SELLER);
-        return typedQuery.getResultList();
+    public List<User> fetchUserByRole(Roles role) {
+        String jpql  = BASE_SELECTION_QUERY + "WHERE u.role = :role";
+        TypedQuery<User> query = manager.createQuery(jpql, User.class);
+        query.setParameter("role", role);
+        return query.getResultList();
     }
+
+    @Override
+    public List<SellerWrapper> fetchSellers() {
+        String jpql = "SELECT NEW  org.assignment.wrappers.SellerWrapper(u.id, u.name) FROM User u " + " WHERE u.role = :role";
+        TypedQuery<SellerWrapper> query = manager.createQuery(jpql, SellerWrapper.class);
+        query.setParameter("role", Roles.SELLER);
+        return query.getResultList();
+    }
+
 }

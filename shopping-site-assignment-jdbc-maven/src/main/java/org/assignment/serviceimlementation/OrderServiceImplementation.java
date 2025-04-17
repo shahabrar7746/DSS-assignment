@@ -1,26 +1,23 @@
 package org.assignment.serviceimlementation;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.assignment.entities.CartItems;
-import org.assignment.entities.User;
-import org.assignment.entities.Order;
-import org.assignment.entities.Product;
+import org.assignment.entities.*;
 import org.assignment.enums.Currency;
 import org.assignment.enums.OrderStatus;
 import org.assignment.enums.ResponseStatus;
 import org.assignment.exceptions.CustomerNotFoundException;
 import org.assignment.exceptions.NoProductFoundException;
 import org.assignment.exceptions.OrderNotFoundException;
+import org.assignment.repository.interfaces.InvoiceRepository;
 import org.assignment.repository.interfaces.OrderRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 
+import org.assignment.services.InvoiceService;
 import org.assignment.services.UserService;
 import org.assignment.services.OrderService;
-import org.assignment.util.CartUtil;
-import org.assignment.util.Constants;
-import org.assignment.util.MathUtil;
-import org.assignment.util.Response;
+import org.assignment.util.*;
 import org.assignment.wrappers.ProductCountWrappers;
 import org.hibernate.HibernateException;
 
@@ -30,6 +27,8 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -37,6 +36,8 @@ public class OrderServiceImplementation implements OrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final UserService userService;
+    private final InvoiceRepository invoiceRepository;
+    private final InvoiceService invoiceService;
 
     @Override
     public Response fetchOrdersByCustomerAndOrderStatus(User user, OrderStatus status) {
@@ -46,47 +47,23 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Response cancelOrder(int count, User user, String productName, boolean multiple) {
-        Optional<List<Order>> order = Optional.empty();
-        Response resp = null;
-        List<Order> orders = null;
-        try {
-            Optional<Product> product = productRepository.fetchProductByName(productName);
-            if (product.isEmpty()) {
-                resp = new Response(ResponseStatus.ERROR, null, "Incorrect product name");
-            } else {
-                orders = orderRepository.fetchOrderByProductAndCustomer(product.get(), user);
-            }
+    public Response cancelOrder(User user, int index) {
 
-        } catch (CustomerNotFoundException | NoProductFoundException e) {
-            resp = new Response(ResponseStatus.ERROR, null, e.getLocalizedMessage());
-        } catch (SQLException | HibernateException e) {
-            log.error("Some error occured while order cancelation for user {} ", user.getId(), e);
-            resp = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
-        }
-        if (orders != null && !orders.isEmpty()) {
-            order = Optional.of(orders);
-        }
-        if (resp == null && orders != null && orders.size() > 1 && count == 1 && !multiple) {
-            double price = orders.getFirst().getPrice();
-            int quantity = orders.getFirst().getQuantity();
-            double total = MathUtil.getTotalFromPriceAndQuantity(price, quantity);
-            int numberOfOrders = orders.size();//number of orders of same product.
-            resp = new Response(ResponseStatus.PROCESSING
-                    , new ProductCountWrappers(productName, numberOfOrders, price, total)
-                    , null);
-        }
-        if (resp == null && order.isPresent()) {
-            try {
-                helperForCancelOrderAndUpdateStockOfProduct(count, order.get());
-            } catch (Exception e) {
-                resp = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
+        try {
+            List<Order> orders = orderRepository.getOrderByCustomer(user)
+                    .stream()
+                    .sorted()
+                    .collect(Collectors.toList());
+            if (orders.size() <= index) {
+                return new Response(ResponseStatus.ERROR, null, "Index out of limit");
             }
+            Order orderTobeRemoved = orders.get(index);
+            helperForCancelOrderAndUpdateStockOfProduct(orderTobeRemoved);
+        } catch (Exception e) {
+            log.error("Some error occured while fetching order based on  user {} ", user.getId(), e);
+            return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
         }
-        if (resp == null && order.isPresent()) {
-            resp = new Response(ResponseStatus.SUCCESSFUL, count + " Order cancelled..", null);
-        }
-        return resp;
+        return new Response(ResponseStatus.SUCCESSFUL, "Order cancelled", null);
     }
 
     @Override
@@ -110,10 +87,63 @@ public class OrderServiceImplementation implements OrderService {
         }
         double total = CartUtil.getCartTotal(user.getCart());
         Currency currency = user.getCart().getFirst().getProduct().getCurrency();
-        int cartSize = user.getCart().size();
+        String message = canOrder(user.getCart());
+        if (!message.isBlank()) {
+            return new Response(ResponseStatus.ERROR, null, message);
+        }
         Response response;
+
+
+        List<OrderedProduct> productLst = user.getCart()
+                .stream()
+                .map(items -> {
+                    OrderedProduct orderedProduct = OrderedProduct.builder()
+                            .product(items.getProduct())
+                            .quantity(items.getQuantity())
+                            .build();
+                    return orderedProduct;
+                })
+                .collect(Collectors.toList());
+        Order order = Order.builder()
+                .orderedOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .user(user)
+                .price(total)
+                .status(OrderStatus.ORDERED)
+                .orderedProducts(productLst)
+                .build();
+        try {
+            orderRepository.addOrder(order);
+            decreaseQuantity(productLst);
+            Invoice invoice = invoiceService.generateInvoice(order);
+            StringBuilder messageBuilder = new StringBuilder(invoice.toString());
+            messageBuilder.append("Your grand total amount is " + total + " " + currency.getSymbol());
+            response = new Response(ResponseStatus.SUCCESSFUL, messageBuilder.toString(), null);
+        } catch (Exception e) {
+            log.error("Some error occured while placing orders from cart of user {} ", user.getId(), e);
+            response = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
+        }
+        user.getCart().clear();
+        Response userUpdateSuccess = userService.updateCustomerAndCart(user);
+        return userUpdateSuccess.getStatus() == ResponseStatus.ERROR ? userUpdateSuccess : response;
+    }
+
+    private void helperForCancelOrderAndUpdateStockOfProduct(Order removedOrder) {
+        removedOrder.setStatus(OrderStatus.CANCELED);
+        orderRepository.updateOrder(removedOrder);
+        for (OrderedProduct orderedProduct : removedOrder.getOrderedProducts()) {
+            Product product = orderedProduct.getProduct();
+            int orderedQuantity = orderedProduct.getQuantity();
+            int currentStock = product.getStock();
+            product.setStock(currentStock + orderedQuantity);
+            productRepository.updateProduct(product);
+        }
+
+    }
+
+    private String canOrder(List<CartItems> cart) {
         StringBuilder builder = new StringBuilder();
-        for (CartItems item : user.getCart()) {
+
+        for (CartItems item : cart) {
             Product product = item.getProduct();
             if (product.getStock() < item.getQuantity()) {
                 String productName = product.getName();
@@ -124,51 +154,18 @@ public class OrderServiceImplementation implements OrderService {
                         .append(" with quantity of ")
                         .append(itemQuantity)
                         .append("\n");
-
             }
         }
         String message = builder.toString();
-        if (!message.isBlank()) {
-            return new Response(ResponseStatus.ERROR, null, message);
-        }
-        for (CartItems item : user.getCart()) {
-            Product product = item.getProduct();
-
-            Order order = Order.builder()
-                    .orderedOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                    .user(user)
-                    .price(total)
-                    .status(OrderStatus.ORDERED)
-                    .quantity(item.getQuantity())
-                    .product(product)
-                    .build();
-            try {
-                orderRepository.addOrder(order);
-                int oldStock = product.getStock();
-                product.setStock(oldStock - item.getQuantity());
-                productRepository.updateProduct(product);
-            } catch (Exception e) {
-                log.error("Some error occured while placing orders from cart of user {} ", user.getId(), e);
-                return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
-            }
-        }
-        user.getCart().clear();
-        response = userService.updateCustomerAndCart(user);
-        response = response.getStatus() == ResponseStatus.ERROR ? response : new Response(ResponseStatus.SUCCESSFUL, cartSize + " items Ordered with total bill amount of " + total + currency.getSymbol(), null);
-        return response;
+        return message;
     }
 
-    private void helperForCancelOrderAndUpdateStockOfProduct(int count, List<Order> orders) {
-        int index = 0;
-        while (index < count) {
-            Order removedOrder = orders.get(index);
-            removedOrder.setStatus(OrderStatus.CANCELED);
-            orderRepository.updateOrder(removedOrder);
-            Product orderedProduct = removedOrder.getProduct();
-            int currentStock = orderedProduct.getStock();
-            orderedProduct.setStock(currentStock + removedOrder.getQuantity());
-            productRepository.updateProduct(orderedProduct);
-            index++;
+    private void decreaseQuantity(List<OrderedProduct> orderedProducts) {
+        for (OrderedProduct orderedProduct : orderedProducts) {
+            Product product = orderedProduct.getProduct();
+            int oldStock = product.getStock();
+            product.setStock(oldStock - orderedProduct.getQuantity());
+            productRepository.updateProduct(product);
         }
     }
 }

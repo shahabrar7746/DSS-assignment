@@ -47,10 +47,15 @@ public abstract class UI {
 
     }
 
-    public void printCartItems(List<CartItems> items) {
-        String header = ColorCodes.BRIGHT_BLUE + "+-------------------+-------------------+--------------------+------------+\n" +
-                "| Product Name      | Quantity          | Price per unit     | Total Price|\n" +
-                "+-------------------+-------------------+--------------------+------------+";
+    public static void printCartItems(List<CartItems> items) {
+        char currencySymbol = items.isEmpty() ? '$' : items
+                .getFirst()
+                .getProduct()
+                .getCurrency()
+                .getSymbol();
+        String header = ColorCodes.BRIGHT_BLUE + "+-------------------+-------------------+--------------------+-------------+\n" +
+                "| Product Name      | Quantity          | Price per unit "+currencySymbol+"  | Total Price "+currencySymbol+"|\n" +
+                "+-------------------+-------------------+--------------------+-------------+";
         System.out.println(header);
         items.forEach(System.out::println);
 
@@ -137,4 +142,5 @@ public abstract class UI {
         orders.forEach(System.out::println);
         System.out.println(ColorCodes.RESET);
     }
+    
 }

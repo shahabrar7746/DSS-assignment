@@ -2,6 +2,9 @@ package org.assignment.ui;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.ThreadUtils;
+import org.apache.commons.lang3.Validate;
 import org.assignment.entities.User;
 import org.assignment.enums.ResponseStatus;
 
@@ -17,13 +20,11 @@ import org.assignment.wrappers.ProductWrapper;
 import org.hibernate.HibernateException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 @AllArgsConstructor
 @Slf4j
 public class AuthUi extends UI {
-    private final UserService userService;
     private final Scanner sc = new Scanner(System.in);
     private final AuthenticationService service;
     private final ProductService productService;
@@ -34,7 +35,6 @@ public class AuthUi extends UI {
 
     @Override
     public void initAuthServices() {
-
         try {
             System.out.println(ColorCodes.GREEN + "***********WELCOME*************" + ColorCodes.RESET);
             Response response = productService.getAllProduct();
@@ -50,7 +50,7 @@ public class AuthUi extends UI {
         }
 
         String operation = "";
-        while (!operation.equalsIgnoreCase("0")) {
+        while (!operation.equalsIgnoreCase("2")) {
             super.displayOptions(List.of("Press 0 for Log in.", "Press 1 for Registration","Press 2 to exit program", "Operation : "));
 
             operation = sc.nextLine();
@@ -82,15 +82,6 @@ public class AuthUi extends UI {
         System.out.print("Enter Password : ");
         String password = sc.nextLine();
         Response authResponse = service.login(email, password);
-        while ((!email.isBlank() && !password.isBlank()) && authResponse.getStatus() == ResponseStatus.ERROR) {
-            printResponse(authResponse);
-            System.out.print("Enter email : ");
-            email = sc.nextLine().toUpperCase();
-            System.out.print("Enter password : ");
-            password = sc.nextLine();
-            authResponse = service.login(email, password);
-        }
-
         return authResponse;
     }
 
@@ -123,7 +114,6 @@ public class AuthUi extends UI {
                 printPasswordDisclaimer();
             }
         }
-        email = email.toUpperCase();
         response = service.save(email, password, address, name);
         return response.getStatus() == ResponseStatus.SUCCESSFUL ? login() : response;
     }

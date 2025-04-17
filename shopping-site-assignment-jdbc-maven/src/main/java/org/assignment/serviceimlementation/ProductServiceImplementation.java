@@ -6,6 +6,7 @@ import org.assignment.entities.Product;
 import org.assignment.enums.Currency;
 import org.assignment.enums.ProductType;
 import org.assignment.enums.ResponseStatus;
+import org.assignment.enums.Roles;
 import org.assignment.repository.interfaces.UserRepository;
 import org.assignment.repository.interfaces.ProductRepository;
 import org.assignment.services.ProductService;
@@ -92,7 +93,7 @@ private final UserRepository userRepository;
         }
         Optional<User> sellerOptional;
         try {
-             sellerOptional = userRepository.fetchSellerById(seller);
+             sellerOptional = userRepository.fetchUserByIdAndRole(seller, Roles.SELLER);
         }catch (Exception e)
         {
             log.error("Some error occured while fetching seller based on id {} for product addition ", seller, e);

@@ -132,19 +132,28 @@ public class CartServiceImplementation implements CartService {
                 .toList();
         double totalBill = CartUtil.getCartTotal(items);
         Currency currency = Currency.INR;
+
         for (CartItems item : items) {
             if (!edited) {
                 quantity = item.getQuantity();
             }
             currency = item.getProduct().getCurrency();
-            double total = MathUtil.getTotalFromPriceAndQuantity(item.getProduct().getPrice(), quantity);
+            List<OrderedProduct> productLst = user.getCart()
+                    .stream()
+                    .map(cartItems -> {
+                        OrderedProduct orderedProduct = OrderedProduct.builder()
+                                .product(cartItems.getProduct())
+                                .quantity(cartItems.getQuantity())
+                                .build();
+                        return orderedProduct;
+                    })
+                    .collect(Collectors.toList());
             Order order = Order.builder()
                     .orderedOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .user(user)
-                    .price(total)
+                    .price(totalBill)
                     .status(OrderStatus.ORDERED)
-                    .quantity(quantity)
-                    .product(item.getProduct())
+                    .orderedProducts(productLst)
                     .build();
             try {
                 orderRepository.addOrder(order);

@@ -1,0 +1,1343 @@
+2025-04-14 12:21:10 [main] DEBUG org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+2025-04-14 12:21:10 [main] DEBUG o.h.jpa.HibernatePersistenceProvider - Located and parsed 1 persistence units; checking each
+2025-04-14 12:21:10 [main] DEBUG o.h.jpa.HibernatePersistenceProvider - Checking persistence-unit [name=myPersistenceUnit, explicit-provider=null] against incoming persistence unit name [myPersistenceUnit]
+2025-04-14 12:21:10 [main] DEBUG o.h.jpa.boot.spi.ProviderChecker - No PersistenceProvider explicitly requested, assuming Hibernate
+2025-04-14 12:21:10 [main] DEBUG o.h.jpa.internal.util.LogHelper - PersistenceUnitInfo [
+	name: myPersistenceUnit
+	persistence provider classname: null
+	classloader: null
+	excludeUnlistedClasses: false
+	JTA datasource: null
+	Non JTA datasource: null
+	Transaction type: RESOURCE_LOCAL
+	PU root URL: file:/C:/Users/a.shaha/IdeaProjects/DSS-assignment/shopping-site-assignment-jdbc-maven/target/classes/
+	Shared Cache Mode: null
+	Validation Mode: null
+	Jar files URLs []
+	Managed classes names [
+		org.assignment.entities.Seller
+		org.assignment.entities.Order
+		org.assignment.entities.Product
+		org.assignment.entities.User
+		org.assignment.entities.CartItems]
+	Mapping files names []
+	Properties [
+		hibernate.c3p0.timeout: 300
+		hibernate.connection.driver_class: org.postgresql.Driver
+		hibernate.c3p0.max_statements: 50
+		jakarta.persistence.jdbc.password: Fy2aWdXt
+		hibernate.c3p0.max_size: 20
+		hibernate.c3p0.idle_test_period: 300
+		hibernate.c3p0.min_size: 5
+		jakarta.persistence.jdbc.driver: org.postgresql.Driver
+		jakarta.persistence.jdbc.user: dbhuser
+		jakarta.persistence.jdbc.url: jdbc:postgresql://172.16.1.195:5331/dbhdemo
+		hibernate.hbm2ddl.auto: update
+		hibernate.show_sql: false]
+2025-04-14 12:21:10 [main] DEBUG o.h.i.internal.IntegratorServiceImpl - Adding Integrator [org.hibernate.boot.beanvalidation.BeanValidationIntegrator].
+2025-04-14 12:21:10 [main] DEBUG o.h.i.internal.IntegratorServiceImpl - Adding Integrator [org.hibernate.cache.internal.CollectionCacheInvalidator].
+2025-04-14 12:21:10 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.18.Final
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.cfg.Environment - HHH000206: 'hibernate.properties' not found
+2025-04-14 12:21:10 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Ignoring CDI for resolving IdentifierGenerator instances as extended or delayed CDI support was enabled
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [uuid2] -> [org.hibernate.id.UUIDGenerator]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [guid] -> [org.hibernate.id.GUIDGenerator]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [uuid] -> [org.hibernate.id.UUIDHexGenerator]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [uuid.hex] -> [org.hibernate.id.UUIDHexGenerator]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [assigned] -> [org.hibernate.id.Assigned]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [identity] -> [org.hibernate.id.IdentityGenerator]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [select] -> [org.hibernate.id.SelectGenerator]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [sequence] -> [org.hibernate.id.enhanced.SequenceStyleGenerator]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [increment] -> [org.hibernate.id.IncrementGenerator]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [foreign] -> [org.hibernate.id.ForeignGenerator]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [enhanced-sequence] -> [org.hibernate.id.enhanced.SequenceStyleGenerator]
+2025-04-14 12:21:10 [main] DEBUG org.hibernate.orm.idgen.factory - Registering IdentifierGenerator strategy [enhanced-table] -> [org.hibernate.id.enhanced.TableGenerator]
+2025-04-14 12:21:10 [main] DEBUG o.h.c.i.RegionFactoryInitiator - Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
+2025-04-14 12:21:10 [main] DEBUG o.h.c.i.RegionFactoryInitiator - Cache region factory : org.hibernate.cache.internal.NoCachingRegionFactory
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration boolean -> org.hibernate.type.BasicTypeReference@5be46f9d
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration boolean -> org.hibernate.type.BasicTypeReference@5be46f9d
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Boolean -> org.hibernate.type.BasicTypeReference@5be46f9d
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration numeric_boolean -> org.hibernate.type.BasicTypeReference@3f91b517
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration org.hibernate.type.NumericBooleanConverter -> org.hibernate.type.BasicTypeReference@3f91b517
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration true_false -> org.hibernate.type.BasicTypeReference@68702e03
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration org.hibernate.type.TrueFalseConverter -> org.hibernate.type.BasicTypeReference@68702e03
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration yes_no -> org.hibernate.type.BasicTypeReference@7a220c9a
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration org.hibernate.type.YesNoConverter -> org.hibernate.type.BasicTypeReference@7a220c9a
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration byte -> org.hibernate.type.BasicTypeReference@2421cc4
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration byte -> org.hibernate.type.BasicTypeReference@2421cc4
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Byte -> org.hibernate.type.BasicTypeReference@2421cc4
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration binary -> org.hibernate.type.BasicTypeReference@30c93896
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration byte[] -> org.hibernate.type.BasicTypeReference@30c93896
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration [B -> org.hibernate.type.BasicTypeReference@30c93896
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration binary_wrapper -> org.hibernate.type.BasicTypeReference@59a008ba
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration wrapper-binary -> org.hibernate.type.BasicTypeReference@59a008ba
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration image -> org.hibernate.type.BasicTypeReference@338c99c8
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration blob -> org.hibernate.type.BasicTypeReference@21ba0741
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.sql.Blob -> org.hibernate.type.BasicTypeReference@21ba0741
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration materialized_blob -> org.hibernate.type.BasicTypeReference@58ce9668
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration materialized_blob_wrapper -> org.hibernate.type.BasicTypeReference@172b013
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration short -> org.hibernate.type.BasicTypeReference@56673b2c
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration short -> org.hibernate.type.BasicTypeReference@56673b2c
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Short -> org.hibernate.type.BasicTypeReference@56673b2c
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration integer -> org.hibernate.type.BasicTypeReference@2796aeae
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration int -> org.hibernate.type.BasicTypeReference@2796aeae
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Integer -> org.hibernate.type.BasicTypeReference@2796aeae
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration long -> org.hibernate.type.BasicTypeReference@b4711e2
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration long -> org.hibernate.type.BasicTypeReference@b4711e2
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Long -> org.hibernate.type.BasicTypeReference@b4711e2
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration float -> org.hibernate.type.BasicTypeReference@1fa1cab1
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration float -> org.hibernate.type.BasicTypeReference@1fa1cab1
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Float -> org.hibernate.type.BasicTypeReference@1fa1cab1
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration double -> org.hibernate.type.BasicTypeReference@70f02c32
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration double -> org.hibernate.type.BasicTypeReference@70f02c32
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Double -> org.hibernate.type.BasicTypeReference@70f02c32
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration big_integer -> org.hibernate.type.BasicTypeReference@62010f5c
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.math.BigInteger -> org.hibernate.type.BasicTypeReference@62010f5c
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration big_decimal -> org.hibernate.type.BasicTypeReference@51fadaff
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.math.BigDecimal -> org.hibernate.type.BasicTypeReference@51fadaff
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration character -> org.hibernate.type.BasicTypeReference@401f7633
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration char -> org.hibernate.type.BasicTypeReference@401f7633
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Character -> org.hibernate.type.BasicTypeReference@401f7633
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration character_nchar -> org.hibernate.type.BasicTypeReference@31ff43be
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration string -> org.hibernate.type.BasicTypeReference@5b6ec132
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.String -> org.hibernate.type.BasicTypeReference@5b6ec132
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration nstring -> org.hibernate.type.BasicTypeReference@5c44c582
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration characters -> org.hibernate.type.BasicTypeReference@67d18ed7
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration char[] -> org.hibernate.type.BasicTypeReference@67d18ed7
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration [C -> org.hibernate.type.BasicTypeReference@67d18ed7
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration wrapper-characters -> org.hibernate.type.BasicTypeReference@2c78d320
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration text -> org.hibernate.type.BasicTypeReference@132e0cc
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration ntext -> org.hibernate.type.BasicTypeReference@7b205dbd
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration clob -> org.hibernate.type.BasicTypeReference@106cc338
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.sql.Clob -> org.hibernate.type.BasicTypeReference@106cc338
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration nclob -> org.hibernate.type.BasicTypeReference@7a67e3c6
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.sql.NClob -> org.hibernate.type.BasicTypeReference@7a67e3c6
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration materialized_clob -> org.hibernate.type.BasicTypeReference@6cc558c6
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration materialized_clob_char_array -> org.hibernate.type.BasicTypeReference@15713d56
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration materialized_clob_character_array -> org.hibernate.type.BasicTypeReference@63f259c3
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration materialized_nclob -> org.hibernate.type.BasicTypeReference@26ceffa8
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration materialized_nclob_character_array -> org.hibernate.type.BasicTypeReference@600b90df
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration materialized_nclob_char_array -> org.hibernate.type.BasicTypeReference@7c8c9a05
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration Duration -> org.hibernate.type.BasicTypeReference@d41f816
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.Duration -> org.hibernate.type.BasicTypeReference@d41f816
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration LocalDateTime -> org.hibernate.type.BasicTypeReference@5c2375a9
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.LocalDateTime -> org.hibernate.type.BasicTypeReference@5c2375a9
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration LocalDate -> org.hibernate.type.BasicTypeReference@60129b9a
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.LocalDate -> org.hibernate.type.BasicTypeReference@60129b9a
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration LocalTime -> org.hibernate.type.BasicTypeReference@78d6692f
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.LocalTime -> org.hibernate.type.BasicTypeReference@78d6692f
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration OffsetDateTime -> org.hibernate.type.BasicTypeReference@7a55af6b
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.OffsetDateTime -> org.hibernate.type.BasicTypeReference@7a55af6b
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration OffsetDateTimeWithTimezone -> org.hibernate.type.BasicTypeReference@3d9c13b5
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration OffsetDateTimeWithoutTimezone -> org.hibernate.type.BasicTypeReference@492691d7
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration OffsetTime -> org.hibernate.type.BasicTypeReference@27216cd
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.OffsetTime -> org.hibernate.type.BasicTypeReference@27216cd
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration OffsetTimeUtc -> org.hibernate.type.BasicTypeReference@558bdf1f
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration OffsetTimeWithTimezone -> org.hibernate.type.BasicTypeReference@8576fa0
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration OffsetTimeWithoutTimezone -> org.hibernate.type.BasicTypeReference@7582ff54
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration ZonedDateTime -> org.hibernate.type.BasicTypeReference@67545b57
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.ZonedDateTime -> org.hibernate.type.BasicTypeReference@67545b57
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration ZonedDateTimeWithTimezone -> org.hibernate.type.BasicTypeReference@6c2c1385
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration ZonedDateTimeWithoutTimezone -> org.hibernate.type.BasicTypeReference@5f354bcf
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration date -> org.hibernate.type.BasicTypeReference@3daf7722
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.sql.Date -> org.hibernate.type.BasicTypeReference@3daf7722
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration time -> org.hibernate.type.BasicTypeReference@78641d23
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.sql.Time -> org.hibernate.type.BasicTypeReference@78641d23
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration timestamp -> org.hibernate.type.BasicTypeReference@74589991
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.sql.Timestamp -> org.hibernate.type.BasicTypeReference@74589991
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.util.Date -> org.hibernate.type.BasicTypeReference@74589991
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration calendar -> org.hibernate.type.BasicTypeReference@146dfe6
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.util.Calendar -> org.hibernate.type.BasicTypeReference@146dfe6
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.util.GregorianCalendar -> org.hibernate.type.BasicTypeReference@146dfe6
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration calendar_date -> org.hibernate.type.BasicTypeReference@4716be8b
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration calendar_time -> org.hibernate.type.BasicTypeReference@1fc32e4f
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration instant -> org.hibernate.type.BasicTypeReference@2f67b837
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.Instant -> org.hibernate.type.BasicTypeReference@2f67b837
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration uuid -> org.hibernate.type.BasicTypeReference@1869fbd2
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.util.UUID -> org.hibernate.type.BasicTypeReference@1869fbd2
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration pg-uuid -> org.hibernate.type.BasicTypeReference@1869fbd2
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration uuid-binary -> org.hibernate.type.BasicTypeReference@6af9fcb2
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration uuid-char -> org.hibernate.type.BasicTypeReference@7efaad5a
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration class -> org.hibernate.type.BasicTypeReference@291a7e3c
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Class -> org.hibernate.type.BasicTypeReference@291a7e3c
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration currency -> org.hibernate.type.BasicTypeReference@ca30bc1
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration Currency -> org.hibernate.type.BasicTypeReference@ca30bc1
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.util.Currency -> org.hibernate.type.BasicTypeReference@ca30bc1
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration locale -> org.hibernate.type.BasicTypeReference@1046d517
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.util.Locale -> org.hibernate.type.BasicTypeReference@1046d517
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration serializable -> org.hibernate.type.BasicTypeReference@3b7d3a38
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.io.Serializable -> org.hibernate.type.BasicTypeReference@3b7d3a38
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration timezone -> org.hibernate.type.BasicTypeReference@416c58f5
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.util.TimeZone -> org.hibernate.type.BasicTypeReference@416c58f5
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration ZoneOffset -> org.hibernate.type.BasicTypeReference@5505ae1a
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.ZoneOffset -> org.hibernate.type.BasicTypeReference@5505ae1a
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration url -> org.hibernate.type.BasicTypeReference@73cd37c0
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.net.URL -> org.hibernate.type.BasicTypeReference@73cd37c0
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration row_version -> org.hibernate.type.BasicTypeReference@21337f7b
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration object -> org.hibernate.type.JavaObjectType@764faa6
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Object -> org.hibernate.type.JavaObjectType@764faa6
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration null -> org.hibernate.type.NullType@e57b96d
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration imm_date -> org.hibernate.type.BasicTypeReference@32c726ee
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration imm_time -> org.hibernate.type.BasicTypeReference@22f31dec
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration imm_timestamp -> org.hibernate.type.BasicTypeReference@34c01041
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration imm_calendar -> org.hibernate.type.BasicTypeReference@76f4b65
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration imm_calendar_date -> org.hibernate.type.BasicTypeReference@c94fd30
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration imm_calendar_time -> org.hibernate.type.BasicTypeReference@36328d33
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration imm_binary -> org.hibernate.type.BasicTypeReference@2c4d1ac
+2025-04-14 12:21:10 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration imm_serializable -> org.hibernate.type.BasicTypeReference@7f0d96f2
+2025-04-14 12:21:10 [main] DEBUG o.h.b.internal.BootstrapContextImpl - Injecting ScanEnvironment [org.hibernate.jpa.boot.internal.StandardJpaScanEnvironmentImpl@24ba9639] into BootstrapContext; was [null]
+2025-04-14 12:21:10 [main] DEBUG o.h.b.internal.BootstrapContextImpl - Injecting ScanOptions [org.hibernate.boot.archive.scan.internal.StandardScanOptions@38aa816f] into BootstrapContext; was [org.hibernate.boot.archive.scan.internal.StandardScanOptions@53f6fd09]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.p.i.ScanningCoordinator - Unable to resolve class [org.assignment.entities.Seller] named in persistence unit [file:/C:/Users/a.shaha/IdeaProjects/DSS-assignment/shopping-site-assignment-jdbc-maven/target/classes/]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.internal.BootstrapContextImpl - Injecting JPA temp ClassLoader [null] into BootstrapContext; was [null]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - ClassLoaderAccessImpl#injectTempClassLoader(null) [was null]
+2025-04-14 12:21:11 [main] WARN  o.h.e.j.c.i.ConnectionProviderInitiator - HHH000022: c3p0 properties were encountered, but the c3p0 provider class was not found on the classpath; these properties are going to be ignored.
+2025-04-14 12:21:11 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using built-in connection pool (not intended for production use)
+2025-04-14 12:21:11 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Loaded JDBC driver class: org.postgresql.Driver
+2025-04-14 12:21:11 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001012: Connecting with JDBC URL [jdbc:postgresql://172.16.1.195:5331/dbhdemo]
+2025-04-14 12:21:11 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=Fy2aWdXt, user=dbhuser}
+2025-04-14 12:21:11 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.orm.connections.pooling - Initializing Connection pool with 1 Connections
+2025-04-14 12:21:11 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001115: Connection pool size: 20 (min=1)
+2025-04-14 12:21:11 [main] DEBUG o.h.e.j.e.i.JdbcEnvironmentInitiator - Database ->
+       name : PostgreSQL
+    version : 14.2 (Debian 14.2-1.pgdg110+1)
+      major : 14
+      minor : 2
+2025-04-14 12:21:11 [main] DEBUG o.h.e.j.e.i.JdbcEnvironmentInitiator - Driver ->
+       name : PostgreSQL JDBC Driver
+    version : 42.7.5
+      major : 42
+      minor : 7
+2025-04-14 12:21:11 [main] DEBUG o.h.e.j.e.i.JdbcEnvironmentInitiator - JDBC version : 4.2
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.orm.dialect - HHH035001: Using dialect: org.hibernate.dialect.PostgreSQLDialect, version: org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$DialectResolutionInfoImpl@38f2e97e
+2025-04-14 12:21:11 [main] DEBUG o.h.e.j.e.s.IdentifierHelperBuilder - JDBC driver metadata reported database stores quoted identifiers in neither upper, lower nor mixed case
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.orm.jdbc.lob - HHH10010004: Disabling contextual LOB creation as Dialect reported it is not supported
+2025-04-14 12:21:11 [main] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(6, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@2160e52a) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@29f0802c)
+2025-04-14 12:21:11 [main] DEBUG o.h.t.d.jdbc.spi.JdbcTypeRegistry - addDescriptor(2004, BlobTypeDescriptor(BLOB_BINDING)) replaced previous registration(BlobTypeDescriptor(DEFAULT))
+2025-04-14 12:21:11 [main] DEBUG o.h.t.d.jdbc.spi.JdbcTypeRegistry - addDescriptor(2005, ClobTypeDescriptor(CLOB_BINDING)) replaced previous registration(ClobTypeDescriptor(DEFAULT))
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration JAVA_OBJECT -> org.hibernate.type.JavaObjectType@a619c2
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.lang.Object -> org.hibernate.type.JavaObjectType@a619c2
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Type registration key [java.lang.Object] overrode previous entry : `org.hibernate.type.JavaObjectType@764faa6`
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration org.hibernate.type.DurationType -> basicType@1(java.time.Duration,2)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration Duration -> basicType@1(java.time.Duration,2)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.Duration -> basicType@1(java.time.Duration,2)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration org.hibernate.type.OffsetDateTimeType -> basicType@2(java.time.OffsetDateTime,3003)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration OffsetDateTime -> basicType@2(java.time.OffsetDateTime,3003)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.OffsetDateTime -> basicType@2(java.time.OffsetDateTime,3003)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration org.hibernate.type.ZonedDateTimeType -> basicType@3(java.time.ZonedDateTime,3003)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration ZonedDateTime -> basicType@3(java.time.ZonedDateTime,3003)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.ZonedDateTime -> basicType@3(java.time.ZonedDateTime,3003)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration org.hibernate.type.OffsetTimeType -> basicType@4(java.time.OffsetTime,3007)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration OffsetTime -> basicType@4(java.time.OffsetTime,3007)
+2025-04-14 12:21:11 [main] DEBUG o.hibernate.type.BasicTypeRegistry - Adding type registration java.time.OffsetTime -> basicType@4(java.time.OffsetTime,3007)
+2025-04-14 12:21:11 [main] DEBUG o.h.type.spi.TypeConfiguration$Scope - Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@6579c3d9] to MetadataBuildingContext [org.hibernate.boot.internal.MetadataBuildingContextRootImpl@2b87581]
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.relational.Namespace - Created database namespace [logicalName=Name{catalog=null, schema=null}, physicalName=Name{catalog=null, schema=null}]
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Binding entity from annotated class: org.assignment.entities.CartItems
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Import with entity name CartItems
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Bind entity org.assignment.entities.CartItems on table cart_items
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [org.assignment.entities.CartItems] is safe
+2025-04-14 12:21:11 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : org.assignment.entities.CartItems
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property id with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.CartItems:id]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for id
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: cart_items.id
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property id
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.BinderHelper - #makeIdGenerator(BasicValue([Column(id)]), id, identity, , ...)
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedJoinColumn(column='product_id')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property product
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='quantity')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property quantity with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.CartItems:quantity]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for quantity
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: cart_items.quantity
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property quantity
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedJoinColumn(column='customer_id')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property user
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Binding entity from annotated class: org.assignment.entities.Order
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Import with entity name Order
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Bind entity org.assignment.entities.Order on table orders
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='order_id')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [org.assignment.entities.Order] is safe
+2025-04-14 12:21:11 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : org.assignment.entities.Order
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property id with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Order:id]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for id
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: orders.order_id
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property id
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.BinderHelper - #makeIdGenerator(BasicValue([Column(order_id)]), id, org.hibernate.id.enhanced.TableGenerator, , ...)
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='ordered_on')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property orderedOn with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Order:orderedOn]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for orderedOn
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: orders.ordered_on
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property orderedOn
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='price')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property price with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Order:price]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for price
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: orders.price
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property price
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedJoinColumn(column='product_id')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property product
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='quantity')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property quantity with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Order:quantity]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for quantity
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: orders.quantity
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property quantity
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='status')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property status with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Order:status]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for status
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: orders.status
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property status
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedJoinColumn(column='customer_id')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property user
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Binding entity from annotated class: org.assignment.entities.User
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Import with entity name User
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Bind entity org.assignment.entities.User on table users
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='user_id')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [org.assignment.entities.User] is safe
+2025-04-14 12:21:11 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : org.assignment.entities.User
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property id with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.User:id]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for id
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: users.user_id
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property id
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.BinderHelper - #makeIdGenerator(BasicValue([Column(user_id)]), id, identity, , ...)
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='address')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property address with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.User:address]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for address
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: users.address
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property address
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedJoinColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: IndexColumn(column='cart_ORDER')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='cart_KEY')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedJoinColumn(column='cart_KEY')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedJoinColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedJoinColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.CollectionBinder - Collection role: org.assignment.entities.User.cart
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property cart
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='email')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property email with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.User:email]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for email
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: users.email
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property email
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='logged_in')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property isLoggedIn with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.User:isLoggedIn]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for isLoggedIn
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: users.logged_in
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property isLoggedIn
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='name')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property name with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.User:name]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for name
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: users.name
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property name
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='password')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property password with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.User:password]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for password
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: users.password
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property password
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='registered_on')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property registeredOn with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.User:registeredOn]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for registeredOn
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: users.registered_on
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property registeredOn
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='role')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property role with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.User:role]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for role
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: users.role
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property role
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Binding entity from annotated class: org.assignment.entities.Product
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Import with entity name Product
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.EntityBinder - Bind entity org.assignment.entities.Product on table product
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='product_id')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [org.assignment.entities.Product] is safe
+2025-04-14 12:21:11 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : org.assignment.entities.Product
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property id with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Product:id]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for id
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: product.product_id
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property id
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.BinderHelper - #makeIdGenerator(BasicValue([Column(product_id)]), id, identity, , ...)
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='currency')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property currency with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Product:currency]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for currency
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: product.currency
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property currency
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='product_name')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property name with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Product:name]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for name
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: product.product_name
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property name
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='price')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property price with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Product:price]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for price
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: product.price
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property price
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedJoinColumn(column='seller_id')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn()
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property seller
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='stock')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property stock with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Product:stock]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for stock
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: product.stock
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property stock
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.AnnotatedColumn - Binding column: AnnotatedColumn(column='product_type')
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - MetadataSourceProcessor property type with lazy=false
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.AbstractPropertyHolder - Attempting to locate auto-apply AttributeConverter for property [org.assignment.entities.Product:type]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - building BasicValue for type
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.BasicValue - Skipping column re-registration: product.product_type
+2025-04-14 12:21:11 [main] DEBUG o.h.b.model.internal.PropertyBinder - Building property type
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for id
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for quantity
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for id
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for orderedOn
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for price
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for quantity
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for status
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for id
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for address
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for email
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for isLoggedIn
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for name
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for password
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for registeredOn
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for role
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for id
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for currency
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for name
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for price
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for stock
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.BasicValueBinder - Starting `BasicValueBinder#fillSimpleValue` for type
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.PrimaryKey - Forcing column [id] to be non-null as it is part of the primary key for table [cart_items]
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.PrimaryKey - Forcing column [order_id] to be non-null as it is part of the primary key for table [orders]
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.PrimaryKey - Forcing column [user_id] to be non-null as it is part of the primary key for table [users]
+2025-04-14 12:21:11 [main] DEBUG org.hibernate.mapping.PrimaryKey - Forcing column [product_id] to be non-null as it is part of the primary key for table [product]
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.CollectionSecondPass - Second pass for collection: org.assignment.entities.User.cart
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.CollectionBinder - Binding a OneToMany: org.assignment.entities.User.cart through a foreign key
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.internal.CollectionBinder - Mapping collection: org.assignment.entities.User.cart -> cart_items
+2025-04-14 12:21:11 [main] DEBUG o.h.boot.model.internal.TableBinder - Retrieving property org.assignment.entities.CartItems.user
+2025-04-14 12:21:11 [main] DEBUG o.h.b.m.i.CollectionSecondPass - Mapped collection key: customer_id, one-to-many: org.assignment.entities.CartItems
+2025-04-14 12:21:11 [main] DEBUG o.h.b.i.InFlightMetadataCollectorImpl - Resolving reference to class: org.assignment.entities.Product
+2025-04-14 12:21:12 [main] DEBUG o.h.b.i.InFlightMetadataCollectorImpl - Resolving reference to class: org.assignment.entities.User
+2025-04-14 12:21:12 [main] DEBUG o.h.b.i.InFlightMetadataCollectorImpl - Resolving reference to class: org.assignment.entities.Product
+2025-04-14 12:21:12 [main] DEBUG o.h.b.i.InFlightMetadataCollectorImpl - Resolving reference to class: org.assignment.entities.User
+2025-04-14 12:21:12 [main] DEBUG o.h.b.i.InFlightMetadataCollectorImpl - Resolving reference to class: org.assignment.entities.User
+2025-04-14 12:21:12 [main] DEBUG o.h.b.i.InFlightMetadataCollectorImpl - Resolving reference to class: org.assignment.entities.Product
+2025-04-14 12:21:12 [main] DEBUG o.h.b.i.InFlightMetadataCollectorImpl - Resolving reference to class: org.assignment.entities.User
+2025-04-14 12:21:12 [main] DEBUG o.h.b.i.InFlightMetadataCollectorImpl - Resolving reference to class: org.assignment.entities.Product
+2025-04-14 12:21:12 [main] DEBUG o.h.b.i.InFlightMetadataCollectorImpl - Resolving reference to class: org.assignment.entities.User
+2025-04-14 12:21:12 [main] DEBUG o.h.b.i.InFlightMetadataCollectorImpl - Resolving reference to class: org.assignment.entities.User
+2025-04-14 12:21:12 [main] INFO  o.h.id.enhanced.TableGenerator - HHH000398: Explicit segment value for id generator [hibernate_sequences.sequence_name] suggested; using default [default]
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.mapping.PrimaryKey - Forcing column [sequence_name] to be non-null as it is part of the primary key for table [hibernate_sequences]
+2025-04-14 12:21:12 [main] DEBUG o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2025-04-14 12:21:12 [main] DEBUG o.h.internal.SessionFactoryImpl - Building session factory
+2025-04-14 12:21:12 [main] DEBUG o.h.s.i.SessionFactoryServiceRegistryImpl - EventListenerRegistry access via ServiceRegistry is deprecated.  Use `sessionFactory.getEventEngine().getListenerRegistry()` instead
+2025-04-14 12:21:12 [main] DEBUG o.h.internal.SessionFactoryImpl - Instantiating SessionFactory with settings: {java.specification.version=23, sun.cpu.isalist=amd64, hibernate.c3p0.idle_test_period=300, sun.jnu.encoding=Cp1252, hibernate.c3p0.min_size=5, java.class.path=C:\Users\a.shaha\IdeaProjects\DSS-assignment\shopping-site-assignment-jdbc-maven\target\classes;C:\Users\a.shaha\.m2\repository\org\postgresql\postgresql\42.7.5\postgresql-42.7.5.jar;C:\Users\a.shaha\.m2\repository\org\checkerframework\checker-qual\3.48.3\checker-qual-3.48.3.jar;C:\Users\a.shaha\.m2\repository\org\slf4j\slf4j-api\2.0.16\slf4j-api-2.0.16.jar;C:\Users\a.shaha\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\a.shaha\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\a.shaha\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.2.0-M2\jakarta.persistence-api-3.2.0-M2.jar;C:\Users\a.shaha\.m2\repository\org\hibernate\orm\hibernate-core\6.2.18.Final\hibernate-core-6.2.18.Final.jar;C:\Users\a.shaha\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\a.shaha\.m2\repository\org\jboss\logging\jboss-logging\3.5.0.Final\jboss-logging-3.5.0.Final.jar;C:\Users\a.shaha\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\a.shaha\.m2\repository\io\smallrye\jandex\3.0.5\jandex-3.0.5.jar;C:\Users\a.shaha\.m2\repository\com\fasterxml\classmate\1.5.1\classmate-1.5.1.jar;C:\Users\a.shaha\.m2\repository\net\bytebuddy\byte-buddy\1.14.7\byte-buddy-1.14.7.jar;C:\Users\a.shaha\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.0\jakarta.xml.bind-api-4.0.0.jar;C:\Users\a.shaha\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.0\jakarta.activation-api-2.1.0.jar;C:\Users\a.shaha\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.2\jaxb-runtime-4.0.2.jar;C:\Users\a.shaha\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.2\jaxb-core-4.0.2.jar;C:\Users\a.shaha\.m2\repository\org\eclipse\angus\angus-activation\2.0.0\angus-activation-2.0.0.jar;C:\Users\a.shaha\.m2\repository\org\glassfish\jaxb\txw2\4.0.2\txw2-4.0.2.jar;C:\Users\a.shaha\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.1\istack-commons-runtime-4.1.1.jar;C:\Users\a.shaha\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\a.shaha\.m2\repository\org\antlr\antlr4-runtime\4.10.1\antlr4-runtime-4.10.1.jar, java.vm.vendor=Oracle Corporation, sun.arch.data.model=64, user.variant=, java.vendor.url=https://java.oracle.com/, user.timezone=Asia/Calcutta, javax.persistence.jdbc.user=****, javax.persistence.jdbc.url=jdbc:postgresql://172.16.1.195:5331/dbhdemo, java.vm.specification.version=23, os.name=Windows 10, jakarta.persistence.jdbc.password=****, sun.java.launcher=SUN_STANDARD, user.country=IN, local.setting.IS_JTA_TXN_COORD=false, sun.boot.library.path=C:\Program Files\Java\jdk-23\bin, sun.java.command=Main, jdk.debug=release, jakarta.persistence.jdbc.driver=org.postgresql.Driver, sun.cpu.endian=little, user.home=C:\Users\a.shaha, hibernate.c3p0.max_statements=50, user.language=en, sun.stderr.encoding=UTF-8, java.specification.vendor=Oracle Corporation, java.version.date=2024-10-15, java.home=C:\Program Files\Java\jdk-23, file.separator=\, java.vm.compressedOopsMode=Zero based, jakarta.persistence.jdbc.user=****, sun.stdout.encoding=UTF-8, line.separator=
+, hibernate.persistenceUnitName=myPersistenceUnit, hibernate.c3p0.timeout=300, java.vm.specification.vendor=Oracle Corporation, java.specification.name=Java Platform API Specification, hibernate.transaction.coordinator_class=class org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorBuilderImpl, javax.persistence.jdbc.driver=org.postgresql.Driver, hibernate.hbm2ddl.auto=update, user.script=, sun.management.compiler=HotSpot 64-Bit Tiered Compilers, hibernate.c3p0.max_size=20, java.runtime.version=23.0.1+11-39, user.name=a.shaha, stdout.encoding=UTF-8, path.separator=;, hibernate.connection.username=****, os.version=10.0, java.runtime.name=Java(TM) SE Runtime Environment, hibernate.connection.url=jdbc:postgresql://172.16.1.195:5331/dbhdemo, file.encoding=UTF-8, java.vm.name=Java HotSpot(TM) 64-Bit Server VM, hibernate.show_sql=false, hibernate.connection.driver_class=org.postgresql.Driver, java.vendor.url.bug=https://bugreport.java.com/bugreport/, java.io.tmpdir=C:\Users\A4794~1.SHA\AppData\Local\Temp\, java.version=23.0.1, user.dir=C:\Users\a.shaha\IdeaProjects\DSS-assignment\shopping-site-assignment-jdbc-maven, os.arch=amd64, java.vm.specification.name=Java Virtual Machine Specification, hibernate.connection.password=****, sun.os.patch.level=, jakarta.persistence.jdbc.url=jdbc:postgresql://172.16.1.195:5331/dbhdemo, hibernate.boot.CfgXmlAccessService.key=org.hibernate.boot.registry.StandardServiceRegistryBuilder$1@5c5d6175, native.encoding=Cp1252, java.library.path=C:\Program Files\Java\jdk-23\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\a.shaha\AppData\Local\Microsoft\WindowsApps;C:\Program Files\apache-maven-3.9.9\bin;;., java.vendor=Oracle Corporation, stderr.encoding=UTF-8, java.vm.info=mixed mode, sharing, java.vm.version=23.0.1+11-39, hibernate.bytecode.use_reflection_optimizer=true, sun.io.unicode.encoding=UnicodeLittle, javax.persistence.jdbc.password=****, java.class.version=67.0}
+2025-04-14 12:21:12 [main] DEBUG o.h.internal.SessionFactoryImpl - Session factory constructed with filter configurations : {}
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(max)] under max; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(min)] under min; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(sum)] under sum; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(avg)] under avg; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CountFunction@69d45cca] under count; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.EveryAnyEmulation@7ff8a9dc] under every; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.EveryAnyEmulation@2cde651b] under any; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(floor)] under floor; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(ceiling)] under ceiling; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(mod)] under mod; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(abs)] under abs; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(sign)] under sign; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(sqrt)] under sqrt; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(ln)] under ln; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(exp)] under exp; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(power)] under power; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(round)] under round; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(sin)] under sin; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(cos)] under cos; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(tan)] under tan; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(asin)] under asin; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(acos)] under acos; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(atan)] under atan; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(atan2)] under atan2; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@655a01d8] under sinh; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@c29fe36] under cosh; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@6614bd4b] under tanh; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@4d266391] under pi; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@7847ef2c] under log; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(coalesce)] under coalesce; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(nullif)] under nullif; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(left)] under left; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(right)] under right; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(replace)] under replace; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(concat)] under concat; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(lower)] under lower; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(upper)] under upper; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(substring)] under substring; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(locate)] under locate; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(character_length)] under character_length; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : length -> character_length
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.LocatePositionEmulation@27755487] under position; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.InsertSubstringOverlayEmulation@367f0121] under overlay; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.TrimFunction@5349b246] under trim; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CastFunction@24841372] under cast; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@77114efe] under collate; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.ExtractFunction@7e7f3cfd] under extract; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(least)] under least; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(greatest)] under greatest; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CoalesceIfnullEmulation@65ddee5a] under ifnull; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(lpad)] under lpad; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(rpad)] under rpad; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.LpadRpadPadEmulation@49d831c2] under pad; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CastStrEmulation@ef60710] under str; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.FormatFunction@7ee8130e] under format; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.TimestampaddFunction@285c6918] under timestampadd; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.TimestampdiffFunction@5cc9d3d0] under timestampdiff; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : dateadd -> timestampadd
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : datediff -> timestampdiff
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CurrentFunction@59ce792e] under current_date; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CurrentFunction@4860827a] under current_time; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CurrentFunction@404db674] under current_timestamp; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : current date -> current_date
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : current time -> current_time
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : current timestamp -> current_timestamp
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CurrentFunction@50f097b5] under local_date; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CurrentFunction@7add838c] under local_time; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CurrentFunction@3662bdff] under local_datetime; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CurrentFunction@1bb15351] under offset_datetime; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : local date -> local_date
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : local time -> local_time
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : local datetime -> local_datetime
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : offset datetime -> offset_datetime
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.CurrentFunction@4fa822ad] under instant; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : current_instant -> instant
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.SqlFunction@65d8dff8] under sql; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(cot)] under cot; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(radians)] under radians; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(degrees)] under degrees; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(log)] under log; prior registration was org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@7847ef2c
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@444f44c5] under mod; prior registration was NamedSqmFunctionTemplate(mod)
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(log10)] under log10; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(tanh)] under tanh; prior registration was org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@6614bd4b
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(sinh)] under sinh; prior registration was org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@655a01d8
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(cosh)] under cosh; prior registration was org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@c29fe36
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(acosh)] under acosh; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(asinh)] under asinh; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(atanh)] under atanh; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(cbrt)] under cbrt; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(pi)] under pi; prior registration was org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@4d266391
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(ltrim)] under ltrim; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(rtrim)] under rtrim; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(repeat)] under repeat; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(md5)] under md5; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(initcap)] under initcap; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(substr)] under substr; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(substr)] under substring; prior registration was NamedSqmFunctionTemplate(substring)
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(translate)] under translate; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(to_number)] under to_number; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(to_char)] under to_char; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(to_date)] under to_date; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(to_timestamp)] under to_timestamp; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.ConcatPipeFunction@1f1e58ca] under concat; prior registration was NamedSqmFunctionTemplate(concat)
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(localtime)] under localtime; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(localtimestamp)] under localtimestamp; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(localtime)] under local_time; prior registration was org.hibernate.dialect.function.CurrentFunction@7add838c
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(localtimestamp)] under local_datetime; prior registration was org.hibernate.dialect.function.CurrentFunction@3662bdff
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.LengthFunction@380e1909] under character_length; prior registration was NamedSqmFunctionTemplate(character_length)
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : length -> character_length
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.LengthFunction@2d5ef498] under bit_length; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.LengthFunction@95eb320] under octet_length; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(ascii)] under ascii; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(chr)] under chr; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : char -> chr
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@2f521c4] under position; prior registration was org.hibernate.dialect.function.LocatePositionEmulation@27755487
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@4afbb6c2] under bitand; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@10db6131] under bitor; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@6c6017b9] under bitxor; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@4730e0f0] under bitnot; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(bit_and)] under bit_and; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(bit_or)] under bit_or; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(bool_and)] under bool_and; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : every -> bool_and
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(bool_or)] under bool_or; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : any -> bool_or
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@506a1372] under median; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(stddev)] under stddev; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(stddev_pop)] under stddev_pop; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(stddev_samp)] under stddev_samp; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(variance)] under variance; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(var_pop)] under var_pop; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(var_samp)] under var_samp; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(covar_pop)] under covar_pop; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(covar_samp)] under covar_samp; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(corr)] under corr; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(regr_avgx)] under regr_avgx; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(regr_avgy)] under regr_avgy; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(regr_count)] under regr_count; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(regr_intercept)] under regr_intercept; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(regr_r2)] under regr_r2; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(regr_slope)] under regr_slope; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(regr_sxx)] under regr_sxx; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(regr_sxy)] under regr_sxy; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(regr_syy)] under regr_syy; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@77c233af] under insert; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.MultipatternSqmFunctionDescriptor@5399f6c5] under overlay; prior registration was org.hibernate.dialect.function.InsertSubstringOverlayEmulation@367f0121
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(soundex)] under soundex; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.MultipatternSqmFunctionDescriptor@4fe64d23] under locate; prior registration was NamedSqmFunctionTemplate(locate)
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(row_number)] under row_number; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(lag)] under lag; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(lead)] under lead; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(first_value)] under first_value; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(last_value)] under last_value; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(nth_value)] under nth_value; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.ListaggStringAggEmulation@4ba6ec50] under listagg; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(make_date)] under make_date; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(make_time)] under make_time; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(make_timestamp)] under make_timestamp; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [NamedSqmFunctionTemplate(make_timestamptz)] under make_timestamptz; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.InverseDistributionFunction@63538bb4] under mode; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.InverseDistributionFunction@24534cb0] under percentile_cont; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.InverseDistributionFunction@5a50d9fc] under percentile_disc; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.HypotheticalSetFunction@dd71b20] under rank; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.HypotheticalSetFunction@767f6ee7] under dense_rank; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.HypotheticalSetFunction@7b6c6e70] under percent_rank; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.HypotheticalSetFunction@f324455] under cume_dist; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.PostgreSQLMinMaxFunction@3206174f] under min; prior registration was NamedSqmFunctionTemplate(min)
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.PostgreSQLMinMaxFunction@42fb8c87] under max; prior registration was NamedSqmFunctionTemplate(max)
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.PostgreSQLTruncRoundFunction@795f5d51] under round; prior registration was NamedSqmFunctionTemplate(round)
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.dialect.function.PostgreSQLTruncFunction@7a3e5cd3] under trunc; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registering alternate key : truncate -> trunc
+2025-04-14 12:21:12 [main] DEBUG o.h.q.s.function.SqmFunctionRegistry - Registered SqmFunctionTemplate [org.hibernate.query.sqm.function.PatternBasedSqmFunctionDescriptor@3c79088e] under date_trunc; prior registration was null
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - abs(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double acos(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double acosh(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Boolean any(BOOLEAN predicate)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Integer ascii(STRING arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double asin(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double asinh(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double atan(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double atan2(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double atanh(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double avg(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - bit_and(arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Integer bit_length(STRING_OR_CLOB arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - bit_or(arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - bitand(arg0, arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - bitnot(arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - bitor(arg0, arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - bitxor(arg0, arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Boolean bool_and(BOOLEAN predicate)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Boolean bool_or(BOOLEAN predicate)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - cast(arg as Type)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double cbrt(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - ceiling(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Character char(INTEGER arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Integer character_length(STRING_OR_CLOB arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Character chr(INTEGER arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - coalesce(arg0[, arg1[, ...]])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String collate(STRING string as COLLATION collation)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - (STRING string0[, STRING string1[, ...]])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double corr(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double cos(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double cosh(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double cot(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Long count([distinct ]{arg|*})
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double covar_pop(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double covar_samp(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double cume_dist([arg0[, ...]])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Date current date
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Time current time
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Timestamp current timestamp
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Date current_date
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Instant current_instant
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Time current_time
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Timestamp current_timestamp
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - date_trunc(STRING field, TEMPORAL datetime)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - dateadd(TEMPORAL_UNIT field, INTEGER magnitude, TEMPORAL datetime)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - basicType@6(java.lang.Long,-5)|basicType@8(java.lang.Double,8) datediff(TEMPORAL_UNIT field, TEMPORAL start, TEMPORAL end)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double degrees(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Long dense_rank([arg0[, ...]])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Boolean every(BOOLEAN predicate)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double exp(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - extract(TEMPORAL_UNIT field from TEMPORAL arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - first_valueANY value
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - floor(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String format(TEMPORAL datetime as STRING pattern)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - greatest(COMPARABLE arg0, COMPARABLE arg1[, arg2[, ...]])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - ifnull(arg0, arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String initcap(arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String insert(STRING string, INTEGER start, INTEGER length, STRING replacement)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Instant instant
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - lagANY value[, INTEGER offset[, ANY default]]
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - last_valueANY value
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - leadANY value[, INTEGER offset[, ANY default]]
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - least(COMPARABLE arg0, COMPARABLE arg1[, arg2[, ...]])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String left(STRING string, INTEGER length)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Integer length(STRING_OR_CLOB arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String listagg(STRING arg0, STRING arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double ln(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - LocalDate local date
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - LocalDateTime local datetime
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - LocalTime local time
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - LocalDate local_date
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - LocalDateTime local_datetime
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - LocalTime local_time
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Time localtime
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Timestamp localtimestamp
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Integer locate(STRING pattern, STRING string[, INTEGER start])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double log(NUMERIC arg0[, NUMERIC arg1])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double log10(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String lower(STRING string)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String lpad(STRING string, INTEGER length[, STRING padding])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String ltrim(STRING string[, STRING characters])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Date make_date(INTEGER arg0, INTEGER arg1, INTEGER arg2)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Time make_time(INTEGER arg0, INTEGER arg1, INTEGER arg2)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Timestamp make_timestamp(INTEGER arg0, INTEGER arg1, INTEGER arg2, INTEGER arg3, INTEGER arg4, INTEGER arg5)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Timestamp make_timestamptz(INTEGER arg0, INTEGER arg1, INTEGER arg2, INTEGER arg3, INTEGER arg4, INTEGER arg5[, INTEGER arg6])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - max(COMPARABLE arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String md5(arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double median(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - min(COMPARABLE arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Integer mod(INTEGER arg0, INTEGER arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - mode()
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - nth_valueANY value, INTEGER nth
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - nullif(arg0, arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Integer octet_length(STRING_OR_CLOB arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - OffsetDateTime offset datetime
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - OffsetDateTime offset_datetime
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String overlay(string placing replacement from start[ for length])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String pad(STRING string with INTEGER length {leading|trailing}[ STRING character])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double percent_rank([arg0[, ...]])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - percentile_cont(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - percentile_disc(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double pi
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Integer position(STRING pattern in STRING string)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double power(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double radians(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Long rank([arg0[, ...]])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double regr_avgx(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double regr_avgy(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double regr_count(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double regr_intercept(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double regr_r2(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double regr_slope(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double regr_sxx(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double regr_sxy(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double regr_syy(NUMERIC arg0, NUMERIC arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String repeat(STRING string, INTEGER times)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String replace(STRING string, STRING pattern, STRING replacement)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String right(STRING string, INTEGER length)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - round(NUMERIC number[, INTEGER places])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Long row_number()
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String rpad(STRING string, INTEGER length[, STRING padding])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String rtrim(STRING string[, STRING characters])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Integer sign(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double sin(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double sinh(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String soundex(arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Object sql
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double sqrt(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double stddev(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double stddev_pop(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double stddev_samp(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String str(arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String substr(STRING string, INTEGER start[, INTEGER length])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String substring(STRING string{ from|,} INTEGER start[{ for|,} INTEGER length])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - sum(arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double tan(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double tanh(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - timestampadd(TEMPORAL_UNIT field, INTEGER magnitude, TEMPORAL datetime)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - basicType@6(java.lang.Long,-5)|basicType@8(java.lang.Double,8) timestampdiff(TEMPORAL_UNIT field, TEMPORAL start, TEMPORAL end)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String to_char(ANY arg0[, STRING arg1, STRING arg2])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Date to_date(STRING arg0[, STRING arg1, STRING arg2])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double to_number(STRING arg0[, STRING arg1, STRING arg2])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Timestamp to_timestamp(STRING arg0[, STRING arg1, STRING arg2])
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String translate(STRING arg0, STRING arg1, STRING arg2)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String trim([[{leading|trailing|both} ][STRING arg0 ]from] STRING arg1)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - trunc( ... )
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - truncate( ... )
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - String upper(STRING string)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double var_pop(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double var_samp(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.HQL_FUNCTIONS - Double variance(NUMERIC arg)
+2025-04-14 12:21:12 [main] DEBUG org.hibernate.orm.query.plan.cache - Starting QueryPlanCache(2048)
+2025-04-14 12:21:12 [main] DEBUG o.h.s.i.SessionFactoryServiceRegistryImpl - EventListenerRegistry access via ServiceRegistry is deprecated.  Use `sessionFactory.getEventEngine().getListenerRegistry()` instead
+2025-04-14 12:21:12 [main] DEBUG o.h.e.i.EntityCopyObserverFactoryInitiator - Configured EntityCopyObserver strategy: disallow
+2025-04-14 12:21:12 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.CartItems#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:12 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.CartItems#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:12 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.CartItems#user` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:12 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.CartItems#user` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:12 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [org.assignment.entities.CartItems] is safe
+2025-04-14 12:21:12 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : org.assignment.entities.CartItems
+2025-04-14 12:21:13 [main] DEBUG o.h.b.i.b.BytecodeProviderImpl - HHH000513: Unable to create the ReflectionOptimizer for [org.assignment.entities.CartItems]: private accessor [product]
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.CartItems#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.CartItems#user` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.Order#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.Order#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.Order#user` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.Order#user` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [org.assignment.entities.Order] is safe
+2025-04-14 12:21:13 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : org.assignment.entities.Order
+2025-04-14 12:21:13 [main] DEBUG o.h.b.i.b.BytecodeProviderImpl - HHH000513: Unable to create the ReflectionOptimizer for [org.assignment.entities.Order]: private accessor [orderedOn]
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.Order#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.Order#user` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [org.assignment.entities.User] is safe
+2025-04-14 12:21:13 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : org.assignment.entities.User
+2025-04-14 12:21:13 [main] DEBUG o.h.b.i.b.BytecodeProviderImpl - HHH000513: Unable to create the ReflectionOptimizer for [org.assignment.entities.User]: private accessor [address]
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.Product#seller` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.Product#seller` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - Not known whether passed class name [org.assignment.entities.Product] is safe
+2025-04-14 12:21:13 [main] DEBUG o.h.b.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : org.assignment.entities.Product
+2025-04-14 12:21:13 [main] DEBUG o.h.b.i.b.BytecodeProviderImpl - HHH000513: Unable to create the ReflectionOptimizer for [org.assignment.entities.Product]: private accessor [currency]
+2025-04-14 12:21:13 [main] DEBUG o.hibernate.ormbytecode.interceptor - To-one property `org.assignment.entities.Product#seller` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.jdbc.mutation - Skipping collection (re)creation - org.assignment.entities.User.cart
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.jdbc.mutation - Skipping collection row deletions - org.assignment.entities.User.cart
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.jdbc.mutation - Skipping collection removals - org.assignment.entities.User.cart
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting post-init callbacks
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : To-one key - NavigableRole[org.assignment.entities.CartItems.product]
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : To-one key - NavigableRole[org.assignment.entities.CartItems.user]
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : Entity(org.assignment.entities.CartItems) `staticFetchableList` generator
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : To-one key - NavigableRole[org.assignment.entities.Order.product]
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : To-one key - NavigableRole[org.assignment.entities.Order.user]
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : Entity(org.assignment.entities.Order) `staticFetchableList` generator
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[org.assignment.entities.User.cart#{element}]) - element descriptor
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : PluralAttributeMapping(org.assignment.entities.User.cart)#finishInitialization
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : PluralAttributeMapping(org.assignment.entities.User.cart) - key descriptor
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : Entity(org.assignment.entities.User) `staticFetchableList` generator
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : To-one key - NavigableRole[org.assignment.entities.Product.seller]
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : Entity(org.assignment.entities.Product) `staticFetchableList` generator
+2025-04-14 12:21:13 [main] DEBUG o.h.orm.model.mapping.creation - Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[org.assignment.entities.User.cart#{element}]) - element descriptor
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister - Static SQL for entity: org.assignment.entities.CartItems
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Version select: select id from cart_items where id=?
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Insert (0): insert into cart_items (product_id,quantity,customer_id) values (?,?,?)
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Update (0): update cart_items set product_id=?,quantity=?,customer_id=? where id=?
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Delete (0): delete from cart_items where id=?
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : c1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(org.assignment.entities.CartItems)] with identifierForTableGroup [org.assignment.entities.CartItems] for NavigablePath [org.assignment.entities.CartItems] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@261f359f] with identifierForTableGroup [org.assignment.entities.CartItems.product] for NavigablePath [org.assignment.entities.CartItems.product] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : p1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@22f02996] with identifierForTableGroup [org.assignment.entities.CartItems.product.seller] for NavigablePath [org.assignment.entities.CartItems.product.seller] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : s1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : c2_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.OneToManyTableGroup@512abf25] with identifierForTableGroup [org.assignment.entities.CartItems.product.seller.cart] for NavigablePath [org.assignment.entities.CartItems.product.seller.cart] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(org.assignment.entities.CartItems.product.seller.cart.{element})] with identifierForTableGroup [org.assignment.entities.CartItems.product.seller.cart.{element}] for NavigablePath [org.assignment.entities.CartItems.product.seller.cart.{element}] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@14de1901] with identifierForTableGroup [org.assignment.entities.CartItems.product.seller.cart.{element}.product] for NavigablePath [org.assignment.entities.CartItems.product.seller.cart.{element}.product] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@26f0141] with identifierForTableGroup [org.assignment.entities.CartItems.product.seller.cart.{element}.user] for NavigablePath [org.assignment.entities.CartItems.product.seller.cart.{element}.user] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@2dc39b53] with identifierForTableGroup [org.assignment.entities.CartItems.user] for NavigablePath [org.assignment.entities.CartItems.user] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : u2_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [org.assignment.entities.CartItems]
+ |  +-EntityFetchJoinedImpl [org.assignment.entities.CartItems.product]
+ |  +-BasicFetch [org.assignment.entities.CartItems.quantity]
+ |  \-EntityFetchJoinedImpl [org.assignment.entities.CartItems.user]
+
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (c1 : org.assignment.entities.CartItems) {
+          primaryTableReference : cart_items as c1_0
+          TableGroupJoins {
+            left  join LazyTableGroup (p1 : org.assignment.entities.CartItems.product) {
+              primaryTableReference : product as p1_0
+              TableGroupJoins {
+                left  join LazyTableGroup (s1 : org.assignment.entities.CartItems.product.seller) {
+                  primaryTableReference : users as s1_0
+                  TableGroupJoins {
+                    left  join OneToManyTableGroup (c2 : org.assignment.entities.CartItems.product.seller.cart) {
+                      primaryTableReference : cart_items as c2_0
+                      TableGroupJoins {
+                        left  join LazyTableGroup (p2 : org.assignment.entities.CartItems.product.seller.cart.{element}.product) {
+                        }
+                        left  join LazyTableGroup (u1 : org.assignment.entities.CartItems.product.seller.cart.{element}.user) {
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            left  join LazyTableGroup (u2 : org.assignment.entities.CartItems.user) {
+              primaryTableReference : users as u2_0
+            }
+          }
+        }
+      }
+    }
+
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister - Static SQL for entity: org.assignment.entities.Order
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Version select: select order_id from orders where order_id=?
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Insert (0): insert into orders (ordered_on,price,product_id,quantity,status,customer_id,order_id) values (?,?,?,?,?,?,?)
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Update (0): update orders set ordered_on=?,price=?,product_id=?,quantity=?,status=?,customer_id=? where order_id=?
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Delete (0): delete from orders where order_id=?
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : o1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(org.assignment.entities.Order)] with identifierForTableGroup [org.assignment.entities.Order] for NavigablePath [org.assignment.entities.Order] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@33e4b9c4] with identifierForTableGroup [org.assignment.entities.Order.product] for NavigablePath [org.assignment.entities.Order.product] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : p1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@5cff729b] with identifierForTableGroup [org.assignment.entities.Order.product.seller] for NavigablePath [org.assignment.entities.Order.product.seller] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : s1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : c1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.OneToManyTableGroup@10d18696] with identifierForTableGroup [org.assignment.entities.Order.product.seller.cart] for NavigablePath [org.assignment.entities.Order.product.seller.cart] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(org.assignment.entities.Order.product.seller.cart.{element})] with identifierForTableGroup [org.assignment.entities.Order.product.seller.cart.{element}] for NavigablePath [org.assignment.entities.Order.product.seller.cart.{element}] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@6b8b5020] with identifierForTableGroup [org.assignment.entities.Order.product.seller.cart.{element}.product] for NavigablePath [org.assignment.entities.Order.product.seller.cart.{element}.product] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : p2_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@7d37ee0c] with identifierForTableGroup [org.assignment.entities.Order.product.seller.cart.{element}.product.seller] for NavigablePath [org.assignment.entities.Order.product.seller.cart.{element}.product.seller] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@5a7b309b] with identifierForTableGroup [org.assignment.entities.Order.product.seller.cart.{element}.user] for NavigablePath [org.assignment.entities.Order.product.seller.cart.{element}.user] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@7739aac4] with identifierForTableGroup [org.assignment.entities.Order.user] for NavigablePath [org.assignment.entities.Order.user] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : u2_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [org.assignment.entities.Order]
+ |  +-BasicFetch [org.assignment.entities.Order.orderedOn]
+ |  +-BasicFetch [org.assignment.entities.Order.price]
+ |  +-EntityFetchJoinedImpl [org.assignment.entities.Order.product]
+ |  +-BasicFetch [org.assignment.entities.Order.quantity]
+ |  +-BasicFetch [org.assignment.entities.Order.status]
+ |  \-EntityFetchJoinedImpl [org.assignment.entities.Order.user]
+
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (o1 : org.assignment.entities.Order) {
+          primaryTableReference : orders as o1_0
+          TableGroupJoins {
+            left  join LazyTableGroup (p1 : org.assignment.entities.Order.product) {
+              primaryTableReference : product as p1_0
+              TableGroupJoins {
+                left  join LazyTableGroup (s1 : org.assignment.entities.Order.product.seller) {
+                  primaryTableReference : users as s1_0
+                  TableGroupJoins {
+                    left  join OneToManyTableGroup (c1 : org.assignment.entities.Order.product.seller.cart) {
+                      primaryTableReference : cart_items as c1_0
+                      TableGroupJoins {
+                        left  join LazyTableGroup (p2 : org.assignment.entities.Order.product.seller.cart.{element}.product) {
+                          primaryTableReference : product as p2_0
+                          TableGroupJoins {
+                            left  join LazyTableGroup (s2 : org.assignment.entities.Order.product.seller.cart.{element}.product.seller) {
+                            }
+                          }
+                        }
+                        left  join LazyTableGroup (u1 : org.assignment.entities.Order.product.seller.cart.{element}.user) {
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            left  join LazyTableGroup (u2 : org.assignment.entities.Order.user) {
+              primaryTableReference : users as u2_0
+            }
+          }
+        }
+      }
+    }
+
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister - Static SQL for entity: org.assignment.entities.User
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Version select: select user_id from users where user_id=?
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Insert (0): insert into users (address,email,logged_in,name,password,registered_on,role) values (?,?,?,?,?,?,?)
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Update (0): update users set address=?,email=?,logged_in=?,name=?,password=?,registered_on=?,role=? where user_id=?
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Delete (0): delete from users where user_id=?
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : u1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(org.assignment.entities.User)] with identifierForTableGroup [org.assignment.entities.User] for NavigablePath [org.assignment.entities.User] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : c1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.OneToManyTableGroup@76563ae7] with identifierForTableGroup [org.assignment.entities.User.cart] for NavigablePath [org.assignment.entities.User.cart] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(org.assignment.entities.User.cart.{element})] with identifierForTableGroup [org.assignment.entities.User.cart.{element}] for NavigablePath [org.assignment.entities.User.cart.{element}] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@4fd74223] with identifierForTableGroup [org.assignment.entities.User.cart.{element}.product] for NavigablePath [org.assignment.entities.User.cart.{element}.product] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : p1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@4fea840f] with identifierForTableGroup [org.assignment.entities.User.cart.{element}.product.seller] for NavigablePath [org.assignment.entities.User.cart.{element}.product.seller] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : s1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [org.assignment.entities.User]
+ |  +-BasicFetch [org.assignment.entities.User.address]
+ |  +-EagerCollectionFetch [org.assignment.entities.User.cart]
+ |  |  \-EntityFetchJoinedImpl [org.assignment.entities.User.cart.{element}]
+ |  +-BasicFetch [org.assignment.entities.User.email]
+ |  +-BasicFetch [org.assignment.entities.User.isLoggedIn]
+ |  +-BasicFetch [org.assignment.entities.User.name]
+ |  +-BasicFetch [org.assignment.entities.User.password]
+ |  +-BasicFetch [org.assignment.entities.User.registeredOn]
+ |  \-BasicFetch [org.assignment.entities.User.role]
+
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (u1 : org.assignment.entities.User) {
+          primaryTableReference : users as u1_0
+          TableGroupJoins {
+            left  join OneToManyTableGroup (c1 : org.assignment.entities.User.cart) {
+              primaryTableReference : cart_items as c1_0
+              TableGroupJoins {
+                left  join LazyTableGroup (p1 : org.assignment.entities.User.cart.{element}.product) {
+                  primaryTableReference : product as p1_0
+                  TableGroupJoins {
+                    left  join LazyTableGroup (s1 : org.assignment.entities.User.cart.{element}.product.seller) {
+                      primaryTableReference : users as s1_0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister - Static SQL for entity: org.assignment.entities.Product
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Version select: select product_id from product where product_id=?
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Insert (0): insert into product (currency,product_name,price,seller_id,stock,product_type) values (?,?,?,?,?,?)
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Update (0): update product set currency=?,product_name=?,price=?,seller_id=?,stock=?,product_type=? where product_id=?
+2025-04-14 12:21:13 [main] DEBUG o.h.p.entity.AbstractEntityPersister -  Delete (0): delete from product where product_id=?
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : p1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(org.assignment.entities.Product)] with identifierForTableGroup [org.assignment.entities.Product] for NavigablePath [org.assignment.entities.Product] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@747f6c5a] with identifierForTableGroup [org.assignment.entities.Product.seller] for NavigablePath [org.assignment.entities.Product.seller] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : s1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : c1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.OneToManyTableGroup@66e341e9] with identifierForTableGroup [org.assignment.entities.Product.seller.cart] for NavigablePath [org.assignment.entities.Product.seller.cart] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(org.assignment.entities.Product.seller.cart.{element})] with identifierForTableGroup [org.assignment.entities.Product.seller.cart.{element}] for NavigablePath [org.assignment.entities.Product.seller.cart.{element}] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@5b48f0f4] with identifierForTableGroup [org.assignment.entities.Product.seller.cart.{element}.product] for NavigablePath [org.assignment.entities.Product.seller.cart.{element}.product] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : p2_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@546ed2a0] with identifierForTableGroup [org.assignment.entities.Product.seller.cart.{element}.product.seller] for NavigablePath [org.assignment.entities.Product.seller.cart.{element}.product.seller] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@5bfc79cb] with identifierForTableGroup [org.assignment.entities.Product.seller.cart.{element}.user] for NavigablePath [org.assignment.entities.Product.seller.cart.{element}.user] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [org.assignment.entities.Product]
+ |  +-BasicFetch [org.assignment.entities.Product.currency]
+ |  +-BasicFetch [org.assignment.entities.Product.name]
+ |  +-BasicFetch [org.assignment.entities.Product.price]
+ |  +-EntityFetchJoinedImpl [org.assignment.entities.Product.seller]
+ |  +-BasicFetch [org.assignment.entities.Product.stock]
+ |  \-BasicFetch [org.assignment.entities.Product.type]
+
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (p1 : org.assignment.entities.Product) {
+          primaryTableReference : product as p1_0
+          TableGroupJoins {
+            left  join LazyTableGroup (s1 : org.assignment.entities.Product.seller) {
+              primaryTableReference : users as s1_0
+              TableGroupJoins {
+                left  join OneToManyTableGroup (c1 : org.assignment.entities.Product.seller.cart) {
+                  primaryTableReference : cart_items as c1_0
+                  TableGroupJoins {
+                    left  join LazyTableGroup (p2 : org.assignment.entities.Product.seller.cart.{element}.product) {
+                      primaryTableReference : product as p2_0
+                      TableGroupJoins {
+                        left  join LazyTableGroup (s2 : org.assignment.entities.Product.seller.cart.{element}.product.seller) {
+                        }
+                      }
+                    }
+                    left  join LazyTableGroup (u1 : org.assignment.entities.Product.seller.cart.{element}.user) {
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : c1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.OneToManyTableGroup@656842bc] with identifierForTableGroup [org.assignment.entities.User.cart] for NavigablePath [org.assignment.entities.User.cart] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(org.assignment.entities.User.cart.{element})] with identifierForTableGroup [org.assignment.entities.User.cart.{element}] for NavigablePath [org.assignment.entities.User.cart.{element}] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@2055833f] with identifierForTableGroup [org.assignment.entities.User.cart.{element}.product] for NavigablePath [org.assignment.entities.User.cart.{element}.product] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : p1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@28768e25] with identifierForTableGroup [org.assignment.entities.User.cart.{element}.product.seller] for NavigablePath [org.assignment.entities.User.cart.{element}.product.seller] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : s1_0
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@310d57b1] with identifierForTableGroup [org.assignment.entities.User.cart.{element}.user] for NavigablePath [org.assignment.entities.User.cart.{element}.user] 
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-CollectionDomainResult [org.assignment.entities.User.cart]
+
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        OneToManyTableGroup (c1 : org.assignment.entities.User.cart) {
+          primaryTableReference : cart_items as c1_0
+          TableGroupJoins {
+            left  join LazyTableGroup (p1 : org.assignment.entities.User.cart.{element}.product) {
+              primaryTableReference : product as p1_0
+              TableGroupJoins {
+                left  join LazyTableGroup (s1 : org.assignment.entities.User.cart.{element}.product.seller) {
+                  primaryTableReference : users as s1_0
+                }
+              }
+            }
+            left  join LazyTableGroup (u1 : org.assignment.entities.User.cart.{element}.user) {
+            }
+          }
+        }
+      }
+    }
+
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.orm.jdbc.mutation - Static SQL for collection: org.assignment.entities.User.cart
+2025-04-14 12:21:13 [main] DEBUG o.h.e.t.j.p.i.JtaPlatformInitiator - No JtaPlatform was specified, checking resolver
+2025-04-14 12:21:13 [main] DEBUG o.h.e.t.j.p.i.JtaPlatformResolverInitiator - No JtaPlatformResolver was specified, using default [org.hibernate.engine.transaction.jta.platform.internal.StandardJtaPlatformResolver]
+2025-04-14 12:21:13 [main] DEBUG o.h.e.t.j.p.i.StandardJtaPlatformResolver - Could not resolve JtaPlatform, using default [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-04-14 12:21:13 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-14 12:21:13 [main] DEBUG o.h.type.spi.TypeConfiguration$Scope - Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@6579c3d9] to SessionFactoryImplementor [org.hibernate.internal.SessionFactoryImpl@6cdee57]
+2025-04-14 12:21:13 [main] DEBUG o.h.q.named.NamedObjectRepository - Checking 0 named HQL queries
+2025-04-14 12:21:13 [main] DEBUG o.h.q.named.NamedObjectRepository - Checking 0 named SQL queries
+2025-04-14 12:21:13 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@49754e74] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.mapping.Table - No alter strings for table : cart_items
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.mapping.Table - No alter strings for table : hibernate_sequences
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.mapping.Table - No alter strings for table : orders
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.mapping.Table - No alter strings for table : product
+2025-04-14 12:21:13 [main] DEBUG org.hibernate.mapping.Table - No alter strings for table : users
+2025-04-14 12:21:13 [main] DEBUG o.h.internal.SessionFactoryRegistry - Initializing SessionFactoryRegistry : org.hibernate.internal.SessionFactoryRegistry@5f193335
+2025-04-14 12:21:13 [main] DEBUG o.h.internal.SessionFactoryRegistry - Registering SessionFactory: b20bdced-54a4-4390-b2b8-8102183bf5b4 (<unnamed>)
+2025-04-14 12:21:13 [main] DEBUG o.h.internal.SessionFactoryRegistry - Not binding SessionFactory to JNDI, no JNDI name configured
+2025-04-14 12:21:13 [main] DEBUG o.h.internal.SessionFactoryImpl - Instantiated SessionFactory
+2025-04-14 12:21:13 [main] DEBUG o.h.s.internal.StatisticsInitiator - Statistics initialized [enabled=false]
+2025-04-14 12:21:13 [main] DEBUG o.h.e.t.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.query.hql - HQL :  SELECT p FROM Product p 
+2025-04-14 12:21:14 [main] DEBUG o.h.q.h.i.SemanticQueryBuilder - Handling root path - Product
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.query.sqm.ast - SqmStatement Tree :
+    -> [select]
+      -> [query-spec]
+        -> [select]
+          -> [selection]
+            -> [root] - `org.assignment.entities.Product(p)`
+            <- [root] - `org.assignment.entities.Product(p)`
+          <- [selection]
+        <- [select]
+        -> [from]
+          -> [root] - `org.assignment.entities.Product(p)`
+          <- [root] - `org.assignment.entities.Product(p)`
+        <- [from]
+      <- [query-spec]
+    <- [select]
+
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : p1_0
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(org.assignment.entities.Product(p))] with identifierForTableGroup [org.assignment.entities.Product] for NavigablePath [org.assignment.entities.Product] 
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@57b1ec84] with identifierForTableGroup [org.assignment.entities.Product.seller] for NavigablePath [org.assignment.entities.Product.seller] 
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [org.assignment.entities.Product(p)]
+ |  +-BasicFetch [org.assignment.entities.Product(p).currency]
+ |  +-BasicFetch [org.assignment.entities.Product(p).name]
+ |  +-BasicFetch [org.assignment.entities.Product(p).price]
+ |  +-EntityFetchSelectImpl [org.assignment.entities.Product(p).seller]
+ |  +-BasicFetch [org.assignment.entities.Product(p).stock]
+ |  \-BasicFetch [org.assignment.entities.Product(p).type]
+
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (p1 : org.assignment.entities.Product(p)) {
+          primaryTableReference : product as p1_0
+          TableGroupJoins {
+            left  join LazyTableGroup (s1 : org.assignment.entities.Product(p).seller) {
+            }
+          }
+        }
+      }
+    }
+
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Initializer list:
+	  org.assignment.entities.Product(p).seller -> EntitySelectFetchInitializer(org.assignment.entities.Product(p).seller)@408012754 (ToOneAttributeMapping(NavigableRole[org.assignment.entities.Product.seller])@964829290)
+	  org.assignment.entities.Product(p) -> EntityResultInitializer(org.assignment.entities.Product(p))@1050653829 (SingleTableEntityPersister(org.assignment.entities.Product))
+
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.SQL - select p1_0.product_id,p1_0.currency,p1_0.product_name,p1_0.price,p1_0.seller_id,p1_0.stock,p1_0.product_type from product p1_0
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [6]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 6
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#6] : 924635900
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntitySelectFetchInitializer) Invoking session#internalLoad for entity (org.assignment.entities.Product(p).seller#1) : 1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = IGNORE
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Initializer list:
+	  org.assignment.entities.User.cart.{element} -> EntityJoinedFetchInitializer(org.assignment.entities.User.cart.{element})@1896545607 (EntityCollectionPart(org.assignment.entities.User.cart#{element})@1682050612)
+	  org.assignment.entities.User.cart -> BagInitializer(org.assignment.entities.User.cart)@1719289471 (PluralAttribute(org.assignment.entities.User.cart))
+	  org.assignment.entities.User -> EntityResultInitializer(org.assignment.entities.User)@844008362 (SingleTableEntityPersister(org.assignment.entities.User))
+	  org.assignment.entities.User.cart.{element}.product -> EntityJoinedFetchInitializer(org.assignment.entities.User.cart.{element}.product)@344500321 (ToOneAttributeMapping(NavigableRole[org.assignment.entities.CartItems.product])@1615804266)
+	  org.assignment.entities.User.cart.{element}.product.seller -> EntityJoinedFetchInitializer(org.assignment.entities.User.cart.{element}.product.seller)@1412619426 (ToOneAttributeMapping(NavigableRole[org.assignment.entities.Product.seller])@964829290)
+	  org.assignment.entities.User.cart.{element}.product.seller.cart -> SelectEagerCollectionInitializer(org.assignment.entities.User.cart.{element}.product.seller.cart)@308743765 (PluralAttribute(org.assignment.entities.User.cart))
+
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.SQL - select u1_0.user_id,u1_0.address,u1_0.email,u1_0.logged_in,u1_0.name,u1_0.password,u1_0.registered_on,u1_0.role,c1_0.customer_id,c1_0.id,p1_0.product_id,p1_0.currency,p1_0.product_name,p1_0.price,s1_0.user_id,s1_0.address,s1_0.email,s1_0.logged_in,s1_0.name,s1_0.password,s1_0.registered_on,s1_0.role,p1_0.stock,p1_0.product_type,c1_0.quantity from users u1_0 left join cart_items c1_0 on u1_0.user_id=c1_0.customer_id left join product p1_0 on p1_0.product_id=c1_0.product_id left join users s1_0 on s1_0.user_id=p1_0.seller_id where u1_0.user_id=?
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [14] - [null]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityJoinedFetchInitializer) EntityKey (org.assignment.entities.User.cart.{element}.product.seller) is null
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [10] - [null]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityJoinedFetchInitializer) EntityKey (org.assignment.entities.User.cart.{element}.product) is null
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [9] - [null]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityJoinedFetchInitializer) EntityKey (org.assignment.entities.User.cart.{element}) is null
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.User): 1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [1]
+2025-04-14 12:21:14 [main] DEBUG o.h.o.r.l.o.h.o.r.loading.collection - (BagInitializer) Current row collection key : org.assignment.entities.User.cart#1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [8] - [null]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.User#1] : 333281415
+2025-04-14 12:21:14 [main] DEBUG o.h.o.r.l.o.h.o.r.loading.collection - (BagInitializer) Created new collection wrapper [org.assignment.entities.User.cart#1] : org.hibernate.collection.spi.PersistentBag@2010176442
+2025-04-14 12:21:14 [main] DEBUG o.h.o.r.l.o.h.o.r.loading.collection - (BagInitializer) Responsible for loading collection [org.assignment.entities.User.cart#1] : org.hibernate.collection.spi.PersistentBag@2010176442
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [India]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [SELLER@GMAIL.COM]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [false]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [Global Seller]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [Seller@3]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [2025-04-08T19:48:21.621582]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [7] - [SELLER]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.User#1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@ac417a2
+2025-04-14 12:21:14 [main] DEBUG o.h.s.results.internal.ResultsHelper - Collection fully initialized: [org.assignment.entities.User.cart#1]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntitySelectFetchInitializer) Entity [org.assignment.entities.Product(p).seller#1] : 1 has being loaded by session.internalLoad.
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [MASKARA]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [789.0]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [80]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [CLOTHING]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#6
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [9]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 9
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#9] : 2018964506
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [T-SHIRT]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [345.0]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [80]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [CLOTHING]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#9
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [8]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 8
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#8] : 100380224
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [TABLE]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [8900.0]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [80]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [FURNITURE]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#8
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [4]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 4
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#4] : 738772871
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [FAN]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [3567.88]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [80]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [APPLIANCES]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#4
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [5]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 5
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#5] : 1744146882
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [TABLE FAN]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [8900.7]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [240]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [APPLIANCES]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#5
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [3]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 3
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#3] : 676089602
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [ANDROID PHONE]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [34787.9]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [80]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [PHONE]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#3
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [10]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 10
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#10] : 1889365477
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [SHIRT]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [900.0]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [900]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [CLOTHING]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#10
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [12]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 12
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#12] : 440641678
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [bottle]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [1.0]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [FURNITURE]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#12
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [11]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 11
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#11] : 1374896517
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [MAOUSE]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [900.0]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [APPLIANCES]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#11
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [7]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 7
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#7] : 462233830
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [LAPTOP]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [67868.0]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [198]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [APPLIANCES]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#7
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [2]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 2
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#2] : 14980151
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [IPHONE]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [45678.0]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [93]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [PHONE]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#2
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [1]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 1
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#1] : 124017533
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [PEN]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [2.0]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [35]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [FURNITURE]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [13]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (org.assignment.entities.Product(p)): 13
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Created new entity instance [org.assignment.entities.Product(p)#13] : 1280363901
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [4] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [1] - [INR]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [2] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [3] - [1.0]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [5] - [1]
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [6] - [FURNITURE]
+2025-04-14 12:21:14 [main] DEBUG o.h.orm.results.loading.entity - (EntityResultInitializer) Done materializing entityInstance : org.assignment.entities.Product(p)#13
+2025-04-14 12:21:14 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@14dbfdb1
+2025-04-14 12:21:14 [main] DEBUG o.h.r.j.i.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+2025-04-14 12:21:14 [main] DEBUG o.h.r.j.i.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+2025-04-14 12:21:41 [Hibernate Connection Pool Validation Thread] DEBUG o.hibernate.orm.connections.pooling - Connection pool now considered primed; min-size will be maintained

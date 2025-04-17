@@ -2,6 +2,7 @@ package org.assignment.repositoryhibernateimpl;
 
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
+import org.assignment.entities.Invoice;
 import org.assignment.entities.User;
 import org.assignment.entities.Order;
 import org.assignment.entities.Product;
@@ -48,13 +49,13 @@ public class OrderRepoHibernateImpl implements OrderRepository {
     }
 
     @Override
-    public List<Order> fetchOrderByProductAndCustomer(Product product, User user)  {
-        String jpql = BASE_SELECTION_QUERY + " WHERE o.product = :product AND o.user = :user AND o.status = :status";
+    public Optional<Order> fetchOrderByInvoiceAndUser(Invoice invoice, User user)  {
+        String jpql = BASE_SELECTION_QUERY + " WHERE o.invoice = :product AND o.user = :user AND o.status = :status";
         TypedQuery<Order> query = manager.createQuery(jpql, Order.class);
-        query.setParameter("product", product);
+        query.setParameter("invoice", invoice);
         query.setParameter("user", user);
         query.setParameter("status", OrderStatus.ORDERED);
-        return query.getResultList();
+       return Optional.ofNullable(query.getSingleResultOrNull());
     }
 
     @Override
@@ -91,7 +92,7 @@ public class OrderRepoHibernateImpl implements OrderRepository {
 
     @Override
     public List<Order> getOrdersByStatusAndCustomer(User user, OrderStatus status) {
-        String jpql = BASE_SELECTION_QUERY + "WHERE o.user = :user AND o.status = :status";
+        String jpql = BASE_SELECTION_QUERY + " WHERE o.user = :user AND o.status = :status";
         TypedQuery<Order> typedQuery = manager.createQuery(jpql, Order.class);
         typedQuery.setParameter("user", user);
         typedQuery.setParameter("status", status);

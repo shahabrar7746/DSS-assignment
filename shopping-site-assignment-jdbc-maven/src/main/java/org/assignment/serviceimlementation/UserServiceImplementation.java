@@ -35,9 +35,7 @@ public class UserServiceImplementation implements UserService {
         try {
             List<CustomerWrapper> maskedCustomer = new ArrayList<>();
             repository
-                    .getCustomers()
-                    .stream()
-                    .filter(c -> c.getRole() == Roles.CUSTOMER)
+                    .fetchUserByRole(Roles.CUSTOMER)
                     .forEach(c -> maskedCustomer.add(new CustomerWrapper(c.getName(), c.getEmail())));
 
             response = new Response(ResponseStatus.SUCCESSFUL, maskedCustomer, null);
@@ -56,7 +54,6 @@ public class UserServiceImplementation implements UserService {
         Optional<User> optionalCustomer;
         try {
             optionalCustomer = repository.fetchByEmail(email);
-
             response = new Response(ResponseStatus.SUCCESSFUL, optionalCustomer, null);
         } catch (SQLException | PersistenceException e) {
             log.error("Some error occurred while finding user by email, mail {}", email, e);
@@ -84,11 +81,7 @@ public class UserServiceImplementation implements UserService {
     public Response getAllCustomer() {
         List<User> allUser;
         try {
-            allUser = repository
-                    .getCustomers()
-                    .stream()
-                    .filter(c -> c.getRole() == Roles.CUSTOMER)
-                    .toList();
+            allUser = repository.fetchUserByRole(Roles.CUSTOMER);
         } catch (Exception ex) {
             log.error("error while fetching user records: ", ex);
             return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
@@ -103,14 +96,11 @@ public class UserServiceImplementation implements UserService {
     public Response fetchAllAdmins() {
         List<User> admins;
         try {
-            admins = repository.getCustomers()
-                    .stream()
-                    .filter(c -> c.getRole() == Roles.ADMIN)
-                    .toList();
+            admins = repository.fetchUserByRole(Roles.ADMIN);
             if (admins.isEmpty()) {
                 return new Response(ResponseStatus.ERROR, null, "No admin found");//throws NoAdminFoundException if no admin found UserRepository.
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             log.error("Some error occured while fetching all admins : ", e);
             return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
         }
@@ -143,7 +133,7 @@ public class UserServiceImplementation implements UserService {
     public Response isAdmin(Long id) {
         Response response;
         try {
-            response = new Response(ResponseStatus.SUCCESSFUL, repository.fetchAdminById(id).isPresent(), null);
+            response = new Response(ResponseStatus.SUCCESSFUL, repository.fetchUserByIdAndRole(id, Roles.ADMIN).isPresent(), null);
         } catch (Exception e) {
             log.error("Some error occured while checking if the provided 'id' is admin, id {}, stacktrace : ", id, e);
             response = new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
@@ -155,11 +145,7 @@ public class UserServiceImplementation implements UserService {
     public Response fetchAllSellers() {
         Response response;
         try {
-            List<SellerWrapper> wrappers = new ArrayList<>();
-            repository.fetchAllSellers()
-                    .forEach(seller -> {
-                        wrappers.add(new SellerWrapper(seller.getId(), seller.getName()));
-                    });
+            List<SellerWrapper> wrappers = repository.fetchSellers();
             response = new Response(ResponseStatus.SUCCESSFUL, wrappers, null);
         } catch (Exception e) {
             log.error("Error occured while fetching all sellers ", e);

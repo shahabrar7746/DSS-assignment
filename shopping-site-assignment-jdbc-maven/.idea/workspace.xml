@@ -5,62 +5,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5405caaa-ed17-442c-bf7f-14ef15b22302" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/wrappers/CustomerWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/wrappers/SellerWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Invoice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/OrderedProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/InvoicePrintStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/PaymentStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/InvoiceRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/OrderedProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/InvoiceHibernateImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/OrderedProductHibernateImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/InvoiceServiceImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/OrderedProductServiceImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/InvoiceService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/OrderedProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/PrintUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logfile-2025-03-21.log" beforeDir="false" afterPath="$PROJECT_DIR$/logfile-2025-03-21.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logfile-2025-03-24.log" beforeDir="false" afterPath="$PROJECT_DIR$/logfile-2025-03-24.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logfile-2025-03-26.log" beforeDir="false" afterPath="$PROJECT_DIR$/logfile-2025-03-26.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/application.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/CartItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/CartItems.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Order.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/entities/Seller.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/enums/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/Currency.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/queries/CustomerQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/CustomerQueries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/queries/OrderQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/queries/OrderQueries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/enums/ProductType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/enums/ProductType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/SellerRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/CustomerRepoHibernateImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/UserRepoHibernateImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repository/interfaces/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/OrderRepoHibernateImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/OrderRepoHibernateImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/ProductRepoHibernateImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/ProductRepoHibernateImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/SellerRepoHibernateImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/CustomerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/UserRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/UserRepoHibernateImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/UserRepoHibernateImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/OrderRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/OrderRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/ProductRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/ProductRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/SellerRepositoryImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/CustomerCollectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/UserCollectionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/UserRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/repositoryjdbcimpl/UserRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/OrderCollectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/OrderCollectionRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/ProductCollectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/ProductCollectionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/SellerCollectionRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/UserCollectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/respositorycollectionimpl/UserCollectionRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AdminServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/AuthenticationServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CartServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CartServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/CustomerServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/UserServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/OrderServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/OrderServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/ProductServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/ProductServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/services/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/services/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/UserServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/UserServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/services/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/services/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AuthUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/AuthUi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/ui/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/ui/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/util/CartUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/CartUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/util/ConnectionUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/ConnectionUtility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/util/CustomerUtility.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/util/MathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/MathUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/util/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/Response.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/util/ResultSetUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/util/ResultSetUtility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/assignment/wrappers/ProductWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/assignment/wrappers/ProductWrapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logback.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +59,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package-info" />
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -104,7 +93,7 @@
     "Application.Main (1).executor": "Run",
     "Application.Main.executor": "Run",
     "Application.Test.executor": "Run",
-    "Application.UI.executor": "Debug",
+    "Application.UI.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "hibernate-dev",
@@ -163,8 +152,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main (1)" />
-        <item itemvalue="Application.Driver" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Driver" />
       </list>
     </recent_temporary>
   </component>
@@ -193,37 +182,27 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java</url>
-          <line>142</line>
+          <line>143</line>
           <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java</url>
-          <line>182</line>
+          <line>183</line>
           <option name="timeStamp" value="74" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/OrderServiceImplementation.java</url>
-          <line>156</line>
-          <option name="timeStamp" value="77" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/assignment/serviceimlementation/OrderServiceImplementation.java</url>
-          <line>155</line>
-          <option name="timeStamp" value="78" />
         </line-breakpoint>
         <line-breakpoint suspend="NONE" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java</url>
-          <line>175</line>
+          <line>182</line>
           <option name="timeStamp" value="79" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java</url>
-          <line>177</line>
+          <line>184</line>
           <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java</url>
-          <line>179</line>
+          <line>186</line>
           <option name="timeStamp" value="81" />
         </line-breakpoint>
         <line-breakpoint suspend="NONE" type="java-line">
@@ -238,17 +217,17 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java</url>
-          <line>162</line>
+          <line>169</line>
           <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java</url>
-          <line>228</line>
+          <line>236</line>
           <option name="timeStamp" value="88" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/AdminUI.java</url>
-          <line>236</line>
+          <line>244</line>
           <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -258,22 +237,22 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/OrderRepoHibernateImpl.java</url>
-          <line>68</line>
+          <line>69</line>
           <option name="timeStamp" value="104" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/repositoryhibernateimpl/OrderRepoHibernateImpl.java</url>
-          <line>59</line>
+          <line>60</line>
           <option name="timeStamp" value="105" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java</url>
-          <line>204</line>
+          <line>205</line>
           <option name="timeStamp" value="107" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/assignment/ui/CustomerUI.java</url>
-          <line>206</line>
+          <line>207</line>
           <option name="timeStamp" value="109" />
         </line-breakpoint>
       </breakpoints>

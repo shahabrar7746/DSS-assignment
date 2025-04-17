@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
     <persistence-unit name="myPersistenceUnit" transaction-type="RESOURCE_LOCAL">
-        <class>org.assignment.entities.Seller</class>
         <class>org.assignment.entities.Order</class>
         <class>org.assignment.entities.Product</class>
         <class>org.assignment.entities.User</class>
@@ -11,16 +10,16 @@
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="false"/>
 
-            <!-- JDBC URL -->
+
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://172.16.1.195:5331/dbhdemo"/>
 
-            <!-- JDBC username -->
+
             <property name="jakarta.persistence.jdbc.user" value="dbhuser"/>
 
-            <!-- JDBC password -->
+
             <property name="jakarta.persistence.jdbc.password" value="Fy2aWdXt"/>
 
-            <!-- JDBC driver class -->
+
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
 
             <!-- Connection pool properties (HikariCP) -->

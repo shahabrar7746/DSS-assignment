@@ -49,15 +49,12 @@ public class AdminServiceImplementation implements AdminService {
     public Response revokeAccess(Long id) {
         Response response;
         try {
-            Optional<User> customer = userRepository.fetchAdminById(id);
+            Optional<User> customer = userRepository.fetchUserByIdAndRole(id, Roles.ADMIN);
             if (customer.isEmpty()) {
                 return new Response(ResponseStatus.ERROR, null, "Could not find user with given id");
             }
-            if (customer.get().getRole() == Roles.SUPER_ADMIN) {
+            if (customer.get().getRole() == Roles.SUPER_ADMIN || customer.get().getRole() == Roles.CUSTOMER) {
                 return new Response(ResponseStatus.SUCCESSFUL, null, "Cannot perform action");
-            }
-            if (customer.get().getRole() == Roles.CUSTOMER) {
-                return new Response(ResponseStatus.ERROR, null, "The chosen user is already a user");
             }
             customer.ifPresent(c -> c.setRole(Roles.CUSTOMER));
             userRepository.updateCustomer(customer.get());//critical section.

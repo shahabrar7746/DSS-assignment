@@ -8,7 +8,7 @@ public interface OrderService {
 
     Response fetchOrdersByCustomerAndOrderStatus(User user, OrderStatus status);
 
-    Response cancelOrder(int count, User user, String productName, boolean multiple);
+    Response cancelOrder(User user, int index);
 
     Response getAllOrdersByCustomer(User user);
 
