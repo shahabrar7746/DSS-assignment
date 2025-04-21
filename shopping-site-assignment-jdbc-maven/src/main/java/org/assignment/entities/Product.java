@@ -20,20 +20,20 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
 
-    @Column(name = "product_name")
+    @Column(name = "product_name", nullable = false)
     private String name;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false, precision = 2)
     private double price;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "currency")
+    @Column(name = "currency", nullable = false)
     private Currency currency;
 
 
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "product_type")
+    @Column(name = "product_type", nullable = false)
     private ProductType type;
 
 

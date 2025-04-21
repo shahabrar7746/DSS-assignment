@@ -98,13 +98,14 @@ public class OrderServiceImplementation implements OrderService {
                     OrderedProduct orderedProduct = OrderedProduct.builder()
                             .product(items.getProduct())
                             .quantity(items.getQuantity())
+                            .productTotal(items.getQuantity() * items.getProduct().getPrice())
                             .build();
                     return orderedProduct;
                 })
                 .collect(Collectors.toList());
 
         Order order = Order.builder()
-                .orderedOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .orderedOn(LocalDateTime.now())
                 .user(user)
                 .price(total)
                 .status(OrderStatus.ORDERED)

@@ -24,15 +24,15 @@ public class Invoice {
     private Long invoiceId;
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", nullable = false, updatable = false)
     private Order order;
 
     @CreationTimestamp
-    @Column(name = "generated_on")
+    @Column(name = "generated_on", nullable = false, updatable = false)
     private LocalDateTime generatedOn;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "print_status")
+    @Column(name = "print_status", nullable = false)
     private InvoicePrintStatus printStatus;
 
     @Override
@@ -45,7 +45,7 @@ public class Invoice {
            stringBuilder.append(PRODUCT_NAME + product.getName() + "\n")
                    .append(QUANTITY + quantity + "\n")
                    .append(PRICE_PER_QUANTITY + product.getPrice() + currency + "\n" )
-                   .append(TOTAL_PRODUCT_PRICE + MathUtil.getTotalFromPriceAndQuantity(product.getPrice(), quantity) + currency + "\n")
+                   .append(TOTAL_PRODUCT_PRICE + String.format("%.2f",orderedProduct.getProductTotal()) + currency + "\n")
                    .append(FOOTER);
         }
         return stringBuilder.toString();

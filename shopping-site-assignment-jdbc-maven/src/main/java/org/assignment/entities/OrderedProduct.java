@@ -20,10 +20,13 @@ public class OrderedProduct {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false, updatable = false)
     private  Product product;
 
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private  Integer quantity;
+
+    @Column(name = "product_total", nullable = false, precision = 2)
+    private double productTotal;
 }

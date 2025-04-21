@@ -11,17 +11,27 @@ public class OrderedProductHibernateImpl implements OrderedProductRepository {
     private final EntityTransaction transaction;
     @Override
     public OrderedProduct save(OrderedProduct product) {
-        transaction.begin();
-        manager.persist(product);
-        transaction.commit();
+        try {
+            transaction.begin();
+            manager.persist(product);
+            transaction.commit();
+        }catch (Exception e) {
+            transaction.setRollbackOnly();
+            throw new RuntimeException(e);
+        }
         return product;
     }
 
     @Override
     public OrderedProduct update(OrderedProduct product) {
-        transaction.begin();
-        manager.merge(product);
-        transaction.commit();
+        try {
+            transaction.begin();
+            manager.persist(product);
+            transaction.commit();
+        }catch (Exception e) {
+            transaction.setRollbackOnly();
+            throw new RuntimeException(e);
+        }
         return product;
     }
 }

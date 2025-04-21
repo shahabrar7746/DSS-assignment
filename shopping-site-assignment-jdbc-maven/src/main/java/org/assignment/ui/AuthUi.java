@@ -11,11 +11,8 @@ import org.assignment.enums.ResponseStatus;
 import org.assignment.services.AuthenticationService;
 import org.assignment.services.UserService;
 import org.assignment.services.ProductService;
-import org.assignment.util.ColorCodes;
-import org.assignment.util.Constants;
-import org.assignment.util.FormValidation;
+import org.assignment.util.*;
 
-import org.assignment.util.Response;
 import org.assignment.wrappers.ProductWrapper;
 import org.hibernate.HibernateException;
 
@@ -25,7 +22,7 @@ import java.util.Scanner;
 @AllArgsConstructor
 @Slf4j
 public class AuthUi extends UI {
-    private final Scanner sc = new Scanner(System.in);
+    private final Scanner sc;
     private final AuthenticationService service;
     private final ProductService productService;
 
@@ -53,7 +50,7 @@ public class AuthUi extends UI {
         while (!operation.equalsIgnoreCase("2")) {
             super.displayOptions(List.of("Press 0 for Log in.", "Press 1 for Registration","Press 2 to exit program", "Operation : "));
 
-            operation = sc.nextLine();
+            operation = Inputs.getStringInputs(sc);
             try {
                 Response response = new Response(ResponseStatus.ERROR, null, "No Inputs");
                 if (operation.equalsIgnoreCase("0")) {
@@ -78,9 +75,9 @@ public class AuthUi extends UI {
     private Response login() {
         System.out.println(ColorCodes.GREEN + "*************LOG-IN*****************" + ColorCodes.RESET);
         System.out.print("Enter Email : ");
-        String email = sc.nextLine().toUpperCase();
+        String email = Inputs.getStringInputs(sc).toUpperCase();
         System.out.print("Enter Password : ");
-        String password = sc.nextLine();
+        String password = Inputs.getStringInputs(sc);
         Response authResponse = service.login(email, password);
         return authResponse;
     }
@@ -89,14 +86,14 @@ public class AuthUi extends UI {
         Response response;
         System.out.println(ColorCodes.GREEN + "*******REGISTRATION*******" + ColorCodes.RESET);
         System.out.print("Your Name : ");
-        String name = sc.nextLine();
+        String name = Inputs.getStringInputs(sc);
         System.out.print("Your Address : ");
-        String address = sc.nextLine();
+        String address = Inputs.getStringInputs(sc);
         boolean validEmail = false;
         String email = "";
         while (!validEmail) {
             System.out.print("Your Email : ");
-            email = sc.nextLine();
+            email = Inputs.getStringInputs(sc);
             validEmail = FormValidation.validateEmail(email);
             if (!validEmail) {
                 System.out.println("The email must follow the provided instruction");
@@ -107,7 +104,7 @@ public class AuthUi extends UI {
         String password = "";
         while (!validPassword) {
             System.out.print("Your Password : ");
-            password = sc.nextLine();
+            password = Inputs.getStringInputs(sc);
             validPassword = FormValidation.validatePassword(password);
             if (!validPassword) {
                 System.out.println("The password must follow the provided instruction");

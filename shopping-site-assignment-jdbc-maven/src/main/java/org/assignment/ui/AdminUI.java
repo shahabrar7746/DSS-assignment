@@ -20,6 +20,7 @@ import org.assignment.services.OrderService;
 import org.assignment.services.ProductService;
 import org.assignment.util.ColorCodes;
 import org.assignment.util.Constants;
+import org.assignment.util.Inputs;
 import org.assignment.util.Response;
 import org.assignment.wrappers.CustomerWrapper;
 import org.assignment.wrappers.ProductWrapper;
@@ -31,7 +32,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 public class AdminUI extends UI {
-    private final Scanner sc = new Scanner(System.in);
+    private final Scanner sc;
     private final AdminService service;
 
     private final UserService userService;
@@ -62,7 +63,7 @@ public class AdminUI extends UI {
             }
             option.add("Enter '0' to go to previous page");
             displayOptions(option);
-            operation = sc.nextLine();
+            operation = Inputs.getStringInputs(sc);
 
             Response resp;
             switch (operation) {
@@ -82,7 +83,6 @@ public class AdminUI extends UI {
                        displaySingleCustomer((Optional<User>) resp.getData());
                         resp = null;
                     }
-                    sc.nextLine();
                     break;
                 case "4":
                     resp = getOrdersByCustomer();
@@ -104,15 +104,12 @@ public class AdminUI extends UI {
                     break;
                 case "7":
                     resp = addProduct();
-                    sc.nextLine();
                     break;
                 case "8":
                     resp = grantAccess();
-                    sc.nextLine();
                     break;
                 case "9":
                     resp = revokeAccess();
-                    sc.nextLine();
                     break;
                 case "0":
                     resp = new Response(ResponseStatus.SUCCESSFUL, "Going back", null);
@@ -145,28 +142,28 @@ public class AdminUI extends UI {
         while (response == null || response.getStatus() == ResponseStatus.ERROR) {
             try {
                 System.out.println(ColorCodes.GREEN + "Please provide product name" + ColorCodes.RESET);
-                String productName = sc.nextLine().toUpperCase();
+                String productName = Inputs.getStringInputs(sc).toUpperCase();
                 boolean condition = Boolean.logicalOr(StringUtils.isAllBlank(productName),StringUtils.isNumeric(productName));
 
                 while (condition)
                 {
                     System.out.println(ColorCodes.RED + "product name cannot be blank" + ColorCodes.RESET);
                     System.out.println(ColorCodes.GREEN + "Please provide product name" + ColorCodes.RESET);
-                    productName = sc.nextLine().toUpperCase();
+                    productName = Inputs.getStringInputs(sc).toUpperCase();
                     condition = Boolean.logicalOr(StringUtils.isAllBlank(productName),StringUtils.isNumeric(productName));
                 }
                 System.out.println(ColorCodes.GREEN + "Please choose Currency" + ColorCodes.RESET);
                 printAndDisplayOptionsForCurrencies();
-                int currencyIndex = sc.nextInt();
+                int currencyIndex = Inputs.getIntegerInput(sc);
 
                 System.out.println(ColorCodes.GREEN + "Please choose Product Type" + ColorCodes.RESET);
                 printAndDisplayOptionsForProductTypes();
-                int productTypeIndex = sc.nextInt();
+                int productTypeIndex = Inputs.getIntegerInput(sc);
 
                 double price = 0.0;
                 while (price <= 0.0) {
                     System.out.println(ColorCodes.RED + "Please provide price of the product(must be greater than 0) " + ColorCodes.RESET);
-                    price = sc.nextDouble();
+                    price = Inputs.getDoubleInput(sc);
                 }
                 Response sellerResponse = userService.fetchAllSellers();
                 if (sellerResponse.getStatus() == ResponseStatus.SUCCESSFUL && sellerResponse.getData() instanceof List) {
@@ -177,16 +174,15 @@ public class AdminUI extends UI {
                 }
 
                 System.out.println(ColorCodes.GREEN + "Provide seller id" + ColorCodes.RESET);
-                long seller = sc.nextLong();
+                long seller = Inputs.getLongInput(sc);
                 int stock = 0;
                 while (stock <= 0) {
                     System.out.println(ColorCodes.RED + "Please provide stocks of the product(must be greater than 0) " + ColorCodes.RESET);
-                    stock = sc.nextInt();
+                    stock = Inputs.getIntegerInput(sc);
                 }
                 response = productService.addProduct(productName, seller, productTypeIndex, currencyIndex, price, stock);
                 if (response.getStatus() == ResponseStatus.ERROR) {
                     printResponse(response);
-                    sc.nextLine();
                 }
 
             } catch (InputMismatchException e) {
@@ -231,7 +227,7 @@ public class AdminUI extends UI {
                 System.out.println("Press " + i + " for " + types[i]);
             }
             System.out.println("Press " + types.length + " to display all product");
-            operation = sc.nextLine();
+            operation = Inputs.getStringInputs(sc);
             if (operation.matches("-?\\d+")) {
                 int index = Integer.parseInt(operation);
                 if (index < 0 || index > types.length) {
@@ -261,7 +257,7 @@ public class AdminUI extends UI {
 
         System.out.println(ColorCodes.BLUE + "Admins : " + customerResponse.getData() + ColorCodes.RESET);
         System.out.print("Enter User id to whom you want to grant access to : ");
-        String cid = sc.nextLine();
+        String cid = Inputs.getStringInputs(sc);;
 
         Response isCustomer = userService.customerExists(Long.valueOf(cid));
 
@@ -274,7 +270,7 @@ public class AdminUI extends UI {
         while (!condition && (count-- > 0)) {
             System.out.println("Wrong user id, enter correct user id");
             System.out.print(ColorCodes.BLUE + "Enter User id to whom you want to grant access to : " + ColorCodes.RESET);
-            cid = sc.nextLine();
+            cid = Inputs.getStringInputs(sc);
             isCustomer = userService.customerExists(Long.valueOf(cid));
             if (isCustomer.getStatus() == ResponseStatus.ERROR) {
                 return isCustomer;
@@ -288,12 +284,12 @@ public class AdminUI extends UI {
 
     private Response authenticate() {
         System.out.println("please provide the super admin password for further action : ");
-        String password = sc.nextLine();
+        String password = Inputs.getStringInputs(sc);
         int count = 5;
         Response response = null;
         while (!userService.authenticateSuperAdmin(password) && count-- > 0) {
             System.out.println("Incorrect password please try again...");
-            password = sc.nextLine();
+            password = Inputs.getStringInputs(sc);
         }
         if (!userService.authenticateSuperAdmin(password)) {
             response = new Response(ResponseStatus.ERROR, null, "Incorrect password");
@@ -311,7 +307,7 @@ public class AdminUI extends UI {
         }
         System.out.println(ColorCodes.BLUE + "Admins : " + admins.getData() + ColorCodes.RESET);
         System.out.print("Enter User id to whom you want to revoke access to : ");
-        String cid = sc.nextLine();
+        String cid = Inputs.getStringInputs(sc);
         Response adminResponse = userService.isAdmin(Long.valueOf(cid));
         if (adminResponse.getStatus() == ResponseStatus.ERROR) {
             return adminResponse;
@@ -321,7 +317,7 @@ public class AdminUI extends UI {
             try {
                 System.out.println("Wrong user id, enter correct user id");
                 System.out.print("Enter User id to whom you want to revoke access to : ");
-                cid = sc.nextLine();//keeps on requesting id if no object is found for the previous id, keeps on going until count is not equals to 0 or less than 0
+                cid = Inputs.getStringInputs(sc);//keeps on requesting id if no object is found for the previous id, keeps on going until count is not equals to 0 or less than 0
                 admins = userService.isAdmin(Long.valueOf(cid));
                 if (admins.getStatus() == ResponseStatus.ERROR) {
                     return admins;
@@ -329,6 +325,7 @@ public class AdminUI extends UI {
                 condition = (Boolean) admins.getData();
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input");
+                sc.next();
             } catch (Exception e) {
                 log.error("Some error occured while revoking access admin from cid ", e);
                 return new Response(ResponseStatus.ERROR, null, Constants.ERROR_MESSAGE);
@@ -347,7 +344,7 @@ public class AdminUI extends UI {
 
     private Response getCustomerByEmail(String message) {
         System.out.println(message);
-        String email = sc.nextLine().toUpperCase();
+        String email = Inputs.getStringInputs(sc).toUpperCase();
         if(StringUtils.isBlank(email))return new Response(ResponseStatus.ERROR, null, "Email cannot be blank");
         Response response = userService.findByEmail(email);
         return response;

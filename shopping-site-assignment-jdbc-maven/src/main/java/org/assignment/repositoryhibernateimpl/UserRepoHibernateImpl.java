@@ -59,6 +59,7 @@ public class UserRepoHibernateImpl implements UserRepository {
             manager.persist(user);
             transaction.commit();
         } catch (EntityExistsException e) {
+            transaction.setRollbackOnly();
             throw new RuntimeException("User already exist");
         }
         return user;
@@ -66,9 +67,14 @@ public class UserRepoHibernateImpl implements UserRepository {
 
     @Override
     public User updateCustomer(User user) {
-        transaction.begin();
-        manager.merge(user);
-        transaction.commit();
+        try {
+            transaction.begin();
+            manager.merge(user);
+            transaction.commit();
+        }catch (Exception e) {
+            transaction.setRollbackOnly();
+            throw new RuntimeException(e);
+        }
         return user;
     }
 

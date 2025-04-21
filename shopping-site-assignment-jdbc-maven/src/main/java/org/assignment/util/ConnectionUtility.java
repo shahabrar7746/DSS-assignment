@@ -37,7 +37,7 @@ public final class ConnectionUtility {
 
     public static EntityManager getEntityManager() {
         if (manager == null) {
-            final EntityManagerFactory factory = Persistence.createEntityManagerFactory("LOCAL_HOME_CONFIG");
+            final EntityManagerFactory factory = Persistence.createEntityManagerFactory("myPersistenceUnit");
             manager = factory.createEntityManager();
         }
         return manager;

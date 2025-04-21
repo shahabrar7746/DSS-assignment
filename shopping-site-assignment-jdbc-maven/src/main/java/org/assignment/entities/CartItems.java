@@ -17,16 +17,16 @@ public class CartItems {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false, updatable = false)
     @EqualsAndHashCode.Exclude
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     @EqualsAndHashCode.Exclude
     private int quantity;
 

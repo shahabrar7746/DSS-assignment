@@ -23,9 +23,14 @@ public class ProductRepoHibernateImpl implements ProductRepository {
 
     @Override
     public Product updateProduct(Product product) {
-        transaction.begin();
-        manager.merge(product);
-        transaction.commit();
+        try {
+            transaction.begin();
+            manager.merge(product);
+            transaction.commit();
+        }catch (Exception e) {
+            transaction.setRollbackOnly();
+            throw new RuntimeException(e);
+        }
         return product;
     }
 
@@ -45,8 +50,13 @@ public class ProductRepoHibernateImpl implements ProductRepository {
 
     @Override
     public void addProduct(Product product) {
-        transaction.begin();
-        manager.persist(product);
-        transaction.commit();
+        try {
+            transaction.begin();
+            manager.persist(product);
+            transaction.commit();
+        }catch (Exception e) {
+            transaction.setRollbackOnly();
+            throw new RuntimeException(e);
+        }
     }
 }

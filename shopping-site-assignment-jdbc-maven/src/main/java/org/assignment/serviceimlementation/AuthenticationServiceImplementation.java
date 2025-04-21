@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 import java.util.Optional;
+import java.util.Scanner;
 
 @AllArgsConstructor
 public class AuthenticationServiceImplementation implements AuthenticationService {
@@ -34,6 +35,7 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
     private final ProductService productService;
     private final OrderService orderService;
     private final CartService cartService;
+    private final Scanner sc;
 
     @Override
     public Response login(String email, String pasword) {
@@ -47,10 +49,10 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
                 c.setLoggedIn(true);
                 userService.updateCustomerAndCart(c);
                 if (c.getRole() == Roles.ADMIN || c.getRole() == Roles.SUPER_ADMIN) {
-                    UI adminUI = new AdminUI(adminService, userService, productService, orderService);
+                    UI adminUI = new AdminUI(sc,adminService, userService, productService, orderService);
                     adminUI.initAdminServices(c);
                 } else if (c.getRole() == Roles.CUSTOMER) {
-                    UI customerUI = new CustomerUI(orderService, productService, cartService);
+                    UI customerUI = new CustomerUI(sc, orderService, productService, cartService);
                     customerUI.initCustomerServices(c);
                 }
                 c.setLoggedIn(false);
@@ -82,7 +84,6 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
                         .email(email.toUpperCase())
                         .name(name)
                         .password(password)
-                        .registeredOn(LocalDateTime.now())
                         .build();
                 userRepository.addCustomer(newUser);
                 response = new Response(ResponseStatus.SUCCESSFUL, newUser, null);

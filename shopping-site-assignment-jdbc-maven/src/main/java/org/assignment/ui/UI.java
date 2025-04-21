@@ -1,7 +1,5 @@
 package org.assignment.ui;
 
-
-import jdk.swing.interop.SwingInterOpUtils;
 import org.assignment.entities.CartItems;
 import org.assignment.entities.Order;
 import org.assignment.entities.OrderedProduct;
@@ -17,7 +15,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public abstract class UI {
@@ -163,9 +160,9 @@ public abstract class UI {
             }
             builder.append("Ordered on : " + order
                             .getOrderedOn()
-                            .truncatedTo(ChronoUnit.SECONDS)
-                            .format(DateTimeFormatter.ofPattern("dd/mm/yyyy HH:mm:ss"))+ "\n")
-                    .append("Order Status : " + order.getStatus() + "\n");
+                            .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))+ "\n")
+                    .append("Order Status : " + order.getStatus() + "\n")
+                    .append("Order Total   : " + order.getPrice() + "\n");
 
             List<OrderedProduct> orderedProducts = order.getOrderedProducts();
             for (int j = 0; j < orderedProducts.size(); j++) {
@@ -180,8 +177,7 @@ index = j+1;
                         .append("Product name : " + orderedProduct.getProduct().getName() + "\n")
                         .append("Product quantity : " + orderedProduct.getQuantity() + "\n")
                         .append("Product amount : " + orderedProduct.getProduct().getPrice()  + currency + "\n")
-                        .append("Total amount for the product : " + orderedProduct
-                                .getQuantity() * orderedProduct.getProduct().getPrice() + currency + "\n");
+                        .append("Total amount for the product : " + orderedProduct.getProductTotal() + currency + "\n");
             }
             builder.append(FOOTER + "\n");
         }

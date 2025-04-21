@@ -7,7 +7,6 @@ import org.assignment.enums.OrderStatus;
 import org.assignment.util.ColorCodes;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.CurrentTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,44 +14,37 @@ import java.util.*;
 
 
 @Builder
-@Entity
-@Getter
-@Setter
-@RequiredArgsConstructor
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "orders")
 public class Order implements Serializable, Comparable<Order> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
 
-    @Column(name = "price")
+    @Column(name = "grand_total", nullable = false, precision = 2)
     private double price;
 
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false, updatable = false)
     private User user;
 
-    @JoinColumn(name = "ordered_product_id")
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<OrderedProduct> orderedProducts;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private OrderStatus status;
 
 
     @CreationTimestamp
-    @Column(name = "ordered_on")
+    @Column(name = "ordered_on", nullable = false, updatable = false)
     private LocalDateTime orderedOn;
-
-
-    @UpdateTimestamp
-    @Column(name = "updated_on")
-    private LocalDateTime updatedOn;
 
     @Override
     public boolean equals(Object object) {
@@ -72,21 +64,6 @@ public class Order implements Serializable, Comparable<Order> {
         return Objects.hashCode(id);
     }
 
-//    @Override
-//    public String toString() {
-//        return
-//                String.format("| %-17s | %-17s | %-17s | %-17s | %-17s | %-17.2f | %-17s | %-17d |\n",
-//                        product != null ? product.getName() : "N/A",
-//                        product != null ? product.getSeller().getName() : "N/A",  // Assuming Product has a getSellerName() method
-//                        user != null ? user.getName() : "N/A",
-//                        status != null ? status.name() : "N/A",
-//                        orderedOn != null ? orderedOn.toString() : "N/A",
-//                        price,
-//                       product != null ? product.getCurrency() : "N/A",  // Assuming Currency enum has a meaningful name
-//                        quantity) +
-//                "+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+";
-//    }
-
 
     @Override
     public String toString() {
@@ -95,17 +72,6 @@ public class Order implements Serializable, Comparable<Order> {
                 ", orderCode='" + orderCode + '\'' +
                 '}';
     }
-
-    private String getPrintableOrderBody()
-    {
-        StringBuilder builder = new StringBuilder();
-        for (OrderedProduct product : orderedProducts)
-        {
-
-        }
-        return null;
-    }
-
     @Override
     public int compareTo(Order o) {
         long result = this.id  - o.id;

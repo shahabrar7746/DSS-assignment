@@ -35,16 +35,26 @@ public class OrderRepoHibernateImpl implements OrderRepository {
 
     @Override
     public void cancelOrder(Order order) {
-        transaction.begin();
-        manager.remove(order);
-        transaction.commit();
+        try {
+            transaction.begin();
+            manager.remove(order);
+            transaction.commit();
+        }catch (Exception e) {
+            transaction.setRollbackOnly();
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public Order addOrder(Order order) {
-        transaction.begin();
-        manager.persist(order);
-        transaction.commit();
+        try {
+            transaction.begin();
+            manager.persist(order);
+            transaction.commit();
+        }catch (Exception e) {
+            transaction.setRollbackOnly();
+            throw new RuntimeException(e);
+        }
         return order;
     }
 
@@ -84,9 +94,14 @@ public class OrderRepoHibernateImpl implements OrderRepository {
 
     @Override
     public Order updateOrder(Order order) {
-        transaction.begin();
-        manager.merge(order);
-        transaction.commit();
+        try {
+            transaction.begin();
+            manager.merge(order);
+            transaction.commit();
+        }catch (Exception e) {
+            transaction.setRollbackOnly();
+            throw new RuntimeException(e);
+        }
         return order;
     }
 

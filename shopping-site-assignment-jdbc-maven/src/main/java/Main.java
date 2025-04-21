@@ -14,29 +14,31 @@ import org.assignment.ui.AuthUi;
 import org.assignment.ui.UI;
 import org.assignment.util.ConnectionUtility;
 
+import java.util.Scanner;
+
 @Slf4j
 public class Main {
     public static void main(String[] args) {
-        try(EntityManager manager = ConnectionUtility.getEntityManager()) {
-        final OrderRepository orderRepository = new OrderRepoHibernateImpl(manager, manager.getTransaction());
-        final ProductRepository productRepository = new ProductRepoHibernateImpl(manager, manager.getTransaction());
-        final UserRepository userRepository = new UserRepoHibernateImpl(manager, manager.getTransaction());
-       final InvoiceRepository invoiceRepository = new InvoiceHibernateImpl(manager, manager.getTransaction());
+        try (EntityManager manager = ConnectionUtility.getEntityManager()) {
+            final Scanner sc = new Scanner(System.in);
+            final OrderRepository orderRepository = new OrderRepoHibernateImpl(manager, manager.getTransaction());
+            final ProductRepository productRepository = new ProductRepoHibernateImpl(manager, manager.getTransaction());
+            final UserRepository userRepository = new UserRepoHibernateImpl(manager, manager.getTransaction());
+            final InvoiceRepository invoiceRepository = new InvoiceHibernateImpl(manager, manager.getTransaction());
 
-       final InvoiceService invoiceService = new InvoiceServiceImplementation(invoiceRepository);
-        final ProductService productService = new ProductServiceImplementation(productRepository, userRepository);
-        final UserService userService = new UserServiceImplementation(userRepository);
-        final CartService cartService = new CartServiceImplementation(productRepository, orderRepository, userRepository);
-        final OrderService orderService = new OrderServiceImplementation(orderRepository, productRepository,
-                userService,invoiceRepository,invoiceService);
-        final AdminService adminService = new AdminServiceImplementation(userRepository);
+            final InvoiceService invoiceService = new InvoiceServiceImplementation(invoiceRepository);
+            final ProductService productService = new ProductServiceImplementation(productRepository, userRepository);
+            final UserService userService = new UserServiceImplementation(userRepository);
+            final CartService cartService = new CartServiceImplementation(productRepository, orderRepository, userRepository);
+            final OrderService orderService = new OrderServiceImplementation(orderRepository, productRepository,
+                    userService, invoiceRepository, invoiceService);
+            final AdminService adminService = new AdminServiceImplementation(userRepository);
 
-        final AuthenticationService authService = new AuthenticationServiceImplementation(userRepository, userService, adminService, productService, orderService, cartService);
+            final AuthenticationService authService = new AuthenticationServiceImplementation(userRepository, userService, adminService, productService, orderService, cartService, sc);
 
-      final UI authUi = new AuthUi(authService, productService);
+            final UI authUi = new AuthUi(sc, authService, productService);
 
-
-           authUi.initAuthServices();
+            authUi.initAuthServices();
         } catch (Exception e) {
             log.error("Unable to start to application : ", e);
             System.out.println("Enable to start application");

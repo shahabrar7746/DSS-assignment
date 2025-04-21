@@ -13,6 +13,7 @@ import org.assignment.services.CartService;
 import org.assignment.services.OrderService;
 import org.assignment.services.ProductService;
 import org.assignment.util.ColorCodes;
+import org.assignment.util.Inputs;
 import org.assignment.util.Response;
 import org.assignment.wrappers.ProductWrapper;
 
@@ -22,7 +23,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class CustomerUI extends UI {
-    private final Scanner sc = new Scanner(System.in);
+    private final Scanner sc;
     private final OrderService orderService;
     private final ProductService productService;
     private final CartService cartService;
@@ -59,7 +60,9 @@ public class CustomerUI extends UI {
             options.add("TYPE 0 TO LOG OUT");
             options.add("Operation : ");
             displayOptions(options);
-            operation = sc.nextLine().toUpperCase();
+
+            operation = Inputs.getStringInputs(sc).toUpperCase();
+
             switch (operation) {
                 case "1" -> {
                     if (isCartEmpty) {
@@ -81,7 +84,6 @@ public class CustomerUI extends UI {
                 case "0" -> System.out.println("Going back");
                 default -> System.out.println("Invalid input");
             }
-            sc.nextLine();
         }
 
     }
@@ -94,12 +96,12 @@ public class CustomerUI extends UI {
 
         printCartItems(user.getCart());
         System.out.println(ColorCodes.GREEN + "Enter '1' to place orders\n'2' to return main menu\nEnter choice : " + ColorCodes.RESET);
-        String operation = sc.nextLine();
+        String operation = Inputs.getStringInputs(sc);
         while (!operation.equalsIgnoreCase("1") && !operation.equalsIgnoreCase("2")) {
 
             System.out.println(ColorCodes.RED + "Incorrect choice\n Enter again" + ColorCodes.RESET);
             System.out.println(ColorCodes.GREEN + "Enter '1' to place orders\n      '2' to return main menu\nEnter choice : " + ColorCodes.RESET);
-            operation = sc.nextLine();
+            operation = Inputs.getStringInputs(sc);
         }
         if (operation.equalsIgnoreCase("1")) {
             printResponse(orderService.orderCart(user));
@@ -130,7 +132,7 @@ public class CustomerUI extends UI {
             options.add("PRESS 5 TO EXIT CART");
             options.add(ColorCodes.GREEN + "Operation : " + ColorCodes.RESET);
             displayOptions(options);
-            choice = sc.nextLine().toUpperCase();
+            choice = Inputs.getStringInputs(sc).toUpperCase();
 
             if (choice.equalsIgnoreCase("1")) {
                 addToCart(user);
@@ -150,12 +152,12 @@ public class CustomerUI extends UI {
 
     private void addToCart(User user) {
         System.out.println("Please provide product name : ");
-        String product = sc.nextLine().toUpperCase();
+        String product = Inputs.getStringInputs(sc).toUpperCase();
         int quantity = 0;
         while (quantity <= 0) {
             System.out.println("Please provide the quantity for the product (press '-1' to go to back)");
             try {
-                quantity = sc.nextInt();
+                quantity = Inputs.getIntegerInput(sc);
 
                 if (quantity == -1) {
                     return;
@@ -171,7 +173,6 @@ public class CustomerUI extends UI {
 
         Response response = cartService.intiateCart(user, product, quantity);
         printResponse(response);
-        sc.nextLine();
     }
 
     private void chechkOut(User user) {
@@ -191,7 +192,7 @@ public class CustomerUI extends UI {
         String name = "";
         while (!name.equalsIgnoreCase("-1") && !user.getCart().isEmpty()) {
             System.out.println("Enter product name to be removed from cart ( '-1' to go back)");
-            name = sc.nextLine();
+            name = Inputs.getStringInputs(sc);
             if (name.equalsIgnoreCase("-1")) {
                 break;
             }
@@ -219,11 +220,17 @@ public class CustomerUI extends UI {
         System.out.println("Your orders : ");
         printOrdersForRole(false, (List<Order>) response.getData());
         int index = -1;
-        while (index < 1) {
-            System.out.println("Please provide index of order \n" +
-                               "Note : Index must be equals or greater than zero\n" +
-                               "Choice : ");
-            index = sc.nextInt();
+        try {
+            while (index < 1) {
+                System.out.println("Please provide index of order \n" +
+                        "Note : Index must be equals or greater than zero\n" +
+                        "Choice : ");
+                index = Inputs.getIntegerInput(sc);
+            }
+        }catch (InputMismatchException e)
+        {
+            System.out.println(ColorCodes.RED + "Inputs must be in Integer only" + ColorCodes.RESET);
+            sc.next();
         }
         response = orderService.cancelOrder(user, index-1);
         printResponse(response);
@@ -243,12 +250,12 @@ public class CustomerUI extends UI {
 
         System.out.print(ColorCodes.BLUE + cart + ColorCodes.RESET);
         System.out.println("Please provide the product which needs to be ordered from cart : ");
-        String productName = sc.nextLine();
+        String productName = Inputs.getStringInputs(sc);
         boolean exists = (boolean) productService.hasProduct(user, productName).getData();
         while (!exists) {
             System.out.println(ColorCodes.RED + "Incorrect product name" + ColorCodes.RESET + "\nplease provide the correct product name :");
             System.out.println("Type '-1' to exit");
-            productName = sc.nextLine().toUpperCase();
+            productName = Inputs.getStringInputs(sc).toUpperCase();
             if (StringUtils.isBlank(productName)) {
                 continue;
             }
@@ -262,14 +269,13 @@ public class CustomerUI extends UI {
             while (quantity <= 0) {
                 disclaimerForQuantity();
                 System.out.println("Please provide the quantity for the product");
-                quantity = sc.nextInt();
+                quantity = Inputs.getIntegerInput(sc);
             }
             Response response = cartService.orderFromCart(user, productName, quantity, true);
             printResponse(response);
         } else {
             System.out.println(ColorCodes.BLUE + "Going back" + ColorCodes.RESET);
         }
-        sc.nextLine();
     }
 
     private void editCart(User user) {
@@ -280,7 +286,7 @@ public class CustomerUI extends UI {
         System.out.println(ColorCodes.BLUE + "Your cart : " + ColorCodes.RESET);
         printCartItems(user.getCart());
         System.out.println(ColorCodes.GREEN + "Please provide the product name whose quantity you want to update( Type 'back' to go to previous menu) " + ColorCodes.RESET);
-        String product = sc.nextLine().toUpperCase();
+        String product = Inputs.getStringInputs(sc).toUpperCase();
 
         Optional<CartItems> cartItemsOptional = (Optional<CartItems>) cartService.findCartItemByName(user, product).getData();
 
@@ -289,7 +295,7 @@ public class CustomerUI extends UI {
         boolean check = Boolean.logicalAnd(isBack, isEmpty);
         while (check) {
             System.out.println(ColorCodes.RED + "Incorrect product name please enter correct product name " + ColorCodes.RESET);
-            product = sc.nextLine().toUpperCase();
+            product = Inputs.getStringInputs(sc).toUpperCase();
             cartItemsOptional = (Optional<CartItems>) cartService.findCartItemByName(user, product).getData();
             isBack = Boolean.FALSE.equals(product.equalsIgnoreCase("back"));
             isEmpty = Boolean.TRUE.equals(cartItemsOptional.isEmpty());
@@ -311,7 +317,7 @@ public class CustomerUI extends UI {
         int quantity = 0;
         while (quantity == 0) {
             System.out.println("Do you want remove the product (y/n) ?\nChoice : ");
-            String choice = sc.nextLine();
+            String choice = Inputs.getStringInputs(sc);
             if (choice.equalsIgnoreCase("y")) {
                 break;
             } else if (choice.equalsIgnoreCase("n")) {
@@ -330,7 +336,7 @@ public class CustomerUI extends UI {
             try {
 
                 System.out.println(ColorCodes.GREEN + "New Quantity : " + ColorCodes.RESET);
-                quantity = sc.nextInt();
+                quantity = Inputs.getIntegerInput(sc);
                 if (quantity < 0) {
                     System.out.println(ColorCodes.RED + "Quantity must be greater than zero" + ColorCodes.RESET);
                 }
@@ -338,7 +344,6 @@ public class CustomerUI extends UI {
                 System.out.println(ColorCodes.RED + "Inputs must be Integer" + ColorCodes.RESET);
                 sc.next();
             }
-            sc.nextLine();
         }
         return quantity;
     }

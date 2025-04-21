@@ -5,6 +5,7 @@ import lombok.*;
 import org.assignment.enums.Roles;
 
 import org.assignment.util.ColorCodes;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -25,29 +26,31 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false, unique = true)
     private String password;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "registered_on")
+
+    @CreationTimestamp
+    @Column(name = "registered_on", nullable = false, updatable = false)
     private LocalDateTime registeredOn;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     private Roles role;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<CartItems> cart;
 
-    @Column(name = "logged_in")
+    @Column(name = "logged_in", nullable = false)
     private boolean isLoggedIn;
 
     @Override

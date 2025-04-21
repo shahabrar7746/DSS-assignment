@@ -16,17 +16,28 @@ public class InvoiceHibernateImpl implements InvoiceRepository {
     private final EntityTransaction transaction;
     @Override
     public Invoice save(Invoice invoice) {
-        transaction.begin();
-        manager.persist(invoice);
-        transaction.commit();
+        try {
+            transaction.begin();
+            manager.persist(invoice);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.setRollbackOnly();
+            throw new RuntimeException(e);
+        }
+
         return invoice;
     }
 
     @Override
     public Invoice update(Invoice invoice) {
-        transaction.begin();
-        manager.merge(invoice);
-        transaction.commit();
+        try {
+            transaction.begin();
+            manager.merge(invoice);
+            transaction.commit();
+        }catch (Exception e) {
+            transaction.setRollbackOnly();
+            throw new RuntimeException(e);
+        }
         return invoice;
     }
 
